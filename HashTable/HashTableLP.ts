@@ -5,19 +5,15 @@ let DELETED_VALUE : number = 2;
 class HashTableLP {
 
     tableSize : number;
-    Arr : number[];
-    Flag : number[];
+    KeyArr : number[];
+    DataArr : number[];
+    FlagArr : number[];
 
     public constructor(tSize : number) {
-        if(this.tableSize===undefined) this.tableSize = 0;
-        if(this.Arr===undefined) this.Arr = null;
-        if(this.Flag===undefined) this.Flag = null;
         this.tableSize = tSize;
-        this.Arr = (s => { let a=[]; while(s-->0) a.push(0); return a; })(tSize + 1);
-        this.Flag = (s => { let a=[]; while(s-->0) a.push(0); return a; })(tSize + 1);
-        for(let i : number = 0; i <= tSize; i++) {{
-            this.Flag[i] = EMPTY_VALUE;
-        };}
+        this.KeyArr = new Array(tSize + 1);
+        this.DataArr = new Array(tSize + 1);
+        this.FlagArr = new Array(tSize + 1).fill(EMPTY_VALUE);
     }
 
     computeHash(key : number) : number {
@@ -32,71 +28,97 @@ class HashTableLP {
         return index * index;
     }
 
-    add(value : number) : boolean {
-        let hashValue : number = this.computeHash(value);
-        for(let i : number = 0; i < this.tableSize; i++) {{
-            if(this.Flag[hashValue] === EMPTY_VALUE || 
-                this.Flag[hashValue] === DELETED_VALUE) {
-                this.Arr[hashValue] = value;
-                this.Flag[hashValue] = FILLED_VALUE;
+    add(key : number, value : number) : boolean {
+        let hashValue : number = this.computeHash(key);
+        for(let i : number = 0; i < this.tableSize; i++) {
+            if(this.FlagArr[hashValue] === EMPTY_VALUE || 
+                this.FlagArr[hashValue] === DELETED_VALUE) 
+            {
+                this.KeyArr[hashValue] = key;
+                this.DataArr[hashValue] = value;
+                this.FlagArr[hashValue] = FILLED_VALUE;
+                return true;
+            }
+            else if (this.FlagArr[hashValue] === FILLED_VALUE && 
+                this.KeyArr[hashValue] === key) 
+            {
+                this.DataArr[hashValue] = value;
                 return true;
             }
             hashValue += this.resolverFun(i);
             hashValue %= this.tableSize;
-        };}
+        };
         return false;
     }
 
-    find(value : number) : boolean {
-        let hashValue : number = this.computeHash(value);
-        for(let i : number = 0; i < this.tableSize; i++) {{
-            if(this.Flag[hashValue] === EMPTY_VALUE) {
+    find(key : number) : boolean {
+        let hashValue : number = this.computeHash(key);
+        for(let i : number = 0; i < this.tableSize; i++) {
+            if (this.FlagArr[hashValue] === EMPTY_VALUE) {
                 return false;
             }
-            if(this.Flag[hashValue] === FILLED_VALUE && this.Arr[hashValue] === value) {
+            if (this.FlagArr[hashValue] === FILLED_VALUE
+                && this.KeyArr[hashValue] === key) {
                 return true;
             }
             hashValue += this.resolverFun(i);
             hashValue %= this.tableSize;
-        };}
+        };
         return false;
     }
 
-    remove(value : number) : boolean {
-        let hashValue : number = this.computeHash(value);
-        for(let i : number = 0; i < this.tableSize; i++) {{
-            if(this.Flag[hashValue] === EMPTY_VALUE) {
+    get(key : number) : number {
+        let hashValue : number = this.computeHash(key);
+        for (let i = 0; i < this.tableSize; i++) {
+            if (this.FlagArr[hashValue] === EMPTY_VALUE) {
+                return 0;
+            }
+            if (this.FlagArr[hashValue] === FILLED_VALUE
+                && this.KeyArr[hashValue] === key) {
+                return this.DataArr[hashValue];
+            }
+            hashValue += this.resolverFun(i);
+            hashValue %= this.tableSize;
+        }
+        return 0;    
+    }
+
+    delete(key : number) : boolean {
+        let hashValue : number = this.computeHash(key);
+        for (let i = 0; i < this.tableSize; i++) {
+            if (this.FlagArr[hashValue] === EMPTY_VALUE) {
                 return false;
             }
-            if(this.Flag[hashValue] === FILLED_VALUE && this.Arr[hashValue] === value) {
-                this.Flag[hashValue] = DELETED_VALUE;
+            if (this.FlagArr[hashValue] === FILLED_VALUE
+                && this.KeyArr[hashValue] === key) {
+                this.FlagArr[hashValue] = DELETED_VALUE;
                 return true;
             }
             hashValue += this.resolverFun(i);
             hashValue %= this.tableSize;
-        };}
+        }
         return false;
     }
 
     print() {
-        for(let i : number = 0; i < this.tableSize; i++) {{
-            if(this.Flag[i] === FILLED_VALUE) {
-                console.info("Node at index [" + i + " ] :: " + this.Arr[i]);
+        for(let i : number = 0; i < this.tableSize; i++) {
+            if(this.FlagArr[i] === FILLED_VALUE) {
+                console.info("Node at index [" + i + " ] :: " + this.DataArr[i]);
             }
-        };}
-    }
-
-    public static main(args : string[]) {
-        let ht : HashTableLP = new HashTableLP(1000);
-        ht.add(1);
-        ht.add(2);
-        ht.add(3);
-        ht.print();
-        console.info(ht.remove(1));
-        console.info(ht.remove(4));
-        ht.print();
-    }
+        };
+    }    
 }
-HashTableLP["__class"] = "HashTableLP";
 
-HashTableLP.main(null);
+function main() {
+    let ht : HashTableLP = new HashTableLP(1000);
+    ht.add(1, 10);
+    ht.add(2, 20);
+    ht.add(3, 30);
+    ht.print();
+    
+    console.log("Find key 2 : ", ht.find(2));
+    console.log("Value at key 2 : ",ht.get(2))
+    ht.delete(1)
+    ht.print()
+}
+main();

@@ -1,6 +1,5 @@
-/* Generated from Java with JSweet 2.2.0-SNAPSHOT - http://www.jsweet.org */
 class TwoStack {
-    /*private*/ MAX_SIZE : number = 50;
+    MAX_SIZE : number = 50;
 
     top1 : number;
 

@@ -1,15 +1,23 @@
-/* Generated from Java with JSweet 2.2.0-SNAPSHOT - http://www.jsweet.org */
-class QueueLL {
-    /*private*/ tail : QueueLL.Node = null;
+class QueueNode {
+    value : number;
+    next : QueueNode;
 
-    /*private*/ __size : number = 0;
+    public constructor(v : number, n : QueueNode) {
+        this.value = v;
+        this.next = n;
+    }
+}
+
+class QueueLL {
+    tail : QueueNode = null;
+    _size : number = 0;
 
     public size() : number {
-        return this.__size;
+        return this._size;
     }
 
     public isEmpty() : boolean {
-        return this.__size === 0;
+        return this._size === 0;
     }
 
     public peek() : number {
@@ -20,7 +28,7 @@ class QueueLL {
     }
 
     public add(value : number) {
-        let temp : QueueLL.Node = new QueueLL.Node(value, null);
+        let temp : QueueNode = new QueueNode(value, null);
         if(this.tail == null) {
             this.tail = temp;
             this.tail.next = this.tail;
@@ -29,7 +37,7 @@ class QueueLL {
             this.tail.next = temp;
             this.tail = temp;
         }
-        this.__size++;
+        this._size++;
     }
 
     public remove() : number {
@@ -42,40 +50,19 @@ class QueueLL {
             value = this.tail.next.value;
             this.tail.next = this.tail.next.next;
         }
-        this.__size--;
+        this._size--;
         return value;
     }
-
-    public static main(args : string[]) {
-        let q : QueueLL = new QueueLL();
-        q.add(1);
-        q.add(2);
-        q.add(3);
-        for(let i : number = 0; i < 3; i++) {console.info(q.remove());}
-    }
-}
-QueueLL["__class"] = "QueueLL";
-
-
-namespace QueueLL {
-
-    export class Node {
-        value : number;
-
-        next : QueueLL.Node;
-
-        public constructor(v : number, n : QueueLL.Node) {
-            if(this.value===undefined) this.value = 0;
-            if(this.next===undefined) this.next = null;
-            this.value = v;
-            this.next = n;
-        }
-    }
-    Node["__class"] = "QueueLL.Node";
-
 }
 
+function main() {
+    let q : QueueLL = new QueueLL();
+    q.add(1);
+    q.add(2);
+    q.add(3);
+    for(let i : number = 0; i < 3; i++) {
+        console.info(q.remove());
+    }
+}
 
-
-
-QueueLL.main(null);
+main();

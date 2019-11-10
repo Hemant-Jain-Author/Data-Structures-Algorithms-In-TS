@@ -1,9 +1,7 @@
-/* Generated from Java with JSweet 2.2.0-SNAPSHOT - http://www.jsweet.org */
 class Tree {
-    /*private*/ root : Tree.Node;
+    root : TNode;
 
     public constructor() {
-        if(this.root===undefined) this.root = null;
         this.root = null;
     }
 
@@ -11,9 +9,9 @@ class Tree {
         this.root = this.levelOrderBinaryTree$int_A$int(arr, 0);
     }
 
-    public levelOrderBinaryTree$int_A$int(arr : number[], start : number) : Tree.Node {
+    public levelOrderBinaryTree$int_A$int(arr : number[], start : number) : TNode {
         let size : number = arr.length;
-        let curr : Tree.Node = new Tree.Node(arr[start]);
+        let curr : TNode = new TNode(arr[start]);
         let left : number = 2 * start + 1;
         let right : number = 2 * start + 2;
         if(left < size) curr.lChild = this.levelOrderBinaryTree$int_A$int(arr, left);
@@ -33,9 +31,9 @@ class Tree {
         this.root = this.InsertNode$Tree_Node$int(this.root, value);
     }
 
-    public InsertNode$Tree_Node$int(node : Tree.Node, value : number) : Tree.Node {
+    public InsertNode$Tree_Node$int(node : TNode, value : number) : TNode {
         if(node == null) {
-            node = new Tree.Node(value, null, null);
+            node = new TNode(value, null, null);
         } else {
             if(node.value > value) {
                 node.lChild = this.InsertNode$Tree_Node$int(node.lChild, value);
@@ -47,7 +45,7 @@ class Tree {
     }
 
     public InsertNode(node? : any, value? : any) : any {
-        if(((node != null && node instanceof <any>Tree.Node) || node === null) && ((typeof value === 'number') || value === null)) {
+        if(((node != null && node instanceof <any>TNode) || node === null) && ((typeof value === 'number') || value === null)) {
             return <any>this.InsertNode$Tree_Node$int(node, value);
         } else if(((typeof node === 'number') || node === null) && value === undefined) {
             return <any>this.InsertNode$int(node);
@@ -58,7 +56,7 @@ class Tree {
         this.PrintPreOrder$Tree_Node(this.root);
     }
 
-    public PrintPreOrder$Tree_Node(node : Tree.Node) {
+    public PrintPreOrder$Tree_Node(node : TNode) {
         if(node != null) {
             console.info(" " + node.value);
             this.PrintPreOrder$Tree_Node(node.lChild);
@@ -67,7 +65,7 @@ class Tree {
     }
 
     public PrintPreOrder(node? : any) : any {
-        if(((node != null && node instanceof <any>Tree.Node) || node === null)) {
+        if(((node != null && node instanceof <any>TNode) || node === null)) {
             return <any>this.PrintPreOrder$Tree_Node(node);
         } else if(node === undefined) {
             return <any>this.PrintPreOrder$();
@@ -79,7 +77,7 @@ class Tree {
         this.NthPreOrder$Tree_Node$int$int_A(this.root, index, counter);
     }
 
-    public NthPreOrder$Tree_Node$int$int_A(node : Tree.Node, index : number, counter : number[]) {
+    public NthPreOrder$Tree_Node$int$int_A(node : TNode, index : number, counter : number[]) {
         if(node != null) {
             counter[0]++;
             if(counter[0] === index) {
@@ -91,7 +89,7 @@ class Tree {
     }
 
     public NthPreOrder(node? : any, index? : any, counter? : any) : any {
-        if(((node != null && node instanceof <any>Tree.Node) || node === null) && ((typeof index === 'number') || index === null) && ((counter != null && counter instanceof <any>Array && (counter.length==0 || counter[0] == null ||(typeof counter[0] === 'number'))) || counter === null)) {
+        if(((node != null && node instanceof <any>TNode) || node === null) && ((typeof index === 'number') || index === null) && ((counter != null && counter instanceof <any>Array && (counter.length==0 || counter[0] == null ||(typeof counter[0] === 'number'))) || counter === null)) {
             return <any>this.NthPreOrder$Tree_Node$int$int_A(node, index, counter);
         } else if(((typeof node === 'number') || node === null) && index === undefined && counter === undefined) {
             return <any>this.NthPreOrder$int(node);
@@ -102,7 +100,7 @@ class Tree {
         this.PrintPostOrder$Tree_Node(this.root);
     }
 
-    public PrintPostOrder$Tree_Node(node : Tree.Node) {
+    public PrintPostOrder$Tree_Node(node : TNode) {
         if(node != null) {
             this.PrintPostOrder$Tree_Node(node.lChild);
             this.PrintPostOrder$Tree_Node(node.rChild);
@@ -111,7 +109,7 @@ class Tree {
     }
 
     public PrintPostOrder(node? : any) : any {
-        if(((node != null && node instanceof <any>Tree.Node) || node === null)) {
+        if(((node != null && node instanceof <any>TNode) || node === null)) {
             return <any>this.PrintPostOrder$Tree_Node(node);
         } else if(node === undefined) {
             return <any>this.PrintPostOrder$();
@@ -123,7 +121,7 @@ class Tree {
         this.NthPostOrder$Tree_Node$int$int_A(this.root, index, counter);
     }
 
-    public NthPostOrder$Tree_Node$int$int_A(node : Tree.Node, index : number, counter : number[]) {
+    public NthPostOrder$Tree_Node$int$int_A(node : TNode, index : number, counter : number[]) {
         if(node != null) {
             this.NthPostOrder$Tree_Node$int$int_A(node.lChild, index, counter);
             this.NthPostOrder$Tree_Node$int$int_A(node.rChild, index, counter);
@@ -135,7 +133,7 @@ class Tree {
     }
 
     public NthPostOrder(node? : any, index? : any, counter? : any) : any {
-        if(((node != null && node instanceof <any>Tree.Node) || node === null) && ((typeof index === 'number') || index === null) && ((counter != null && counter instanceof <any>Array && (counter.length==0 || counter[0] == null ||(typeof counter[0] === 'number'))) || counter === null)) {
+        if(((node != null && node instanceof <any>TNode) || node === null) && ((typeof index === 'number') || index === null) && ((counter != null && counter instanceof <any>Array && (counter.length==0 || counter[0] == null ||(typeof counter[0] === 'number'))) || counter === null)) {
             return <any>this.NthPostOrder$Tree_Node$int$int_A(node, index, counter);
         } else if(((typeof node === 'number') || node === null) && index === undefined && counter === undefined) {
             return <any>this.NthPostOrder$int(node);
@@ -146,7 +144,7 @@ class Tree {
         this.PrintInOrder$Tree_Node(this.root);
     }
 
-    public PrintInOrder$Tree_Node(node : Tree.Node) {
+    public PrintInOrder$Tree_Node(node : TNode) {
         if(node != null) {
             this.PrintInOrder$Tree_Node(node.lChild);
             console.info(" " + node.value);
@@ -155,7 +153,7 @@ class Tree {
     }
 
     public PrintInOrder(node? : any) : any {
-        if(((node != null && node instanceof <any>Tree.Node) || node === null)) {
+        if(((node != null && node instanceof <any>TNode) || node === null)) {
             return <any>this.PrintInOrder$Tree_Node(node);
         } else if(node === undefined) {
             return <any>this.PrintInOrder$();
@@ -167,7 +165,7 @@ class Tree {
         this.NthInOrder$Tree_Node$int$int_A(this.root, index, counter);
     }
 
-    public NthInOrder$Tree_Node$int$int_A(node : Tree.Node, index : number, counter : number[]) {
+    public NthInOrder$Tree_Node$int$int_A(node : TNode, index : number, counter : number[]) {
         if(node != null) {
             this.NthInOrder$Tree_Node$int$int_A(node.lChild, index, counter);
             counter[0]++;
@@ -179,7 +177,7 @@ class Tree {
     }
 
     public NthInOrder(node? : any, index? : any, counter? : any) : any {
-        if(((node != null && node instanceof <any>Tree.Node) || node === null) && ((typeof index === 'number') || index === null) && ((counter != null && counter instanceof <any>Array && (counter.length==0 || counter[0] == null ||(typeof counter[0] === 'number'))) || counter === null)) {
+        if(((node != null && node instanceof <any>TNode) || node === null) && ((typeof index === 'number') || index === null) && ((counter != null && counter instanceof <any>Array && (counter.length==0 || counter[0] == null ||(typeof counter[0] === 'number'))) || counter === null)) {
             return <any>this.NthInOrder$Tree_Node$int$int_A(node, index, counter);
         } else if(((typeof node === 'number') || node === null) && index === undefined && counter === undefined) {
             return <any>this.NthInOrder$int(node);
@@ -187,8 +185,8 @@ class Tree {
     }
 
     public PrintBredthFirst() {
-        let que : Array<Tree.Node> = <any>([]);
-        let temp : Tree.Node;
+        let que : Array<TNode> = <any>([]);
+        let temp : TNode;
         if(this.root != null) /* add */(que.push(this.root)>0);
         while((/* isEmpty */(que.length == 0) === false)) {{
             temp = /* pop */que.pop();
@@ -199,8 +197,8 @@ class Tree {
     }
 
     public PrintDepthFirst() {
-        let stk : Array<Tree.Node> = <any>([]);
-        let temp : Tree.Node;
+        let stk : Array<TNode> = <any>([]);
+        let temp : TNode;
         if(this.root != null) /* push */(stk.push(this.root)>0);
         while((/* isEmpty */(stk.length == 0) === false)) {{
             temp = /* pop */stk.pop();
@@ -211,9 +209,9 @@ class Tree {
     }
 
     PrintLevelOrderLineByLine() {
-        let que1 : Array<Tree.Node> = <any>([]);
-        let que2 : Array<Tree.Node> = <any>([]);
-        let temp : Tree.Node = null;
+        let que1 : Array<TNode> = <any>([]);
+        let que2 : Array<TNode> = <any>([]);
+        let temp : TNode = null;
         if(this.root != null) /* add */(que1.push(this.root)>0);
         while((/* size */(<number>que1.length) !== 0 || /* size */(<number>que2.length) !== 0)) {{
             while((/* size */(<number>que1.length) !== 0)) {{
@@ -224,7 +222,7 @@ class Tree {
             }};
             console.info("");
             while((/* size */(<number>que2.length) !== 0)) {{
-                temp = <Tree.Node>/* pop */que2.pop();
+                temp = <TNode>/* pop */que2.pop();
                 console.info(" " + temp.value);
                 if(temp.lChild != null) /* add */(que1.push(temp.lChild)>0);
                 if(temp.rChild != null) /* add */(que1.push(temp.rChild)>0);
@@ -234,8 +232,8 @@ class Tree {
     }
 
     PrintLevelOrderLineByLine2() {
-        let que : Array<Tree.Node> = <any>([]);
-        let temp : Tree.Node = null;
+        let que : Array<TNode> = <any>([]);
+        let temp : TNode = null;
         let count : number = 0;
         if(this.root != null) /* add */(que.push(this.root)>0);
         while((/* size */(<number>que.length) !== 0)) {{
@@ -252,9 +250,9 @@ class Tree {
     }
 
     PrintSpiralTree() {
-        let stk1 : Array<Tree.Node> = <any>([]);
-        let stk2 : Array<Tree.Node> = <any>([]);
-        let temp : Tree.Node;
+        let stk1 : Array<TNode> = <any>([]);
+        let stk2 : Array<TNode> = <any>([]);
+        let temp : TNode;
         if(this.root != null) /* push */(stk1.push(this.root)>0);
         while((/* size */(<number>stk1.length) !== 0 || /* size */(<number>stk2.length) !== 0)) {{
             while((/* size */(<number>stk1.length) !== 0)) {{
@@ -273,7 +271,7 @@ class Tree {
     }
 
     public Find(value : number) : boolean {
-        let curr : Tree.Node = this.root;
+        let curr : TNode = this.root;
         while((curr != null)) {{
             if(curr.value === value) {
                 return true;
@@ -287,13 +285,13 @@ class Tree {
     }
 
     public Find2(value : number) : boolean {
-        let curr : Tree.Node = this.root;
+        let curr : TNode = this.root;
         while((curr != null && curr.value !== value)) {curr = (curr.value > value)?curr.lChild:curr.rChild};
         return curr != null;
     }
 
     public FindMin() : number {
-        let node : Tree.Node = this.root;
+        let node : TNode = this.root;
         if(node == null) {
             return 2147483647;
         }
@@ -304,7 +302,7 @@ class Tree {
     }
 
     public FindMax() : number {
-        let node : Tree.Node = this.root;
+        let node : TNode = this.root;
         if(node == null) {
             return -2147483648;
         }
@@ -314,8 +312,8 @@ class Tree {
         return node.value;
     }
 
-    public FindMaxNode(curr : Tree.Node) : Tree.Node {
-        let node : Tree.Node = curr;
+    public FindMaxNode(curr : TNode) : TNode {
+        let node : TNode = curr;
         if(node == null) {
             return null;
         }
@@ -325,8 +323,8 @@ class Tree {
         return node;
     }
 
-    public FindMinNode(curr : Tree.Node) : Tree.Node {
-        let node : Tree.Node = curr;
+    public FindMinNode(curr : TNode) : TNode {
+        let node : TNode = curr;
         if(node == null) {
             return null;
         }
@@ -344,8 +342,8 @@ class Tree {
         this.root = this.DeleteNode$Tree_Node$int(this.root, value);
     }
 
-    public DeleteNode$Tree_Node$int(node : Tree.Node, value : number) : Tree.Node {
-        let temp : Tree.Node = null;
+    public DeleteNode$Tree_Node$int(node : TNode, value : number) : TNode {
+        let temp : TNode = null;
         if(node != null) {
             if(node.value === value) {
                 if(node.lChild == null && node.rChild == null) {
@@ -359,7 +357,7 @@ class Tree {
                         temp = node.lChild;
                         return temp;
                     }
-                    let minNode : Tree.Node = this.FindMinNode(node.rChild);
+                    let minNode : TNode = this.FindMinNode(node.rChild);
                     let minValue : number = minNode.value;
                     node.value = minValue;
                     node.rChild = this.DeleteNode$Tree_Node$int(node.rChild, minValue);
@@ -376,7 +374,7 @@ class Tree {
     }
 
     public DeleteNode(node? : any, value? : any) : any {
-        if(((node != null && node instanceof <any>Tree.Node) || node === null) && ((typeof value === 'number') || value === null)) {
+        if(((node != null && node instanceof <any>TNode) || node === null) && ((typeof value === 'number') || value === null)) {
             return <any>this.DeleteNode$Tree_Node$int(node, value);
         } else if(((typeof node === 'number') || node === null) && value === undefined) {
             return <any>this.DeleteNode$int(node);
@@ -387,7 +385,7 @@ class Tree {
         return this.TreeDepth$Tree_Node(this.root);
     }
 
-    public TreeDepth$Tree_Node(curr : Tree.Node) : number {
+    public TreeDepth$Tree_Node(curr : TNode) : number {
         if(curr == null) return 0; else {
             let lDepth : number = this.TreeDepth$Tree_Node(curr.lChild);
             let rDepth : number = this.TreeDepth$Tree_Node(curr.rChild);
@@ -396,7 +394,7 @@ class Tree {
     }
 
     public TreeDepth(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
             return <any>this.TreeDepth$Tree_Node(curr);
         } else if(curr === undefined) {
             return <any>this.TreeDepth$();
@@ -407,11 +405,11 @@ class Tree {
         return this.isEqualUtil(this.root, T2.root);
     }
 
-    isEqualUtil(node1 : Tree.Node, node2 : Tree.Node) : boolean {
+    isEqualUtil(node1 : TNode, node2 : TNode) : boolean {
         if(node1 == null && node2 == null) return true; else if(node1 == null || node2 == null) return false; else return (this.isEqualUtil(node1.lChild, node2.lChild) && this.isEqualUtil(node1.rChild, node2.rChild) && (node1.value === node2.value));
     }
 
-    public Ancestor$int$int(first : number, second : number) : Tree.Node {
+    public Ancestor$int$int(first : number, second : number) : TNode {
         if(first > second) {
             let temp : number = first;
             first = second;
@@ -420,7 +418,7 @@ class Tree {
         return this.Ancestor$Tree_Node$int$int(this.root, first, second);
     }
 
-    public Ancestor$Tree_Node$int$int(curr : Tree.Node, first : number, second : number) : Tree.Node {
+    public Ancestor$Tree_Node$int$int(curr : TNode, first : number, second : number) : TNode {
         if(curr == null) {
             return null;
         }
@@ -434,7 +432,7 @@ class Tree {
     }
 
     public Ancestor(curr? : any, first? : any, second? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null) && ((typeof first === 'number') || first === null) && ((typeof second === 'number') || second === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null) && ((typeof first === 'number') || first === null) && ((typeof second === 'number') || second === null)) {
             return <any>this.Ancestor$Tree_Node$int$int(curr, first, second);
         } else if(((typeof curr === 'number') || curr === null) && ((typeof first === 'number') || first === null) && second === undefined) {
             return <any>this.Ancestor$int$int(curr, first);
@@ -447,10 +445,10 @@ class Tree {
         return tree2;
     }
 
-    public CopyTree$Tree_Node(curr : Tree.Node) : Tree.Node {
-        let temp : Tree.Node;
+    public CopyTree$Tree_Node(curr : TNode) : TNode {
+        let temp : TNode;
         if(curr != null) {
-            temp = new Tree.Node(curr.value);
+            temp = new TNode(curr.value);
             temp.lChild = this.CopyTree$Tree_Node(curr.lChild);
             temp.rChild = this.CopyTree$Tree_Node(curr.rChild);
             return temp;
@@ -458,7 +456,7 @@ class Tree {
     }
 
     public CopyTree(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
             return <any>this.CopyTree$Tree_Node(curr);
         } else if(curr === undefined) {
             return <any>this.CopyTree$();
@@ -471,10 +469,10 @@ class Tree {
         return tree2;
     }
 
-    public CopyMirrorTree$Tree_Node(curr : Tree.Node) : Tree.Node {
-        let temp : Tree.Node;
+    public CopyMirrorTree$Tree_Node(curr : TNode) : TNode {
+        let temp : TNode;
         if(curr != null) {
-            temp = new Tree.Node(curr.value);
+            temp = new TNode(curr.value);
             temp.rChild = this.CopyMirrorTree$Tree_Node(curr.lChild);
             temp.lChild = this.CopyMirrorTree$Tree_Node(curr.rChild);
             return temp;
@@ -482,7 +480,7 @@ class Tree {
     }
 
     public CopyMirrorTree(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
             return <any>this.CopyMirrorTree$Tree_Node(curr);
         } else if(curr === undefined) {
             return <any>this.CopyMirrorTree$();
@@ -493,12 +491,12 @@ class Tree {
         return this.numNodes$Tree_Node(this.root);
     }
 
-    public numNodes$Tree_Node(curr : Tree.Node) : number {
+    public numNodes$Tree_Node(curr : TNode) : number {
         if(curr == null) return 0; else return (1 + this.numNodes$Tree_Node(curr.rChild) + this.numNodes$Tree_Node(curr.lChild));
     }
 
     public numNodes(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
             return <any>this.numNodes$Tree_Node(curr);
         } else if(curr === undefined) {
             return <any>this.numNodes$();
@@ -509,7 +507,7 @@ class Tree {
         return this.numNodes$Tree_Node(this.root);
     }
 
-    public numFullNodesBT$Tree_Node(curr : Tree.Node) : number {
+    public numFullNodesBT$Tree_Node(curr : TNode) : number {
         let count : number;
         if(curr == null) return 0;
         count = this.numFullNodesBT$Tree_Node(curr.rChild) + this.numFullNodesBT$Tree_Node(curr.lChild);
@@ -518,7 +516,7 @@ class Tree {
     }
 
     public numFullNodesBT(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
             return <any>this.numFullNodesBT$Tree_Node(curr);
         } else if(curr === undefined) {
             return <any>this.numFullNodesBT$();
@@ -529,7 +527,7 @@ class Tree {
         return this.maxLengthPathBT$Tree_Node(this.root);
     }
 
-    public maxLengthPathBT$Tree_Node(curr : Tree.Node) : number {
+    public maxLengthPathBT$Tree_Node(curr : TNode) : number {
         let max : number;
         let leftPath : number;
         let rightPath : number;
@@ -547,7 +545,7 @@ class Tree {
     }
 
     public maxLengthPathBT(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
             return <any>this.maxLengthPathBT$Tree_Node(curr);
         } else if(curr === undefined) {
             return <any>this.maxLengthPathBT$();
@@ -558,13 +556,13 @@ class Tree {
         return this.numLeafNodes$Tree_Node(this.root);
     }
 
-    public numLeafNodes$Tree_Node(curr : Tree.Node) : number {
+    public numLeafNodes$Tree_Node(curr : TNode) : number {
         if(curr == null) return 0;
         if(curr.lChild == null && curr.rChild == null) return 1; else return (this.numLeafNodes$Tree_Node(curr.rChild) + this.numLeafNodes$Tree_Node(curr.lChild));
     }
 
     public numLeafNodes(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
             return <any>this.numLeafNodes$Tree_Node(curr);
         } else if(curr === undefined) {
             return <any>this.numLeafNodes$();
@@ -575,13 +573,13 @@ class Tree {
         return this.sumAllBT$Tree_Node(this.root);
     }
 
-    public sumAllBT$Tree_Node(curr : Tree.Node) : number {
+    public sumAllBT$Tree_Node(curr : TNode) : number {
         if(curr == null) return 0;
         return (curr.value + this.sumAllBT$Tree_Node(curr.lChild) + this.sumAllBT$Tree_Node(curr.lChild));
     }
 
     public sumAllBT(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
             return <any>this.sumAllBT$Tree_Node(curr);
         } else if(curr === undefined) {
             return <any>this.sumAllBT$();
@@ -589,8 +587,8 @@ class Tree {
     }
 
     public iterativePreOrder() {
-        let stk : Array<Tree.Node> = <any>([]);
-        let curr : Tree.Node;
+        let stk : Array<TNode> = <any>([]);
+        let curr : TNode;
         if(this.root != null) /* add */(stk.push(this.root)>0);
         while((/* isEmpty */(stk.length == 0) === false)) {{
             curr = /* pop */stk.pop();
@@ -601,9 +599,9 @@ class Tree {
     }
 
     public iterativePostOrder() {
-        let stk : Array<Tree.Node> = <any>([]);
+        let stk : Array<TNode> = <any>([]);
         let visited : Array<number> = <any>([]);
-        let curr : Tree.Node;
+        let curr : TNode;
         let vtd : number;
         if(this.root != null) {
             /* add */(stk.push(this.root)>0);
@@ -630,9 +628,9 @@ class Tree {
     }
 
     public iterativeInOrder() {
-        let stk : Array<Tree.Node> = <any>([]);
+        let stk : Array<TNode> = <any>([]);
         let visited : Array<number> = <any>([]);
-        let curr : Tree.Node;
+        let curr : TNode;
         let vtd : number;
         if(this.root != null) {
             /* add */(stk.push(this.root)>0);
@@ -658,7 +656,7 @@ class Tree {
         }};
     }
 
-    public isBST3(root : Tree.Node) : boolean {
+    public isBST3(root : TNode) : boolean {
         if(root == null) return true;
         if(root.lChild != null && this.FindMaxNode(root.lChild).value > root.value) return false;
         if(root.rChild != null && this.FindMinNode(root.rChild).value <= root.value) return false;
@@ -669,14 +667,14 @@ class Tree {
         return this.isBST$Tree_Node$int$int(this.root, -2147483648, 2147483647);
     }
 
-    public isBST$Tree_Node$int$int(curr : Tree.Node, min : number, max : number) : boolean {
+    public isBST$Tree_Node$int$int(curr : TNode, min : number, max : number) : boolean {
         if(curr == null) return true;
         if(curr.value < min || curr.value > max) return false;
         return this.isBST$Tree_Node$int$int(curr.lChild, min, curr.value) && this.isBST$Tree_Node$int$int(curr.rChild, curr.value, max);
     }
 
     public isBST(curr? : any, min? : any, max? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null) && ((typeof min === 'number') || min === null) && ((typeof max === 'number') || max === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null) && ((typeof min === 'number') || min === null) && ((typeof max === 'number') || max === null)) {
             return <any>this.isBST$Tree_Node$int$int(curr, min, max);
         } else if(curr === undefined && min === undefined && max === undefined) {
             return <any>this.isBST$();
@@ -688,7 +686,7 @@ class Tree {
         return this.isBST2$Tree_Node$int_A(this.root, count);
     }
 
-    public isBST2$Tree_Node$int_A(root : Tree.Node, count : number[]) : boolean {
+    public isBST2$Tree_Node$int_A(root : TNode, count : number[]) : boolean {
         let ret : boolean;
         if(root != null) {
             ret = this.isBST2$Tree_Node$int_A(root.lChild, count);
@@ -702,7 +700,7 @@ class Tree {
     }
 
     public isBST2(root? : any, count? : any) : any {
-        if(((root != null && root instanceof <any>Tree.Node) || root === null) && ((count != null && count instanceof <any>Array && (count.length==0 || count[0] == null ||(typeof count[0] === 'number'))) || count === null)) {
+        if(((root != null && root instanceof <any>TNode) || root === null) && ((count != null && count instanceof <any>Array && (count.length==0 || count[0] == null ||(typeof count[0] === 'number'))) || count === null)) {
             return <any>this.isBST2$Tree_Node$int_A(root, count);
         } else if(root === undefined && count === undefined) {
             return <any>this.isBST2$();
@@ -710,8 +708,8 @@ class Tree {
     }
 
     isCompleteTree() : boolean {
-        let que : Array<Tree.Node> = <any>([]);
-        let temp : Tree.Node = null;
+        let que : Array<TNode> = <any>([]);
+        let temp : TNode = null;
         let noChild : number = 0;
         if(this.root != null) /* add */(que.push(this.root)>0);
         while((/* size */(<number>que.length) !== 0)) {{
@@ -728,7 +726,7 @@ class Tree {
         return true;
     }
 
-    isCompleteTreeUtil(curr : Tree.Node, index : number, count : number) : boolean {
+    isCompleteTreeUtil(curr : TNode, index : number, count : number) : boolean {
         if(curr == null) return true;
         if(index > count) return false;
         return this.isCompleteTreeUtil(curr.lChild, index * 2 + 1, count) && this.isCompleteTreeUtil(curr.rChild, index * 2 + 2, count);
@@ -739,7 +737,7 @@ class Tree {
         return this.isCompleteTreeUtil(this.root, 0, count);
     }
 
-    isHeapUtil(curr : Tree.Node, parentValue : number) : boolean {
+    isHeapUtil(curr : TNode, parentValue : number) : boolean {
         if(curr == null) return true;
         if(curr.value < parentValue) return false;
         return (this.isHeapUtil(curr.lChild, curr.value) && this.isHeapUtil(curr.rChild, curr.value));
@@ -750,7 +748,7 @@ class Tree {
         return (this.isCompleteTree() && this.isHeapUtil(this.root, infi));
     }
 
-    isHeapUtil2(curr : Tree.Node, index : number, count : number, parentValue : number) : boolean {
+    isHeapUtil2(curr : TNode, index : number, count : number, parentValue : number) : boolean {
         if(curr == null) return true;
         if(index > count) return false;
         if(curr.value < parentValue) return false;
@@ -763,15 +761,15 @@ class Tree {
         return this.isHeapUtil2(this.root, 0, count, parentValue);
     }
 
-    public treeToListRec$() : Tree.Node {
-        let head : Tree.Node = this.treeToListRec$Tree_Node(this.root);
-        let temp : Tree.Node = head;
+    public treeToListRec$() : TNode {
+        let head : TNode = this.treeToListRec$Tree_Node(this.root);
+        let temp : TNode = head;
         return temp;
     }
 
-    public treeToListRec$Tree_Node(curr : Tree.Node) : Tree.Node {
-        let Head : Tree.Node = null;
-        let Tail : Tree.Node = null;
+    public treeToListRec$Tree_Node(curr : TNode) : TNode {
+        let Head : TNode = null;
+        let Tail : TNode = null;
         if(curr == null) return null;
         if(curr.lChild == null && curr.rChild == null) {
             curr.lChild = curr;
@@ -785,7 +783,7 @@ class Tree {
             Tail.rChild = curr;
         } else Head = curr;
         if(curr.rChild != null) {
-            let tempHead : Tree.Node = this.treeToListRec$Tree_Node(curr.rChild);
+            let tempHead : TNode = this.treeToListRec$Tree_Node(curr.rChild);
             Tail = tempHead.lChild;
             curr.rChild = tempHead;
             tempHead.lChild = curr;
@@ -796,7 +794,7 @@ class Tree {
     }
 
     public treeToListRec(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
             return <any>this.treeToListRec$Tree_Node(curr);
         } else if(curr === undefined) {
             return <any>this.treeToListRec$();
@@ -808,7 +806,7 @@ class Tree {
         this.printAllPathUtil(this.root, stk);
     }
 
-    printAllPathUtil(curr : Tree.Node, stk : Array<number>) {
+    printAllPathUtil(curr : TNode, stk : Array<number>) {
         if(curr == null) return;
         /* push */(stk.push(curr.value)>0);
         if(curr.lChild == null && curr.rChild == null) {
@@ -822,13 +820,13 @@ class Tree {
     }
 
     public LCA$int$int(first : number, second : number) : number {
-        let ans : Tree.Node = this.LCA$Tree_Node$int$int(this.root, first, second);
+        let ans : TNode = this.LCA$Tree_Node$int$int(this.root, first, second);
         if(ans != null) return ans.value; else return -2147483648;
     }
 
-    public LCA$Tree_Node$int$int(curr : Tree.Node, first : number, second : number) : Tree.Node {
-        let left : Tree.Node;
-        let right : Tree.Node;
+    public LCA$Tree_Node$int$int(curr : TNode, first : number, second : number) : TNode {
+        let left : TNode;
+        let right : TNode;
         if(curr == null) return null;
         if(curr.value === first || curr.value === second) return curr;
         left = this.LCA$Tree_Node$int$int(curr.lChild, first, second);
@@ -837,7 +835,7 @@ class Tree {
     }
 
     public LCA(curr? : any, first? : any, second? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null) && ((typeof first === 'number') || first === null) && ((typeof second === 'number') || second === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null) && ((typeof first === 'number') || first === null) && ((typeof second === 'number') || second === null)) {
             return <any>this.LCA$Tree_Node$int$int(curr, first, second);
         } else if(((typeof curr === 'number') || curr === null) && ((typeof first === 'number') || first === null) && second === undefined) {
             return <any>this.LCA$int$int(curr, first);
@@ -848,7 +846,7 @@ class Tree {
         return this.LcaBST$Tree_Node$int$int(this.root, first, second);
     }
 
-    public LcaBST$Tree_Node$int$int(curr : Tree.Node, first : number, second : number) : number {
+    public LcaBST$Tree_Node$int$int(curr : TNode, first : number, second : number) : number {
         if(curr == null) {
             return 2147483647;
         }
@@ -862,7 +860,7 @@ class Tree {
     }
 
     public LcaBST(curr? : any, first? : any, second? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null) && ((typeof first === 'number') || first === null) && ((typeof second === 'number') || second === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null) && ((typeof first === 'number') || first === null) && ((typeof second === 'number') || second === null)) {
             return <any>this.LcaBST$Tree_Node$int$int(curr, first, second);
         } else if(((typeof curr === 'number') || curr === null) && ((typeof first === 'number') || first === null) && second === undefined) {
             return <any>this.LcaBST$int$int(curr, first);
@@ -873,7 +871,7 @@ class Tree {
         this.trimOutsideRange$Tree_Node$int$int(this.root, min, max);
     }
 
-    public trimOutsideRange$Tree_Node$int$int(curr : Tree.Node, min : number, max : number) : Tree.Node {
+    public trimOutsideRange$Tree_Node$int$int(curr : TNode, min : number, max : number) : TNode {
         if(curr == null) return null;
         curr.lChild = this.trimOutsideRange$Tree_Node$int$int(curr.lChild, min, max);
         curr.rChild = this.trimOutsideRange$Tree_Node$int$int(curr.rChild, min, max);
@@ -887,7 +885,7 @@ class Tree {
     }
 
     public trimOutsideRange(curr? : any, min? : any, max? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null) && ((typeof min === 'number') || min === null) && ((typeof max === 'number') || max === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null) && ((typeof min === 'number') || min === null) && ((typeof max === 'number') || max === null)) {
             return <any>this.trimOutsideRange$Tree_Node$int$int(curr, min, max);
         } else if(((typeof curr === 'number') || curr === null) && ((typeof min === 'number') || min === null) && max === undefined) {
             return <any>this.trimOutsideRange$int$int(curr, min);
@@ -898,7 +896,7 @@ class Tree {
         this.printInRange$Tree_Node$int$int(this.root, min, max);
     }
 
-    public printInRange$Tree_Node$int$int(root : Tree.Node, min : number, max : number) {
+    public printInRange$Tree_Node$int$int(root : TNode, min : number, max : number) {
         if(root == null) return;
         this.printInRange$Tree_Node$int$int(root.lChild, min, max);
         if(root.value >= min && root.value <= max) console.info(root.value + " ");
@@ -906,7 +904,7 @@ class Tree {
     }
 
     public printInRange(root? : any, min? : any, max? : any) : any {
-        if(((root != null && root instanceof <any>Tree.Node) || root === null) && ((typeof min === 'number') || min === null) && ((typeof max === 'number') || max === null)) {
+        if(((root != null && root instanceof <any>TNode) || root === null) && ((typeof min === 'number') || min === null) && ((typeof max === 'number') || max === null)) {
             return <any>this.printInRange$Tree_Node$int$int(root, min, max);
         } else if(((typeof root === 'number') || root === null) && ((typeof min === 'number') || min === null) && max === undefined) {
             return <any>this.printInRange$int$int(root, min);
@@ -914,7 +912,7 @@ class Tree {
     }
 
     public FloorBST(val : number) : number {
-        let curr : Tree.Node = this.root;
+        let curr : TNode = this.root;
         let floor : number = 2147483647;
         while((curr != null)) {{
             if(curr.value === val) {
@@ -931,7 +929,7 @@ class Tree {
     }
 
     public CeilBST(val : number) : number {
-        let curr : Tree.Node = this.root;
+        let curr : TNode = this.root;
         let ceil : number = -2147483648;
         while((curr != null)) {{
             if(curr.value === val) {
@@ -952,7 +950,7 @@ class Tree {
         return ans;
     }
 
-    public findMaxBT$Tree_Node(curr : Tree.Node) : number {
+    public findMaxBT$Tree_Node(curr : TNode) : number {
         let left : number;
         let right : number;
         if(curr == null) return -2147483648;
@@ -965,7 +963,7 @@ class Tree {
     }
 
     public findMaxBT(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>Tree.Node) || curr === null)) {
+        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
             return <any>this.findMaxBT$Tree_Node(curr);
         } else if(curr === undefined) {
             return <any>this.findMaxBT$();
@@ -976,7 +974,7 @@ class Tree {
         return this.searchBTUtil(this.root, value);
     }
 
-    public searchBTUtil(curr : Tree.Node, value : number) : boolean {
+    public searchBTUtil(curr : TNode, value : number) : boolean {
         let left : boolean;
         let right : boolean;
         if(curr == null) return false;
@@ -992,11 +990,11 @@ class Tree {
         this.root = this.CreateBinaryTree$int_A$int$int(arr, 0, arr.length - 1);
     }
 
-    public CreateBinaryTree$int_A$int$int(arr : number[], start : number, end : number) : Tree.Node {
-        let curr : Tree.Node = null;
+    public CreateBinaryTree$int_A$int$int(arr : number[], start : number, end : number) : TNode {
+        let curr : TNode = null;
         if(start > end) return null;
         let mid : number = ((start + end) / 2|0);
-        curr = new Tree.Node(arr[mid]);
+        curr = new TNode(arr[mid]);
         curr.lChild = this.CreateBinaryTree$int_A$int$int(arr, start, mid - 1);
         curr.rChild = this.CreateBinaryTree$int_A$int$int(arr, mid + 1, end);
         return curr;
@@ -1022,83 +1020,71 @@ class Tree {
         };}
         return true;
     }
-
-    public static main(args : string[]) {
-        let t : Tree = new Tree();
-        let arr : number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        t.levelOrderBinaryTree$int_A(arr);
-        console.info("");
-        console.info(t.isHeap());
-        console.info(t.isHeap2());
-        console.info(t.isCompleteTree());
-        console.info("");
-        t.PrintBredthFirst();
-        console.info("");
-        t.PrintPreOrder();
-        console.info("");
-        t.PrintLevelOrderLineByLine();
-        console.info("");
-        t.PrintLevelOrderLineByLine2();
-        console.info("");
-        t.PrintSpiralTree();
-        console.info("");
-        t.printAllPath();
-        console.info("");
-        t.NthInOrder$int(4);
-        console.info("");
-        t.NthPostOrder$int(4);
-        console.info("");
-        t.NthPreOrder$int(4);
-        console.info("");
-    }
-}
-Tree["__class"] = "Tree";
-
-
-namespace Tree {
-
-    export class Node {
-        value : number;
-
-        lChild : Tree.Node;
-
-        rChild : Tree.Node;
-
-        public constructor(v? : any, l? : any, r? : any) {
-            if(((typeof v === 'number') || v === null) && ((l != null && l instanceof <any>Tree.Node) || l === null) && ((r != null && r instanceof <any>Tree.Node) || r === null)) {
-                let __args = arguments;
-                if(this.value===undefined) this.value = 0;
-                if(this.lChild===undefined) this.lChild = null;
-                if(this.rChild===undefined) this.rChild = null;
-                if(this.value===undefined) this.value = 0;
-                if(this.lChild===undefined) this.lChild = null;
-                if(this.rChild===undefined) this.rChild = null;
-                (() => {
-                    this.value = v;
-                    this.lChild = l;
-                    this.rChild = r;
-                })();
-            } else if(((typeof v === 'number') || v === null) && l === undefined && r === undefined) {
-                let __args = arguments;
-                if(this.value===undefined) this.value = 0;
-                if(this.lChild===undefined) this.lChild = null;
-                if(this.rChild===undefined) this.rChild = null;
-                if(this.value===undefined) this.value = 0;
-                if(this.lChild===undefined) this.lChild = null;
-                if(this.rChild===undefined) this.rChild = null;
-                (() => {
-                    this.value = v;
-                    this.lChild = null;
-                    this.rChild = null;
-                })();
-            } else throw new Error('invalid overload');
-        }
-    }
-    Node["__class"] = "Tree.Node";
-
 }
 
+class TNode {
+    value : number;
+    lChild : TNode;
+    rChild : TNode;
 
+    public constructor(v? : any, l? : any, r? : any) {
+        if(((typeof v === 'number') || v === null) && ((l != null && l instanceof <any>TNode) || l === null) && ((r != null && r instanceof <any>TNode) || r === null)) {
+            let __args = arguments;
+            if(this.value===undefined) this.value = 0;
+            if(this.lChild===undefined) this.lChild = null;
+            if(this.rChild===undefined) this.rChild = null;
+            if(this.value===undefined) this.value = 0;
+            if(this.lChild===undefined) this.lChild = null;
+            if(this.rChild===undefined) this.rChild = null;
+            (() => {
+                this.value = v;
+                this.lChild = l;
+                this.rChild = r;
+            })();
+        } else if(((typeof v === 'number') || v === null) && l === undefined && r === undefined) {
+            let __args = arguments;
+            if(this.value===undefined) this.value = 0;
+            if(this.lChild===undefined) this.lChild = null;
+            if(this.rChild===undefined) this.rChild = null;
+            if(this.value===undefined) this.value = 0;
+            if(this.lChild===undefined) this.lChild = null;
+            if(this.rChild===undefined) this.rChild = null;
+            (() => {
+                this.value = v;
+                this.lChild = null;
+                this.rChild = null;
+            })();
+        } else throw new Error('invalid overload');
+    }
+}
 
+function main() {
+    let t : Tree = new Tree();
+    let arr : number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    t.levelOrderBinaryTree$int_A(arr);
+    console.info("");
+    console.info(t.isHeap());
+    console.info(t.isHeap2());
+    console.info(t.isCompleteTree());
+    console.info("");
+    t.PrintBredthFirst();
+    console.info("");
+    t.PrintPreOrder();
+    console.info("");
+    t.PrintLevelOrderLineByLine();
+    console.info("");
+    t.PrintLevelOrderLineByLine2();
+    console.info("");
+    t.PrintSpiralTree();
+    console.info("");
+    t.printAllPath();
+    console.info("");
+    t.NthInOrder$int(4);
+    console.info("");
+    t.NthPostOrder$int(4);
+    console.info("");
+    t.NthPreOrder$int(4);
+    console.info("");
+}
 
-Tree.main(null);
+main();

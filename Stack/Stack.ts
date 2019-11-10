@@ -1,10 +1,9 @@
-/* Generated from Java with JSweet 2.2.0-SNAPSHOT - http://www.jsweet.org */
 class Stack {
-    /*private*/ capacity : number = 1000;
+    capacity : number = 1000;
 
-    /*private*/ data : number[];
+    data : number[];
 
-    /*private*/ __top : number = -1;
+    __top : number = -1;
 
     public constructor(size? : any) {
         if(((typeof size === 'number') || size === null)) {

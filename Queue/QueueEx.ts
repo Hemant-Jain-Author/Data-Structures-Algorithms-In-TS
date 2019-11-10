@@ -1,130 +1,227 @@
-/* Generated from Java with JSweet 2.2.0-SNAPSHOT - http://www.jsweet.org */
-class QueueEx {
-    public static CircularTour(arr : number[][], n : number) : number {
-        let que : Array<number> = <any>([]);
-        let nextPump : number = 0;
-        let prevPump : number;
-        let count : number = 0;
-        let petrol : number = 0;
-        while((/* size */(<number>que.length) !== n)) {{
-            while((petrol >= 0 && /* size */(<number>que.length) !== n)) {{
-                /* add */(que.push(nextPump)>0);
-                petrol += (arr[nextPump][0] - arr[nextPump][1]);
-                nextPump = (nextPump + 1) % n;
-            }};
-            while((petrol < 0 && /* size */(<number>que.length) > 0)) {{
-                prevPump = /* pop */que.pop();
-                petrol -= (arr[prevPump][0] - arr[prevPump][1]);
-            }};
-            count += 1;
-            if(count === n) return -1;
-        }};
-        if(petrol >= 0) return /* pop */que.pop(); else return -1;
+class Deque {
+    data : number[];
+
+    public constructor() {
+        this.data = [];
     }
 
-    public static main1(args : string[]) {
-        let tour : number[][] = [[8, 6], [1, 4], [7, 6]];
-        console.info(" Circular Tour : " + QueueEx.CircularTour(tour, 3));
+    public size() : number {
+        return this.data.length;
     }
 
-    public static convertXY(src : number, dst : number) : number {
-        let que : Array<number> = <any>([]);
-        let arr : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(100);
-        let steps : number = 0;
-        let index : number = 0;
-        let value : number;
-        /* add */(que.push(src)>0);
-        while((/* size */(<number>que.length) !== 0)) {{
-            value = /* pop */que.pop();
-            arr[index++] = value;
-            if(value === dst) {
-                for(let i : number = 0; i < index; i++) {console.info(arr[i]);}
-                console.info("Steps countr :: " + steps);
-                return steps;
-            }
-            steps++;
-            if(value < dst) /* add */(que.push(value * 2)>0); else /* add */(que.push(value - 1)>0);
-        }};
-        return -1;
+    public add(val : number) {
+        this.data.push(val);
     }
 
-    public static main3(args : string[]) {
-        QueueEx.convertXY(2, 7);
+    public remove() : number {
+        return this.data.shift();
     }
 
-    public static maxSlidingWindows(arr : number[], size : number, k : number) {
-        let que : Array<number> = <any>([]);
-        for(let i : number = 0; i < size; i++) {{
-            if(/* size */(<number>que.length) > 0 && /* peek */((s) => { return s[s.length-1]; })(que) <= i - k) /* pop */que.pop();
-            while((/* size */(<number>que.length) > 0 && arr[/* peek */((s) => { return s[s.length-1]; })(que)] <= arr[i])) {/* pop */que.pop()};
-            /* add */(que.push(i)>0);
-            if(i >= (k - 1)) console.info(arr[/* peek */((s) => { return s[s.length-1]; })(que)]);
-        };}
+    public removeLast() : number {
+        return this.data.pop()
+    }
+    
+    public peek() : number{
+        return this.data[0]
     }
 
-    public static main4(args : string[]) {
-        let arr : number[] = [11, 2, 75, 92, 59, 90, 55];
-        let k : number = 3;
-        QueueEx.maxSlidingWindows(arr, 7, 3);
-    }
-
-    public static minOfMaxSlidingWindows(arr : number[], size : number, k : number) : number {
-        let que : Array<number> = <any>([]);
-        let minVal : number = 999999;
-        for(let i : number = 0; i < size; i++) {{
-            if(/* size */(<number>que.length) > 0 && /* peek */((s) => { return s[s.length-1]; })(que) <= i - k) /* pop */que.pop();
-            while((/* size */(<number>que.length) > 0 && arr[/* peek */((s) => { return s[s.length-1]; })(que)] <= arr[i])) {/* pop */que.pop()};
-            /* add */(que.push(i)>0);
-            if(i >= (k - 1) && minVal > arr[/* peek */((s) => { return s[s.length-1]; })(que)]) minVal = arr[/* peek */((s) => { return s[s.length-1]; })(que)];
-        };}
-        console.info("Min of max is :: " + minVal);
-        return minVal;
-    }
-
-    public static main5(args : string[]) {
-        let arr : number[] = [11, 2, 75, 92, 59, 90, 55];
-        let k : number = 3;
-        QueueEx.minOfMaxSlidingWindows(arr, 7, 3);
-    }
-
-    public static maxOfMinSlidingWindows(arr : number[], size : number, k : number) {
-        let que : Array<number> = <any>([]);
-        let maxVal : number = -999999;
-        for(let i : number = 0; i < size; i++) {{
-            if(/* size */(<number>que.length) > 0 && /* peek */((s) => { return s[s.length-1]; })(que) <= i - k) /* pop */que.pop();
-            while((/* size */(<number>que.length) > 0 && arr[/* peek */((s) => { return s[s.length-1]; })(que)] >= arr[i])) {/* pop */que.pop()};
-            /* add */(que.push(i)>0);
-            if(i >= (k - 1) && maxVal < arr[/* peek */((s) => { return s[s.length-1]; })(que)]) maxVal = arr[/* peek */((s) => { return s[s.length-1]; })(que)];
-        };}
-        console.info("Max of min is :: " + maxVal);
-    }
-
-    public static main6(args : string[]) {
-        let arr : number[] = [11, 2, 75, 92, 59, 90, 55];
-        let k : number = 3;
-        QueueEx.maxOfMinSlidingWindows(arr, 7, 3);
-    }
-
-    public static firstNegSlidingWindows(arr : number[], size : number, k : number) {
-        let que : Array<number> = <any>([]);
-        for(let i : number = 0; i < size; i++) {{
-            if(/* size */(<number>que.length) > 0 && /* peek */((s) => { return s[s.length-1]; })(que) <= i - k) /* pop */que.pop();
-            if(arr[i] < 0) /* add */(que.push(i)>0);
-            if(i >= (k - 1)) {
-                if(/* size */(<number>que.length) > 0) console.info(arr[/* peek */((s) => { return s[s.length-1]; })(que)]); else console.info("NAN");
-            }
-        };}
-    }
-
-    public static main(args : string[]) {
-        let arr : number[] = [3, -2, -6, 10, -14, 50, 14, 21];
-        let k : number = 3;
-        QueueEx.firstNegSlidingWindows(arr, 8, 3);
+    public peekLast() : number {
+        return this.data[this.data.length - 1]
     }
 }
-QueueEx["__class"] = "QueueEx";
 
 
+class Queue {
+    frontIndex : number;
+    data : number[];
 
+    public constructor() {
+        this.frontIndex = 0;
+        this.data = [];
+    }
 
-QueueEx.main(null);
+    public add(value : number) {
+        this.data.push(value);
+    }
+
+    public remove() : number {
+        let value = this.data[this.frontIndex];
+        this.frontIndex++;
+        if (this.data.length > 0 && this.frontIndex * 2 >= this.data.length) {
+            this.data = this.data.slice(this.frontIndex);
+            this.frontIndex = 0;
+        }
+        return value;
+    }
+
+    public peek() : number {
+        let value = this.data[this.frontIndex];
+        return value;
+    }
+
+    public isEmpty() : boolean {
+        return (this.data.length - this.frontIndex) === 0;
+    }
+
+    public size() : number {
+        return (this.data.length - this.frontIndex);
+    }
+
+    public peekLast() : number {
+        return this.data[this.data.length - 1]
+    }
+}
+
+function CircularTour(arr : number[][], n : number) : number {
+    let que : Queue = new Queue();
+    let nextPump : number = 0;
+    let prevPump : number;
+    let count : number = 0;
+    let petrol : number = 0;
+    while(que.size() !== n) {
+        while((petrol >= 0 && que.size() !== n)) {
+            que.add(nextPump);
+            petrol += (arr[nextPump][0] - arr[nextPump][1]);
+            nextPump = (nextPump + 1) % n;
+        };
+        while((petrol < 0 && que.size() > 0)) {
+            prevPump = que.remove();
+            petrol -= (arr[prevPump][0] - arr[prevPump][1]);
+        };
+        count += 1;
+        if(count === n) return -1;
+    };
+    if(petrol >= 0) 
+        return que.remove(); 
+    else 
+        return -1;
+}
+
+function main1() {
+    let tour : number[][] = [[8, 6], [1, 4], [7, 6]];
+    console.info(" Circular Tour : " + CircularTour(tour, 3));
+}
+
+function convertXY(src : number, dst : number) : number {
+    let que : Queue = new Queue();
+    let arr : number[] = new Array<number>(100);
+    let steps : number = 0;
+    let index : number = 0;
+    let value : number;
+    que.add(src);
+    while(que.size() !== 0) {
+        value = que.remove();
+        arr[index++] = value;
+        if(value === dst) {
+            for(let i : number = 0; i < index; i++) {
+                console.info(arr[i]);
+            }
+            console.info("Steps countr :: " + steps);
+            return steps;
+        }
+        steps++;
+        if(value < dst) 
+            que.add(value * 2); 
+        else 
+            que.add(value - 1);
+    };
+    return -1;
+}
+
+function main2() {
+    convertXY(2, 7);
+}
+
+function maxSlidingWindows(arr : number[], size : number, k : number) {
+    let que : Deque = new Deque();
+    for (let i = 0; i < size; i++) {
+        if (que.size() > 0 && que.peek() <= i - k)
+            que.remove();
+        while (que.size() > 0 && arr[que.peekLast()] <= arr[i]) {
+            que.removeLast();
+        };
+        que.add(i);
+        if (i >= (k - 1))
+            console.info(`${arr[que.peek()]} `);
+    }
+}
+
+function main3() {
+    let arr : number[] = [11, 2, 75, 92, 59, 90, 55];
+    let k : number = 3;
+    maxSlidingWindows(arr, 7, 3);
+}
+
+function minOfMaxSlidingWindows(arr : number[], size : number, k : number) : number {
+    let que : Queue = new Queue();
+    let minVal : number = 999999;
+    for (let i = 0; i < size; i++) {
+        if (que.size() > 0 && que.peek() <= i - k)
+            que.remove();
+        while (que.size() > 0 && arr[que.peekLast()] <= arr[i]) {
+            que.remove();
+        };
+        que.add(i);
+        if (i >= (k - 1) && minVal > arr[que.peek()])
+            minVal = arr[que.peek()];
+    }
+    console.info(`Min of max is :: ${minVal}`);
+    return minVal;
+}
+
+function main4() {
+    let arr : number[] = [11, 2, 75, 92, 59, 90, 55];
+    let k : number = 3;
+    minOfMaxSlidingWindows(arr, 7, 3);
+}
+
+function maxOfMinSlidingWindows(arr : number[], size : number, k : number) {
+    let que : Queue = new Queue();
+    let maxVal : number = -999999;
+    for (let i = 0; i < size; i++) {
+        if (que.size() > 0 && que.peek() <= i - k)
+            que.remove();
+        while (que.size() > 0 && arr[que.peekLast()] >= arr[i]) {
+            que.remove();
+        };
+        que.add(i);
+        if (i >= (k - 1) && maxVal < arr[que.peek()])
+            maxVal = arr[que.peek()];
+    }
+    console.info("Max of min is :: " + maxVal);
+}
+
+function main5() {
+    let arr : number[] = [11, 2, 75, 92, 59, 90, 55];
+    let k : number = 3;
+    maxOfMinSlidingWindows(arr, 7, 3);
+}
+
+function firstNegSlidingWindows(arr : number[], size : number, k : number) {
+    let que : Queue = new Queue();
+    for (let i = 0; i < size; i++) {
+        if (que.size() > 0 && que.peek() <= i - k)
+            que.remove();
+        if (arr[i] < 0)
+            que.add(i);
+        if (i >= (k - 1)) {
+            if (que.size() > 0)
+                console.info(`${arr[que.peek()]} `);
+            else
+                console.info("NAN ");
+        }
+    }
+}
+
+function main6() {
+    let arr : number[] = [3, -2, -6, 10, -14, 50, 14, 21];
+    let k : number = 3;
+    firstNegSlidingWindows(arr, 8, 3);
+}
+
+main1();
+main2();
+main3();
+main4();
+main5();
+main6();

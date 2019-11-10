@@ -19,13 +19,13 @@ class GraphAM {
     }
 
     public print() {
-        for(let i : number = 0; i < this.count; i++) {{
+        for(let i : number = 0; i < this.count; i++) {
             console.info("Node index [ " + i + " ] is connected with : ");
-            for(let j : number = 0; j < this.count; j++) {{
+            for(let j : number = 0; j < this.count; j++) {
                 if(this.adj[i][j] !== 0) console.info(j + " ");
-            };}
+            };
             console.info("");
-        };}
+        };
     }
 
     public static main1() {
@@ -41,23 +41,23 @@ class GraphAM {
         let previous : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(gph.count);
         let dist : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(gph.count);
         let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(gph.count);
-        for(let i : number = 0; i < gph.count; i++) {{
+        for(let i : number = 0; i < gph.count; i++) {
             previous[i] = -1;
             dist[i] = 2147483647;
             visited[i] = false;
-        };}
+        };
         dist[source] = 0;
         previous[source] = -1;
         let comp : GraphAM.EdgeComparator = new GraphAM.EdgeComparator();
         let queue : PriorityQueue<GraphAM.Edge> = <any>(new PriorityQueue<GraphAM.Edge>(100, <any>(comp)));
         let node : GraphAM.Edge = new GraphAM.Edge(source, 0);
         queue.add(node);
-        while((queue.isEmpty() !== true)) {{
+        while(queue.isEmpty() === false) {
             node = queue.peek();
             queue.remove();
             source = node.dest;
             visited[source] = true;
-            for(let dest : number = 0; dest < gph.count; dest++) {{
+            for(let dest : number = 0; dest < gph.count; dest++) {
                 let cost : number = gph.adj[source][dest];
                 if(cost !== 0) {
                     let alt : number = cost + dist[source];
@@ -68,16 +68,16 @@ class GraphAM {
                         queue.add(node);
                     }
                 }
-            };}
-        }};
+            };
+        };
         let count : number = gph.count;
-        for(let i : number = 0; i < count; i++) {{
+        for(let i : number = 0; i < count; i++) {
             if(dist[i] === 2147483647) {
                 console.info(" \n node id " + i + "  prev " + previous[i] + " distance : Unreachable");
             } else {
                 console.info(" node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
             }
-        };}
+        };
     }
 
     public static prims(gph : GraphAM) {
@@ -85,23 +85,23 @@ class GraphAM {
         let dist : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(gph.count);
         let source : number = 0;
         let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(gph.count);
-        for(let i : number = 0; i < gph.count; i++) {{
+        for(let i : number = 0; i < gph.count; i++) {
             previous[i] = -1;
             dist[i] = 2147483647;
             visited[i] = false;
-        };}
+        };
         dist[source] = 0;
         previous[source] = -1;
         let comp : GraphAM.EdgeComparator = new GraphAM.EdgeComparator();
         let queue : PriorityQueue<GraphAM.Edge> = <any>(new PriorityQueue<GraphAM.Edge>(100, <any>(comp)));
         let node : GraphAM.Edge = new GraphAM.Edge(source, 0);
         queue.add(node);
-        while((queue.isEmpty() !== true)) {{
+        while(queue.isEmpty() === false) {
             node = queue.peek();
             queue.remove();
             source = node.dest;
             visited[source] = true;
-            for(let dest : number = 0; dest < gph.count; dest++) {{
+            for(let dest : number = 0; dest < gph.count; dest++) {
                 let cost : number = gph.adj[source][dest];
                 if(cost !== 0) {
                     let alt : number = cost;
@@ -112,16 +112,16 @@ class GraphAM {
                         queue.add(node);
                     }
                 }
-            };}
-        }};
+            };
+        };
         let count : number = gph.count;
-        for(let i : number = 0; i < count; i++) {{
+        for(let i : number = 0; i < count; i++) {
             if(dist[i] === 2147483647) {
                 console.info(" \n node id " + i + "  prev " + previous[i] + " distance : Unreachable");
             } else {
                 console.info(" node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
             }
-        };}
+        };
     }
 
     public static main2() {
@@ -167,7 +167,7 @@ class GraphAM {
         if(pSize === graph.count) {
             return true;
         }
-        for(let vertex : number = 0; vertex < graph.count; vertex++) {{
+        for(let vertex : number = 0; vertex < graph.count; vertex++) {
             if(pSize === 0 || (graph.adj[path[pSize - 1]][vertex] === 1 && added[vertex] === 0)) {
                 path[pSize++] = vertex;
                 added[vertex] = 1;
@@ -175,7 +175,7 @@ class GraphAM {
                 pSize--;
                 added[vertex] = 0;
             }
-        };}
+        };
         return false;
     }
 
@@ -198,7 +198,7 @@ class GraphAM {
                 return true;
             } else return false;
         }
-        for(let vertex : number = 0; vertex < graph.count; vertex++) {{
+        for(let vertex : number = 0; vertex < graph.count; vertex++) {
             if(pSize === 0 || (graph.adj[path[pSize - 1]][vertex] === 1 && added[vertex] === 0)) {
                 path[pSize++] = vertex;
                 added[vertex] = 1;
@@ -206,7 +206,7 @@ class GraphAM {
                 pSize--;
                 added[vertex] = 0;
             }
-        };}
+        };
         return false;
     }
 

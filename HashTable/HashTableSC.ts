@@ -1,17 +1,23 @@
-/* Generated from Java with JSweet 2.2.0-SNAPSHOT - http://www.jsweet.org */
-class HashTableSC {
-    /*private*/ tableSize : number;
+class HashTableNode {
+    key : number;    
+    value : number;
+    next : HashTableNode;
 
-    listArray : HashTableSC.Node[];
+    public constructor(k : number, v : number, n : HashTableNode) {
+        this.key = k;
+        this.value = v;
+        this.next = n;
+    }
+}
+
+
+class HashTableSC {
+    tableSize : number;
+    listArray : HashTableNode[];
 
     public constructor() {
-        if(this.tableSize===undefined) this.tableSize = 0;
-        if(this.listArray===undefined) this.listArray = null;
         this.tableSize = 512;
-        this.listArray = (s => { let a=[]; while(s-->0) a.push(null); return a; })(this.tableSize);
-        for(let i : number = 0; i < this.tableSize; i++) {{
-            this.listArray[i] = null;
-        };}
+        this.listArray = new Array(this.tableSize).fill(null); 
     }
 
     computeHash(key : number) : number {
@@ -19,89 +25,80 @@ class HashTableSC {
         return hashValue % this.tableSize;
     }
 
-    public add(value : number) {
+    public add(key : number, value : number) {
         let index : number = this.computeHash(value);
-        this.listArray[index] = new HashTableSC.Node(this, value, this.listArray[index]);
+        this.listArray[index] = new HashTableNode(key, value, this.listArray[index]);
     }
 
-    public remove(value : number) : boolean {
-        let index : number = this.computeHash(value);
-        let nextNode : HashTableSC.Node;
-        let head : HashTableSC.Node = this.listArray[index];
-        if(head != null && head.value === value) {
+    public delete(key : number) : boolean {
+        let index : number = this.computeHash(key);
+        let nextNode : HashTableNode;
+        let head : HashTableNode = this.listArray[index];
+        if(head != null && head.key === key) {
             this.listArray[index] = head.next;
             return true;
         }
-        while((head != null)) {{
+        while(head != null) {
             nextNode = head.next;
-            if(nextNode != null && nextNode.value === value) {
+            if(nextNode != null && nextNode.key === key) {
                 head.next = nextNode.next;
                 return true;
             } else {
                 head = nextNode;
             }
-        }};
+        };
         return false;
     }
 
     public print() {
-        for(let i : number = 0; i < this.tableSize; i++) {{
-            console.info("printing for index value :: " + i + "List of value printing :: ");
-            let head : HashTableSC.Node = this.listArray[i];
-            while((head != null)) {{
-                console.info(head.value);
+        for (let i = 0; i < this.tableSize; i++) {
+            let head = this.listArray[i];
+            let data = "";
+
+            while (head != null) {
+                data += (`${head.value} `)
                 head = head.next;
-            }};
-        };}
+            }
+
+            if (data != "") {
+                console.log(`Index value :: ${i} Data :: ${data}`);
+            }
+        }
     }
 
-    public find(value : number) : boolean {
-        let index : number = this.computeHash(value);
-        let head : HashTableSC.Node = this.listArray[index];
-        while((head != null)) {{
-            if(head.value === value) {
+    public find(key : number) : boolean {
+        let index : number = this.computeHash(key);
+        let head : HashTableNode = this.listArray[index];
+        while(head != null) {
+            if(head.key === key) {
                 return true;
             }
             head = head.next;
-        }};
+        };
         return false;
     }
 
-    public static main(args : string[]) {
-        let ht : HashTableSC = new HashTableSC();
-        for(let i : number = 100; i < 110; i++) {{
-            ht.add(i);
-        };}
-        console.info("search 100 :: " + ht.find(100));
-        console.info("remove 100 :: " + ht.remove(100));
-        console.info("search 100 :: " + ht.find(100));
-        console.info("remove 100 :: " + ht.remove(100));
+
+    public get(key : number) : number {
+        let index : number = this.computeHash(key);
+        let head : HashTableNode = this.listArray[index];
+        while(head != null) {
+            if(head.key === key) {
+                return head.value;
+            }
+            head = head.next;
+        };
+        return 0;
     }
 }
-HashTableSC["__class"] = "HashTableSC";
 
+let ht : HashTableSC = new HashTableSC();
+ht.add(1, 10);
+ht.add(2, 20);
+ht.add(3, 30);
+ht.print();
 
-namespace HashTableSC {
-
-    export class Node {
-        public __parent: any;
-        value : number;
-
-        next : HashTableSC.Node;
-
-        public constructor(__parent: any, v : number, n : HashTableSC.Node) {
-            this.__parent = __parent;
-            if(this.value===undefined) this.value = 0;
-            if(this.next===undefined) this.next = null;
-            this.value = v;
-            this.next = n;
-        }
-    }
-    Node["__class"] = "HashTableSC.Node";
-
-}
-
-
-
-
-HashTableSC.main(null);
+console.log("Find key 2 : ", ht.find(2));
+console.log("Value at key 2 : ",ht.get(2));
+ht.delete(1);
+ht.print();

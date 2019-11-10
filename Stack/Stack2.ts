@@ -1,12 +1,11 @@
-/* Generated from Java with JSweet 2.2.0-SNAPSHOT - http://www.jsweet.org */
 class Stack2 {
-    /*private*/ data : number[];
+    data : number[];
 
-    /*private*/ __top : number = -1;
+    __top : number = -1;
 
-    /*private*/ minCapacity : number;
+    minCapacity : number;
 
-    /*private*/ capacity : number;
+    capacity : number;
 
     public constructor(size? : any) {
         if(((typeof size === 'number') || size === null)) {

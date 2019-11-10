@@ -1,8 +1,7 @@
-/* Generated from Java with JSweet 2.2.0-SNAPSHOT - http://www.jsweet.org */
 class StackLL {
-    /*private*/ head : StackLL.Node = null;
+    head : StackLL.Node = null;
 
-    /*private*/ __size : number = 0;
+    __size : number = 0;
 
     public size() : number {
         return this.__size;

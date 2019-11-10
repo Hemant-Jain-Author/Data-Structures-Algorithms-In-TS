@@ -1,4 +1,3 @@
-/* Generated from Java with JSweet 2.2.0-SNAPSHOT - http://www.jsweet.org */
 class Stringclass {
     public static main(args : string[]) {
         let str1 : string = "hello";
