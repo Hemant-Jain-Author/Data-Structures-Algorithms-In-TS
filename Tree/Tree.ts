@@ -1,3 +1,60 @@
+
+class Queue {
+    frontIndex : number;
+    data : any[];
+
+    public constructor() {
+        this.frontIndex = 0;
+        this.data = [];
+    }
+
+    public add(value : any) {
+        this.data.push(value);
+    }
+
+    public remove() : any {
+        let value = this.data[this.frontIndex];
+        this.frontIndex++;
+        if (this.data.length > 0 && this.frontIndex * 2 >= this.data.length) {
+            this.data = this.data.slice(this.frontIndex);
+            this.frontIndex = 0;
+        }
+        return value;
+    }
+
+    public peek() : any {
+        let value = this.data[this.frontIndex];
+        return value;
+    }
+
+    public isEmpty() : boolean {
+        return (this.data.length - this.frontIndex) === 0;
+    }
+
+    public size() : number {
+        return (this.data.length - this.frontIndex);
+    }
+
+    public peekLast() : any {
+        return this.data[this.data.length - 1]
+    }
+}
+
+const MAX_INT = 2147483647;
+const MIN_INT = -2147483647;
+
+class TNode {
+    value : number;
+    lChild : TNode;
+    rChild : TNode;
+
+    public constructor(v : number, l : TNode = null, r : TNode = null) {
+        this.value = v;
+        this.lChild = l;
+        this.rChild = r;
+    }
+}
+
 class Tree {
     root : TNode;
 
@@ -5,126 +62,89 @@ class Tree {
         this.root = null;
     }
 
-    public levelOrderBinaryTree$int_A(arr : number[]) {
-        this.root = this.levelOrderBinaryTree$int_A$int(arr, 0);
+    public levelOrderBinaryTree(arr : number[]) {
+        this.root = this.levelOrderBinaryTreeUtil(arr, 0);
     }
 
-    public levelOrderBinaryTree$int_A$int(arr : number[], start : number) : TNode {
+    public levelOrderBinaryTreeUtil(arr : number[], start : number) : TNode {
         let size : number = arr.length;
         let curr : TNode = new TNode(arr[start]);
         let left : number = 2 * start + 1;
         let right : number = 2 * start + 2;
-        if(left < size) curr.lChild = this.levelOrderBinaryTree$int_A$int(arr, left);
-        if(right < size) curr.rChild = this.levelOrderBinaryTree$int_A$int(arr, right);
+        if(left < size) 
+            curr.lChild = this.levelOrderBinaryTreeUtil(arr, left);
+        if(right < size) 
+            curr.rChild = this.levelOrderBinaryTreeUtil(arr, right);
         return curr;
     }
 
-    public levelOrderBinaryTree(arr? : any, start? : any) : any {
-        if(((arr != null && arr instanceof <any>Array && (arr.length==0 || arr[0] == null ||(typeof arr[0] === 'number'))) || arr === null) && ((typeof start === 'number') || start === null)) {
-            return <any>this.levelOrderBinaryTree$int_A$int(arr, start);
-        } else if(((arr != null && arr instanceof <any>Array && (arr.length==0 || arr[0] == null ||(typeof arr[0] === 'number'))) || arr === null) && start === undefined) {
-            return <any>this.levelOrderBinaryTree$int_A(arr);
-        } else throw new Error('invalid overload');
+    public InsertNode(value : number) {
+        this.root = this.InsertNodeUtil(this.root, value);
     }
 
-    public InsertNode$int(value : number) {
-        this.root = this.InsertNode$Tree_Node$int(this.root, value);
-    }
-
-    public InsertNode$Tree_Node$int(node : TNode, value : number) : TNode {
+    public InsertNodeUtil(node : TNode, value : number) : TNode {
         if(node == null) {
             node = new TNode(value, null, null);
         } else {
             if(node.value > value) {
-                node.lChild = this.InsertNode$Tree_Node$int(node.lChild, value);
+                node.lChild = this.InsertNodeUtil(node.lChild, value);
             } else {
-                node.rChild = this.InsertNode$Tree_Node$int(node.rChild, value);
+                node.rChild = this.InsertNodeUtil(node.rChild, value);
             }
         }
         return node;
     }
 
-    public InsertNode(node? : any, value? : any) : any {
-        if(((node != null && node instanceof <any>TNode) || node === null) && ((typeof value === 'number') || value === null)) {
-            return <any>this.InsertNode$Tree_Node$int(node, value);
-        } else if(((typeof node === 'number') || node === null) && value === undefined) {
-            return <any>this.InsertNode$int(node);
-        } else throw new Error('invalid overload');
+    public PrintPreOrder() {
+        this.PrintPreOrderUtil(this.root);
     }
 
-    public PrintPreOrder$() {
-        this.PrintPreOrder$Tree_Node(this.root);
-    }
-
-    public PrintPreOrder$Tree_Node(node : TNode) {
+    public PrintPreOrderUtil(node : TNode) {
         if(node != null) {
             console.info(" " + node.value);
-            this.PrintPreOrder$Tree_Node(node.lChild);
-            this.PrintPreOrder$Tree_Node(node.rChild);
+            this.PrintPreOrderUtil(node.lChild);
+            this.PrintPreOrderUtil(node.rChild);
         }
     }
 
-    public PrintPreOrder(node? : any) : any {
-        if(((node != null && node instanceof <any>TNode) || node === null)) {
-            return <any>this.PrintPreOrder$Tree_Node(node);
-        } else if(node === undefined) {
-            return <any>this.PrintPreOrder$();
-        } else throw new Error('invalid overload');
-    }
-
-    public NthPreOrder$int(index : number) {
+    
+    public NthPreOrder(index : number) {
         let counter : number[] = [0];
-        this.NthPreOrder$Tree_Node$int$int_A(this.root, index, counter);
+        this.NthPreOrderUtil(this.root, index, counter);
     }
 
-    public NthPreOrder$Tree_Node$int$int_A(node : TNode, index : number, counter : number[]) {
+    public NthPreOrderUtil(node : TNode, index : number, counter : number[]) {
         if(node != null) {
             counter[0]++;
             if(counter[0] === index) {
                 console.info(node.value);
             }
-            this.NthPreOrder$Tree_Node$int$int_A(node.lChild, index, counter);
-            this.NthPreOrder$Tree_Node$int$int_A(node.rChild, index, counter);
+            this.NthPreOrderUtil(node.lChild, index, counter);
+            this.NthPreOrderUtil(node.rChild, index, counter);
         }
     }
 
-    public NthPreOrder(node? : any, index? : any, counter? : any) : any {
-        if(((node != null && node instanceof <any>TNode) || node === null) && ((typeof index === 'number') || index === null) && ((counter != null && counter instanceof <any>Array && (counter.length==0 || counter[0] == null ||(typeof counter[0] === 'number'))) || counter === null)) {
-            return <any>this.NthPreOrder$Tree_Node$int$int_A(node, index, counter);
-        } else if(((typeof node === 'number') || node === null) && index === undefined && counter === undefined) {
-            return <any>this.NthPreOrder$int(node);
-        } else throw new Error('invalid overload');
+    public PrintPostOrder() {
+        this.PrintPostOrderUtil(this.root);
     }
 
-    public PrintPostOrder$() {
-        this.PrintPostOrder$Tree_Node(this.root);
-    }
-
-    public PrintPostOrder$Tree_Node(node : TNode) {
+    public PrintPostOrderUtil(node : TNode) {
         if(node != null) {
-            this.PrintPostOrder$Tree_Node(node.lChild);
-            this.PrintPostOrder$Tree_Node(node.rChild);
+            this.PrintPostOrderUtil(node.lChild);
+            this.PrintPostOrderUtil(node.rChild);
             console.info(" " + node.value);
         }
     }
 
-    public PrintPostOrder(node? : any) : any {
-        if(((node != null && node instanceof <any>TNode) || node === null)) {
-            return <any>this.PrintPostOrder$Tree_Node(node);
-        } else if(node === undefined) {
-            return <any>this.PrintPostOrder$();
-        } else throw new Error('invalid overload');
-    }
-
-    public NthPostOrder$int(index : number) {
+    public NthPostOrder(index : number) {
         let counter : number[] = [0];
-        this.NthPostOrder$Tree_Node$int$int_A(this.root, index, counter);
+        this.NthPostOrderUtil(this.root, index, counter);
     }
 
-    public NthPostOrder$Tree_Node$int$int_A(node : TNode, index : number, counter : number[]) {
+    public NthPostOrderUtil(node : TNode, index : number, counter : number[]) {
         if(node != null) {
-            this.NthPostOrder$Tree_Node$int$int_A(node.lChild, index, counter);
-            this.NthPostOrder$Tree_Node$int$int_A(node.rChild, index, counter);
+            this.NthPostOrderUtil(node.lChild, index, counter);
+            this.NthPostOrderUtil(node.rChild, index, counter);
             counter[0]++;
             if(counter[0] === index) {
                 console.info(" " + node.value);
@@ -132,147 +152,141 @@ class Tree {
         }
     }
 
-    public NthPostOrder(node? : any, index? : any, counter? : any) : any {
-        if(((node != null && node instanceof <any>TNode) || node === null) && ((typeof index === 'number') || index === null) && ((counter != null && counter instanceof <any>Array && (counter.length==0 || counter[0] == null ||(typeof counter[0] === 'number'))) || counter === null)) {
-            return <any>this.NthPostOrder$Tree_Node$int$int_A(node, index, counter);
-        } else if(((typeof node === 'number') || node === null) && index === undefined && counter === undefined) {
-            return <any>this.NthPostOrder$int(node);
-        } else throw new Error('invalid overload');
+    public PrintInOrder() {
+        this.PrintInOrderUtil(this.root);
     }
 
-    public PrintInOrder$() {
-        this.PrintInOrder$Tree_Node(this.root);
-    }
-
-    public PrintInOrder$Tree_Node(node : TNode) {
+    public PrintInOrderUtil(node : TNode) {
         if(node != null) {
-            this.PrintInOrder$Tree_Node(node.lChild);
+            this.PrintInOrderUtil(node.lChild);
             console.info(" " + node.value);
-            this.PrintInOrder$Tree_Node(node.rChild);
+            this.PrintInOrderUtil(node.rChild);
         }
     }
 
-    public PrintInOrder(node? : any) : any {
-        if(((node != null && node instanceof <any>TNode) || node === null)) {
-            return <any>this.PrintInOrder$Tree_Node(node);
-        } else if(node === undefined) {
-            return <any>this.PrintInOrder$();
-        } else throw new Error('invalid overload');
-    }
-
-    public NthInOrder$int(index : number) {
+    public NthInOrder(index : number) {
         let counter : number[] = [0];
-        this.NthInOrder$Tree_Node$int$int_A(this.root, index, counter);
+        this.NthInOrderUtil(this.root, index, counter);
     }
 
-    public NthInOrder$Tree_Node$int$int_A(node : TNode, index : number, counter : number[]) {
+    public NthInOrderUtil(node : TNode, index : number, counter : number[]) {
         if(node != null) {
-            this.NthInOrder$Tree_Node$int$int_A(node.lChild, index, counter);
+            this.NthInOrderUtil(node.lChild, index, counter);
             counter[0]++;
             if(counter[0] === index) {
                 console.info(" " + node.value);
             }
-            this.NthInOrder$Tree_Node$int$int_A(node.rChild, index, counter);
+            this.NthInOrderUtil(node.rChild, index, counter);
         }
-    }
-
-    public NthInOrder(node? : any, index? : any, counter? : any) : any {
-        if(((node != null && node instanceof <any>TNode) || node === null) && ((typeof index === 'number') || index === null) && ((counter != null && counter instanceof <any>Array && (counter.length==0 || counter[0] == null ||(typeof counter[0] === 'number'))) || counter === null)) {
-            return <any>this.NthInOrder$Tree_Node$int$int_A(node, index, counter);
-        } else if(((typeof node === 'number') || node === null) && index === undefined && counter === undefined) {
-            return <any>this.NthInOrder$int(node);
-        } else throw new Error('invalid overload');
     }
 
     public PrintBredthFirst() {
-        let que : Array<TNode> = <any>([]);
+        let que : Queue= new Queue();;
         let temp : TNode;
-        if(this.root != null) /* add */(que.push(this.root)>0);
-        while((/* isEmpty */(que.length == 0) === false)) {{
-            temp = /* pop */que.pop();
+        if(this.root != null) 
+            que.add(this.root);
+        while(que.isEmpty() === false) {
+            temp = que.remove();
             console.info(" " + temp.value);
-            if(temp.lChild != null) /* add */(que.push(temp.lChild)>0);
-            if(temp.rChild != null) /* add */(que.push(temp.rChild)>0);
-        }};
+            if(temp.lChild != null) 
+                que.add(temp.lChild);
+            if(temp.rChild != null) 
+                que.add(temp.rChild);
+        };
     }
 
     public PrintDepthFirst() {
-        let stk : Array<TNode> = <any>([]);
+        let stk : Array<TNode> = ([]);
         let temp : TNode;
-        if(this.root != null) /* push */(stk.push(this.root)>0);
-        while((/* isEmpty */(stk.length == 0) === false)) {{
-            temp = /* pop */stk.pop();
+        if(this.root != null) 
+            stk.push(this.root);
+        while(stk.length > 0) {
+            temp = stk.pop();
             console.info(temp.value);
-            if(temp.lChild != null) /* push */(stk.push(temp.lChild)>0);
-            if(temp.rChild != null) /* push */(stk.push(temp.rChild)>0);
-        }};
+            if(temp.lChild != null) 
+                stk.push(temp.lChild);
+            if(temp.rChild != null) 
+                stk.push(temp.rChild);
+        };
     }
 
     PrintLevelOrderLineByLine() {
-        let que1 : Array<TNode> = <any>([]);
-        let que2 : Array<TNode> = <any>([]);
+        let que1 : Queue = new Queue();
+        let que2 : Queue = new Queue();
         let temp : TNode = null;
-        if(this.root != null) /* add */(que1.push(this.root)>0);
-        while((/* size */(<number>que1.length) !== 0 || /* size */(<number>que2.length) !== 0)) {{
-            while((/* size */(<number>que1.length) !== 0)) {{
-                temp = /* pop */que1.pop();
+        if(this.root != null) 
+            que1.add(this.root);
+        while(<number>que1.size() > 0 || <number>que2.size() > 0) {
+            while(<number>que1.size() > 0) {
+                temp = que1.remove();
                 console.info(" " + temp.value);
-                if(temp.lChild != null) /* add */(que2.push(temp.lChild)>0);
-                if(temp.rChild != null) /* add */(que2.push(temp.rChild)>0);
-            }};
+                if(temp.lChild != null) 
+                    que2.add(temp.lChild);
+                if(temp.rChild != null) 
+                    que2.add(temp.rChild);
+            };
             console.info("");
-            while((/* size */(<number>que2.length) !== 0)) {{
-                temp = <TNode>/* pop */que2.pop();
+            while(<number>que2.size() > 0) {
+                temp = <TNode>que2.remove();
                 console.info(" " + temp.value);
-                if(temp.lChild != null) /* add */(que1.push(temp.lChild)>0);
-                if(temp.rChild != null) /* add */(que1.push(temp.rChild)>0);
-            }};
+                if(temp.lChild != null) 
+                    que1.add(temp.lChild);
+                if(temp.rChild != null) 
+                    que1.add(temp.rChild);
+            };
             console.info("");
-        }};
+        };
     }
 
     PrintLevelOrderLineByLine2() {
-        let que : Array<TNode> = <any>([]);
+        let que : Queue = new Queue();
         let temp : TNode = null;
         let count : number = 0;
-        if(this.root != null) /* add */(que.push(this.root)>0);
-        while((/* size */(<number>que.length) !== 0)) {{
-            count = /* size */(<number>que.length);
-            while((count > 0)) {{
-                temp = /* pop */que.pop();
+        if(this.root != null) que.add(this.root);
+        while(<number>que.size() !== 0) {
+            count = <number>que.size();
+            while(count > 0) {
+                temp = que.remove();
                 console.info(" " + temp.value);
-                if(temp.lChild != null) /* add */(que.push(temp.lChild)>0);
-                if(temp.rChild != null) /* add */(que.push(temp.rChild)>0);
+                if(temp.lChild != null) 
+                    que.add(temp.lChild);
+                if(temp.rChild != null) 
+                    que.add(temp.rChild);
                 count -= 1;
-            }};
+            };
             console.info("");
-        }};
+        };
     }
 
     PrintSpiralTree() {
-        let stk1 : Array<TNode> = <any>([]);
-        let stk2 : Array<TNode> = <any>([]);
+        let stk1 : Array<TNode> = ([]);
+        let stk2 : Array<TNode> = ([]);
         let temp : TNode;
-        if(this.root != null) /* push */(stk1.push(this.root)>0);
-        while((/* size */(<number>stk1.length) !== 0 || /* size */(<number>stk2.length) !== 0)) {{
-            while((/* size */(<number>stk1.length) !== 0)) {{
-                temp = /* pop */stk1.pop();
+        if(this.root != null) 
+            stk1.push(this.root);
+        while(<number>stk1.length > 0 || <number>stk2.length > 0) {
+            while(<number>stk1.length > 0) {
+                temp = stk1.pop();
                 console.info(" " + temp.value);
-                if(temp.rChild != null) /* push */(stk2.push(temp.rChild)>0);
-                if(temp.lChild != null) /* push */(stk2.push(temp.lChild)>0);
-            }};
-            while((/* size */(<number>stk2.length) !== 0)) {{
-                temp = /* pop */stk2.pop();
+                if(temp.rChild != null) 
+                    stk2.push(temp.rChild);
+                if(temp.lChild != null) 
+                    stk2.push(temp.lChild);
+            };
+            while(<number>stk2.length > 0) {
+                temp = stk2.pop();
                 console.info(" " + temp.value);
-                if(temp.lChild != null) /* push */(stk1.push(temp.lChild)>0);
-                if(temp.rChild != null) /* push */(stk1.push(temp.rChild)>0);
-            }};
-        }};
+                if(temp.lChild != null) 
+                    stk1.push(temp.lChild);
+                if(temp.rChild != null) 
+                    stk1.push(temp.rChild);
+            };
+        };
     }
 
     public Find(value : number) : boolean {
         let curr : TNode = this.root;
-        while((curr != null)) {{
+        while(curr != null) {
             if(curr.value === value) {
                 return true;
             } else if(curr.value > value) {
@@ -280,35 +294,37 @@ class Tree {
             } else {
                 curr = curr.rChild;
             }
-        }};
+        };
         return false;
     }
 
     public Find2(value : number) : boolean {
         let curr : TNode = this.root;
-        while((curr != null && curr.value !== value)) {curr = (curr.value > value)?curr.lChild:curr.rChild};
+        while(curr != null && curr.value !== value) {
+            curr = (curr.value > value)?curr.lChild:curr.rChild
+        };
         return curr != null;
     }
 
     public FindMin() : number {
         let node : TNode = this.root;
         if(node == null) {
-            return 2147483647;
+            return MAX_INT;
         }
-        while((node.lChild != null)) {{
+        while(node.lChild != null) {
             node = node.lChild;
-        }};
+        };
         return node.value;
     }
 
     public FindMax() : number {
         let node : TNode = this.root;
         if(node == null) {
-            return -2147483648;
+            return MIN_INT;
         }
-        while((node.rChild != null)) {{
+        while(node.rChild != null) {
             node = node.rChild;
-        }};
+        };
         return node.value;
     }
 
@@ -317,9 +333,9 @@ class Tree {
         if(node == null) {
             return null;
         }
-        while((node.rChild != null)) {{
+        while(node.rChild != null) {
             node = node.rChild;
-        }};
+        };
         return node;
     }
 
@@ -328,9 +344,9 @@ class Tree {
         if(node == null) {
             return null;
         }
-        while((node.lChild != null)) {{
+        while(node.lChild != null) {
             node = node.lChild;
-        }};
+        };
         return node;
     }
 
@@ -338,11 +354,11 @@ class Tree {
         this.root = null;
     }
 
-    public DeleteNode$int(value : number) {
-        this.root = this.DeleteNode$Tree_Node$int(this.root, value);
+    public DeleteNode(value : number) {
+        this.root = this.DeleteNodeUtil(this.root, value);
     }
 
-    public DeleteNode$Tree_Node$int(node : TNode, value : number) : TNode {
+    public DeleteNodeUtil(node : TNode, value : number) : TNode {
         let temp : TNode = null;
         if(node != null) {
             if(node.value === value) {
@@ -360,45 +376,34 @@ class Tree {
                     let minNode : TNode = this.FindMinNode(node.rChild);
                     let minValue : number = minNode.value;
                     node.value = minValue;
-                    node.rChild = this.DeleteNode$Tree_Node$int(node.rChild, minValue);
+                    node.rChild = this.DeleteNodeUtil(node.rChild, minValue);
                 }
             } else {
                 if(node.value > value) {
-                    node.lChild = this.DeleteNode$Tree_Node$int(node.lChild, value);
+                    node.lChild = this.DeleteNodeUtil(node.lChild, value);
                 } else {
-                    node.rChild = this.DeleteNode$Tree_Node$int(node.rChild, value);
+                    node.rChild = this.DeleteNodeUtil(node.rChild, value);
                 }
             }
         }
         return node;
     }
 
-    public DeleteNode(node? : any, value? : any) : any {
-        if(((node != null && node instanceof <any>TNode) || node === null) && ((typeof value === 'number') || value === null)) {
-            return <any>this.DeleteNode$Tree_Node$int(node, value);
-        } else if(((typeof node === 'number') || node === null) && value === undefined) {
-            return <any>this.DeleteNode$int(node);
-        } else throw new Error('invalid overload');
+    public TreeDepth() : number {
+        return this.TreeDepthUtil(this.root);
     }
 
-    public TreeDepth$() : number {
-        return this.TreeDepth$Tree_Node(this.root);
-    }
-
-    public TreeDepth$Tree_Node(curr : TNode) : number {
-        if(curr == null) return 0; else {
-            let lDepth : number = this.TreeDepth$Tree_Node(curr.lChild);
-            let rDepth : number = this.TreeDepth$Tree_Node(curr.rChild);
-            if(lDepth > rDepth) return lDepth + 1; else return rDepth + 1;
+    public TreeDepthUtil(curr : TNode) : number {
+        if(curr == null) 
+            return 0; 
+        else {
+            let lDepth : number = this.TreeDepthUtil(curr.lChild);
+            let rDepth : number = this.TreeDepthUtil(curr.rChild);
+            if(lDepth > rDepth) 
+                return lDepth + 1; 
+            else 
+                return rDepth + 1;
         }
-    }
-
-    public TreeDepth(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
-            return <any>this.TreeDepth$Tree_Node(curr);
-        } else if(curr === undefined) {
-            return <any>this.TreeDepth$();
-        } else throw new Error('invalid overload');
     }
 
     public isEqual(T2 : Tree) : boolean {
@@ -406,330 +411,304 @@ class Tree {
     }
 
     isEqualUtil(node1 : TNode, node2 : TNode) : boolean {
-        if(node1 == null && node2 == null) return true; else if(node1 == null || node2 == null) return false; else return (this.isEqualUtil(node1.lChild, node2.lChild) && this.isEqualUtil(node1.rChild, node2.rChild) && (node1.value === node2.value));
+        if(node1 == null && node2 == null) 
+            return true; 
+        else if(node1 == null || node2 == null) 
+            return false; 
+        else 
+            return (this.isEqualUtil(node1.lChild, node2.lChild) && 
+            this.isEqualUtil(node1.rChild, node2.rChild) && 
+            (node1.value === node2.value));
     }
 
-    public Ancestor$int$int(first : number, second : number) : TNode {
+    public Ancestor(first : number, second : number) : TNode {
         if(first > second) {
             let temp : number = first;
             first = second;
             second = temp;
         }
-        return this.Ancestor$Tree_Node$int$int(this.root, first, second);
+        return this.AncestorUtil(this.root, first, second);
     }
 
-    public Ancestor$Tree_Node$int$int(curr : TNode, first : number, second : number) : TNode {
+    public AncestorUtil(curr : TNode, first : number, second : number) : TNode {
         if(curr == null) {
             return null;
         }
         if(curr.value > first && curr.value > second) {
-            return this.Ancestor$Tree_Node$int$int(curr.lChild, first, second);
+            return this.AncestorUtil(curr.lChild, first, second);
         }
         if(curr.value < first && curr.value < second) {
-            return this.Ancestor$Tree_Node$int$int(curr.rChild, first, second);
+            return this.AncestorUtil(curr.rChild, first, second);
         }
         return curr;
     }
 
-    public Ancestor(curr? : any, first? : any, second? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null) && ((typeof first === 'number') || first === null) && ((typeof second === 'number') || second === null)) {
-            return <any>this.Ancestor$Tree_Node$int$int(curr, first, second);
-        } else if(((typeof curr === 'number') || curr === null) && ((typeof first === 'number') || first === null) && second === undefined) {
-            return <any>this.Ancestor$int$int(curr, first);
-        } else throw new Error('invalid overload');
-    }
-
-    public CopyTree$() : Tree {
+    public CopyTree() : Tree {
         let tree2 : Tree = new Tree();
-        tree2.root = this.CopyTree$Tree_Node(this.root);
+        tree2.root = this.CopyTreeUtil(this.root);
         return tree2;
     }
 
-    public CopyTree$Tree_Node(curr : TNode) : TNode {
+    public CopyTreeUtil(curr : TNode) : TNode {
         let temp : TNode;
         if(curr != null) {
             temp = new TNode(curr.value);
-            temp.lChild = this.CopyTree$Tree_Node(curr.lChild);
-            temp.rChild = this.CopyTree$Tree_Node(curr.rChild);
+            temp.lChild = this.CopyTreeUtil(curr.lChild);
+            temp.rChild = this.CopyTreeUtil(curr.rChild);
             return temp;
-        } else return null;
+        } 
+        else 
+            return null;
     }
 
-    public CopyTree(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
-            return <any>this.CopyTree$Tree_Node(curr);
-        } else if(curr === undefined) {
-            return <any>this.CopyTree$();
-        } else throw new Error('invalid overload');
-    }
-
-    public CopyMirrorTree$() : Tree {
+    public CopyMirrorTree() : Tree {
         let tree2 : Tree = new Tree();
-        tree2.root = this.CopyMirrorTree$Tree_Node(this.root);
+        tree2.root = this.CopyMirrorTreeUtil(this.root);
         return tree2;
     }
 
-    public CopyMirrorTree$Tree_Node(curr : TNode) : TNode {
+    public CopyMirrorTreeUtil(curr : TNode) : TNode {
         let temp : TNode;
         if(curr != null) {
             temp = new TNode(curr.value);
-            temp.rChild = this.CopyMirrorTree$Tree_Node(curr.lChild);
-            temp.lChild = this.CopyMirrorTree$Tree_Node(curr.rChild);
+            temp.rChild = this.CopyMirrorTreeUtil(curr.lChild);
+            temp.lChild = this.CopyMirrorTreeUtil(curr.rChild);
             return temp;
-        } else return null;
+        } 
+        else 
+            return null;
     }
 
-    public CopyMirrorTree(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
-            return <any>this.CopyMirrorTree$Tree_Node(curr);
-        } else if(curr === undefined) {
-            return <any>this.CopyMirrorTree$();
-        } else throw new Error('invalid overload');
+    public numNodes() : number {
+        return this.numNodesUtil(this.root);
     }
 
-    public numNodes$() : number {
-        return this.numNodes$Tree_Node(this.root);
+    public numNodesUtil(curr : TNode) : number {
+        if(curr == null) 
+            return 0; 
+        else 
+            return (1 + this.numNodesUtil(curr.rChild) + 
+            this.numNodesUtil(curr.lChild));
     }
 
-    public numNodes$Tree_Node(curr : TNode) : number {
-        if(curr == null) return 0; else return (1 + this.numNodes$Tree_Node(curr.rChild) + this.numNodes$Tree_Node(curr.lChild));
+    public numFullNodesBT() : number {
+        return this.numNodesUtil(this.root);
     }
 
-    public numNodes(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
-            return <any>this.numNodes$Tree_Node(curr);
-        } else if(curr === undefined) {
-            return <any>this.numNodes$();
-        } else throw new Error('invalid overload');
-    }
-
-    public numFullNodesBT$() : number {
-        return this.numNodes$Tree_Node(this.root);
-    }
-
-    public numFullNodesBT$Tree_Node(curr : TNode) : number {
+    public numFullNodesBTUtil(curr : TNode) : number {
         let count : number;
-        if(curr == null) return 0;
-        count = this.numFullNodesBT$Tree_Node(curr.rChild) + this.numFullNodesBT$Tree_Node(curr.lChild);
-        if(curr.rChild != null && curr.lChild != null) count++;
+        if(curr == null) 
+            return 0;
+        count = this.numFullNodesBTUtil(curr.rChild) + this.numFullNodesBTUtil(curr.lChild);
+        if(curr.rChild != null && curr.lChild != null) 
+            count++;
         return count;
     }
 
-    public numFullNodesBT(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
-            return <any>this.numFullNodesBT$Tree_Node(curr);
-        } else if(curr === undefined) {
-            return <any>this.numFullNodesBT$();
-        } else throw new Error('invalid overload');
+    public maxLengthPathBT() : number {
+        return this.maxLengthPathBTUtil(this.root);
     }
 
-    public maxLengthPathBT$() : number {
-        return this.maxLengthPathBT$Tree_Node(this.root);
-    }
-
-    public maxLengthPathBT$Tree_Node(curr : TNode) : number {
+    public maxLengthPathBTUtil(curr : TNode) : number {
         let max : number;
         let leftPath : number;
         let rightPath : number;
         let leftMax : number;
         let rightMax : number;
-        if(curr == null) return 0;
-        leftPath = this.TreeDepth$Tree_Node(curr.lChild);
-        rightPath = this.TreeDepth$Tree_Node(curr.rChild);
+
+        if(curr == null) 
+            return 0;
+        
+            leftPath = this.TreeDepthUtil(curr.lChild);
+        rightPath = this.TreeDepthUtil(curr.rChild);
         max = leftPath + rightPath + 1;
-        leftMax = this.maxLengthPathBT$Tree_Node(curr.lChild);
-        rightMax = this.maxLengthPathBT$Tree_Node(curr.rChild);
-        if(leftMax > max) max = leftMax;
-        if(rightMax > max) max = rightMax;
+        leftMax = this.maxLengthPathBTUtil(curr.lChild);
+        rightMax = this.maxLengthPathBTUtil(curr.rChild);
+        
+        if(leftMax > max) 
+            max = leftMax;
+        if(rightMax > max) 
+            max = rightMax;
         return max;
     }
 
-    public maxLengthPathBT(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
-            return <any>this.maxLengthPathBT$Tree_Node(curr);
-        } else if(curr === undefined) {
-            return <any>this.maxLengthPathBT$();
-        } else throw new Error('invalid overload');
+    public numLeafNodes() : number {
+        return this.numLeafNodesUtil(this.root);
     }
 
-    public numLeafNodes$() : number {
-        return this.numLeafNodes$Tree_Node(this.root);
+    public numLeafNodesUtil(curr : TNode) : number {
+        if(curr == null) 
+            return 0;
+        
+        if(curr.lChild == null && curr.rChild == null) 
+            return 1; 
+        else 
+            return (this.numLeafNodesUtil(curr.rChild) + this.numLeafNodesUtil(curr.lChild));
     }
 
-    public numLeafNodes$Tree_Node(curr : TNode) : number {
-        if(curr == null) return 0;
-        if(curr.lChild == null && curr.rChild == null) return 1; else return (this.numLeafNodes$Tree_Node(curr.rChild) + this.numLeafNodes$Tree_Node(curr.lChild));
+    public sumAllBT() : number {
+        return this.sumAllBTUtil(this.root);
     }
 
-    public numLeafNodes(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
-            return <any>this.numLeafNodes$Tree_Node(curr);
-        } else if(curr === undefined) {
-            return <any>this.numLeafNodes$();
-        } else throw new Error('invalid overload');
-    }
-
-    public sumAllBT$() : number {
-        return this.sumAllBT$Tree_Node(this.root);
-    }
-
-    public sumAllBT$Tree_Node(curr : TNode) : number {
-        if(curr == null) return 0;
-        return (curr.value + this.sumAllBT$Tree_Node(curr.lChild) + this.sumAllBT$Tree_Node(curr.lChild));
-    }
-
-    public sumAllBT(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
-            return <any>this.sumAllBT$Tree_Node(curr);
-        } else if(curr === undefined) {
-            return <any>this.sumAllBT$();
-        } else throw new Error('invalid overload');
+    public sumAllBTUtil(curr : TNode) : number {
+        if(curr == null) 
+            return 0;
+        return (curr.value + this.sumAllBTUtil(curr.lChild) + 
+        this.sumAllBTUtil(curr.lChild));
     }
 
     public iterativePreOrder() {
-        let stk : Array<TNode> = <any>([]);
+        let stk : Array<TNode> = ([]);
         let curr : TNode;
-        if(this.root != null) /* add */(stk.push(this.root)>0);
-        while((/* isEmpty */(stk.length == 0) === false)) {{
-            curr = /* pop */stk.pop();
+        if(this.root != null) 
+            stk.push(this.root);
+        while(stk.length > 0) {
+            curr = stk.pop();
             console.info(curr.value + " ");
-            if(curr.rChild != null) /* push */(stk.push(curr.rChild)>0);
-            if(curr.lChild != null) /* push */(stk.push(curr.lChild)>0);
-        }};
+            if(curr.rChild != null) 
+                stk.push(curr.rChild);
+            if(curr.lChild != null) 
+                stk.push(curr.lChild);
+        };
     }
 
     public iterativePostOrder() {
-        let stk : Array<TNode> = <any>([]);
-        let visited : Array<number> = <any>([]);
+        let stk : Array<TNode> = ([]);
+        let visited : Array<number> = [];
         let curr : TNode;
         let vtd : number;
         if(this.root != null) {
-            /* add */(stk.push(this.root)>0);
-            /* add */(visited.push(0)>0);
+            stk.push(this.root);
+            visited.push(0);
         }
-        while((/* isEmpty */(stk.length == 0) === false)) {{
-            curr = /* pop */stk.pop();
-            vtd = /* pop */visited.pop();
+        while(stk.length > 0) {
+            curr = stk.pop();
+            vtd = visited.pop();
             if(vtd === 1) {
                 console.info(curr.value + " ");
             } else {
-                /* push */(stk.push(curr)>0);
-                /* push */(visited.push(1)>0);
+                stk.push(curr);
+                visited.push(1);
                 if(curr.rChild != null) {
-                    /* push */(stk.push(curr.rChild)>0);
-                    /* push */(visited.push(0)>0);
+                    stk.push(curr.rChild);
+                    visited.push(0);
                 }
                 if(curr.lChild != null) {
-                    /* push */(stk.push(curr.lChild)>0);
-                    /* push */(visited.push(0)>0);
+                    stk.push(curr.lChild);
+                    visited.push(0);
                 }
             }
-        }};
+        };
     }
 
     public iterativeInOrder() {
-        let stk : Array<TNode> = <any>([]);
-        let visited : Array<number> = <any>([]);
+        let stk : Array<TNode> = ([]);
+        let visited : Array<number> = [];
         let curr : TNode;
         let vtd : number;
         if(this.root != null) {
-            /* add */(stk.push(this.root)>0);
-            /* add */(visited.push(0)>0);
+            stk.push(this.root);
+            visited.push(0);
         }
-        while((/* isEmpty */(stk.length == 0) === false)) {{
-            curr = /* pop */stk.pop();
-            vtd = /* pop */visited.pop();
+        while(stk.length > 0) {
+            curr = stk.pop();
+            vtd = visited.pop();
             if(vtd === 1) {
                 console.info(curr.value + " ");
             } else {
                 if(curr.rChild != null) {
-                    /* push */(stk.push(curr.rChild)>0);
-                    /* push */(visited.push(0)>0);
+                    stk.push(curr.rChild);
+                    visited.push(0);
                 }
-                /* push */(stk.push(curr)>0);
-                /* push */(visited.push(1)>0);
+                stk.push(curr);
+                visited.push(1);
                 if(curr.lChild != null) {
-                    /* push */(stk.push(curr.lChild)>0);
-                    /* push */(visited.push(0)>0);
+                    stk.push(curr.lChild);
+                    visited.push(0);
                 }
             }
-        }};
+        };
     }
 
     public isBST3(root : TNode) : boolean {
-        if(root == null) return true;
-        if(root.lChild != null && this.FindMaxNode(root.lChild).value > root.value) return false;
-        if(root.rChild != null && this.FindMinNode(root.rChild).value <= root.value) return false;
+        if(root == null) 
+            return true;
+
+        if(root.lChild != null && this.FindMaxNode(root.lChild).value > root.value) 
+            return false;
+        if(root.rChild != null && this.FindMinNode(root.rChild).value <= root.value) 
+            return false;
         return (this.isBST3(root.lChild) && this.isBST3(root.rChild));
     }
 
-    public isBST$() : boolean {
-        return this.isBST$Tree_Node$int$int(this.root, -2147483648, 2147483647);
+    public isBST() : boolean {
+        return this.isBSTUtil(this.root, MIN_INT, MAX_INT);
     }
 
-    public isBST$Tree_Node$int$int(curr : TNode, min : number, max : number) : boolean {
-        if(curr == null) return true;
-        if(curr.value < min || curr.value > max) return false;
-        return this.isBST$Tree_Node$int$int(curr.lChild, min, curr.value) && this.isBST$Tree_Node$int$int(curr.rChild, curr.value, max);
+    public isBSTUtil(curr : TNode, min : number, max : number) : boolean {
+        if(curr == null) 
+            return true;
+
+        if(curr.value < min || curr.value > max) 
+            return false;
+        return this.isBSTUtil(curr.lChild, min, curr.value) && 
+        this.isBSTUtil(curr.rChild, curr.value, max);
     }
 
-    public isBST(curr? : any, min? : any, max? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null) && ((typeof min === 'number') || min === null) && ((typeof max === 'number') || max === null)) {
-            return <any>this.isBST$Tree_Node$int$int(curr, min, max);
-        } else if(curr === undefined && min === undefined && max === undefined) {
-            return <any>this.isBST$();
-        } else throw new Error('invalid overload');
-    }
-
-    public isBST2$() : boolean {
+    public isBST2() : boolean {
         let count : number[] = [0];
-        return this.isBST2$Tree_Node$int_A(this.root, count);
+        return this.isBST2Util(this.root, count);
     }
 
-    public isBST2$Tree_Node$int_A(root : TNode, count : number[]) : boolean {
+    public isBST2Util(root : TNode, count : number[]) : boolean {
         let ret : boolean;
         if(root != null) {
-            ret = this.isBST2$Tree_Node$int_A(root.lChild, count);
-            if(!ret) return false;
-            if(count[0] > root.value) return false;
+            ret = this.isBST2Util(root.lChild, count);
+            if(!ret) 
+                return false;
+            if(count[0] > root.value) 
+                return false;
             count[0] = root.value;
-            ret = this.isBST2$Tree_Node$int_A(root.rChild, count);
+            ret = this.isBST2Util(root.rChild, count);
             if(!ret) return false;
         }
         return true;
     }
 
-    public isBST2(root? : any, count? : any) : any {
-        if(((root != null && root instanceof <any>TNode) || root === null) && ((count != null && count instanceof <any>Array && (count.length==0 || count[0] == null ||(typeof count[0] === 'number'))) || count === null)) {
-            return <any>this.isBST2$Tree_Node$int_A(root, count);
-        } else if(root === undefined && count === undefined) {
-            return <any>this.isBST2$();
-        } else throw new Error('invalid overload');
-    }
-
     isCompleteTree() : boolean {
-        let que : Array<TNode> = <any>([]);
+        let que : Queue = new Queue();
         let temp : TNode = null;
         let noChild : number = 0;
-        if(this.root != null) /* add */(que.push(this.root)>0);
-        while((/* size */(<number>que.length) !== 0)) {{
-            temp = /* pop */que.pop();
+        if(this.root != null) 
+            que.add(this.root);
+        while(<number>que.size() > 0) {
+            temp = que.remove();
             if(temp.lChild != null) {
-                if(noChild === 1) return false;
-                /* add */(que.push(temp.lChild)>0);
-            } else noChild = 1;
+                if(noChild === 1) 
+                    return false;
+                que.add(temp.lChild);
+            } 
+            else 
+                noChild = 1;
+            
             if(temp.rChild != null) {
-                if(noChild === 1) return false;
-                /* add */(que.push(temp.rChild)>0);
-            } else noChild = 1;
-        }};
+                if(noChild === 1) 
+                    return false;
+                que.add(temp.rChild);
+            } 
+            else 
+                noChild = 1;
+        };
         return true;
     }
 
     isCompleteTreeUtil(curr : TNode, index : number, count : number) : boolean {
-        if(curr == null) return true;
-        if(index > count) return false;
-        return this.isCompleteTreeUtil(curr.lChild, index * 2 + 1, count) && this.isCompleteTreeUtil(curr.rChild, index * 2 + 2, count);
+        if(curr == null) 
+            return true;
+        if(index > count) 
+            return false;
+        return this.isCompleteTreeUtil(curr.lChild, index * 2 + 1, count) && 
+        this.isCompleteTreeUtil(curr.rChild, index * 2 + 2, count);
     }
 
     isCompleteTree2() : boolean {
@@ -738,143 +717,148 @@ class Tree {
     }
 
     isHeapUtil(curr : TNode, parentValue : number) : boolean {
-        if(curr == null) return true;
-        if(curr.value < parentValue) return false;
-        return (this.isHeapUtil(curr.lChild, curr.value) && this.isHeapUtil(curr.rChild, curr.value));
+        if(curr == null) 
+            return true;
+        if(curr.value < parentValue) 
+            return false;
+        return (this.isHeapUtil(curr.lChild, curr.value) && 
+        this.isHeapUtil(curr.rChild, curr.value));
     }
 
     isHeap() : boolean {
-        let infi : number = -9999999;
+        let infi : number = MIN_INT;
         return (this.isCompleteTree() && this.isHeapUtil(this.root, infi));
     }
 
     isHeapUtil2(curr : TNode, index : number, count : number, parentValue : number) : boolean {
-        if(curr == null) return true;
-        if(index > count) return false;
-        if(curr.value < parentValue) return false;
+        if(curr == null) 
+            return true;
+        if(index > count) 
+            return false;
+        if(curr.value < parentValue) 
+            return false;
         return this.isHeapUtil2(curr.lChild, index * 2 + 1, count, curr.value) && this.isHeapUtil2(curr.rChild, index * 2 + 2, count, curr.value);
     }
 
     isHeap2() : boolean {
         let count : number = this.numNodes();
-        let parentValue : number = -9999999;
+        let parentValue : number = MIN_INT;
         return this.isHeapUtil2(this.root, 0, count, parentValue);
     }
 
-    public treeToListRec$() : TNode {
-        let head : TNode = this.treeToListRec$Tree_Node(this.root);
+    public treeToListRec() : TNode {
+        let head : TNode = this.treeToListRecUtil(this.root);
         let temp : TNode = head;
         return temp;
     }
 
-    public treeToListRec$Tree_Node(curr : TNode) : TNode {
+    public treeToListRecUtil(curr : TNode) : TNode {
         let Head : TNode = null;
         let Tail : TNode = null;
-        if(curr == null) return null;
+
+        if(curr == null) 
+            return null;
+        
         if(curr.lChild == null && curr.rChild == null) {
             curr.lChild = curr;
             curr.rChild = curr;
             return curr;
         }
+
         if(curr.lChild != null) {
-            Head = this.treeToListRec$Tree_Node(curr.lChild);
+            Head = this.treeToListRecUtil(curr.lChild);
             Tail = Head.lChild;
             curr.lChild = Tail;
             Tail.rChild = curr;
-        } else Head = curr;
+        } 
+        else 
+            Head = curr;
+        
         if(curr.rChild != null) {
-            let tempHead : TNode = this.treeToListRec$Tree_Node(curr.rChild);
+            let tempHead : TNode = this.treeToListRecUtil(curr.rChild);
             Tail = tempHead.lChild;
             curr.rChild = tempHead;
             tempHead.lChild = curr;
-        } else Tail = curr;
+        } 
+        else 
+            Tail = curr;
+        
         Head.lChild = Tail;
         Tail.rChild = Head;
         return Head;
     }
 
-    public treeToListRec(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
-            return <any>this.treeToListRec$Tree_Node(curr);
-        } else if(curr === undefined) {
-            return <any>this.treeToListRec$();
-        } else throw new Error('invalid overload');
-    }
-
     public printAllPath() {
-        let stk : Array<number> = <any>([]);
+        let stk : Array<number> = [];
         this.printAllPathUtil(this.root, stk);
     }
 
     printAllPathUtil(curr : TNode, stk : Array<number>) {
-        if(curr == null) return;
-        /* push */(stk.push(curr.value)>0);
+        if(curr == null) 
+            return;
+        
+        stk.push(curr.value);
         if(curr.lChild == null && curr.rChild == null) {
             console.info(stk);
-            /* pop */stk.pop();
+            stk.pop();
             return;
         }
         this.printAllPathUtil(curr.rChild, stk);
         this.printAllPathUtil(curr.lChild, stk);
-        /* pop */stk.pop();
+        stk.pop();
     }
 
-    public LCA$int$int(first : number, second : number) : number {
-        let ans : TNode = this.LCA$Tree_Node$int$int(this.root, first, second);
-        if(ans != null) return ans.value; else return -2147483648;
+    public LCA(first : number, second : number) : number {
+        let ans : TNode = this.LCAUtil(this.root, first, second);
+        if(ans != null) 
+            return ans.value; 
+        else 
+            return MIN_INT;
     }
 
-    public LCA$Tree_Node$int$int(curr : TNode, first : number, second : number) : TNode {
+    public LCAUtil(curr : TNode, first : number, second : number) : TNode {
         let left : TNode;
         let right : TNode;
-        if(curr == null) return null;
-        if(curr.value === first || curr.value === second) return curr;
-        left = this.LCA$Tree_Node$int$int(curr.lChild, first, second);
-        right = this.LCA$Tree_Node$int$int(curr.rChild, first, second);
-        if(left != null && right != null) return curr; else if(left != null) return left; else return right;
+        if(curr == null) 
+            return null;
+        if(curr.value === first || curr.value === second) 
+            return curr;
+        left = this.LCAUtil(curr.lChild, first, second);
+        right = this.LCAUtil(curr.rChild, first, second);
+        if(left != null && right != null) 
+            return curr; 
+        else if(left != null) 
+            return left; 
+        else 
+            return right;
     }
 
-    public LCA(curr? : any, first? : any, second? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null) && ((typeof first === 'number') || first === null) && ((typeof second === 'number') || second === null)) {
-            return <any>this.LCA$Tree_Node$int$int(curr, first, second);
-        } else if(((typeof curr === 'number') || curr === null) && ((typeof first === 'number') || first === null) && second === undefined) {
-            return <any>this.LCA$int$int(curr, first);
-        } else throw new Error('invalid overload');
+    public LcaBST(first : number, second : number) : number {
+        return this.LcaBSTUtil(this.root, first, second);
     }
 
-    public LcaBST$int$int(first : number, second : number) : number {
-        return this.LcaBST$Tree_Node$int$int(this.root, first, second);
-    }
-
-    public LcaBST$Tree_Node$int$int(curr : TNode, first : number, second : number) : number {
+    public LcaBSTUtil(curr : TNode, first : number, second : number) : number {
         if(curr == null) {
-            return 2147483647;
+            return MAX_INT;
         }
         if(curr.value > first && curr.value > second) {
-            return this.LcaBST$Tree_Node$int$int(curr.lChild, first, second);
+            return this.LcaBSTUtil(curr.lChild, first, second);
         }
         if(curr.value < first && curr.value < second) {
-            return this.LcaBST$Tree_Node$int$int(curr.rChild, first, second);
+            return this.LcaBSTUtil(curr.rChild, first, second);
         }
         return curr.value;
     }
 
-    public LcaBST(curr? : any, first? : any, second? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null) && ((typeof first === 'number') || first === null) && ((typeof second === 'number') || second === null)) {
-            return <any>this.LcaBST$Tree_Node$int$int(curr, first, second);
-        } else if(((typeof curr === 'number') || curr === null) && ((typeof first === 'number') || first === null) && second === undefined) {
-            return <any>this.LcaBST$int$int(curr, first);
-        } else throw new Error('invalid overload');
+    public trimOutsideRange(min : number, max : number) {
+        this.trimOutsideRangeUtil(this.root, min, max);
     }
 
-    public trimOutsideRange$int$int(min : number, max : number) {
-        this.trimOutsideRange$Tree_Node$int$int(this.root, min, max);
-    }
-
-    public trimOutsideRange$Tree_Node$int$int(curr : TNode, min : number, max : number) : TNode {
-        if(curr == null) return null;
-        curr.lChild = this.trimOutsideRange$Tree_Node$int$int(curr.lChild, min, max);
-        curr.rChild = this.trimOutsideRange$Tree_Node$int$int(curr.rChild, min, max);
+    public trimOutsideRangeUtil(curr : TNode, min : number, max : number) : TNode {
+        if(curr == null) 
+            return null;
+        curr.lChild = this.trimOutsideRangeUtil(curr.lChild, min, max);
+        curr.rChild = this.trimOutsideRangeUtil(curr.rChild, min, max);
         if(curr.value < min) {
             return curr.rChild;
         }
@@ -884,37 +868,23 @@ class Tree {
         return curr;
     }
 
-    public trimOutsideRange(curr? : any, min? : any, max? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null) && ((typeof min === 'number') || min === null) && ((typeof max === 'number') || max === null)) {
-            return <any>this.trimOutsideRange$Tree_Node$int$int(curr, min, max);
-        } else if(((typeof curr === 'number') || curr === null) && ((typeof min === 'number') || min === null) && max === undefined) {
-            return <any>this.trimOutsideRange$int$int(curr, min);
-        } else throw new Error('invalid overload');
+    public printInRange(min : number, max : number) {
+        this.printInRangeUtil(this.root, min, max);
     }
 
-    public printInRange$int$int(min : number, max : number) {
-        this.printInRange$Tree_Node$int$int(this.root, min, max);
-    }
-
-    public printInRange$Tree_Node$int$int(root : TNode, min : number, max : number) {
-        if(root == null) return;
-        this.printInRange$Tree_Node$int$int(root.lChild, min, max);
-        if(root.value >= min && root.value <= max) console.info(root.value + " ");
-        this.printInRange$Tree_Node$int$int(root.rChild, min, max);
-    }
-
-    public printInRange(root? : any, min? : any, max? : any) : any {
-        if(((root != null && root instanceof <any>TNode) || root === null) && ((typeof min === 'number') || min === null) && ((typeof max === 'number') || max === null)) {
-            return <any>this.printInRange$Tree_Node$int$int(root, min, max);
-        } else if(((typeof root === 'number') || root === null) && ((typeof min === 'number') || min === null) && max === undefined) {
-            return <any>this.printInRange$int$int(root, min);
-        } else throw new Error('invalid overload');
+    public printInRangeUtil(root : TNode, min : number, max : number) {
+        if(root == null) 
+            return;
+        this.printInRangeUtil(root.lChild, min, max);
+        if(root.value >= min && root.value <= max) 
+            console.info(root.value + " ");
+        this.printInRangeUtil(root.rChild, min, max);
     }
 
     public FloorBST(val : number) : number {
         let curr : TNode = this.root;
-        let floor : number = 2147483647;
-        while((curr != null)) {{
+        let floor : number = MAX_INT;
+        while(curr != null) {
             if(curr.value === val) {
                 floor = curr.value;
                 break;
@@ -924,14 +894,14 @@ class Tree {
                 floor = curr.value;
                 curr = curr.rChild;
             }
-        }};
+        };
         return floor;
     }
 
     public CeilBST(val : number) : number {
         let curr : TNode = this.root;
-        let ceil : number = -2147483648;
-        while((curr != null)) {{
+        let ceil : number = MIN_INT;
+        while(curr != null) {
             if(curr.value === val) {
                 ceil = curr.value;
                 break;
@@ -941,33 +911,28 @@ class Tree {
             } else {
                 curr = curr.rChild;
             }
-        }};
+        };
         return ceil;
     }
 
-    public findMaxBT$() : number {
-        let ans : number = this.findMaxBT$Tree_Node(this.root);
+    public findMaxBT() : number {
+        let ans : number = this.findMaxBTUtil(this.root);
         return ans;
     }
 
-    public findMaxBT$Tree_Node(curr : TNode) : number {
+    public findMaxBTUtil(curr : TNode) : number {
         let left : number;
         let right : number;
-        if(curr == null) return -2147483648;
+        if(curr == null) 
+            return MIN_INT;
         let max : number = curr.value;
-        left = this.findMaxBT$Tree_Node(curr.lChild);
-        right = this.findMaxBT$Tree_Node(curr.rChild);
-        if(left > max) max = left;
-        if(right > max) max = right;
+        left = this.findMaxBTUtil(curr.lChild);
+        right = this.findMaxBTUtil(curr.rChild);
+        if(left > max) 
+            max = left;
+        if(right > max) 
+            max = right;
         return max;
-    }
-
-    public findMaxBT(curr? : any) : any {
-        if(((curr != null && curr instanceof <any>TNode) || curr === null)) {
-            return <any>this.findMaxBT$Tree_Node(curr);
-        } else if(curr === undefined) {
-            return <any>this.findMaxBT$();
-        } else throw new Error('invalid overload');
     }
 
     public searchBT(value : number) : boolean {
@@ -977,114 +942,83 @@ class Tree {
     public searchBTUtil(curr : TNode, value : number) : boolean {
         let left : boolean;
         let right : boolean;
-        if(curr == null) return false;
-        if(curr.value === value) return true;
+        if(curr == null) 
+            return false;
+        if(curr.value === value) 
+            return true;
         left = this.searchBTUtil(curr.lChild, value);
-        if(left) return true;
+        if(left) 
+            return true;
         right = this.searchBTUtil(curr.rChild, value);
-        if(right) return true;
+        if(right) 
+            return true;
         return false;
     }
 
-    public CreateBinaryTree$int_A(arr : number[]) {
-        this.root = this.CreateBinaryTree$int_A$int$int(arr, 0, arr.length - 1);
+    public CreateBinaryTree(arr : number[]) {
+        this.root = this.CreateBinaryTreeUtil(arr, 0, arr.length - 1);
     }
 
-    public CreateBinaryTree$int_A$int$int(arr : number[], start : number, end : number) : TNode {
+    public CreateBinaryTreeUtil(arr : number[], start : number, end : number) : TNode {
         let curr : TNode = null;
-        if(start > end) return null;
+        if(start > end) 
+            return null;
         let mid : number = ((start + end) / 2|0);
         curr = new TNode(arr[mid]);
-        curr.lChild = this.CreateBinaryTree$int_A$int$int(arr, start, mid - 1);
-        curr.rChild = this.CreateBinaryTree$int_A$int$int(arr, mid + 1, end);
+        curr.lChild = this.CreateBinaryTreeUtil(arr, start, mid - 1);
+        curr.rChild = this.CreateBinaryTreeUtil(arr, mid + 1, end);
         return curr;
     }
 
-    public CreateBinaryTree(arr? : any, start? : any, end? : any) : any {
-        if(((arr != null && arr instanceof <any>Array && (arr.length==0 || arr[0] == null ||(typeof arr[0] === 'number'))) || arr === null) && ((typeof start === 'number') || start === null) && ((typeof end === 'number') || end === null)) {
-            return <any>this.CreateBinaryTree$int_A$int$int(arr, start, end);
-        } else if(((arr != null && arr instanceof <any>Array && (arr.length==0 || arr[0] == null ||(typeof arr[0] === 'number'))) || arr === null) && start === undefined && end === undefined) {
-            return <any>this.CreateBinaryTree$int_A(arr);
-        } else throw new Error('invalid overload');
-    }
-
     isBSTArray(preorder : number[], size : number) : boolean {
-        let stk : Array<number> = <any>([]);
+        let stk : Array<number> = [];
         let value : number;
-        let root : number = -999999;
-        for(let i : number = 0; i < size; i++) {{
+        let root : number = MIN_INT;
+        for(let i : number = 0; i < size; i++) {
             value = preorder[i];
             if(value < root) return false;
-            while((/* size */(<number>stk.length) > 0 && /* peek */((s) => { return s[s.length-1]; })(stk) < value)) {root = /* pop */stk.pop()};
-            /* push */(stk.push(value)>0);
-        };}
+            while((<number>stk.length > 0) && (stk[stk.length-1]< value)) {
+                root = stk.pop()
+            };
+            stk.push(value);
+        };
         return true;
-    }
-}
-
-class TNode {
-    value : number;
-    lChild : TNode;
-    rChild : TNode;
-
-    public constructor(v? : any, l? : any, r? : any) {
-        if(((typeof v === 'number') || v === null) && ((l != null && l instanceof <any>TNode) || l === null) && ((r != null && r instanceof <any>TNode) || r === null)) {
-            let __args = arguments;
-            if(this.value===undefined) this.value = 0;
-            if(this.lChild===undefined) this.lChild = null;
-            if(this.rChild===undefined) this.rChild = null;
-            if(this.value===undefined) this.value = 0;
-            if(this.lChild===undefined) this.lChild = null;
-            if(this.rChild===undefined) this.rChild = null;
-            (() => {
-                this.value = v;
-                this.lChild = l;
-                this.rChild = r;
-            })();
-        } else if(((typeof v === 'number') || v === null) && l === undefined && r === undefined) {
-            let __args = arguments;
-            if(this.value===undefined) this.value = 0;
-            if(this.lChild===undefined) this.lChild = null;
-            if(this.rChild===undefined) this.rChild = null;
-            if(this.value===undefined) this.value = 0;
-            if(this.lChild===undefined) this.lChild = null;
-            if(this.rChild===undefined) this.rChild = null;
-            (() => {
-                this.value = v;
-                this.lChild = null;
-                this.rChild = null;
-            })();
-        } else throw new Error('invalid overload');
     }
 }
 
 function main() {
     let t : Tree = new Tree();
     let arr : number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    t.levelOrderBinaryTree$int_A(arr);
-    console.info("");
-    console.info(t.isHeap());
-    console.info(t.isHeap2());
-    console.info(t.isCompleteTree());
-    console.info("");
+    t.levelOrderBinaryTree(arr);
+
+    console.info("isHeap : " + t.isHeap());
+    console.info("isHeap2 : " + t.isHeap2());
+    console.info("isCompleteTree : " + t.isCompleteTree());
+    
+    console.info("PrintBredthFirst : ");
     t.PrintBredthFirst();
-    console.info("");
+    
+    console.info("PrintPreOrder : ");
     t.PrintPreOrder();
-    console.info("");
+    
+    console.info("PrintLevelOrderLineByLine : ");
     t.PrintLevelOrderLineByLine();
-    console.info("");
+
+    console.info("PrintLevelOrderLineByLine2 : ");
     t.PrintLevelOrderLineByLine2();
-    console.info("");
+
+    console.info("PrintSpiralTree : ");
     t.PrintSpiralTree();
-    console.info("");
+
+    console.info("printAllPath : ");
     t.printAllPath();
-    console.info("");
-    t.NthInOrder$int(4);
-    console.info("");
-    t.NthPostOrder$int(4);
-    console.info("");
-    t.NthPreOrder$int(4);
-    console.info("");
+
+    console.info("NthInOrder : " + t.NthInOrder(4));
+    
+    console.info("NthPostOrder : " + t.NthPostOrder(4));
+    
+    console.info("NthPreOrder : " + t.NthPreOrder(4));
 }
 
 main();
+
