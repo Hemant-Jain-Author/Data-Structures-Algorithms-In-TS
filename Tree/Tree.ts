@@ -62,11 +62,11 @@ class Tree {
         this.root = null;
     }
 
-    public levelOrderBinaryTree(arr : number[]) {
+    public levelOrderBinaryTree(arr :  Array<number>) {
         this.root = this.levelOrderBinaryTreeUtil(arr, 0);
     }
 
-    public levelOrderBinaryTreeUtil(arr : number[], start : number) : TNode {
+    public levelOrderBinaryTreeUtil(arr :  Array<number>, start : number) : TNode {
         let size : number = arr.length;
         let curr : TNode = new TNode(arr[start]);
         let left : number = 2 * start + 1;
@@ -109,11 +109,11 @@ class Tree {
 
     
     public NthPreOrder(index : number) {
-        let counter : number[] = [0];
+        let counter :  Array<number> = [0];
         this.NthPreOrderUtil(this.root, index, counter);
     }
 
-    public NthPreOrderUtil(node : TNode, index : number, counter : number[]) {
+    public NthPreOrderUtil(node : TNode, index : number, counter :  Array<number>) {
         if(node != null) {
             counter[0]++;
             if(counter[0] === index) {
@@ -137,11 +137,11 @@ class Tree {
     }
 
     public NthPostOrder(index : number) {
-        let counter : number[] = [0];
+        let counter :  Array<number> = [0];
         this.NthPostOrderUtil(this.root, index, counter);
     }
 
-    public NthPostOrderUtil(node : TNode, index : number, counter : number[]) {
+    public NthPostOrderUtil(node : TNode, index : number, counter :  Array<number>) {
         if(node != null) {
             this.NthPostOrderUtil(node.lChild, index, counter);
             this.NthPostOrderUtil(node.rChild, index, counter);
@@ -165,11 +165,11 @@ class Tree {
     }
 
     public NthInOrder(index : number) {
-        let counter : number[] = [0];
+        let counter :  Array<number> = [0];
         this.NthInOrderUtil(this.root, index, counter);
     }
 
-    public NthInOrderUtil(node : TNode, index : number, counter : number[]) {
+    public NthInOrderUtil(node : TNode, index : number, counter :  Array<number>) {
         if(node != null) {
             this.NthInOrderUtil(node.lChild, index, counter);
             counter[0]++;
@@ -196,7 +196,7 @@ class Tree {
     }
 
     public PrintDepthFirst() {
-        let stk : Array<TNode> = ([]);
+        let stk : Array<TNode> = new Array<TNode>();
         let temp : TNode;
         if(this.root != null) 
             stk.push(this.root);
@@ -259,13 +259,13 @@ class Tree {
     }
 
     PrintSpiralTree() {
-        let stk1 : Array<TNode> = ([]);
-        let stk2 : Array<TNode> = ([]);
+        let stk1 : Array<TNode> = new Array<TNode>();
+        let stk2 : Array<TNode> = new Array<TNode>();
         let temp : TNode;
         if(this.root != null) 
             stk1.push(this.root);
-        while(<number>stk1.length > 0 || <number>stk2.length > 0) {
-            while(<number>stk1.length > 0) {
+        while(stk1.length > 0 || stk2.length > 0) {
+            while(stk1.length > 0) {
                 temp = stk1.pop();
                 console.info(" " + temp.value);
                 if(temp.rChild != null) 
@@ -273,7 +273,7 @@ class Tree {
                 if(temp.lChild != null) 
                     stk2.push(temp.lChild);
             };
-            while(<number>stk2.length > 0) {
+            while(stk2.length > 0) {
                 temp = stk2.pop();
                 console.info(" " + temp.value);
                 if(temp.lChild != null) 
@@ -519,7 +519,7 @@ class Tree {
         if(curr == null) 
             return 0;
         
-            leftPath = this.TreeDepthUtil(curr.lChild);
+        leftPath = this.TreeDepthUtil(curr.lChild);
         rightPath = this.TreeDepthUtil(curr.rChild);
         max = leftPath + rightPath + 1;
         leftMax = this.maxLengthPathBTUtil(curr.lChild);
@@ -558,7 +558,7 @@ class Tree {
     }
 
     public iterativePreOrder() {
-        let stk : Array<TNode> = ([]);
+        let stk : Array<TNode> = new Array<TNode>();
         let curr : TNode;
         if(this.root != null) 
             stk.push(this.root);
@@ -573,8 +573,8 @@ class Tree {
     }
 
     public iterativePostOrder() {
-        let stk : Array<TNode> = ([]);
-        let visited : Array<number> = [];
+        let stk : Array<TNode> = new Array<TNode>();
+        let visited : Array<number> = new Array<number>();
         let curr : TNode;
         let vtd : number;
         if(this.root != null) {
@@ -602,8 +602,8 @@ class Tree {
     }
 
     public iterativeInOrder() {
-        let stk : Array<TNode> = ([]);
-        let visited : Array<number> = [];
+        let stk : Array<TNode> = new Array<TNode>();
+        let visited : Array<number> = new Array<number>();
         let curr : TNode;
         let vtd : number;
         if(this.root != null) {
@@ -656,11 +656,11 @@ class Tree {
     }
 
     public isBST2() : boolean {
-        let count : number[] = [0];
+        let count :  Array<number> = [0];
         return this.isBST2Util(this.root, count);
     }
 
-    public isBST2Util(root : TNode, count : number[]) : boolean {
+    public isBST2Util(root : TNode, count :  Array<number>) : boolean {
         let ret : boolean;
         if(root != null) {
             ret = this.isBST2Util(root.lChild, count);
@@ -789,7 +789,7 @@ class Tree {
     }
 
     public printAllPath() {
-        let stk : Array<number> = [];
+        let stk : Array<number> = new Array<number>();
         this.printAllPathUtil(this.root, stk);
     }
 
@@ -955,11 +955,11 @@ class Tree {
         return false;
     }
 
-    public CreateBinaryTree(arr : number[]) {
+    public CreateBinaryTree(arr :  Array<number>) {
         this.root = this.CreateBinaryTreeUtil(arr, 0, arr.length - 1);
     }
 
-    public CreateBinaryTreeUtil(arr : number[], start : number, end : number) : TNode {
+    public CreateBinaryTreeUtil(arr :  Array<number>, start : number, end : number) : TNode {
         let curr : TNode = null;
         if(start > end) 
             return null;
@@ -970,14 +970,14 @@ class Tree {
         return curr;
     }
 
-    isBSTArray(preorder : number[], size : number) : boolean {
-        let stk : Array<number> = [];
+    isBSTArray(preorder :  Array<number>, size : number) : boolean {
+        let stk : Array<number> = new Array<number>();
         let value : number;
         let root : number = MIN_INT;
         for(let i : number = 0; i < size; i++) {
             value = preorder[i];
             if(value < root) return false;
-            while((<number>stk.length > 0) && (stk[stk.length-1]< value)) {
+            while((stk.length > 0) && (stk[stk.length-1]< value)) {
                 root = stk.pop()
             };
             stk.push(value);
@@ -988,7 +988,7 @@ class Tree {
 
 function main() {
     let t : Tree = new Tree();
-    let arr : number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let arr :  Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     t.levelOrderBinaryTree(arr);
 
     console.info("isHeap : " + t.isHeap());
@@ -1014,11 +1014,8 @@ function main() {
     t.printAllPath();
 
     console.info("NthInOrder : " + t.NthInOrder(4));
-    
     console.info("NthPostOrder : " + t.NthPostOrder(4));
-    
     console.info("NthPreOrder : " + t.NthPreOrder(4));
 }
 
 main();
-

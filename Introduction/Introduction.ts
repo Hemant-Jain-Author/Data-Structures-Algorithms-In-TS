@@ -1,15 +1,15 @@
-function printArray(arr : number[]) {
+function printArray(arr : Array<number>) {
     console.info(arr);
 }
 
-function swap(arr : number[], x : number, y : number) {
+function swap(arr : Array<number>, x : number, y : number) {
     let temp : number = arr[x];
     arr[x] = arr[y];
     arr[y] = temp;
     return;
 }
 
-function SumArray(arr : number[]) : number {
+function SumArray(arr : Array<number>) : number {
     let size : number = arr.length;
     let total : number = 0;
     for(let index : number = 0; index < size; index++) {
@@ -19,7 +19,7 @@ function SumArray(arr : number[]) : number {
 }
 
 function test1() {
-    let arr : number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let arr : Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     console.info("Sum of values in array:" + SumArray(arr));
 }
 
@@ -39,7 +39,7 @@ function test2() {
     console.info("main line 2");
 }
 
-function SequentialSearch(arr : number[], size : number, value : number) : number {
+function SequentialSearch(arr : Array<number>, size : number, value : number) : number {
     for(let i : number = 0; i < size; i++) {
         if(value === arr[i]) {
             return i;
@@ -48,12 +48,12 @@ function SequentialSearch(arr : number[], size : number, value : number) : numbe
     return -1;
 }
 
-function BinarySearch(arr : number[], size : number, value : number) : number {
+function BinarySearch(arr : Array<number>, size : number, value : number) : number {
     let mid : number;
     let low : number = 0;
     let high : number = size - 1;
     while(low <= high) {
-        mid = low + ((high - low) / 2|0);
+        mid = ((low + high ) / 2|0);
         if(arr[mid] === value) {
             return mid;
         } else {
@@ -68,18 +68,18 @@ function BinarySearch(arr : number[], size : number, value : number) : number {
 }
 
 function test3() {
-    let arr : number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let arr : Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     console.info("Sum of values in array:" + SequentialSearch(arr, arr.length, 7));
     console.info("Sum of values in array:" + BinarySearch(arr, arr.length, 7));
 }
 
-function rotateArray(a : number[], n : number, k : number) {
+function rotateArray(a : Array<number>, n : number, k : number) {
     reverseArray(a, 0, k - 1);
     reverseArray(a, k, n - 1);
     reverseArray(a, 0, n - 1);
 }
 
-function reverseArray(a : number[], start : number, end : number) {
+function reverseArray(a : Array<number>, start : number, end : number) {
     for(let i : number = start, j : number = end; i < j; i++, j--) {
         let temp : number = a[i];
         a[i] = a[j];
@@ -87,7 +87,7 @@ function reverseArray(a : number[], start : number, end : number) {
     };
 }
 
-function reverseArray2(a : number[]) {
+function reverseArray2(a : Array<number>) {
     let start : number = 0;
     let end : number = a.length - 1;
     for(let i : number = start, j : number = end; i < j; i++, j--) {
@@ -98,12 +98,12 @@ function reverseArray2(a : number[]) {
 }
 
 function test4() {
-    let arr : number[] = [1, 2, 3, 4, 5, 6];
+    let arr : Array<number> = [1, 2, 3, 4, 5, 6];
     rotateArray(arr, arr.length, 2);
     printArray(arr);
 }
 
-function maxSubArraySum(a : number[], size : number) : number {
+function maxSubArraySum(a : Array<number>, size : number) : number {
     let maxSoFar : number = 0;
     let maxEndingHere : number = 0;
     for(let i : number = 0; i < size; i++) {
@@ -119,11 +119,11 @@ function maxSubArraySum(a : number[], size : number) : number {
 }
 
 function test5() {
-    let arr : number[] = [1, -2, 3, 4, -4, 6, -4, 3, 2];
+    let arr : Array<number> = [1, -2, 3, 4, -4, 6, -4, 3, 2];
     console.info("Max sub array sum :" + maxSubArraySum(arr, 9));
 }
 
-function WaveArray2(arr : number[]) {
+function WaveArray2(arr : Array<number>) {
     let size : number = arr.length;
     for(let i : number = 1; i < size; i += 2) {
         if((i - 1) >= 0 && arr[i] > arr[i - 1]) {
@@ -135,7 +135,7 @@ function WaveArray2(arr : number[]) {
     };
 }
 
-function WaveArray(arr : number[]) {
+function WaveArray(arr : Array<number>) {
     let size : number = arr.length;
     arr.sort();
     printArray(arr);
@@ -145,16 +145,16 @@ function WaveArray(arr : number[]) {
 }
 
 function test6() {
-    let arr : number[] = [8, 1, 2, 3, 4, 5, 6, 4, 2];
+    let arr : Array<number> = [8, 1, 2, 3, 4, 5, 6, 4, 2];
     printArray(arr);
     WaveArray(arr);
     printArray(arr);
-    let arr2 : number[] = [8, 1, 2, 3, 4, 5, 6, 4, 2];
+    let arr2 : Array<number> = [8, 1, 2, 3, 4, 5, 6, 4, 2];
     WaveArray2(arr2);
     printArray(arr2);
 }
 
-function indexArray(arr : number[], size : number) {
+function indexArray(arr : Array<number>, size : number) {
     for(let i : number = 0; i < size; i++) {
         let curr : number = i;
         let value : number = -1;
@@ -169,7 +169,7 @@ function indexArray(arr : number[], size : number) {
     };
 }
 
-function indexArray2(arr : number[], size : number) {
+function indexArray2(arr : Array<number>, size : number) {
     let temp : number;
     for(let i : number = 0; i < size; i++) {
         while((arr[i] !== -1 && arr[i] !== i)) {
@@ -181,17 +181,17 @@ function indexArray2(arr : number[], size : number) {
 }
 
 function test7() {
-    let arr : number[] = [8, -1, 6, 1, 9, 3, 2, 7, 4, -1];
+    let arr : Array<number> = [8, -1, 6, 1, 9, 3, 2, 7, 4, -1];
     let size : number = arr.length;
     indexArray2(arr, size);
     printArray(arr);
-    let arr2 : number[] = [8, -1, 6, 1, 9, 3, 2, 7, 4, -1];
+    let arr2 : Array<number> = [8, -1, 6, 1, 9, 3, 2, 7, 4, -1];
     size = arr2.length;
     indexArray(arr2, size);
     printArray(arr2);
 }
 
-function Sort1toN(arr : number[], size : number) {
+function Sort1toN(arr : Array<number>, size : number) {
     let curr : number;
     let value : number;
     let next : number;
@@ -207,7 +207,7 @@ function Sort1toN(arr : number[], size : number) {
     };
 }
 
-function Sort1toN2(arr : number[], size : number) {
+function Sort1toN2(arr : Array<number>, size : number) {
     let temp : number;
     for(let i : number = 0; i < size; i++) {
         while(arr[i] !== i + 1 && arr[i] > 1) {
@@ -219,17 +219,17 @@ function Sort1toN2(arr : number[], size : number) {
 }
 
 function test8() {
-    let arr : number[] = [8, 5, 6, 1, 9, 3, 2, 7, 4, 10];
+    let arr : Array<number> = [8, 5, 6, 1, 9, 3, 2, 7, 4, 10];
     let size : number = arr.length;
     Sort1toN2(arr, size);
     printArray(arr);
-    let arr2 : number[] = [8, 5, 6, 1, 9, 3, 2, 7, 4, 10];
+    let arr2 : Array<number> = [8, 5, 6, 1, 9, 3, 2, 7, 4, 10];
     size = arr2.length;
     Sort1toN(arr2, size);
     printArray(arr2);
 }
 
-function SmallestPositiveMissingNumber(arr : number[], size : number) : number {
+function SmallestPositiveMissingNumber(arr : Array<number>, size : number) : number {
     let found : number;
     for(let i : number = 1; i < size + 1; i++) {
         found = 0;
@@ -246,7 +246,7 @@ function SmallestPositiveMissingNumber(arr : number[], size : number) : number {
     return -1;
 }
 
-function SmallestPositiveMissingNumber2(arr : number[], size : number) : number {
+function SmallestPositiveMissingNumber2(arr : Array<number>, size : number) : number {
     let hs = new Set();
     for (var i = 0; i < size; i++) {
         hs.add(arr[i]);
@@ -259,7 +259,7 @@ function SmallestPositiveMissingNumber2(arr : number[], size : number) : number 
     return -1;
 }
 
-function SmallestPositiveMissingNumber3(arr : number[], size : number) : number {
+function SmallestPositiveMissingNumber3(arr : Array<number>, size : number) : number {
     let aux = new Array(size).fill(-1);
 
     for (var i = 0; i < size; i++) {
@@ -276,7 +276,7 @@ function SmallestPositiveMissingNumber3(arr : number[], size : number) : number 
     return -1;
 }
 
-function SmallestPositiveMissingNumber4(arr : number[], size : number) : number {
+function SmallestPositiveMissingNumber4(arr : Array<number>, size : number) : number {
     let temp : number;
     for(let i : number = 0; i < size; i++) {
         while(arr[i] !== i + 1 && arr[i] > 0 && arr[i] <= size) {
@@ -294,7 +294,7 @@ function SmallestPositiveMissingNumber4(arr : number[], size : number) : number 
 }
 
 function test9() {
-    let arr : number[] = [8, 5, 6, 1, 9, 11, 2, 7, 4, 10];
+    let arr : Array<number> = [8, 5, 6, 1, 9, 11, 2, 7, 4, 10];
     let size : number = arr.length;
     console.info("Max sub array sum :" + SmallestPositiveMissingNumber(arr, size));
     console.info("Max sub array sum :" + SmallestPositiveMissingNumber2(arr, size));
@@ -302,8 +302,8 @@ function test9() {
     console.info("Max sub array sum :" + SmallestPositiveMissingNumber4(arr, size));
 }
 
-function MaxMinArr(arr : number[], size : number) {
-    let aux : number[] = /* copyOf */arr.slice(0,size);
+function MaxMinArr(arr : Array<number>, size : number) {
+    let aux : Array<number> = /* copyOf */arr.slice(0,size);
     let start : number = 0;
     let stop : number = size - 1;
     for(let i : number = 0; i < size; i++) {
@@ -317,7 +317,7 @@ function MaxMinArr(arr : number[], size : number) {
     };
 }
 
-function ReverseArr(arr : number[], start : number, stop : number) {
+function ReverseArr(arr : Array<number>, start : number, stop : number) {
     while(start < stop) {
         swap(arr, start, stop);
         start += 1;
@@ -325,24 +325,24 @@ function ReverseArr(arr : number[], start : number, stop : number) {
     };
 }
 
-function MaxMinArr2(arr : number[], size : number) {
+function MaxMinArr2(arr : Array<number>, size : number) {
     for(let i : number = 0; i < (size - 1); i++) {
         ReverseArr(arr, i, size - 1);
     };
 }
 
 function test10() {
-    let arr : number[] = [1, 2, 3, 4, 5, 6, 7];
+    let arr : Array<number> = [1, 2, 3, 4, 5, 6, 7];
     let size : number = arr.length;
     MaxMinArr(arr, size);
     printArray(arr);
-    let arr2 : number[] = [1, 2, 3, 4, 5, 6, 7];
+    let arr2 : Array<number> = [1, 2, 3, 4, 5, 6, 7];
     let size2 : number = arr.length;
     MaxMinArr2(arr2, size2);
     printArray(arr2);
 }
 
-function maxCircularSum(arr : number[], size : number) : number {
+function maxCircularSum(arr : Array<number>, size : number) : number {
     let sumAll : number = 0;
     let currVal : number = 0;
     let maxVal : number;
@@ -361,11 +361,11 @@ function maxCircularSum(arr : number[], size : number) : number {
 }
 
 function test11() {
-    let arr : number[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+    let arr : Array<number> = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
     console.info("MaxCirculrSm: " + maxCircularSum(arr, arr.length));
 }
 
-function ArrayIndexMaxDiff(arr : number[], size : number) : number {
+function ArrayIndexMaxDiff(arr : Array<number>, size : number) : number {
     let maxDiff : number = -1;
     let j : number;
     for(let i : number = 0; i < size; i++) {
@@ -381,9 +381,9 @@ function ArrayIndexMaxDiff(arr : number[], size : number) : number {
     return maxDiff;
 }
 
-function ArrayIndexMaxDiff2(arr : number[], size : number) : number {
-    let leftMin : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(size);
-    let rightMax : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(size);
+function ArrayIndexMaxDiff2(arr : Array<number>, size : number) : number {
+    let leftMin : Array<number> = new Array(size);
+    let rightMax : Array<number> = new Array(size);
     leftMin[0] = arr[0];
     let i : number;
     let j : number;
@@ -418,12 +418,12 @@ function ArrayIndexMaxDiff2(arr : number[], size : number) : number {
 }
 
 function test12() {
-    let arr : number[] = [33, 9, 10, 3, 2, 60, 30, 33, 1];
+    let arr : Array<number> = [33, 9, 10, 3, 2, 60, 30, 33, 1];
     console.info("ArrayIndexMaxDiff : " + ArrayIndexMaxDiff(arr, arr.length));
     console.info("ArrayIndexMaxDiff : " + ArrayIndexMaxDiff2(arr, arr.length));
 }
 
-function maxPathSum(arr1 : number[], size1 : number, arr2 : number[], size2 : number) : number {
+function maxPathSum(arr1 : Array<number>, size1 : number, arr2 : Array<number>, size2 : number) : number {
     let i : number = 0;
     let j : number = 0;
     let result : number = 0;
@@ -458,8 +458,8 @@ function maxPathSum(arr1 : number[], size1 : number, arr2 : number[], size2 : nu
 }
 
 function test13() {
-    let arr1 : number[] = [12, 13, 18, 20, 22, 26, 70];
-    let arr2 : number[] = [11, 15, 18, 19, 20, 26, 30, 31];
+    let arr1 : Array<number> = [12, 13, 18, 20, 22, 26, 70];
+    let arr2 : Array<number> = [11, 15, 18, 19, 20, 26, 30, 31];
     console.info("Max Path Sum :: " + maxPathSum(arr1, arr1.length, arr2, arr2.length));
 }
 
@@ -522,7 +522,7 @@ function fibonacci(n : number) : number {
     return fibonacci(n - 1) + fibonacci(n - 2);
 }
 
-function permutation(arr : number[], i : number, length : number) {
+function permutation(arr : Array<number>, i : number, length : number) {
     if(length === i) {
         printArray(arr);
         return;
@@ -537,14 +537,14 @@ function permutation(arr : number[], i : number, length : number) {
 }
 
 function test15() {
-    let arr : number[] = [0, 0, 0, 0, 0];
+    let arr : Array<number> = [0, 0, 0, 0, 0];
     for(let i : number = 0; i < 5; i++) {
         arr[i] = i;
     };
     permutation(arr, 0, 5);
 }
 
-function BinarySearchRecursive(arr : number[], low : number, high : number, value : number) : number {
+function BinarySearchRecursive(arr : Array<number>, low : number, high : number, value : number) : number {
     if(low > high) return -1;
     let mid : number = ((low + high) / 2|0);
     if(arr[mid] === value) {
@@ -557,7 +557,7 @@ function BinarySearchRecursive(arr : number[], low : number, high : number, valu
 }
 
 function test16() {
-    let arr : number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let arr : Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     console.info(BinarySearchRecursive(arr, 0, arr.length - 1, 6));
     console.info(BinarySearchRecursive(arr, 0, arr.length - 1, 16));
 }

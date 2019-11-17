@@ -2,12 +2,9 @@ class CLNode {
     public value : number;
     public next : CLNode;
 
-    public constructor(v : number, n : CLNode) {
-        this.value = v;
-        if(this.next===undefined) 
-            this.next = null;
-        else 
-            this.next = n;            
+    public constructor(v : number, n : CLNode = null) {
+        this.value = v;            
+        this.next = n;            
     }
 }
 
@@ -24,7 +21,8 @@ class CircularLinkedList {
     }
 
     public peek() : number {
-        if(this.isEmpty()) throw Object.defineProperty(new Error("EmptyListException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+        if(this.isEmpty()) 
+            throw "EmptyListException";
         return this.tail.next.value;
     }
 
@@ -55,10 +53,13 @@ class CircularLinkedList {
 
     public removeHead() : number {
         if(this.isEmpty()) {
-            throw Object.defineProperty(new Error("EmptyListException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+            throw "EmptyListException";
         }
         let value : number = this.tail.next.value;
-        if(this.tail === this.tail.next) this.tail = null; else this.tail.next = this.tail.next.next;
+        if(this.tail === this.tail.next) 
+            this.tail = null; 
+        else 
+            this.tail.next = this.tail.next.next;
         this._size--;
         return value;
     }
@@ -71,14 +72,18 @@ class CircularLinkedList {
         let curr : CLNode = this.tail.next;
         let head : CLNode = this.tail.next;
         if(curr.value === key) {
-            if(curr === curr.next) this.tail = null; else this.tail.next = this.tail.next.next;
+            if(curr === curr.next) 
+                this.tail = null; 
+            else 
+                this.tail.next = this.tail.next.next;
             return true;
         }
         prev = curr;
         curr = curr.next;
         while(curr !== head) {
             if(curr.value === key) {
-                if(curr === this.tail) this.tail = prev;
+                if(curr === this.tail) 
+                    this.tail = prev;
                 prev.next = curr.next;
                 return true;
             }
@@ -121,7 +126,8 @@ class CircularLinkedList {
     public searchList(data : number) : boolean {
         let temp : CLNode = this.tail;
         for(let i : number = 0; i < this._size; i++) {
-            if(temp.value === data) return true;
+            if(temp.value === data) 
+                return true;
             temp = temp.next;
         }
         return false;
@@ -136,12 +142,14 @@ class CircularLinkedList {
         if(this.isEmpty()) {
             return;
         }
+        let result : string = "";
         let temp : CLNode = this.tail.next;
         while((temp !== this.tail)) {
-            console.info(temp.value + " ");
+            result += (temp.value + " ");
             temp = temp.next;
         }
-        console.info(temp.value);
+        result += temp.value
+        console.info(result);
     }
 
 

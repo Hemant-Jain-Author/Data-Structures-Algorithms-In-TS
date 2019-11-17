@@ -88,7 +88,7 @@
     }
 
     function isUniqueChar(str : string) : boolean {
-        let bitarr : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(26);
+        let bitarr :  Array<number> = (s => { let a=[]; while(s-->0) a.push(0); return a; })(26);
         let index : number;
         for(let i : number = 0; i < 26; i++) {
             bitarr[i] = 0;
@@ -150,7 +150,7 @@
     }
 
     function isPermutation(s1 : string, s2 : string) : boolean {
-        let count : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(256);
+        let count :  Array<number> = (s => { let a=[]; while(s-->0) a.push(0); return a; })(256);
         let length : number = s1.length;
         if(s2.length !== length) {
             console.info("is permutation return false\n");

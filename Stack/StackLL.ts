@@ -1,6 +1,15 @@
-class StackLL {
-    head : StackLL.Node = null;
+class StackNode {
+    value : number;
+    next : StackNode;
 
+    public constructor(v : number, n : StackNode) {
+        this.value = v;
+        this.next = n;
+    }
+}
+
+class StackLL {
+    head : StackNode = null;
     __size : number = 0;
 
     public size() : number {
@@ -13,19 +22,19 @@ class StackLL {
 
     public peek() : number {
         if(this.isEmpty()) {
-            throw Object.defineProperty(new Error("StackEmptyException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+            throw "StackEmptyException";
         }
         return this.head.value;
     }
 
     public push(value : number) {
-        this.head = new StackLL.Node(value, this.head);
+        this.head = new StackNode(value, this.head);
         this.__size++;
     }
 
     public pop() : number {
         if(this.isEmpty()) {
-            throw Object.defineProperty(new Error("StackEmptyException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+            throw "StackEmptyException";
         }
         let value : number = this.head.value;
         this.head = this.head.next;
@@ -44,46 +53,26 @@ class StackLL {
     }
 
     public print() {
-        let temp : StackLL.Node = this.head;
-        while((temp != null)) {{
-            console.info(temp.value + " ");
+        let temp : StackNode = this.head;
+        let result : string = "";
+        while((temp != null)) {
+            result += (temp.value + " ");
             temp = temp.next;
-        }};
+        };
+        console.log(result);
     }
-
-    public static main(args : string[]) {
-        let s : StackLL = new StackLL();
-        s.push(1);
-        s.push(2);
-        s.push(3);
-        s.print();
-        console.info(s.pop());
-        console.info(s.pop());
-        s.print();
-    }
-}
-StackLL["__class"] = "StackLL";
-
-
-namespace StackLL {
-
-    export class Node {
-        value : number;
-
-        next : StackLL.Node;
-
-        public constructor(v : number, n : StackLL.Node) {
-            if(this.value===undefined) this.value = 0;
-            if(this.next===undefined) this.next = null;
-            this.value = v;
-            this.next = n;
-        }
-    }
-    Node["__class"] = "StackLL.Node";
 
 }
 
-
-
-
-StackLL.main(null);
+function main() {
+    let s : StackLL = new StackLL();
+    s.push(1);
+    s.push(2);
+    s.push(3);
+    s.print();
+    console.info(s.pop());
+    console.info(s.pop());
+    s.print();
+}
+ 
+main();

@@ -1,6 +1,6 @@
 
 
-function bruteForceSearchUtil(text : string[], pattern : string[]) : number {
+function bruteForceSearch(text : string, pattern : string) : number {
     let i : number = 0;
     let j : number = 0;
     let n : number = text.length;
@@ -18,13 +18,8 @@ function bruteForceSearchUtil(text : string[], pattern : string[]) : number {
     return -1;
 }
 
-function bruteForceSearch(text : string, pattern : string) : number {
-    return bruteForceSearchUtil(text.split(''), pattern.split(''));
-}
 
-
-
-function robinKarpUtil(text : string[], pattern : string[]) : number {
+function robinKarp(text : string, pattern : string) : number {
     let n : number = text.length;
     let m : number = pattern.length;
     let i : number;
@@ -60,12 +55,7 @@ function robinKarpUtil(text : string[], pattern : string[]) : number {
     return -1;
 }
 
-function robinKarp(text : string, pattern : string) : number {
-    return robinKarpUtil((text).split(''), (pattern).split(''));
-}
-
-
-function KMPPreprocess(pattern : string[], ShiftArr : number[]) {
+function KMPPreprocess(pattern : string, ShiftArr :  Array<number>) {
     let m : number = pattern.length;
     let i : number = 0;
     let j : number = -1;
@@ -80,7 +70,7 @@ function KMPPreprocess(pattern : string[], ShiftArr : number[]) {
     };
 }
 
-function KMPUtil(text : string[], pattern : string[]) : number {
+function KMP(text : string, pattern : string) : number {
     let i : number = 0;
     let j : number = 0;
     let n : number = text.length;
@@ -100,7 +90,7 @@ function KMPUtil(text : string[], pattern : string[]) : number {
     return -1;
 }
 
-function KMPFindCount(text : string[], pattern : string[]) : number {
+function KMPFindCount(text : string, pattern : string) : number {
     let i : number = 0;
     let j : number = 0;
     let count : number = 0;
@@ -120,9 +110,6 @@ function KMPFindCount(text : string[], pattern : string[]) : number {
         }
     };
     return count;
-}
-function KMP(text : string, pattern : string) : number {
-    return KMPUtil((text).split(''), (pattern).split(''));
 }
 
 function main() {

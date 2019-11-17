@@ -79,7 +79,7 @@ class StringTree {
     public frequencyUtil(curr : TreeNode, value : string) : number {
         if(curr == null) 
             return 0;
-        let compare : number = /* compareTo */curr.value.localeCompare(value);
+        let compare : number = curr.value.localeCompare(value);
         if(compare === 0) 
             return curr.count; 
         else {
@@ -116,7 +116,5 @@ function main() {
     console.info("frequency returned :: " + tt.frequency("mango"));
     console.info("frequency returned :: " + tt.frequency("hemant"));
 }
-
-
 
 main();

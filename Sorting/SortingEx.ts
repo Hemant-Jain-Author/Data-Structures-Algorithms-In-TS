@@ -1,16 +1,16 @@
 
-function printArray(arr : number[], count : number) {
+function printArray(arr :  Array<number>, count : number) {
     console.info(arr);
 }
 
-function swap(arr : number[], x : number, y : number) {
+function swap(arr :  Array<number>, x : number, y : number) {
     let temp : number = arr[x];
     arr[x] = arr[y];
     arr[y] = temp;
     return;
 }
 
-function Partition01(arr : number[], size : number) : number {
+function Partition01(arr :  Array<number>, size : number) : number {
     let left : number = 0;
     let right : number = size - 1;
     let count : number = 0;
@@ -29,7 +29,7 @@ function Partition01(arr : number[], size : number) : number {
     return count;
 }
 
-function Partition012(arr : number[], size : number) {
+function Partition012(arr :  Array<number>, size : number) {
     let left : number = 0;
     let right : number = size - 1;
     let i : number = 0;
@@ -47,16 +47,16 @@ function Partition012(arr : number[], size : number) {
     };
 }
 
-function main1(args : string[]) {
-    let arr : number[] = [0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1];
+function test1() {
+    let arr :  Array<number> = [0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1];
     Partition01(arr, arr.length);
     printArray(arr, arr.length);
-    let arr2 : number[] = [0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1];
+    let arr2 :  Array<number> = [0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1];
     Partition012(arr2, arr2.length);
     printArray(arr2, arr2.length);
 }
 
-function RangePartition(arr : number[], size : number, lower : number, higher : number) {
+function RangePartition(arr :  Array<number>, size : number, lower : number, higher : number) {
     let start : number = 0;
     let end : number = size - 1;
     let i : number = 0;
@@ -74,13 +74,13 @@ function RangePartition(arr : number[], size : number, lower : number, higher : 
     };
 }
 
-function main3(args : string[]) {
-    let arr : number[] = [1, 21, 2, 20, 3, 19, 4, 18, 5, 17, 6, 16, 7, 15, 8, 14, 9, 13, 10, 12, 11];
+function test2() {
+    let arr :  Array<number> = [1, 21, 2, 20, 3, 19, 4, 18, 5, 17, 6, 16, 7, 15, 8, 14, 9, 13, 10, 12, 11];
     RangePartition(arr, arr.length, 9, 12);
     printArray(arr, arr.length);
 }
 
-function minSwaps(arr : number[], size : number, val : number) : number {
+function minSwaps(arr :  Array<number>, size : number, val : number) : number {
     let swapCount : number = 0;
     let first : number = 0;
     let second : number = size - 1;
@@ -100,7 +100,7 @@ function minSwaps(arr : number[], size : number, val : number) : number {
     return swapCount;
 }
 
-function seperateEvenAndOdd(data : number[], size : number) {
+function seperateEvenAndOdd(data :  Array<number>, size : number) {
     let left : number = 0;
     let right : number = size - 1;
     while(left < right) {
@@ -120,7 +120,7 @@ function AbsMore(value1 : number, value2 : number, ref : number) : boolean {
     return (Math.abs(value1 - ref) > Math.abs(value2 - ref));
 }
 
-function AbsBubbleSort(arr : number[], size : number, ref : number) {
+function AbsBubbleSort(arr :  Array<number>, size : number, ref : number) {
     for(let i : number = 0; i < (size - 1); i++) {
         for(let j : number = 0; j < (size - i - 1); j++) {
             if(AbsMore(arr[j], arr[j + 1], ref)) {
@@ -130,8 +130,8 @@ function AbsBubbleSort(arr : number[], size : number, ref : number) {
     }
 }
 
-function main4(args : string[]) {
-    let array : number[] = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+function test3() {
+    let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
     let ref : number = 5;
     AbsBubbleSort(array, array.length, ref);
     printArray(array, array.length);
@@ -143,7 +143,7 @@ function EqMore(value1 : number, value2 : number, A : number) : boolean {
     return value1 > value2;
 }
 
-function ArrayReduction(arr : number[], size : number) {
+function ArrayReduction(arr :  Array<number>, size : number) {
     arr.sort(function cmp(a, b) { return (a - b); });
     let count : number = 1;
     let reduction : number = arr[0];
@@ -157,49 +157,56 @@ function ArrayReduction(arr : number[], size : number) {
     console.info("Total number of reductions " + count);
 }
 
-function main88(args : string[]) {
-    let arr : number[] = [5, 1, 1, 1, 2, 3, 5];
+function test4() {
+    let arr :  Array<number> = [5, 1, 1, 1, 2, 3, 5];
     ArrayReduction(arr, arr.length);
 }
 
-function SortByOrder(arr : number[], size : number, arr2 : number[], size2 : number) {
-    let ht : any = <any>({});
+function SortByOrder(arr :  Array<number>, size : number, arr2 :  Array<number>, size2 : number) {
+    let ht : any = new Map();
     let value : number;
-    for(let i : number = 0; i < size; i++) {
-        if(/* containsKey */((m,k) => { if(m.entries==null) m.entries=[]; for(let i=0;i<m.entries.length;i++) if(m.entries[i].key.equals!=null && m.entries[i].key.equals(k) || m.entries[i].key===k) { return true; } return false; })(<any>ht, arr[i])) {
-            value = /* get */((m,k) => { if(m.entries==null) m.entries=[]; for(let i=0;i<m.entries.length;i++) if(m.entries[i].key.equals!=null && m.entries[i].key.equals(k) || m.entries[i].key===k) { return m.entries[i].value; } return null; })(<any>ht, arr[i]);
-            /* put */((m,k,v) => { if(m.entries==null) m.entries=[]; for(let i=0;i<m.entries.length;i++) if(m.entries[i].key.equals!=null && m.entries[i].key.equals(k) || m.entries[i].key===k) { m.entries[i].value=v; return; } m.entries.push({key:k,value:v,getKey: function() { return this.key }, getValue: function() { return this.value }}); })(<any>ht, arr[i], value + 1);
+    const ret = new Array(size);
+    let retIndex = 0;
+
+    for (var i = 0; i < size; i++) {
+        if (ht.has(arr[i])) {
+            value = ht.get(arr[i]);
+            ht.set(arr[i], value + 1);
         } else {
-            /* put */((m,k,v) => { if(m.entries==null) m.entries=[]; for(let i=0;i<m.entries.length;i++) if(m.entries[i].key.equals!=null && m.entries[i].key.equals(k) || m.entries[i].key===k) { m.entries[i].value=v; return; } m.entries.push({key:k,value:v,getKey: function() { return this.key }, getValue: function() { return this.value }}); })(<any>ht, arr[i], 1);
+            ht.set(arr[i], 1);
         }
     }
-    for(let j : number = 0; j < size2; j++) {
-        if(/* containsKey */((m,k) => { if(m.entries==null) m.entries=[]; for(let i=0;i<m.entries.length;i++) if(m.entries[i].key.equals!=null && m.entries[i].key.equals(k) || m.entries[i].key===k) { return true; } return false; })(<any>ht, arr2[j])) {
-            value = /* get */((m,k) => { if(m.entries==null) m.entries=[]; for(let i=0;i<m.entries.length;i++) if(m.entries[i].key.equals!=null && m.entries[i].key.equals(k) || m.entries[i].key===k) { return m.entries[i].value; } return null; })(<any>ht, arr2[j]);
-            for(let k : number = 0; k < value; k++) {
-                console.info(arr2[j]);
+    for (let j = 0; j < size2; j++) {
+        if (ht.has(arr2[j])) {
+            value = ht.get(arr2[j]);
+            for (var k = 0; k < value; k++) {
+                ret[retIndex++] = arr2[j];
             }
-            /* remove */((m,k) => { if(m.entries==null) m.entries=[]; for(let i=0;i<m.entries.length;i++) if(m.entries[i].key.equals!=null && m.entries[i].key.equals(k) || m.entries[i].key===k) { return m.entries.splice(i,1)[0]; } })(<any>ht, arr2[j]);
+            ht.delete(arr2[j]);
         }
     }
-    for(let i : number = 0; i < size; i++) {
-        if(/* containsKey */((m,k) => { if(m.entries==null) m.entries=[]; for(let i=0;i<m.entries.length;i++) if(m.entries[i].key.equals!=null && m.entries[i].key.equals(k) || m.entries[i].key===k) { return true; } return false; })(<any>ht, arr[i])) {
-            value = /* get */((m,k) => { if(m.entries==null) m.entries=[]; for(let i=0;i<m.entries.length;i++) if(m.entries[i].key.equals!=null && m.entries[i].key.equals(k) || m.entries[i].key===k) { return m.entries[i].value; } return null; })(<any>ht, arr[i]);
-            for(let k : number = 0; k < value; k++) {
-                console.info(arr[i]);
+
+    for (var i = 0; i < size; i++) {
+        if (ht.has(arr[i])) {
+            value = ht.get(arr[i]);
+            for (var k = 0; k < value; k++) {
+                ret[retIndex++] = arr[i];
             }
-            /* remove */((m,k) => { if(m.entries==null) m.entries=[]; for(let i=0;i<m.entries.length;i++) if(m.entries[i].key.equals!=null && m.entries[i].key.equals(k) || m.entries[i].key===k) { return m.entries.splice(i,1)[0]; } })(<any>ht, arr[i]);
+            ht.delete(arr[i]);
         }
+    }
+    for (var i = 0; i < size; i++) {
+        arr[i] = ret[i];
     }
 }
 
-function main7(args : string[]) {
-    let arr : number[] = [2, 1, 2, 5, 7, 1, 9, 3, 6, 8, 8];
-    let arr2 : number[] = [2, 1, 8, 3];
+function test5() {
+    let arr :  Array<number> = [2, 1, 2, 5, 7, 1, 9, 3, 6, 8, 8];
+    let arr2 :  Array<number> = [2, 1, 8, 3];
     SortByOrder(arr, arr.length, arr2, arr2.length);
 }
 
-function merge(arr1 : number[], size1 : number, arr2 : number[], size2 : number) {
+function merge(arr1 :  Array<number>, size1 : number, arr2 :  Array<number>, size2 : number) {
     let index : number = 0;
     while(index < size1) {
         if(arr1[index] <= arr2[0]) {
@@ -216,15 +223,15 @@ function merge(arr1 : number[], size1 : number, arr2 : number[], size2 : number)
     };
 }
 
-function main9(args : string[]) {
-    let arr1 : number[] = [1, 5, 9, 10, 15, 20];
-    let arr2 : number[] = [2, 3, 8, 13];
+function test6() {
+    let arr1 :  Array<number> = [1, 5, 9, 10, 15, 20];
+    let arr2 :  Array<number> = [2, 3, 8, 13];
     merge(arr1, arr1.length, arr2, arr2.length);
     printArray(arr1, arr1.length);
     printArray(arr2, arr2.length);
 }
 
-function checkReverse(arr : number[], size : number) : boolean {
+function checkReverse(arr :  Array<number>, size : number) : boolean {
     let start : number = -1;
     let stop : number = -1;
     for(let i : number = 0; i < (size - 1); i++) {
@@ -260,11 +267,11 @@ function min(X : number, Y : number) : number {
     return Y;
 }
 
-function UnionIntersectionSorted(arr1 : number[], size1 : number, arr2 : number[], size2 : number) {
+function UnionIntersectionSorted(arr1 :  Array<number>, size1 : number, arr2 :  Array<number>, size2 : number) {
     let first : number = 0;
     let second : number = 0;
-    let unionArr : number[] = new Array(size1 + size2);
-    let interArr : number[] = new Array(min(size1, size2));
+    let unionArr :  Array<number> = new Array(size1 + size2);
+    let interArr :  Array<number> = new Array(min(size1, size2));
     let uIndex : number = 0;
     let iIndex : number = 0;
     console.log(arr1)
@@ -295,16 +302,22 @@ function UnionIntersectionSorted(arr1 : number[], size1 : number, arr2 : number[
     printArray(interArr, iIndex);
 }
 
-function UnionIntersectionUnsorted(arr1 : number[], size1 : number, arr2 : number[], size2 : number) {
+function UnionIntersectionUnsorted(arr1 :  Array<number>, size1 : number, arr2 :  Array<number>, size2 : number) {
     arr1.sort(function cmp(a, b) { return (a - b); });
     arr2.sort(function cmp(a, b) { return (a - b); });
     UnionIntersectionSorted(arr1, size1, arr2, size2);
 }
 
-function main(args : string[]) {
-    let arr1 : number[] = [1, 11, 2, 3, 14, 5, 6, 8, 9];
-    let arr2 : number[] = [2, 4, 5, 12, 7, 8, 13, 10];
+function test7() {
+    let arr1 :  Array<number> = [1, 11, 2, 3, 14, 5, 6, 8, 9];
+    let arr2 :  Array<number> = [2, 4, 5, 12, 7, 8, 13, 10];
     UnionIntersectionUnsorted(arr1, arr1.length, arr2, arr2.length);
 }
 
-main(null);
+test1();
+test2();
+test3();
+test4();
+test5();
+test6();
+test7();

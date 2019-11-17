@@ -7,9 +7,8 @@ function more(x:number, y: number) : boolean {
 }
 
 class Heap {
-    static CAPACITY : number = 32;
     size : number;
-    arr : number[];
+    arr :  Array<number>;
     compare : (numbrer, number) => boolean;
 
     public constructor(array? : any, cmp? : (a:number, b:number) => boolean) {
@@ -58,7 +57,7 @@ class Heap {
     }
 
     proclateUp(child : number) {
-        let parent : number = ((child - 1) / 2);
+        let parent : number = Math.floor((child - 1) / 2);
         let temp : number;
         if(parent < 0) {
             return;
@@ -80,11 +79,13 @@ class Heap {
     }
 
     private doubleSize() {
-        let old : number[] = this.arr;
-        this.arr = new Array<number>(this.size*2).fill(0);
+        let old :  Array<number> = this.arr;
+        let newsize = this.size*2;
+        if (newsize === 0)
+            newsize = 1;
+        this.arr = new Array<number>(newsize).fill(0);
         /* arraycopy */
-        var size = this.size;
-        for (let i = 0; i < size; i++)
+        for (let i = 0; i < this.size; i++)
         {
             this.arr[i] = old[i];
         }
@@ -121,7 +122,7 @@ class Heap {
     }
 }
 
-function HeapSort(array : number[], cmp : (a:number, b:number) => boolean) {
+function HeapSort(array :  Array<number>, cmp : (a:number, b:number) => boolean) {
     let hp : Heap = new Heap(array, cmp);
     for(let i : number = 0; i < array.length; i++) {
         array[array.length - i - 1] = hp.remove();
@@ -131,7 +132,7 @@ function HeapSort(array : number[], cmp : (a:number, b:number) => boolean) {
 function test1() {
     let hp1 : Heap = new Heap();
     hp1.add(1);
-    hp1.add(9);
+    hp1.remove();
     hp1.add(6);
     hp1.add(7);
     hp1.print();
@@ -143,7 +144,7 @@ function test1() {
 //test1()
 
 function test2() {
-    let a : number[] = [1, 0, 2, 4, 5, 3];
+    let a :  Array<number> = [1, 0, 2, 4, 5, 3];
     let hp : Heap = new Heap(a); // Min Heap
     hp.print();
     while (hp.isEmpty() == false) {
@@ -154,7 +155,7 @@ function test2() {
 //test2()
 
 function test3() {
-    let a : number[] = [1, 0, 2, 4, 5, 3];
+    let a :  Array<number> = [1, 0, 2, 4, 5, 3];
     let hp : Heap = new Heap(a, more); // Max Heap
     hp.print();
     while (hp.isEmpty() == false) {
@@ -165,19 +166,19 @@ function test3() {
 //test3() 
 
 function test4() {
-    let b : number[] = [6, 5, 3, 4, 1, 2];
+    let b :  Array<number> = [6, 5, 3, 4, 1, 2];
     HeapSort(b, more); // Increasing Order
     console.log(b);
 }
 
 //test4()
 
-function KthSmallest(arr : number[], size : number, k : number) {
+function KthSmallest(arr :  Array<number>, size : number, k : number) {
     arr = arr.sort();
     return arr[k - 1];
 };
 
-function KthSmallest2(arr : number[], size : number, k : number) {
+function KthSmallest2(arr :  Array<number>, size : number, k : number) {
     let value : number = 0;
     let pq : Heap = new Heap(arr, less);
     let i : number = 0;
@@ -189,15 +190,15 @@ function KthSmallest2(arr : number[], size : number, k : number) {
 };
 
 function test5() {
-    let arr : number[] = [8, 7, 6, 5, 7, 5, 2, 1];
+    let arr :  Array<number> = [8, 7, 6, 5, 7, 5, 2, 1];
     console.info(`Kth Smallest :: ${KthSmallest(arr, arr.length, 3)}`);
-    let arr2 : number[] = [8, 7, 6, 5, 7, 5, 2, 1];
+    let arr2 :  Array<number> = [8, 7, 6, 5, 7, 5, 2, 1];
     console.info(`Kth Smallest :: ${KthSmallest2(arr2, arr2.length, 3)}`);
 };
 
 test5()
 
-function isMinHeap(arr : number[]) : boolean {
+function isMinHeap(arr :  Array<number>) : boolean {
     let lchild : number;
     let rchild : number;
     let size : number = arr.length;
@@ -212,7 +213,7 @@ function isMinHeap(arr : number[]) : boolean {
     return true;
 }
 
-function isMaxHeap(arr : number[]) : boolean {
+function isMaxHeap(arr :  Array<number>) : boolean {
     let lchild : number;
     let rchild : number;
     let size : number = arr.length;
@@ -227,15 +228,15 @@ function isMaxHeap(arr : number[]) : boolean {
 }
 
 function test6() {
-    let arr3 : number[] = [8, 7, 6, 5, 7, 5, 2, 1];
+    let arr3 :  Array<number> = [8, 7, 6, 5, 7, 5, 2, 1];
     console.info(`isMaxHeap :: ${isMaxHeap(arr3)}`);
-    let arr4 : number[] = [1, 2, 3, 4, 5, 6, 7, 8];
+    let arr4 :  Array<number> = [1, 2, 3, 4, 5, 6, 7, 8];
     console.info(`isMinHeap :: ${isMinHeap(arr4)}`);
 };
 
 test6()
 
-function KSmallestProduct(arr : number[], 
+function KSmallestProduct(arr :  Array<number>, 
     size : number, k : number) : number {
     arr = arr.sort();
     let product : number = 1;
@@ -246,13 +247,13 @@ function KSmallestProduct(arr : number[],
     return product;
 }
 
-function swap(arr : number[], i : number, j : number) {
+function swap(arr :  Array<number>, i : number, j : number) {
     let temp : number = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
 }
 
-function QuickSelectUtil(arr : number[], lower : number, upper : number, k : number) {
+function QuickSelectUtil(arr :  Array<number>, lower : number, upper : number, k : number) {
     if(upper <= lower) return;
     let pivot : number = arr[lower];
     let start : number = lower;
@@ -275,7 +276,7 @@ function QuickSelectUtil(arr : number[], lower : number, upper : number, k : num
         QuickSelectUtil(arr, upper + 1, stop, k);
 }
 
-function KSmallestProduct3(arr : number[], size : number, k : number) : number {
+function KSmallestProduct3(arr :  Array<number>, size : number, k : number) : number {
     QuickSelectUtil(arr, 0, size - 1, k);
     let product : number = 1;
     for(let i : number = 0; i < k; i++) 
@@ -285,7 +286,7 @@ function KSmallestProduct3(arr : number[], size : number, k : number) : number {
     return product;
 }
 
-function KSmallestProduct2(arr : number[], size : number, k : number) : number {
+function KSmallestProduct2(arr :  Array<number>, size : number, k : number) : number {
     let pq : Heap = new Heap(arr, less); 
     let i : number = 0;
     let product : number = 1;
@@ -310,7 +311,7 @@ function test7() {
 
 test7();
 
-function PrintLargerHalf(arr : number[], size : number) {
+function PrintLargerHalf(arr :  Array<number>, size : number) {
     arr = arr.sort();
     for(let i : number = (size / 2|0); i < size; i++) 
     {
@@ -319,7 +320,7 @@ function PrintLargerHalf(arr : number[], size : number) {
     console.info();
 }
 
-function PrintLargerHalf2(arr : number[], size : number) {
+function PrintLargerHalf2(arr :  Array<number>, size : number) {
     let pq : Heap = new Heap(arr, less); 
     
     for(let i : number = 0; i < (size / 2|0); i++) {
@@ -328,7 +329,7 @@ function PrintLargerHalf2(arr : number[], size : number) {
     pq.print();
 }
 
-function PrintLargerHalf3(arr : number[], size : number) {
+function PrintLargerHalf3(arr :  Array<number>, size : number) {
     QuickSelectUtil(arr, 0, size - 1, (size / 2|0));
     for(let i : number = (size / 2|0); i < size; i++) 
     {
@@ -338,20 +339,20 @@ function PrintLargerHalf3(arr : number[], size : number) {
 }
 
 function test8() {
-    let arr : number[] = [8, 7, 6, 5, 7, 5, 2, 1];
+    let arr :  Array<number> = [8, 7, 6, 5, 7, 5, 2, 1];
     PrintLargerHalf(arr, 8);
-    let arr2 : number[] = [8, 7, 6, 5, 7, 5, 2, 1];
+    let arr2 :  Array<number> = [8, 7, 6, 5, 7, 5, 2, 1];
     PrintLargerHalf2(arr2, 8);
-    let arr3 : number[] = [8, 7, 6, 5, 7, 5, 2, 1];
+    let arr3 :  Array<number> = [8, 7, 6, 5, 7, 5, 2, 1];
     PrintLargerHalf3(arr3, 8);
 }
 
 test8();
 
-function sortK(arr : number[], size : number, k : number) {
+function sortK(arr :  Array<number>, size : number, k : number) {
     let pq : Heap = new Heap([], less); 
     let i : number = 0;
-    let output : number[] = new Array(size);
+    let output :  Array<number> = new Array(size);
     let index : number = 0;
 
     for (i = 0; i < k; i++) {
@@ -375,14 +376,14 @@ function sortK(arr : number[], size : number, k : number) {
 
 function test9() {
     let k : number = 3;
-    let arr : number[] = [1, 5, 4, 10, 50, 9];
+    let arr :  Array<number> = [1, 5, 4, 10, 50, 9];
     let size : number = arr.length;
     sortK(arr, size, k);
 };
 
 test9();
 
-function ChotaBhim(cups : number[], size : number) : number {
+function ChotaBhim(cups :  Array<number>, size : number) : number {
     let time : number = 60;
     cups.sort();
     let total : number = 0;
@@ -406,7 +407,7 @@ function ChotaBhim(cups : number[], size : number) : number {
 }
 
 
-function ChotaBhim2(cups : number[], size : number) : number {
+function ChotaBhim2(cups :  Array<number>, size : number) : number {
     let time : number = 60;
     cups.sort();
     let total : number = 0;
@@ -429,7 +430,7 @@ function ChotaBhim2(cups : number[], size : number) : number {
     return total;
 }
 
-function ChotaBhim3(cups : number[], size : number) : number {
+function ChotaBhim3(cups :  Array<number>, size : number) : number {
     let time : number = 60;
     let pq : Heap = new Heap(cups, more); 
     let total : number = 0;
@@ -446,17 +447,17 @@ function ChotaBhim3(cups : number[], size : number) : number {
 }
 
 function test10(){
-    let cups : number[] = [2, 1, 7, 4, 2];
+    let cups :  Array<number> = [2, 1, 7, 4, 2];
     ChotaBhim(cups, cups.length);
-    let cups2 : number[] = [2, 1, 7, 4, 2];
+    let cups2 :  Array<number> = [2, 1, 7, 4, 2];
     ChotaBhim2(cups2, cups.length);
-    let cups3 : number[] = [2, 1, 7, 4, 2];
+    let cups3 :  Array<number> = [2, 1, 7, 4, 2];
     ChotaBhim3(cups3, cups.length);
 };
 
 test10()
 
-function JoinRopes(ropes : number[], size : number) : number {
+function JoinRopes(ropes :  Array<number>, size : number) : number {
     ropes.sort().reverse();
     let total : number = 0;
     let value : number = 0;
@@ -478,7 +479,7 @@ function JoinRopes(ropes : number[], size : number) : number {
     return total;
 }
 
-function JoinRopes2(ropes : number[], size : number) : number {
+function JoinRopes2(ropes :  Array<number>, size : number) : number {
     let pq : Heap = new Heap(ropes, less);
     let i : number = 0;
     let total : number = 0;
@@ -495,9 +496,9 @@ function JoinRopes2(ropes : number[], size : number) : number {
 }
 
 function test11(){
-    let ropes : number[] = [2, 1, 7, 4, 2];
+    let ropes :  Array<number> = [2, 1, 7, 4, 2];
     JoinRopes(ropes, ropes.length);
-    let rope2 : number[] = [2, 1, 7, 4, 2];
+    let rope2 :  Array<number> = [2, 1, 7, 4, 2];
     JoinRopes2(rope2, rope2.length);
 };
 
@@ -542,7 +543,7 @@ class MedianHeap {
 }
 
 function test12(){
-    let arr : number[] = [1, 9, 2, 8, 3, 7, 4, 6, 5, 1, 9, 2, 8, 3, 7, 4, 6, 5, 10, 10];
+    let arr :  Array<number> = [1, 9, 2, 8, 3, 7, 4, 6, 5, 1, 9, 2, 8, 3, 7, 4, 6, 5, 10, 10];
     let hp : MedianHeap = new MedianHeap();
     for(let i : number = 0; i < 20; i++) {
         hp.insert(arr[i]);

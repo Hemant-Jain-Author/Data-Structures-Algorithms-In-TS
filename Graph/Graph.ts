@@ -1,24 +1,186 @@
+class Queue<T> {
+    frontIndex : number;
+    data : T[];
+
+    public constructor() {
+        this.frontIndex = 0;
+        this.data = [];
+    }
+
+    public add(value : T) {
+        this.data.push(value);
+    }
+
+    public remove() : T {
+        let value = this.data[this.frontIndex];
+        this.frontIndex++;
+        if (this.data.length > 0 && this.frontIndex * 2 >= this.data.length) {
+            this.data = this.data.slice(this.frontIndex);
+            this.frontIndex = 0;
+        }
+        return value;
+    }
+
+    public peek() : T {
+        let value = this.data[this.frontIndex];
+        return value;
+    }
+
+    public isEmpty() : boolean {
+        return (this.data.length - this.frontIndex) === 0;
+    }
+
+    public size() : number {
+        return (this.data.length - this.frontIndex);
+    }
+
+    public peekLast() : T {
+        return this.data[this.data.length - 1]
+    }
+}
+
+const infi = 2147483647;
+
+/*function more(x:number, y: number) : boolean {
+    return (y - x) > 0;
+}
+*/
+
+class PriorityQueue<T> {
+    static CAPACITY : number = 32;
+    size : number;
+    arr : Array<T>;
+    compare : (a:T, b:T) => boolean;
+
+    public constructor(cmp : (a:T, b:T) => boolean) {
+            this.compare = cmp;
+            this.arr = new Array<T>(PriorityQueue<T>.CAPACITY);
+            this.size = 0;
+    }
+
+    proclateDown(parent : number) {
+        let lChild : number = 2 * parent + 1;
+        let rChild : number = lChild + 1;
+        let child : number = -1;
+        let temp : T;
+        if(lChild < this.size) {
+            child = lChild;
+        }
+        if(rChild < this.size && this.compare(this.arr[lChild], this.arr[rChild])) {
+            child = rChild;
+        }
+        if(child !== -1 && this.compare(this.arr[parent], this.arr[child])) {
+            temp = this.arr[parent];
+            this.arr[parent] = this.arr[child];
+            this.arr[child] = temp;
+            this.proclateDown(child);
+        }
+    }
+
+    proclateUp(child : number) {
+        let parent : number = Math.floor((child - 1) / 2);
+        let temp : T;
+        if(parent < 0) {
+            return;
+        }
+        if(this.compare(this.arr[parent], this.arr[child])) {
+            temp = this.arr[child];
+            this.arr[child] = this.arr[parent];
+            this.arr[parent] = temp;
+            this.proclateUp(parent);
+        }
+    }
+
+    public add(value : T) {
+        if(this.size === this.arr.length) {
+            this.doubleSize();
+        }
+        
+        this.arr[this.size++] = value;
+
+        this.proclateUp(this.size - 1);
+    }
+
+    private doubleSize() {
+        let old : Array<T> = this.arr;
+        let newSize = this.size * 2;
+        if(newSize === 0)
+            newSize = 1;
+        this.arr = new Array<T>(newSize);
+        /* arraycopy */
+        var size = this.size;
+        for (let i = 0; i < size; i++)
+        {
+            this.arr[i] = old[i];
+        }
+    }
+
+    public remove() : T {
+        if(this.isEmpty()) {
+            throw new Error("IllegalStateException");
+        }
+        let value : T = this.arr[0];
+        this.arr[0] = this.arr[this.size - 1];
+        this.size--;
+        this.proclateDown(0);
+        return value;
+    }
+
+    public print() {
+            console.info(this.arr);;
+    }
+
+    public isEmpty() : boolean {
+        return (this.size === 0);
+    }
+
+    public length() : number {
+        return this.size;
+    }
+
+    public peek() : T {
+        if(this.isEmpty()) {
+            throw new Error("IllegalStateException");
+        }
+        return this.arr[0];
+    }
+}
+
+class GraphEdge {
+    dest : number;
+    cost : number;
+
+    public constructor(dst : number, cst : number) {
+        if (cst === undefined)
+            cst = 1
+        this.dest = dst;
+        this.cost = cst;
+    }
+}
+
+function EdgeComparator(a:GraphEdge, b:GraphEdge): boolean{
+    return (a.cost - b.cost > 0);
+}
+
 class Graph {
     count : number;
-
-    Adj : Array<Array<Graph.Edge>>; /*private*/
+    Adj : Array<Array<GraphEdge>>; 
 
     public constructor(cnt : number) {
-        if(this.count===undefined) 
-            this.count = 0;
-        if(this.Adj===undefined) 
-            this.Adj = null;
+        if(cnt===undefined) 
+            throw new Error('Invalid argument')
+        
         this.count = cnt;
-        this.Adj = <any>([]);
-        for(let i : number = 0; i < cnt; i++) {
-            this.Adj.push([]);
-        };
+        this.Adj = new Array();
+        for (let i = 0; i < cnt; i++) {
+            this.Adj[i] = new Array()
+        }
     }
 
     public addDirectedEdge(source : number, dest : number, cost : number) {
         if (cost === undefined)
             cost = 1
-        let edge : Graph.Edge = new Graph.Edge(dest, cost);
+        let edge : GraphEdge = new GraphEdge(dest, cost);
         this.Adj[source].push(edge);
     }
 
@@ -29,8 +191,8 @@ class Graph {
 
     public print() {
         for(let i : number = 0; i < this.count; i++) {
-            let ad : Array<Graph.Edge> = this.Adj[i];
-            console.info("\n Vertex " + i + " is connected to : ");
+            let ad : Array<GraphEdge> = this.Adj[i];
+            console.info("Vertex " + i + " is connected to : ");
             for(let index=0; index < ad.length; index++) {
                 let adn = ad[index];
                 console.info("(" + adn.dest + ", " + adn.cost + ") ");
@@ -38,15 +200,15 @@ class Graph {
         };
     }
 
-    public static dfsStack(gph : Graph, source : number, target : number) : boolean {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        let stk : Array<number> = <any>([]);
-        stk.push(source)>0;
+    public dfsStack(source : number, target : number) : boolean {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        let stk : Array<number> =  new Array<number>();
+        stk.push(source);
         visited[source] = true;
         while(stk.length !== 0) {
             let curr : number = stk.pop();
-            let adl : Array<Graph.Edge> = gph.Adj[curr];
+            let adl : Array<GraphEdge> = this.Adj[curr];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];
                 if(visited[adn.dest] === false) {
@@ -58,76 +220,62 @@ class Graph {
         return visited[target];
     }
 
-    public static dfs(gph : Graph, source : number, target : number) : boolean {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        Graph.dfsUtil(gph, source, visited);
+    public dfs(source : number, target : number) : boolean {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        this.dfsUtil(source, visited);
         return visited[target];
     }
 
-    public static dfsUtil(gph : Graph, index : number, visited : boolean[]) {
+    public dfsUtil(index : number, visited : Array<boolean>) {
         visited[index] = true;
-        let adl : Array<Graph.Edge> = gph.Adj[index];
+        let adl : Array<GraphEdge> = this.Adj[index];
         for(let index=0; index < adl.length; index++) {
             let adn = adl[index];
             if(visited[adn.dest] === false) 
-                Graph.dfsUtil(gph, adn.dest, visited);
+                this.dfsUtil(adn.dest, visited);
         }
     }
 
-    public static dfsUtil2(gph : Graph, index : number, visited : boolean[], stk : Array<number>) {
+    public dfsUtil2(index : number, visited : Array<boolean>, stk : Array<number>) {
         visited[index] = true;
-        let adl : Array<Graph.Edge> = gph.Adj[index];
+        let adl : Array<GraphEdge> = this.Adj[index];
         for(let index=0; index < adl.length; index++) {
             let adn = adl[index];
             if(visited[adn.dest] === false) {
-                Graph.dfsUtil2(gph, adn.dest, visited, stk);
+                this.dfsUtil2(adn.dest, visited, stk);
             }
         }
         stk.push(index);
     }
 
-    public static bfs(gph : Graph, source : number, target : number) : boolean {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        let que : Array<number> = <any>([]);
-        que.push(source);
+    public bfs(source : number, target : number) : boolean {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        let que : Queue<number>= new Queue<number>();;
+        que.add(source);
         visited[source] = true;
-        while(que.length !== 0) {
+        while(que.isEmpty() === false) {
             let curr = que.remove();
-            let adl : Array<Graph.Edge> = gph.Adj[curr];
+            let adl : Array<GraphEdge> = this.Adj[curr];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];       
                 if(visited[adn.dest] === false) {
                     visited[adn.dest] = true;
-                    que.push(adn.dest);
+                    que.add(adn.dest);
                 }
             }
         };
         return visited[target];
     }
 
-    public static main$() {
-        let gph : Graph = new Graph(5);
-        gph.addDirectedEdge(0, 1, 3);
-        gph.addDirectedEdge(0, 4, 2);
-        gph.addDirectedEdge(1, 2, 1);
-        gph.addDirectedEdge(2, 3, 1);
-        gph.addDirectedEdge(4, 1, -2);
-        gph.addDirectedEdge(4, 3, 1);
-        gph.print();
-        console.info(Graph.dfs(gph, 0, 2));
-        console.info(Graph.bfs(gph, 0, 2));
-        console.info(Graph.dfsStack(gph, 0, 2));
-    }
-
-    public static topologicalSort(gph : Graph) {
-        let stk : Array<number> = <any>([]);
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
+    public topologicalSort(gph : Graph) {
+        let stk : Array<number> =  new Array<number>();
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         for(let i : number = 0; i < count; i++) {
             if(visited[i] === false) {
-                Graph.dfsUtil2(gph, i, visited, stk);
+                this.dfsUtil2(i, visited, stk);
             }
         };
         console.info("topologicalSort :: ");
@@ -135,50 +283,38 @@ class Graph {
             console.info(" " + stk.pop());
         };
     }
-
-    public static main5() {
-        let gph : Graph = new Graph(6);
-        gph.addDirectedEdge(5, 2, 1);
-        gph.addDirectedEdge(5, 0, 1);
-        gph.addDirectedEdge(4, 0, 1);
-        gph.addDirectedEdge(4, 1, 1);
-        gph.addDirectedEdge(2, 3, 1);
-        gph.addDirectedEdge(3, 1, 1);
-        gph.print();
-        Graph.topologicalSort(gph);
-    }
-
-    public static pathExist(gph : Graph, source : number, dest : number) : boolean {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        Graph.dfsUtil(gph, source, visited);
+    
+    public pathExist(source : number, dest : number) : boolean {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        this.dfsUtil(source, visited);
         return visited[dest];
     }
 
-    public static countAllPathDFS(gph : Graph, visited : boolean[], source : number, dest : number) : number {
+    public countAllPathDFS(visited : Array<boolean>, source : number, dest : number) : number {
         if(source === dest) {
             return 1;
         }
         let count : number = 0;
         visited[source] = true;
-        let adl : Array<Graph.Edge> = gph.Adj[source];
+        let adl : Array<GraphEdge> = this.Adj[source];
         for(let index=0; index < adl.length; index++) {
             let adn = adl[index];
             if(visited[adn.dest] === false) {
-                count += Graph.countAllPathDFS(gph, visited, adn.dest, dest);
+                count += this.countAllPathDFS(visited, adn.dest, dest);
             }
             visited[source] = false;
         }
         return count;
     }
 
-    public static countAllPath(gph : Graph, src : number, dest : number) : number {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        return Graph.countAllPathDFS(gph, visited, src, dest);
+    public countAllPath(src : number, dest : number) : number {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        return this.countAllPathDFS(visited, src, dest);
     }
 
-    public static printAllPathDFS(gph : Graph, visited : boolean[], source : number, dest : number, path : Array<number>) {
+    public printAllPathDFS(visited : Array<boolean>, source : number, dest : number, path : Array<number>) {
         path.push(source);
         if(source === dest) {
             console.info(path);
@@ -186,45 +322,31 @@ class Graph {
             return;
         }
         visited[source] = true;
-        let adl : Array<Graph.Edge> = gph.Adj[source];
+        let adl : Array<GraphEdge> = this.Adj[source];
         for(let index=0; index < adl.length; index++) {
             let adn = adl[index];
             if(visited[adn.dest] === false) {
-                Graph.printAllPathDFS(gph, visited, adn.dest, dest, path);
+                this.printAllPathDFS(visited, adn.dest, dest, path);
             }
         }
         visited[source] = false;
         path.pop();
     }
 
-    public static printAllPath(gph : Graph, src : number, dest : number) {
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(gph.count);
-        let path : Array<number> = <any>([]);
-        Graph.printAllPathDFS(gph, visited, src, dest, path);
+    public printAllPath(src : number, dest : number) {
+        let count : number = this.count;
+        let visited : Array<boolean> =  new Array<boolean>(count).fill(false);
+        let path : Array<number> =  new Array<number>();
+        this.printAllPathDFS(visited, src, dest, path);
     }
-
-    public static main11() {
-        let gph : Graph = new Graph(5);
-        gph.addDirectedEdge(0, 1, 1);
-        gph.addDirectedEdge(0, 2, 1);
-        gph.addDirectedEdge(2, 3, 1);
-        gph.addDirectedEdge(1, 3, 1);
-        gph.addDirectedEdge(3, 4, 1);
-        gph.addDirectedEdge(1, 4, 1);
-        gph.print();
-        console.info("PathExist :: " + Graph.pathExist(gph, 0, 4));
-        console.info();
-        console.info(Graph.countAllPath(gph, 0, 4));
-        Graph.printAllPath(gph, 0, 4);
-    }
-
-    public static rootVertex(gph : Graph) : number {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
+    
+    public rootVertex(gph : Graph) : number {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         let retVal : number = -1;
         for(let i : number = 0; i < count; i++) {
             if(visited[i] === false) {
-                Graph.dfsUtil(gph, i, visited);
+                this.dfsUtil(i, visited);
                 retVal = i;
             }
         };
@@ -232,76 +354,48 @@ class Graph {
         return retVal;
     }
 
-    public static main4() {
-        let gph : Graph = new Graph(7);
-        gph.addDirectedEdge(0, 1, 1);
-        gph.addDirectedEdge(0, 2, 1);
-        gph.addDirectedEdge(1, 3, 1);
-        gph.addDirectedEdge(4, 1, 1);
-        gph.addDirectedEdge(6, 4, 1);
-        gph.addDirectedEdge(5, 6, 1);
-        gph.addDirectedEdge(5, 2, 1);
-        gph.addDirectedEdge(6, 0, 1);
-        gph.print();
-        Graph.rootVertex(gph);
-    }
-
-    public static transitiveClosureUtil(gph : Graph, source : number, dest : number, tc : number[][]) {
+    public transitiveClosureUtil(source : number, dest : number, tc : Array<Array<number>>) {
         tc[source][dest] = 1;
-        let adl : Array<Graph.Edge> = gph.Adj[dest];
+        let adl : Array<GraphEdge> = this.Adj[dest];
         for(let index=0; index < adl.length; index++) {
             let adn = adl[index];
             if(tc[source][adn.dest] === 0) 
-                Graph.transitiveClosureUtil(gph, source, adn.dest, tc);           
+                this.transitiveClosureUtil(source, adn.dest, tc);           
         }
     }
 
-    public static transitiveClosure(gph : Graph) : number[][] {
-        let count : number = gph.count;
-        let tc : number[][] = <any> (function(dims) { let allocate = function(dims) { if(dims.length==0) { return 0; } else { let array = []; for(let i = 0; i < dims[0]; i++) { array.push(allocate(dims.slice(1))); } return array; }}; return allocate(dims);})([count, count]);
+    public transitiveClosure(gph : Graph) : Array<Array<number>> {
+        let count : number = this.count;
+        let tc : Array<Array<number>> = new Array<Array<number>>(count);
         for(let i : number = 0; i < count; i++) {
-            Graph.transitiveClosureUtil(gph, i, i, tc);
+            tc[i] = new Array<number>(count).fill(0);
+        }
+        for(let i : number = 0; i < count; i++) {
+            this.transitiveClosureUtil(i, i, tc);
         };
         return tc;
     }
 
-    public static main10() {
-        let gph : Graph = new Graph(4);
-        gph.addDirectedEdge(0, 1, 1);
-        gph.addDirectedEdge(0, 2, 1);
-        gph.addDirectedEdge(1, 2, 1);
-        gph.addDirectedEdge(2, 0, 1);
-        gph.addDirectedEdge(2, 3, 1);
-        gph.addDirectedEdge(3, 3, 1);
-        let tc : number[][] = Graph.transitiveClosure(gph);
-        for(let i : number = 0; i < 4; i++) {
-            for(let j : number = 0; j < 4; j++) {
-                console.info(tc[i][j] + " ");
-            };
-            console.info();
-        };
-    }
-
-    public static bfsLevelNode(gph : Graph, source : number) {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        let level : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
+    public bfsLevelNode(source : number) {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        let level : Array<number> = new Array<number>(count);
         visited[source] = true;
-        let que : Array<number> = <any>([]);
-        que.push(source);
+        let que : Queue<number>= new Queue<number>();;
+        que.add(source);
         level[source] = 0;
         console.info("\nNode  - Level");
-        while(que.length !== 0) {
+        while(que.isEmpty() === false) {
             let curr = que.remove();
             let depth : number = level[curr];
-            let adl : Array<Graph.Edge> = gph.Adj[curr];
+            let adl : Array<GraphEdge> = this.Adj[curr];
             console.info(curr + " - " + depth);
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];
                 
                 if(visited[adn.dest] === false) {
                     visited[adn.dest] = true;
-                    que.push(adn.dest);
+                    que.add(adn.dest);
                     level[adn.dest] = depth + 1;
                 }
             
@@ -309,18 +403,18 @@ class Graph {
         };
     }
 
-    public static bfsDistance(gph : Graph, source : number, dest : number) : number {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        let que : Array<number> = <any>([]);
-        que.push(source);
+    public bfsDistance(source : number, dest : number) : number {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        let que : Queue<number>= new Queue<number>();;
+        que.add(source);
         visited[source] = true;
-        let level : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
+        let level : Array<number> = new Array<number>(count);
         level[source] = 0;
-        while(que.length !== 0) {
+        while(que.isEmpty() === false) {
             let curr = que.remove();
             let depth : number = level[curr];
-            let adl : Array<Graph.Edge> = gph.Adj[curr];
+            let adl : Array<GraphEdge> = this.Adj[curr];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];
                 if(adn.dest === dest) {
@@ -328,7 +422,7 @@ class Graph {
                 }
                 if(visited[adn.dest] === false) {
                     visited[adn.dest] = true;
-                    que.push(adn.dest);
+                    que.add(adn.dest);
                     level[adn.dest] = depth + 1;
                 }
             }
@@ -336,67 +430,42 @@ class Graph {
         return -1;
     }
 
-    public static main1() {
-        let gph : Graph = new Graph(7);
-        gph.addUndirectedEdge(0, 1, 1);
-        gph.addUndirectedEdge(0, 2, 1);
-        gph.addUndirectedEdge(0, 4, 1);
-        gph.addUndirectedEdge(1, 2, 1);
-        gph.addUndirectedEdge(2, 5, 1);
-        gph.addUndirectedEdge(3, 4, 1);
-        gph.addUndirectedEdge(4, 5, 1);
-        gph.addUndirectedEdge(4, 6, 1);
-        gph.print();
-        Graph.bfsLevelNode(gph, 1);
-        console.info(Graph.bfsDistance(gph, 1, 6));
-    }
-
-    public static isCyclePresentUndirectedDFS(graph : Graph, index : number, parentIndex : number, visited : boolean[]) : boolean {
+    public isCyclePresentUndirectedDFS(index : number, parentIndex : number, visited : Array<boolean>) : boolean {
         visited[index] = true;
         let dest : number;
-        let adl : Array<Graph.Edge> = graph.Adj[index];
+        let adl : Array<GraphEdge> = this.Adj[index];
         for(let index=0; index < adl.length; index++) {
             let adn = adl[index];
             dest = adn.dest;
             if(visited[dest] === false) {
-                if(Graph.isCyclePresentUndirectedDFS(graph, dest, index, visited)) return true;
+                if(this.isCyclePresentUndirectedDFS(dest, index, visited)) return true;
             } else if(parentIndex !== dest) return true;
         }
         return false;
     }
 
-    public static isCyclePresentUndirected(graph : Graph) : boolean {
-        let count : number = graph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
+    public isCyclePresentUndirected() : boolean {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         for(let i : number = 0; i < count; i++) 
         {
             if(visited[i] === false) 
-                if(Graph.isCyclePresentUndirectedDFS(graph, i, -1, visited)) 
+                if(this.isCyclePresentUndirectedDFS(i, -1, visited)) 
                     return true;;
         }
         return false;
     }
 
-    public static main14() {
-        let gph : Graph = new Graph(6);
-        gph.addUndirectedEdge(0, 1, 1);
-        gph.addUndirectedEdge(1, 2, 1);
-        gph.addUndirectedEdge(3, 4, 1);
-        gph.addUndirectedEdge(4, 2, 1);
-        gph.addUndirectedEdge(2, 5, 1);
-        console.info(Graph.isCyclePresentUndirected(gph));
-    }
-
-    public static isCyclePresentDFS(graph : Graph, index : number, visited : boolean[], marked : number[]) : boolean {
+    public isCyclePresentDFS(index : number, visited : Array<boolean>, marked :  Array<number>) : boolean {
         visited[index] = true;
         marked[index] = 1;
-        let adl : Array<Graph.Edge> = graph.Adj[index];
+        let adl : Array<GraphEdge> = this.Adj[index];
         for(let index=0; index < adl.length; index++) {
             let adn = adl[index];
             let dest : number = adn.dest;
             if(marked[dest] === 1) return true;
             if(visited[dest] === false) 
-                if(Graph.isCyclePresentDFS(graph, dest, visited, marked)) 
+                if(this.isCyclePresentDFS(dest, visited, marked)) 
                     return true;
         
         }
@@ -404,75 +473,64 @@ class Graph {
         return false;
     }
 
-    public static isCyclePresent(graph : Graph) : boolean {
-        let count : number = graph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        let marked : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
+    public isCyclePresent() : boolean {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        let marked : Array<number> = new Array<number>(count);
         for(let index : number = 0; index < count; index++) {
             if(visited[index] === false) 
-                if(Graph.isCyclePresentDFS(graph, index, visited, marked)) 
+                if(this.isCyclePresentDFS(index, visited, marked)) 
                     return true;
         };
         return false;
     }
 
-    public static isCyclePresentDFSColor(graph : Graph, index : number, visited : number[]) : boolean {
+    public isCyclePresentDFSColor(index : number, visited :  Array<number>) : boolean {
         visited[index] = 1;
         let dest : number;
-        let adl : Array<Graph.Edge> = graph.Adj[index];
+        let adl : Array<GraphEdge> = this.Adj[index];
         for(let index=0; index < adl.length; index++) {
             let adn = adl[index];
             dest = adn.dest;
-            if(visited[dest] === 1) return true;
+            if(visited[dest] === 1) 
+                return true;
             if(visited[dest] === 0) 
-                if(Graph.isCyclePresentDFSColor(graph, dest, visited)) 
+                if(this.isCyclePresentDFSColor(dest, visited)) 
                     return true;
         }
         visited[index] = 2;
         return false;
     }
 
-    public static isCyclePresentColor(graph : Graph) : boolean {
-        let count : number = graph.count;
-        let visited : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
+    public isCyclePresentColor() : boolean {
+        let count : number = this.count;
+        let visited : Array<number> = new Array<number>(count);
         for(let i : number = 0; i < count; i++) {
             if(visited[i] === 0) 
-                if(Graph.isCyclePresentDFSColor(graph, i, visited)) 
+                if(this.isCyclePresentDFSColor(i, visited)) 
                     return true;
         };
         return false;
     }
 
-    public static main13() {
-        let gph : Graph = new Graph(5);
-        gph.addDirectedEdge(0, 1, 1);
-        gph.addDirectedEdge(0, 2, 1);
-        gph.addDirectedEdge(2, 3, 1);
-        gph.addDirectedEdge(1, 3, 1);
-        gph.addDirectedEdge(3, 4, 1);
-        gph.addDirectedEdge(4, 1, 1);
-        console.info(Graph.isCyclePresentColor(gph));
-    }
-
-    public static transposeGraph(gph : Graph) : Graph {
-        let count : number = gph.count;
+    public transposeGraph() : Graph {
+        let count : number = this.count;
         let g : Graph = new Graph(count);
         for(let i : number = 0; i < count; i++) {
-            let adl : Array<Graph.Edge> = gph.Adj[i];
+            let adl : Array<GraphEdge> = this.Adj[i];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];
-                
-                    let dest : number = adn.dest;
-                    g.addDirectedEdge(dest, i, 1);
+                let dest : number = adn.dest;
+                g.addDirectedEdge(dest, i, 1);
             }
         };
         return g;
     }
 
-    public static isConnectedUndirected(gph : Graph) : boolean {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        Graph.dfsUtil(gph, 0, visited);
+    public isConnectedUndirected(gph : Graph) : boolean {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        this.dfsUtil(0, visited);
         for(let i : number = 0; i < count; i++) {
             if(visited[i] === false) {
                 return false;
@@ -481,20 +539,20 @@ class Graph {
         return true;
     }
 
-    public static isStronglyConnected(gph : Graph) : boolean {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        Graph.dfsUtil(gph, 0, visited);
+    public isStronglyConnected(gph : Graph) : boolean {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        this.dfsUtil(0, visited);
         for(let i : number = 0; i < count; i++) {
             if(visited[i] === false) {
                 return false;
             }
         };
-        let gReversed : Graph = Graph.transposeGraph(gph);
+        let gReversed : Graph = this.transposeGraph();
         for(let i : number = 0; i < count; i++) {
             visited[i] = false;
         };
-        Graph.dfsUtil(gReversed, 0, visited);
+        gReversed.dfsUtil(0, visited);
         for(let i : number = 0; i < count; i++) {
             if(visited[i] === false) {
                 return false;
@@ -503,75 +561,51 @@ class Graph {
         return true;
     }
 
-    public static main6() {
-        let gph : Graph = new Graph(5);
-        gph.addDirectedEdge(0, 1, 1);
-        gph.addDirectedEdge(1, 2, 1);
-        gph.addDirectedEdge(2, 3, 1);
-        gph.addDirectedEdge(3, 0, 1);
-        gph.addDirectedEdge(2, 4, 1);
-        gph.addDirectedEdge(4, 2, 1);
-        console.info(" IsStronglyConnected:: " + Graph.isStronglyConnected(gph));
-    }
-
-    public static stronglyConnectedComponent(gph : Graph) {
-        let count : number = gph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        let stk : Array<number> = <any>([]);
+    public stronglyConnectedComponent(gph : Graph) {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        let stk : Array<number> =  new Array<number>();
         for(let i : number = 0; i < count; i++) {
             if(visited[i] === false) {
-                Graph.dfsUtil2(gph, i, visited, stk);
+                this.dfsUtil2(i, visited, stk);
             }
         };
-        let gReversed : Graph = Graph.transposeGraph(gph);
+        let gReversed : Graph = this.transposeGraph();
         for(let i : number = 0; i < count; i++) {
             visited[i] = false;
         };
-        let stk2 : Array<number> = <any>([]);
+        let stk2 : Array<number> =  new Array<number>();
         while(stk.length !== 0) {
             let index : number = stk.pop();
             if(visited[index] === false) {
                 stk2.length = 0;
-                Graph.dfsUtil2(gReversed, index, visited, stk2);
+                gReversed.dfsUtil2(index, visited, stk2);
                 console.info(stk2);
             }
         };
     }
 
-    public static main7() {
-        let gph : Graph = new Graph(7);
-        gph.addDirectedEdge(0, 1, 1);
-        gph.addDirectedEdge(1, 2, 1);
-        gph.addDirectedEdge(2, 0, 1);
-        gph.addDirectedEdge(2, 3, 1);
-        gph.addDirectedEdge(3, 4, 1);
-        gph.addDirectedEdge(4, 5, 1);
-        gph.addDirectedEdge(5, 3, 1);
-        gph.addDirectedEdge(5, 6, 1);
-        Graph.stronglyConnectedComponent(gph);
-    }
-
-    public static prims(gph : Graph) {
-        let previous : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(gph.count);
-        let dist : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(gph.count);
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(gph.count);
+    public prims() {
+        let previous : Array<number> = new Array(this.count).fill(-1);
+        let dist : Array<number> = new Array(this.count).fill(infi);
+        let visited : Array<boolean> = new Array(this.count).fill(false);
         let source : number = 1;
-        for(let i : number = 0; i < gph.count; i++) {
-            previous[i] = -1;
-            dist[i] = 999999;
-        };
-        dist[source] = 0;
-        previous[source] = -1;
-        let comp : Graph.EdgeComparator = new Graph.EdgeComparator();
-        let queue : PriorityQueue<Graph.Edge> = <any>(new PriorityQueue<Graph.Edge>(100, <any>(comp)));
-        let node : Graph.Edge = new Graph.Edge(source, 0);
+        dist[source] = 0;        
+
+        let queue : PriorityQueue<GraphEdge> = 
+        new PriorityQueue<GraphEdge>(EdgeComparator);
+        let node : GraphEdge = new GraphEdge(source, 0);
         queue.add(node);
+        
         while(queue.isEmpty() === false) {
-            node = queue.peek();
-            queue.remove();
-            visited[source] = true;
+            node = queue.remove();
             source = node.dest;
-            let adl : Array<Graph.Edge> = gph.Adj[source];
+            if (visited[source] == true) {
+                continue
+            }
+            visited[source] = true;
+
+            let adl : Array<GraphEdge> = this.Adj[source];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];
                 let dest : number = adn.dest;
@@ -579,14 +613,14 @@ class Graph {
                 if(dist[dest] > alt && visited[dest] === false) {
                     dist[dest] = alt;
                     previous[dest] = source;
-                    node = new Graph.Edge(dest, alt);
+                    node = new GraphEdge(dest, alt);
                     queue.add(node);
                 }
             }
         };
-        let count : number = gph.count;
+        let count : number = this.count;
         for(let i : number = 0; i < count; i++) {
-            if(dist[i] === 2147483647) {
+            if(dist[i] === infi) {
                 console.info(" node id " + i + "  prev " + previous[i] + " distance : Unreachable");
             } else {
                 console.info(" node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
@@ -594,49 +628,27 @@ class Graph {
         };
     }
 
-    public static main3() {
-        let gph : Graph = new Graph(9);
-        gph.addUndirectedEdge(0, 1, 4);
-        gph.addUndirectedEdge(0, 7, 8);
-        gph.addUndirectedEdge(1, 2, 8);
-        gph.addUndirectedEdge(1, 7, 11);
-        gph.addUndirectedEdge(2, 3, 7);
-        gph.addUndirectedEdge(2, 8, 2);
-        gph.addUndirectedEdge(2, 5, 4);
-        gph.addUndirectedEdge(3, 4, 9);
-        gph.addUndirectedEdge(3, 5, 14);
-        gph.addUndirectedEdge(4, 5, 10);
-        gph.addUndirectedEdge(5, 6, 2);
-        gph.addUndirectedEdge(6, 7, 1);
-        gph.addUndirectedEdge(6, 8, 6);
-        gph.addUndirectedEdge(7, 8, 7);
-        gph.print();
-        console.info();
-        Graph.prims(gph);
-        console.info();
-        Graph.dijkstra(gph, 0);
-    }
 
-    public static shortestPath(gph : Graph, source : number) {
+    public shortestPath(source : number) {
         let curr : number;
-        let count : number = gph.count;
-        let distance : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
-        let path : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
+        let count : number = this.count;
+        let distance : Array<number> = new Array<number>(count);
+        let path : Array<number> = new Array<number>(count);
         for(let i : number = 0; i < count; i++) {
             distance[i] = -1;
         };
-        let que : Array<number> = <any>([]);
-        que.push(source);
+        let que : Queue<number>= new Queue<number>();;
+        que.add(source);
         distance[source] = 0;
-        while(que.length !== 0) {
+        while(que.isEmpty() === false) {
             curr = que.remove();
-            let adl : Array<Graph.Edge> = gph.Adj[curr];
+            let adl : Array<GraphEdge> = this.Adj[curr];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];
                 if(distance[adn.dest] === -1) {
                     distance[adn.dest] = distance[curr] + 1;
                     path[adn.dest] = curr;
-                    que.push(adn.dest);
+                    que.add(adn.dest);
                 }
             }
         };
@@ -645,43 +657,26 @@ class Graph {
         };
     }
 
-    public static main9() {
-        let gph : Graph = new Graph(9);
-        gph.addUndirectedEdge(0, 2, 1);
-        gph.addUndirectedEdge(1, 2, 5);
-        gph.addUndirectedEdge(1, 3, 7);
-        gph.addUndirectedEdge(1, 4, 9);
-        gph.addUndirectedEdge(3, 2, 2);
-        gph.addUndirectedEdge(3, 5, 4);
-        gph.addUndirectedEdge(4, 5, 6);
-        gph.addUndirectedEdge(4, 6, 3);
-        gph.addUndirectedEdge(5, 7, 1);
-        gph.addUndirectedEdge(6, 7, 7);
-        gph.addUndirectedEdge(7, 8, 17);
-        Graph.bellmanFordshortestPath(gph, 1);
-        console.info("isConnectedUndirected :: " + Graph.isConnectedUndirected(gph));
-    }
-
-    public static dijkstra(gph : Graph, source : number) {
-        let previous : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(gph.count);
-        let dist : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(gph.count);
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(gph.count);
-        for(let i : number = 0; i < gph.count; i++) {
+    
+    public dijkstra(source : number) {
+        let previous : Array<number> = new Array<number>(this.count);
+        let dist : Array<number> = new Array<number>(this.count);
+        let visited : Array<boolean> = new Array<boolean>(this.count).fill(false);;
+        for(let i : number = 0; i < this.count; i++) {
             previous[i] = -1;
-            dist[i] = 999999;
+            dist[i] = infi;
         };
         dist[source] = 0;
         previous[source] = -1;
-        let comp : Graph.EdgeComparator = new Graph.EdgeComparator();
-        let queue : PriorityQueue<Graph.Edge> = <any>(new PriorityQueue<Graph.Edge>(100, <any>(comp)));
-        let node : Graph.Edge = new Graph.Edge(source, 0);
+        let queue : PriorityQueue<GraphEdge> = new PriorityQueue<GraphEdge>(EdgeComparator);
+        let node : GraphEdge = new GraphEdge(source, 0);
         queue.add(node);
         while(queue.isEmpty() === false) {
             node = queue.peek();
             queue.remove();
             source = node.dest;
             visited[source] = true;
-            let adl : Array<Graph.Edge> = gph.Adj[source];
+            let adl : Array<GraphEdge> = this.Adj[source];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];       
                 let dest : number = adn.dest;
@@ -689,33 +684,33 @@ class Graph {
                 if(dist[dest] > alt && visited[dest] === false) {
                     dist[dest] = alt;
                     previous[dest] = source;
-                    node = new Graph.Edge(dest, alt);
+                    node = new GraphEdge(dest, alt);
                     queue.add(node);
                 }
             }
         };
-        let count : number = gph.count;
+        let count : number = this.count;
         for(let i : number = 0; i < count; i++) {
-            if(dist[i] === 2147483647) {
-                console.info(" \n node id " + i + "  prev " + previous[i] + " distance : Unreachable");
+            if(dist[i] === infi) {
+                console.info("node id " + i + "  prev " + previous[i] + " distance : Unreachable");
             } else {
-                console.info(" node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
+                console.info("node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
             }
         };
     }
 
-    public static bellmanFordshortestPath(gph : Graph, source : number) {
-        let count : number = gph.count;
-        let distance : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
-        let path : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
+    public bellmanFordshortestPath(source : number) {
+        let count : number = this.count;
+        let distance : Array<number> = new Array<number>(count);
+        let path : Array<number> = new Array<number>(count);
         for(let i : number = 0; i < count; i++) {
-            distance[i] = 999999;
+            distance[i] = infi;
             path[i] = -1;
         };
         distance[source] = 0;
         for(let i : number = 0; i < count - 1; i++) {
             for(let j : number = 0; j < count; j++) {
-                let adl : Array<Graph.Edge> = gph.Adj[j];
+                let adl : Array<GraphEdge> = this.Adj[j];
                 for(let index=0; index < adl.length; index++) {
                     let adn = adl[index];
                     let newDistance : number = distance[j] + adn.cost;
@@ -731,49 +726,37 @@ class Graph {
         };
     }
 
-    public static main2() {
-        let gph : Graph = new Graph(5);
-        gph.addDirectedEdge(0, 1, 3);
-        gph.addDirectedEdge(0, 4, 2);
-        gph.addDirectedEdge(1, 2, 1);
-        gph.addDirectedEdge(2, 3, 1);
-        gph.addDirectedEdge(4, 1, -2);
-        gph.addDirectedEdge(4, 3, 1);
-        gph.print();
-        console.info();
-        Graph.bellmanFordshortestPath(gph, 0);
-    }
 
-    public static heightTreeParentArr(arr : number[]) : number {
+    public heightTreeParentArr(arr :  Array<number>) : number {
         let count : number = arr.length;
-        let heightArr : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
+        let heightArr : Array<number> = new Array<number>(count);
         let gph : Graph = new Graph(count);
         let source : number = 0;
         for(let i : number = 0; i < count; i++) {
             if(arr[i] !== -1) {
-                gph.addDirectedEdge(arr[i], i, 1);
+                this.addDirectedEdge(arr[i], i, 1);
             } else {
                 source = i;
             }
         };
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         visited[source] = true;
-        let que : Array<number> = <any>([]);
-        que.push(source);
+        let que : Queue<number> = new Queue<number>();;
+        que.add(source);
         heightArr[source] = 0;
         let maxHight : number = 0;
-        while(que.length !== 0) {
+        while(que.isEmpty() === false) {
             let curr  = que.remove();
             let height : number = heightArr[curr];
             if(height > maxHight) {
                 maxHight = height;
             }
-            let adl : Array<Graph.Edge> = gph.Adj[curr];
+            let adl : Array<GraphEdge> = this.Adj[curr];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];
                 if(visited[adn.dest] === false) {
                     visited[adn.dest] = true;
-                    que.push(adn.dest);
+                    que.add(adn.dest);
                     heightArr[adn.dest] = height + 1;
                 }
             }
@@ -781,44 +764,38 @@ class Graph {
         return maxHight;
     }
 
-    public static getHeight(arr : number[], height : number[], index : number) : number {
+    public getHeight(arr :  Array<number>, height :  Array<number>, index : number) : number {
         if(arr[index] === -1) {
             return 0;
         } else {
-            return Graph.getHeight(arr, height, arr[index]) + 1;
+            return this.getHeight(arr, height, arr[index]) + 1;
         }
     }
 
-    public static heightTreeParentArr2(arr : number[]) : number {
+    public heightTreeParentArr2(arr :  Array<number>) : number {
         let count : number = arr.length;
-        let height : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
+        let height : Array<number> = new Array<number>(count);
         let maxHeight : number = -1;
         for(let i : number = 0; i < count; i++) {
-            height[i] = Graph.getHeight(arr, height, i);
+            height[i] = this.getHeight(arr, height, i);
             maxHeight = Math.max(maxHeight, height[i]);
         };
         return maxHeight;
     }
 
-    public static main12() {
-        let parentArray : number[] = [-1, 0, 1, 2, 3];
-        console.info(Graph.heightTreeParentArr(parentArray));
-        console.info(Graph.heightTreeParentArr2(parentArray));
-    }
 
-    public static bestFirstSearchPQ(gph : Graph, source : number, dest : number) : number {
-        let previous : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(gph.count);
-        let dist : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(gph.count);
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(gph.count);
-        for(let i : number = 0; i < gph.count; i++) {
+    public bestFirstSearchPQ(source : number, dest : number) : number {
+        let previous : Array<number> = new Array<number>(this.count);
+        let dist : Array<number> = new Array<number>(this.count);
+        let visited : Array<boolean> = new Array<boolean>(this.count).fill(false); 
+        for(let i : number = 0; i < this.count; i++) {
             previous[i] = -1;
-            dist[i] = 999999;
+            dist[i] = infi;
         };
-        let comp : Graph.EdgeComparator = new Graph.EdgeComparator();
-        let pq : PriorityQueue<Graph.Edge> = <any>(new PriorityQueue<Graph.Edge>(100, <any>(comp)));
+        let pq : PriorityQueue<GraphEdge> = new PriorityQueue<GraphEdge>(EdgeComparator);
         dist[source] = 0;
         previous[source] = -1;
-        let node : Graph.Edge = new Graph.Edge(source, 0);
+        let node : GraphEdge = new GraphEdge(source, 0);
         pq.add(node);
         while(pq.isEmpty() === false) {
             node = pq.peek();
@@ -828,7 +805,7 @@ class Graph {
                 return node.cost;
             }
             visited[source] = true;
-            let adl : Array<Graph.Edge> = gph.Adj[source];
+            let adl : Array<GraphEdge> = this.Adj[source];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];
                 {
@@ -838,7 +815,7 @@ class Graph {
                     if(dist[curr] > alt && visited[curr] === false) {
                         dist[curr] = alt;
                         previous[curr] = source;
-                        node = new Graph.Edge(curr, alt);
+                        node = new GraphEdge(curr, alt);
                         pq.add(node);
                     }
                 }
@@ -847,39 +824,39 @@ class Graph {
         return -1;
     }
 
-    public static isConnected(graph : Graph) : boolean {
-        let count : number = graph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        let adl : Array<Graph.Edge>;
+    public isConnected() : boolean {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        let adl : Array<GraphEdge>;
         for(let i : number = 0; i < count; i++) {
-            adl = graph.Adj[i];
+            adl = this.Adj[i];
             if((<number>adl.length) > 0) {
-                Graph.dfsUtil(graph, i, visited);
+                this.dfsUtil(i, visited);
                 break;
             }
         };
         for(let i : number = 0; i < count; i++) {
-            adl = graph.Adj[i];
+            adl = this.Adj[i];
             if((<number>adl.length) > 0) if(visited[i] === false) return false;
         };
         return true;
     }
 
-    public static isEulerian(graph : Graph) : number {
-        let count : number = graph.count;
+    public isEulerian() : number {
+        let count : number = this.count;
         let odd : number;
-        let inDegree : number[];
-        let outDegree : number[];
-        let adl : Array<Graph.Edge>;
-        if(Graph.isConnected(graph) === false) {
+        let inDegree :  Array<number>;
+        let outDegree :  Array<number>;
+        let adl : Array<GraphEdge>;
+        if(this.isConnected() === false) {
             console.info("graph is not Eulerian");
             return 0;
         } else {
             odd = 0;
-            inDegree = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
-            outDegree = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
+            inDegree = Array(count);
+            outDegree = Array(count);
             for(let i : number = 0; i < count; i++) {
-                adl = graph.Adj[i];
+                adl = this.Adj[i];
                 for(let index=0; index < adl.length; index++) {
                     let adn = adl[index];
                     outDegree[i] += 1;
@@ -904,48 +881,13 @@ class Graph {
         }
     }
 
-    public static main15() {
-        let gph : Graph = new Graph(5);
-        gph.addDirectedEdge(1, 0, 1);
-        gph.addDirectedEdge(0, 2, 1);
-        gph.addDirectedEdge(2, 1, 1);
-        gph.addDirectedEdge(0, 3, 1);
-        gph.addDirectedEdge(3, 4, 1);
-        console.info(Graph.isEulerian(gph));
-    }
-
-    public static isStronglyConnected2(graph : Graph) : boolean {
-        let count : number = graph.count;
-        let visited : boolean[] = (s => { let a=[]; while(s-->0) a.push(false); return a; })(count);
-        let gReversed : Graph;
-        let index : number;
-        let adl : Array<Graph.Edge>;
-        for(index = 0; index < count; index++) {
-            adl = graph.Adj[index];
-            if((<number>adl.length) > 0) break;
-        };
-        Graph.dfsUtil(graph, index, visited);
+    public isEulerianCycle() : boolean {
+        let count : number = this.count;
+        let inDegree : Array<number> = new Array<number>(count);
+        let outDegree : Array<number> = new Array<number>(count);
+        if(!this.isStronglyConnected2()) return false;
         for(let i : number = 0; i < count; i++) {
-            adl = graph.Adj[i];
-            if(visited[i] === false && (<number>adl.length) > 0) return false;
-        };
-        gReversed = Graph.transposeGraph(graph);
-        for(let i : number = 0; i < count; i++) {visited[i] = false;}
-        Graph.dfsUtil(gReversed, index, visited);
-        for(let i : number = 0; i < count; i++) {
-            adl = graph.Adj[i];
-            if(visited[i] === false && (<number>adl.length) > 0) return false;
-        };
-        return true;
-    }
-
-    public static isEulerianCycle(graph : Graph) : boolean {
-        let count : number = graph.count;
-        let inDegree : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
-        let outDegree : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(count);
-        if(!Graph.isStronglyConnected2(graph)) return false;
-        for(let i : number = 0; i < count; i++) {
-            let adl : Array<Graph.Edge> = graph.Adj[i];
+            let adl : Array<GraphEdge> = this.Adj[i];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];
                 {
@@ -954,73 +896,286 @@ class Graph {
                 }
             }
         };
-        for(let i : number = 0; i < count; i++) {if(inDegree[i] !== outDegree[i]) return false;;}
+        for(let i : number = 0; i < count; i++) {
+            if(inDegree[i] !== outDegree[i]) 
+                return false;
+        }
         return true;
     }
 
-    public static main16() {
-        let gph : Graph = new Graph(5);
-        gph.addDirectedEdge(0, 1, 1);
-        gph.addDirectedEdge(1, 2, 1);
-        gph.addDirectedEdge(2, 0, 1);
-        gph.addDirectedEdge(0, 4, 1);
-        gph.addDirectedEdge(4, 3, 1);
-        gph.addDirectedEdge(3, 0, 1);
-        console.info(Graph.isEulerianCycle(gph));
-    }
 
-    public static main$java_lang_String_A(args : string[]) {
-        Graph.main();
-        Graph.main10();
-    }
-
-    public static main(args? : any) : any {
-        if(((args != null && args instanceof <any>Array && (args.length==0 || args[0] == null ||(typeof args[0] === 'string'))) || args === null)) {
-            return <any>Graph.main$java_lang_String_A(args);
-        } else if(args === undefined) {
-            return <any>Graph.main$();
-        } else throw new Error('invalid overload');
+    public isStronglyConnected2() : boolean {
+        let count : number = this.count;
+        let visited : Array<boolean> = new Array<boolean>(count).fill(false);
+        let gReversed : Graph;
+        let index : number;
+        let adl : Array<GraphEdge>;
+        for(index = 0; index < count; index++) {
+            adl = this.Adj[index];
+            if((<number>adl.length) > 0) 
+                break;
+        }
+        this.dfsUtil(index, visited);
+        for(let i : number = 0; i < count; i++) {
+            adl = this.Adj[i];
+            if(visited[i] === false && (<number>adl.length) > 0) 
+                return false;
+        };
+        gReversed = this.transposeGraph();
+        for(let i : number = 0; i < count; i++) {
+            visited[i] = false;
+        }
+        gReversed.dfsUtil(index, visited);
+        for(let i : number = 0; i < count; i++) {
+            adl = this.Adj[i];
+            if(visited[i] === false && (<number>adl.length) > 0)
+                return false;
+        };
+        return true;
     }
 }
-Graph["__class"] = "Graph";
+function main1() {
+    let gph : Graph = new Graph(5);
+    gph.addDirectedEdge(0, 1, 3);
+    gph.addDirectedEdge(0, 4, 2);
+    gph.addDirectedEdge(1, 2, 1);
+    gph.addDirectedEdge(2, 3, 1);
+    gph.addDirectedEdge(4, 1, -2);
+    gph.addDirectedEdge(4, 3, 1);
+    gph.print();
+    //console.info(gph.dfs(0, 2));
+    //console.info(gph.bfs(0, 2));
+    //console.info(gph.dfsStack(0, 2));
+}
+
+function main2() {
+    let gph : Graph = new Graph(6);
+    gph.addDirectedEdge(5, 2, 1);
+    gph.addDirectedEdge(5, 0, 1);
+    gph.addDirectedEdge(4, 0, 1);
+    gph.addDirectedEdge(4, 1, 1);
+    gph.addDirectedEdge(2, 3, 1);
+    gph.addDirectedEdge(3, 1, 1);
+    gph.print();
+    gph.topologicalSort(gph);
+}
+function main3() {
+    let gph : Graph = new Graph(5);
+    gph.addDirectedEdge(0, 1, 1);
+    gph.addDirectedEdge(0, 2, 1);
+    gph.addDirectedEdge(2, 3, 1);
+    gph.addDirectedEdge(1, 3, 1);
+    gph.addDirectedEdge(3, 4, 1);
+    gph.addDirectedEdge(1, 4, 1);
+    gph.print();
+    console.info("PathExist :: " + gph.pathExist(0, 4));
+    console.info();
+    console.info(gph.countAllPath(0, 4));
+    gph.printAllPath(0, 4);
+}
+
+function main4() {
+    let gph : Graph = new Graph(7);
+    gph.addDirectedEdge(0, 1, 1);
+    gph.addDirectedEdge(0, 2, 1);
+    gph.addDirectedEdge(1, 3, 1);
+    gph.addDirectedEdge(4, 1, 1);
+    gph.addDirectedEdge(6, 4, 1);
+    gph.addDirectedEdge(5, 6, 1);
+    gph.addDirectedEdge(5, 2, 1);
+    gph.addDirectedEdge(6, 0, 1);
+    gph.print();
+    gph.rootVertex(gph);
+}
 
 
-namespace Graph {
+function main5() {
+    let gph : Graph = new Graph(4);
+    gph.addDirectedEdge(0, 1, 1);
+    gph.addDirectedEdge(0, 2, 1);
+    gph.addDirectedEdge(1, 2, 1);
+    gph.addDirectedEdge(2, 0, 1);
+    gph.addDirectedEdge(2, 3, 1);
+    gph.addDirectedEdge(3, 3, 1);
+    let tc : Array<Array<number>> = gph.transitiveClosure(gph);
+    for(let i : number = 0; i < 4; i++) {
+        for(let j : number = 0; j < 4; j++) {
+            //console.info(tc[i][j] + " ");
+        };
+        console.info();
+    };
+}
 
-    export class Edge {
-        dest : number;
 
-        cost : number;
+function main6() {
+    let gph : Graph = new Graph(7);
+    gph.addUndirectedEdge(0, 1, 1);
+    gph.addUndirectedEdge(0, 2, 1);
+    gph.addUndirectedEdge(0, 4, 1);
+    gph.addUndirectedEdge(1, 2, 1);
+    gph.addUndirectedEdge(2, 5, 1);
+    gph.addUndirectedEdge(3, 4, 1);
+    gph.addUndirectedEdge(4, 5, 1);
+    gph.addUndirectedEdge(4, 6, 1);
+    gph.print();
+    gph.bfsLevelNode(1);
+    console.info(gph.bfsDistance(1, 6));
+}
 
-        public constructor(dst : number, cst : number) {
-            if(this.dest===undefined) this.dest = 0;
-            if(this.cost===undefined) this.cost = 0;
-            this.dest = dst;
-            this.cost = cst;
-        }
-    }
-    Edge["__class"] = "Graph.Edge";
+
+function main7() {
+    let gph : Graph = new Graph(6);
+    gph.addUndirectedEdge(0, 1, 1);
+    gph.addUndirectedEdge(1, 2, 1);
+    gph.addUndirectedEdge(3, 4, 1);
+    gph.addUndirectedEdge(4, 2, 1);
+    gph.addUndirectedEdge(2, 5, 1);
+    console.info(gph.isCyclePresentUndirected());
+}
 
 
-    export class EdgeComparator {
-        public compare(x : Graph.Edge, y : Graph.Edge) : number {
-            if(x.cost < y.cost) {
-                return -1;
-            }
-            if(x.cost > y.cost) {
-                return 1;
-            }
-            return 0;
-        }
-
-        constructor() {
-        }
-    }
-    EdgeComparator["__class"] = "Graph.EdgeComparator";
-    EdgeComparator["__interfaces"] = ["java.util.Comparator"];
+function main8() {
+    let gph : Graph = new Graph(5);
+    gph.addDirectedEdge(0, 1, 1);
+    gph.addDirectedEdge(0, 2, 1);
+    gph.addDirectedEdge(2, 3, 1);
+    gph.addDirectedEdge(1, 3, 1);
+    gph.addDirectedEdge(3, 4, 1);
+    gph.addDirectedEdge(4, 1, 1);
+    console.info(gph.isCyclePresentColor());
 }
 
 
 
+function main9() {
+    let gph : Graph = new Graph(5);
+    gph.addDirectedEdge(0, 1, 1);
+    gph.addDirectedEdge(1, 2, 1);
+    gph.addDirectedEdge(2, 3, 1);
+    gph.addDirectedEdge(3, 0, 1);
+    gph.addDirectedEdge(2, 4, 1);
+    gph.addDirectedEdge(4, 2, 1);
+    console.info(" IsStronglyConnected:: " + gph.isStronglyConnected(gph));
+}
 
-Graph.main(null);
+
+function main10() {
+    let gph : Graph = new Graph(7);
+    gph.addDirectedEdge(0, 1, 1);
+    gph.addDirectedEdge(1, 2, 1);
+    gph.addDirectedEdge(2, 0, 1);
+    gph.addDirectedEdge(2, 3, 1);
+    gph.addDirectedEdge(3, 4, 1);
+    gph.addDirectedEdge(4, 5, 1);
+    gph.addDirectedEdge(5, 3, 1);
+    gph.addDirectedEdge(5, 6, 1);
+    gph.stronglyConnectedComponent(gph);
+}
+
+
+function main11() {
+    let gph : Graph = new Graph(9);
+    gph.addUndirectedEdge(0, 1, 4);
+    gph.addUndirectedEdge(0, 7, 8);
+    gph.addUndirectedEdge(1, 2, 8);
+    gph.addUndirectedEdge(1, 7, 11);
+    gph.addUndirectedEdge(2, 3, 7);
+    gph.addUndirectedEdge(2, 8, 2);
+    gph.addUndirectedEdge(2, 5, 4);
+    gph.addUndirectedEdge(3, 4, 9);
+    gph.addUndirectedEdge(3, 5, 14);
+    gph.addUndirectedEdge(4, 5, 10);
+    gph.addUndirectedEdge(5, 6, 2);
+    gph.addUndirectedEdge(6, 7, 1);
+    gph.addUndirectedEdge(6, 8, 6);
+    gph.addUndirectedEdge(7, 8, 7);
+    gph.print();
+    console.info();
+    gph.prims();
+    console.info();
+    gph.dijkstra(0);
+}
+
+function main12() {
+    let gph : Graph = new Graph(9);
+    gph.addUndirectedEdge(0, 2, 1);
+    gph.addUndirectedEdge(1, 2, 5);
+    gph.addUndirectedEdge(1, 3, 7);
+    gph.addUndirectedEdge(1, 4, 9);
+    gph.addUndirectedEdge(3, 2, 2);
+    gph.addUndirectedEdge(3, 5, 4);
+    gph.addUndirectedEdge(4, 5, 6);
+    gph.addUndirectedEdge(4, 6, 3);
+    gph.addUndirectedEdge(5, 7, 1);
+    gph.addUndirectedEdge(6, 7, 7);
+    gph.addUndirectedEdge(7, 8, 17);
+    gph.bellmanFordshortestPath(1);
+    console.info("isConnectedUndirected :: " + gph.isConnectedUndirected(gph));
+}
+
+
+
+function main13() {
+    let gph : Graph = new Graph(5);
+    gph.addDirectedEdge(0, 1, 3);
+    gph.addDirectedEdge(0, 4, 2);
+    gph.addDirectedEdge(1, 2, 1);
+    gph.addDirectedEdge(2, 3, 1);
+    gph.addDirectedEdge(4, 1, -2);
+    gph.addDirectedEdge(4, 3, 1);
+    gph.print();
+    console.info();
+    gph.bellmanFordshortestPath(0);
+}
+
+
+function main14() {
+    let parentArray :  Array<number> = [-1, 0, 1, 2, 3];
+    //console.info(gph.heightTreeParentArr(parentArray));
+    //console.info(gph.heightTreeParentArr2(parentArray));
+}
+
+
+function main15() {
+    let gph : Graph = new Graph(5);
+    gph.addDirectedEdge(1, 0, 1);
+    gph.addDirectedEdge(0, 2, 1);
+    gph.addDirectedEdge(2, 1, 1);
+    gph.addDirectedEdge(0, 3, 1);
+    gph.addDirectedEdge(3, 4, 1);
+    console.info(gph.isEulerian());
+}
+
+
+    function main16() {
+    let gph : Graph = new Graph(5);
+    gph.addDirectedEdge(0, 1, 1);
+    gph.addDirectedEdge(1, 2, 1);
+    gph.addDirectedEdge(2, 0, 1);
+    gph.addDirectedEdge(0, 4, 1);
+    gph.addDirectedEdge(4, 3, 1);
+    gph.addDirectedEdge(3, 0, 1);
+    console.info(gph.isEulerianCycle());
+}
+
+function main() {
+    main1()
+    main2()
+    main3();
+    main4();
+    main5();
+    main6();
+    main7();   
+    main8();
+    main9();
+    main10();
+    main11();
+    main12();
+    main13();
+    main14();
+    main15();
+    main16();
+
+}
+
+main();

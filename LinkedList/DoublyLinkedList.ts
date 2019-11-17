@@ -3,7 +3,7 @@ class DLLNode {
     next : DLLNode;
     prev : DLLNode;
 
-    public constructor(v? : any, nxt? : any, prv? : any) {
+    public constructor(v : any, nxt : DLLNode = null, prv : DLLNode = null) {
         this.value = v;
         this.next = nxt;
         this.prev = prv;
@@ -29,7 +29,8 @@ class DoublyLinkedList {
     }
 
     public peek() : number {
-        if(this.isEmpty()) throw Object.defineProperty(new Error("EmptyListException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+        if(this.isEmpty()) 
+            throw "EmptyListException";
         return this.head.value;
     }
 
@@ -58,10 +59,15 @@ class DoublyLinkedList {
     }
 
     public removeHead() : number {
-        if(this.isEmpty()) throw Object.defineProperty(new Error("EmptyListException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+        if(this.isEmpty()) 
+            throw "EmptyListException";
         let value : number = this.head.value;
         this.head = this.head.next;
-        if(this.head == null) this.tail = null; else this.head.prev = null;
+        
+        if(this.head == null) 
+            this.tail = null; 
+        else 
+            this.head.prev = null;
         this._size--;
         return value;
     }
@@ -72,13 +78,19 @@ class DoublyLinkedList {
         if(curr.value === key) {
             this.head = this.head.next;
             this._size--;
-            if(this.head != null) this.head.prev = null; else this.tail = null;
+            if(this.head != null) 
+                this.head.prev = null; 
+            else 
+                this.tail = null;
             return true;
         }
-        while((curr.next != null)) {
+        while(curr.next != null) {
             if(curr.next.value === key) {
                 curr.next = curr.next.next;
-                if(curr.next == null) this.tail = curr; else curr.next = curr;
+                if(curr.next == null) 
+                    this.tail = curr; 
+                else 
+                    curr.next = curr;
                 this._size--;
                 return true;
             }
@@ -89,8 +101,9 @@ class DoublyLinkedList {
 
     public isPresent(key : number) : boolean {
         let temp : DLLNode = this.head;
-        while((temp != null)) {
-            if(temp.value === key) return true;
+        while(temp != null) {
+            if(temp.value === key) 
+                return true;
             temp = temp.next;
         }
         return false;
@@ -104,10 +117,12 @@ class DoublyLinkedList {
 
     public print() {
         let temp : DLLNode = this.head;
-        while((temp != null)) {
-            console.info(temp.value + " ");
+        let result : string = "";
+        while(temp != null) {
+            result += (temp.value + " ");
             temp = temp.next;
         }
+        console.info(result);
     }
 
     public sortedInsert(value : number) {
@@ -122,7 +137,7 @@ class DoublyLinkedList {
             this.head.prev = temp;
             this.head = temp;
         }
-        while((curr.next != null && curr.next.value > value)) {
+        while(curr.next != null && curr.next.value > value) {
             curr = curr.next;
         }
         if(curr.next == null) {
@@ -158,7 +173,7 @@ class DoublyLinkedList {
         let curr : DLLNode = this.head;
         let deleteMe : DLLNode;
         while(curr != null) {
-            if((curr.next != null) && curr.value === curr.next.value) {
+            if(curr.next != null && curr.value === curr.next.value) {
                 deleteMe = curr.next;
                 curr.next = deleteMe.next;
                 curr.next.prev = curr;
@@ -192,7 +207,6 @@ class DoublyLinkedList {
     }
 }
 
-
 function main() {
     let ll : DoublyLinkedList = new DoublyLinkedList();
     ll.addHead(1);
@@ -212,7 +226,5 @@ function main() {
     ll.addHead(61);
     ll.print();
 }
-
-    
 
 main();

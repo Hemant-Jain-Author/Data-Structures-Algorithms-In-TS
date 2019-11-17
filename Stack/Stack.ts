@@ -1,31 +1,12 @@
-class Stack {
+class Stack<T> {
     capacity : number = 1000;
-
-    data : number[];
-
+    data :  Array<T>;
     __top : number = -1;
 
-    public constructor(size? : any) {
-        if(((typeof size === 'number') || size === null)) {
-            let __args = arguments;
-            if(this.data===undefined) this.data = null;
-            this.capacity = 1000;
+    public constructor(size : number = 1000) {
+            this.capacity = size;
             this.__top = -1;
-            if(this.data===undefined) this.data = null;
-            (() => {
-                this.data = (s => { let a=[]; while(s-->0) a.push(0); return a; })(size);
-                this.capacity = size;
-            })();
-        } else if(size === undefined) {
-            let __args = arguments;
-            if(this.data===undefined) this.data = null;
-            this.capacity = 1000;
-            this.__top = -1;
-            if(this.data===undefined) this.data = null;
-            (() => {
-                this.data = (s => { let a=[]; while(s-->0) a.push(0); return a; })(this.capacity);
-            })();
-        } else throw new Error('invalid overload');
+            this.data = new Array<T>(size);
     }
 
     public size() : number {
@@ -36,48 +17,46 @@ class Stack {
         return (this.__top === -1);
     }
 
-    public push(value : number) {
+    public push(value : T) {
         if(this.size() === this.data.length) {
-            throw Object.defineProperty(new Error("StackOvarflowException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+            throw "StackOvarflowException";
         }
         this.__top++;
         this.data[this.__top] = value;
     }
 
-    public top() : number {
+    public top() : T {
         if(this.isEmpty()) {
-            throw Object.defineProperty(new Error("StackEmptyException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+            throw "StackEmptyException";
         }
         return this.data[this.__top];
     }
 
-    public pop() : number {
+    public pop() : T {
         if(this.isEmpty()) {
-            throw Object.defineProperty(new Error("StackEmptyException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+            throw "StackEmptyException";
         }
-        let topVal : number = this.data[this.__top];
+        let topVal : T = this.data[this.__top];
         this.__top--;
         return topVal;
     }
 
     public print() {
-        for(let i : number = this.__top; i > -1; i--) {{
+        for(let i : number = this.__top; i > -1; i--) {
             console.info(this.data[i] + " ");
-        };}
-        console.info("");
+        };
     }
 
-    public static main(args : string[]) {
-        let s : Stack = new Stack();
-        s.push(1);
-        s.push(2);
-        s.push(3);
-        s.print();
-        console.info(s.pop());
-        console.info(s.pop());
-        s.print();
-    }
 }
-Stack["__class"] = "Stack";
+function main() {
+    let s : Stack<number> = new Stack<number>();
+    s.push(1);
+    s.push(2);
+    s.push(3);
+    s.print();
+    console.info(s.pop());
+    console.info(s.pop());
+    s.print();
+}
 
-Stack.main(null);
+main();

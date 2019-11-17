@@ -2,7 +2,7 @@ function more(value1 : number, value2 : number) : boolean {
     return value1 > value2;
 }
 
-function SelectionSort(arr : number[]) {
+function SelectionSort(arr :  Array<number>) {
     let size : number = arr.length;
     let i : number;
     let j : number;
@@ -21,7 +21,7 @@ function SelectionSort(arr : number[]) {
     }
 }
 
-function SelectionSort2(arr : number[]) {
+function SelectionSort2(arr :  Array<number>) {
     let size : number = arr.length;
     let i : number;
     let j : number;
@@ -41,12 +41,12 @@ function SelectionSort2(arr : number[]) {
 }
 
 function main() {
-    let array : number[] = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+    let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
     SelectionSort(array);
     console.info(array);
     
     console.info();
-    let array2 : number[] = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+    let array2 :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
     SelectionSort2(array2);
     console.info(array2);
 }

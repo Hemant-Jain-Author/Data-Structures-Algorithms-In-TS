@@ -1,15 +1,15 @@
-class QueueNode {
-    value : number;
-    next : QueueNode;
+class QueueNode<T> {
+    value : T;
+    next : QueueNode<T>;
 
-    public constructor(v : number, n : QueueNode) {
+    public constructor(v : T, n : QueueNode<T>) {
         this.value = v;
         this.next = n;
     }
 }
 
-class QueueLL {
-    tail : QueueNode = null;
+class QueueLL<T> {
+    tail : QueueNode<T> = null;
     _size : number = 0;
 
     public size() : number {
@@ -20,15 +20,17 @@ class QueueLL {
         return this._size === 0;
     }
 
-    public peek() : number {
-        if(this.isEmpty()) throw Object.defineProperty(new Error("StackEmptyException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
-        let value : number;
-        if(this.tail === this.tail.next) value = this.tail.value; else value = this.tail.next.value;
-        return value;
+    public peek() : T {
+        if(this.isEmpty()) 
+            throw "StackEmptyException";
+        if(this.tail === this.tail.next) 
+            return this.tail.value; 
+        else 
+            return this.tail.next.value;
     }
 
-    public add(value : number) {
-        let temp : QueueNode = new QueueNode(value, null);
+    public add(value : T) {
+        let temp : QueueNode<T> = new QueueNode<T>(value, null);
         if(this.tail == null) {
             this.tail = temp;
             this.tail.next = this.tail;
@@ -40,9 +42,10 @@ class QueueLL {
         this._size++;
     }
 
-    public remove() : number {
-        if(this.isEmpty()) throw Object.defineProperty(new Error("StackEmptyException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
-        let value : number = 0;
+    public remove() : T {
+        if(this.isEmpty()) 
+            throw "StackEmptyException";
+        let value : T;
         if(this.tail === this.tail.next) {
             value = this.tail.value;
             this.tail = null;
@@ -56,7 +59,7 @@ class QueueLL {
 }
 
 function main() {
-    let q : QueueLL = new QueueLL();
+    let q : QueueLL<number> = new QueueLL<number>();
     q.add(1);
     q.add(2);
     q.add(3);

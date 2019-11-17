@@ -2,14 +2,13 @@ class LNode {
     public value : number;
     public next : LNode;
 
-    public constructor(v : number, n : LNode) {
-        if(this.value===undefined) this.value = 0;
-        if(this.next===undefined) 
-            this.next = null;
-        else 
-            this.next = n;
+    public constructor(v : number, n : LNode = null) {
+        this.value= v;
+        this.next = n;
     }
 }
+
+const ErrorValue = 2147483647;
 
 class LinkedList {
     head : LNode;
@@ -28,7 +27,8 @@ class LinkedList {
     }
 
     public peek() : number {
-        if(this.isEmpty()) throw Object.defineProperty(new Error("EmptyListException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+        if(this.isEmpty()) 
+            throw "EmptyListException";
         return this.head.value;
     }
 
@@ -50,7 +50,9 @@ class LinkedList {
     }
 
     public removeHead() : number {
-        if(this.isEmpty()) throw Object.defineProperty(new Error("EmptyListException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+        if(this.isEmpty()) 
+            throw "EmptyListException";
+        
         let value : number = this.head.value;
         this.head = this.head.next;
         this._size--;
@@ -60,7 +62,8 @@ class LinkedList {
     public searchList(data : number) : boolean {
         let temp : LNode = this.head;
         while(temp != null) {
-            if(temp.value === data) return true;
+            if(temp.value === data) 
+                return true;
             temp = temp.next;
         }
         return false;
@@ -68,7 +71,9 @@ class LinkedList {
 
     public deleteNode(delValue : number) : boolean {
         let temp : LNode = this.head;
-        if(this.isEmpty()) return false;
+        if(this.isEmpty()) 
+            return false;
+        
         if(delValue === this.head.value) {
             this.head = this.head.next;
             this._size--;
@@ -104,7 +109,9 @@ class LinkedList {
 
     public reverseRecurseUtil(currentNode : LNode, nextNode : LNode) : LNode {
         let ret : LNode;
-        if(currentNode == null) return null;
+        if(currentNode == null) 
+            return null;
+        
         if(currentNode.next == null) {
             currentNode.next = nextNode;
             return currentNode;
@@ -150,10 +157,14 @@ class LinkedList {
         let tailNode : LNode = null;
         let tempNode : LNode = null;
         let curr : LNode = this.head;
-        if(curr == null) return null;
+
+        if(curr == null) 
+            return null;
+
         headNode = new LNode(curr.value, null);
         tailNode = headNode;
         curr = curr.next;
+
         while(curr != null) {
             tempNode = new LNode(curr.value, null);
             tailNode.next = tempNode;
@@ -165,38 +176,30 @@ class LinkedList {
         return ll2;
     }
 
-    public compareList$LinkedList(ll : LinkedList) : boolean {
-        return this.compareList$LinkedList_Node$LinkedList_Node(this.head, ll.head);
+    public compareList(ll : LinkedList) : boolean {
+        return this.compareListUtil(this.head, ll.head);
     }
 
-    public compareList$LinkedList_Node$LinkedList_Node(head1 : LNode, head2 : LNode) : boolean {
+    public compareListUtil(head1? : LNode, head2? : LNode) : boolean {
         if(head1 == null && head2 == null) 
             return true; 
         else if((head1 == null) || (head2 == null) || (head1.value !== head2.value)) 
             return false; 
         else 
-            return this.compareList$LinkedList_Node$LinkedList_Node(head1.next, head2.next);
-    }
-
-    public compareList(head1? : any, head2? : any) : any {
-        if(((head1 != null && head1 instanceof <any>LNode) || head1 === null) && 
-        ((head2 != null && head2 instanceof <any>LNode) || head2 === null)) {
-            return <any>this.compareList$LinkedList_Node$LinkedList_Node(head1, head2);
-        } else if(((head1 != null && head1 instanceof <any>LinkedList) || head1 === null) && 
-        (head2 === undefined)) {
-            return <any>this.compareList$LinkedList(head1);
-        } else throw new Error('invalid overload');
+            return this.compareListUtil(head1.next, head2.next);
     }
 
     public compareList2(ll2 : LinkedList) : boolean {
         let head1 : LNode = this.head;
         let head2 : LNode = ll2.head;
         while(head1 == null && head2 == null) {
-            if(head1.value !== head2.value) return false;
+            if(head1.value !== head2.value) 
+                return false;
             head1 = head1.next;
             head2 = head2.next;
         }
-        if(head1 == null && head2 == null) return true;
+        if(head1 == null && head2 == null) 
+            return true;
         return false;
     }
 
@@ -211,7 +214,8 @@ class LinkedList {
     }
 
     public nthNodeFromBegining(index : number) : number {
-        if(index > this.size() || index < 1) return 2147483647;
+        if(index > this.size() || index < 1) 
+            return ErrorValue;
         let count : number = 0;
         let curr : LNode = this.head;
         while(curr != null && count < index - 1) {
@@ -225,7 +229,7 @@ class LinkedList {
         let size : number = this.findLength();
         let startIndex : number;
         if(size !== 0 && size < index) {
-            return 2147483647;
+            return ErrorValue;
         }
         startIndex = size - index + 1;
         return this.nthNodeFromBegining(startIndex);
@@ -239,7 +243,8 @@ class LinkedList {
             count++;
             forward = forward.next;
         }
-        if(forward == null) return 2147483647;
+        if(forward == null) 
+            return ErrorValue;
         while(forward != null) {
             forward = forward.next;
             curr = curr.next;
@@ -287,10 +292,12 @@ class LinkedList {
 
     public print() {
         let temp : LNode = this.head;
+        let result : string = "";
         while(temp != null) {
-            console.info(temp.value + " ");
+            result += (temp.value + " ");
             temp = temp.next;
         }
+        console.info(result);
     }
 
     public sortedInsert(value : number) {

@@ -1,5 +1,5 @@
 
-function mergeSrt(arr : number[], tempArray : number[], lowerIndex : number, upperIndex : number) {
+function mergeSrt(arr :  Array<number>, tempArray :  Array<number>, lowerIndex : number, upperIndex : number) {
     if(lowerIndex >= upperIndex) {
         return;
     }
@@ -29,14 +29,14 @@ function mergeSrt(arr : number[], tempArray : number[], lowerIndex : number, upp
     }
 }
 
-function MergeSort1(arr : number[]) {
+function MergeSort1(arr :  Array<number>) {
     let size : number = arr.length;
-    let tempArray : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(size);
+    let tempArray :  Array<number> = (s => { let a=[]; while(s-->0) a.push(0); return a; })(size);
     mergeSrt(arr, tempArray, 0, size - 1);
 }
 
 function main() {
-    let array : number[] = [3, 4, 2, 1, 6, 5, 7, 8, 1, 1];
+    let array :  Array<number> = [3, 4, 2, 1, 6, 5, 7, 8, 1, 1];
     MergeSort1(array);
     console.info(array);
 }

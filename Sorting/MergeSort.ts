@@ -1,4 +1,4 @@
-function merge(arr : number[], tempArray : number[], 
+function merge(arr :  Array<number>, tempArray :  Array<number>, 
     lowerIndex : number, middleIndex : number, upperIndex : number) {
     let lowerStart : number = lowerIndex;
     let lowerStop : number = middleIndex;
@@ -23,7 +23,7 @@ function merge(arr : number[], tempArray : number[],
     }
 }
 
-function mergeSrt(arr : number[], tempArray : number[], lowerIndex : number, upperIndex : number) {
+function mergeSrt(arr :  Array<number>, tempArray :  Array<number>, lowerIndex : number, upperIndex : number) {
     if(lowerIndex >= upperIndex) {
         return;
     }
@@ -33,14 +33,14 @@ function mergeSrt(arr : number[], tempArray : number[], lowerIndex : number, upp
     merge(arr, tempArray, lowerIndex, middleIndex, upperIndex);
 }
 
-function MergeSort(arr : number[]) {
+function MergeSort(arr :  Array<number>) {
     let size : number = arr.length;
-    let tempArray : number[] = Array(size);
+    let tempArray :  Array<number> = Array(size);
     mergeSrt(arr, tempArray, 0, size - 1);
 }
 
 function main() {
-    let array : number[] = [3, 4, 2, 1, 6, 5, 7, 8, 1, 1];
+    let array :  Array<number> = [3, 4, 2, 1, 6, 5, 7, 8, 1, 1];
     MergeSort(array);
     console.info(array);
 }

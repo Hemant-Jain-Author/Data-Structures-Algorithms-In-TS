@@ -3,7 +3,7 @@ class DCLLNode {
     next : DCLLNode;
     prev : DCLLNode;
 
-    public constructor(v? : any, nxt? : any, prv? : any) {
+    public constructor(v : number, nxt : DCLLNode = null, prv : DCLLNode = null) {
         this.value = v;
         this.next = nxt;
         this.prev = prv;
@@ -24,7 +24,8 @@ class DoublyCircularLinkedList {
     }
 
     public peekHead() : number {
-        if(this.isEmpty()) throw Object.defineProperty(new Error("EmptyListException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+        if(this.isEmpty()) 
+            throw "EmptyListException";
         return this.head.value;
     }
 
@@ -61,7 +62,8 @@ class DoublyCircularLinkedList {
     }
 
     public removeHead() : number {
-        if(this._size === 0) throw Object.defineProperty(new Error("EmptyListException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+        if(this._size === 0) 
+            "EmptyListException";
         let value : number = this.head.value;
         this._size--;
         if(this._size === 0) {
@@ -77,7 +79,8 @@ class DoublyCircularLinkedList {
     }
 
     public removeTail() : number {
-        if(this._size === 0) throw Object.defineProperty(new Error("EmptyListException"), '__classes', { configurable: true, value: ['java.lang.Throwable','java.lang.IllegalStateException','java.lang.Object','java.lang.RuntimeException','java.lang.Exception'] });
+        if(this._size === 0) 
+            throw "EmptyListException";
         let value : number = this.tail.value;
         this._size--;
         if(this._size === 0) {
@@ -94,11 +97,13 @@ class DoublyCircularLinkedList {
 
     public isPresent(key : number) : boolean {
         let temp : DCLLNode = this.head;
-        if(this.head == null) return false;
-        do {{
-            if(temp.value === key) return true;
+        if(this.head == null) 
+            return false;
+        do {
+            if(temp.value === key) 
+                return true;
             temp = temp.next;
-        }} while((temp !== this.head));
+        } while(temp !== this.head);
         return false;
     }
 
@@ -113,11 +118,14 @@ class DoublyCircularLinkedList {
             return;
         }
         let temp : DCLLNode = this.head;
-        while((temp !== this.tail)) {{
-            console.info(temp.value + " ");
+        let result : string = "";
+
+        while(temp !== this.tail) {
+            result += (temp.value + " ");
             temp = temp.next;
-        }};
-        console.info(temp.value);
+        };
+        result += temp.value;
+        console.info(result);
     }
 }
 

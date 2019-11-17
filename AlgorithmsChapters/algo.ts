@@ -13,6 +13,7 @@ function fibonacci2(n : number) : number {
         return first; 
     else if(n === 1) 
         return second;
+    
     let i : number = 2;
     while(i <= n) {
         temp = first + second;
@@ -24,10 +25,10 @@ function fibonacci2(n : number) : number {
 }
 
 function main1(){
-    console.log(fibonacci2(10) , " " , fibonacci(10))
+    console.log("fibonacci(10) : " , fibonacci(10))
 }
 
-function Feasible(Q : number[], k : number) : boolean {
+function Feasible(Q :  Array<number>, k : number) : boolean {
     for(let i : number = 0; i < k; i++) {
         if(Q[k] === Q[i] || Math.abs(Q[i] - Q[k]) === Math.abs(i - k)) {
             return false;
@@ -36,7 +37,7 @@ function Feasible(Q : number[], k : number) : boolean {
     return true;
 }
 
-function NQueens(Q : number[], k : number, n : number) {
+function NQueens(Q :  Array<number>, k : number, n : number) {
     if(k === n) {
         console.log(Q);
         return;
@@ -50,7 +51,7 @@ function NQueens(Q : number[], k : number, n : number) {
 }
 
 function main2() {
-    let Q : number[] = [0, 0, 0, 0, 0, 0, 0, 0];
+    let Q :  Array<number> = [0, 0, 0, 0, 0, 0, 0, 0];
     NQueens(Q, 0, 8);
 }
 

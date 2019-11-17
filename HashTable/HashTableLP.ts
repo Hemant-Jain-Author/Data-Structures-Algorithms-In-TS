@@ -5,9 +5,9 @@ let DELETED_VALUE : number = 2;
 class HashTableLP {
 
     tableSize : number;
-    KeyArr : number[];
-    DataArr : number[];
-    FlagArr : number[];
+    KeyArr : Array<number>;
+    DataArr : Array<number>;
+    FlagArr : Array<number>;
 
     public constructor(tSize : number) {
         this.tableSize = tSize;

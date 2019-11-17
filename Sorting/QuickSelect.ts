@@ -1,5 +1,5 @@
 
-function quickSelect(arr : number[], lower : number, upper : number, k : number) {
+function quickSelect(arr :  Array<number>, lower : number, upper : number, k : number) {
     if(upper <= lower) return;
     let pivot : number = arr[lower];
     let start : number = lower;
@@ -20,20 +20,20 @@ function quickSelect(arr : number[], lower : number, upper : number, k : number)
     if(k > upper) quickSelect(arr, upper + 1, stop, k);
 }
 
-function swap(arr : number[], first : number, second : number) {
+function swap(arr :  Array<number>, first : number, second : number) {
     let temp : number = arr[first];
     arr[first] = arr[second];
     arr[second] = temp;
 }
 
-function QuickSelect(arr : number[], k : number) : number {
+function QuickSelect(arr :  Array<number>, k : number) : number {
     quickSelect(arr, 0, arr.length - 1, k);
     return arr[4];
 }
 
-function main(args : string[]) {
-    let array : number[] = [3, 4, 2, 1, 6, 5, 7, 8, 10, 9];
+function main() {
+    let array :  Array<number> = [3, 4, 2, 1, 6, 5, 7, 8, 10, 9];
     console.info("value at index 5 is : " + QuickSelect(array, 5));
 }
 
-main(null);
+main();

@@ -1,5 +1,5 @@
 class Stack2 {
-    data : number[];
+    data :  Array<number>;
 
     __top : number = -1;
 
@@ -52,7 +52,7 @@ class Stack2 {
     public push(value : number) {
         if(this.size() === this.capacity) {
             console.info("size dubbelled");
-            let newData : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(this.capacity * 2);
+            let newData :  Array<number> = (s => { let a=[]; while(s-->0) a.push(0); return a; })(this.capacity * 2);
             /* arraycopy */((srcPts, srcOff, dstPts, dstOff, size) => { if(srcPts !== dstPts || dstOff >= srcOff + size) { while (--size >= 0) dstPts[dstOff++] = srcPts[srcOff++];} else { let tmp = srcPts.slice(srcOff, srcOff + size); for (let i = 0; i < size; i++) dstPts[dstOff++] = tmp[i]; }})(this.data, 0, newData, 0, this.capacity);
             this.data = newData;
             this.capacity = this.capacity * 2;
@@ -77,7 +77,7 @@ class Stack2 {
         if(this.size() === (this.capacity / 2|0) && this.capacity > this.minCapacity) {
             console.info("size halfed");
             this.capacity = (this.capacity / 2|0);
-            let newData : number[] = (s => { let a=[]; while(s-->0) a.push(0); return a; })(this.capacity);
+            let newData :  Array<number> = (s => { let a=[]; while(s-->0) a.push(0); return a; })(this.capacity);
             /* arraycopy */((srcPts, srcOff, dstPts, dstOff, size) => { if(srcPts !== dstPts || dstOff >= srcOff + size) { while (--size >= 0) dstPts[dstOff++] = srcPts[srcOff++];} else { let tmp = srcPts.slice(srcOff, srcOff + size); for (let i = 0; i < size; i++) dstPts[dstOff++] = tmp[i]; }})(this.data, 0, newData, 0, this.capacity);
             this.data = newData;
         }

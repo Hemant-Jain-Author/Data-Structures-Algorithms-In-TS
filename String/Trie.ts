@@ -1,6 +1,5 @@
 let CharCount : number = 26;
 
-
 class TrieNode {
     isLastChar : boolean;
     child : TrieNode[];
@@ -34,7 +33,8 @@ class Trie {
         if(str.length === index) {
             curr.isLastChar = true;
         } else {
-            curr.child[str[index].charCodeAt(0) - 'a'.charCodeAt(0)] = this.AddUtil(curr.child[str[index].charCodeAt(0) - 'a'.charCodeAt(0)], str, index + 1);
+            curr.child[str[index].charCodeAt(0) - 'a'.charCodeAt(0)] = 
+            this.AddUtil(curr.child[str[index].charCodeAt(0) - 'a'.charCodeAt(0)], str, index + 1);
         }
         return curr;
     }
