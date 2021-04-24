@@ -61,7 +61,7 @@ class PriorityQueue<T> {
             newSize = 1;
         this.arr = new Array<T>(newSize);
         /* arraycopy */
-        var size = this.size;
+        let size = this.size;
         for (let i = 0; i < size; i++)
         {
             this.arr[i] = old[i];
@@ -99,7 +99,7 @@ class PriorityQueue<T> {
     }
 }
 
-let infi = 2147483647;
+const infi = 2147483647;
 
 class GraphEdge {
     dest : number;
@@ -176,9 +176,9 @@ class GraphAM {
         let count : number = this.count;
         for(let i : number = 0; i < count; i++) {
             if(dist[i] === infi) {
-                console.info(" \n node id " + i + "  prev " + previous[i] + " distance : Unreachable");
+                console.info("Node id " + i + "  prev " + previous[i] + " distance : Unreachable");
             } else {
-                console.info(" node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
+                console.info("Node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
             }
         };
     }
@@ -215,12 +215,12 @@ class GraphAM {
                 }
             };
         };
-        let count : number = this.count;
+        const count : number = this.count;
         for(let i : number = 0; i < count; i++) {
             if(dist[i] === infi) {
-                console.info(" \n node id " + i + "  prev " + previous[i] + " distance : Unreachable");
+                console.info("Node id " + i + "  prev " + previous[i] + " distance : Unreachable");
             } else {
-                console.info(" node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
+                console.info("Node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
             }
         };
     }

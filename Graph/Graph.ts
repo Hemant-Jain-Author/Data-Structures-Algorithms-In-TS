@@ -54,7 +54,7 @@ class PriorityQueue<T> {
 
     public constructor(cmp : (a:T, b:T) => boolean) {
             this.compare = cmp;
-            this.arr = new Array<T>(PriorityQueue<T>.CAPACITY);
+            this.arr = new Array<T>(PriorityQueue.CAPACITY);
             this.size = 0;
     }
 
@@ -108,7 +108,7 @@ class PriorityQueue<T> {
             newSize = 1;
         this.arr = new Array<T>(newSize);
         /* arraycopy */
-        var size = this.size;
+        let size = this.size;
         for (let i = 0; i < size; i++)
         {
             this.arr[i] = old[i];
@@ -201,7 +201,7 @@ class Graph {
     }
 
     public dfsStack(source : number, target : number) : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         let stk : Array<number> =  new Array<number>();
         stk.push(source);
@@ -221,7 +221,7 @@ class Graph {
     }
 
     public dfs(source : number, target : number) : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         this.dfsUtil(source, visited);
         return visited[target];
@@ -250,7 +250,7 @@ class Graph {
     }
 
     public bfs(source : number, target : number) : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         let que : Queue<number>= new Queue<number>();;
         que.add(source);
@@ -271,7 +271,7 @@ class Graph {
 
     public topologicalSort(gph : Graph) {
         let stk : Array<number> =  new Array<number>();
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         for(let i : number = 0; i < count; i++) {
             if(visited[i] === false) {
@@ -285,7 +285,7 @@ class Graph {
     }
     
     public pathExist(source : number, dest : number) : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         this.dfsUtil(source, visited);
         return visited[dest];
@@ -309,7 +309,7 @@ class Graph {
     }
 
     public countAllPath(src : number, dest : number) : number {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         return this.countAllPathDFS(visited, src, dest);
     }
@@ -334,14 +334,14 @@ class Graph {
     }
 
     public printAllPath(src : number, dest : number) {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> =  new Array<boolean>(count).fill(false);
         let path : Array<number> =  new Array<number>();
         this.printAllPathDFS(visited, src, dest, path);
     }
     
     public rootVertex(gph : Graph) : number {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         let retVal : number = -1;
         for(let i : number = 0; i < count; i++) {
@@ -365,7 +365,7 @@ class Graph {
     }
 
     public transitiveClosure(gph : Graph) : Array<Array<number>> {
-        let count : number = this.count;
+        const count : number = this.count;
         let tc : Array<Array<number>> = new Array<Array<number>>(count);
         for(let i : number = 0; i < count; i++) {
             tc[i] = new Array<number>(count).fill(0);
@@ -377,14 +377,14 @@ class Graph {
     }
 
     public bfsLevelNode(source : number) {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         let level : Array<number> = new Array<number>(count);
         visited[source] = true;
         let que : Queue<number>= new Queue<number>();;
         que.add(source);
         level[source] = 0;
-        console.info("\nNode  - Level");
+        console.info("Node  - Level");
         while(que.isEmpty() === false) {
             let curr = que.remove();
             let depth : number = level[curr];
@@ -404,7 +404,7 @@ class Graph {
     }
 
     public bfsDistance(source : number, dest : number) : number {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         let que : Queue<number>= new Queue<number>();;
         que.add(source);
@@ -445,7 +445,7 @@ class Graph {
     }
 
     public isCyclePresentUndirected() : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         for(let i : number = 0; i < count; i++) 
         {
@@ -474,7 +474,7 @@ class Graph {
     }
 
     public isCyclePresent() : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         let marked : Array<number> = new Array<number>(count);
         for(let index : number = 0; index < count; index++) {
@@ -503,7 +503,7 @@ class Graph {
     }
 
     public isCyclePresentColor() : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<number> = new Array<number>(count);
         for(let i : number = 0; i < count; i++) {
             if(visited[i] === 0) 
@@ -514,7 +514,7 @@ class Graph {
     }
 
     public transposeGraph() : Graph {
-        let count : number = this.count;
+        const count : number = this.count;
         let g : Graph = new Graph(count);
         for(let i : number = 0; i < count; i++) {
             let adl : Array<GraphEdge> = this.Adj[i];
@@ -528,7 +528,7 @@ class Graph {
     }
 
     public isConnectedUndirected(gph : Graph) : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         this.dfsUtil(0, visited);
         for(let i : number = 0; i < count; i++) {
@@ -540,7 +540,7 @@ class Graph {
     }
 
     public isStronglyConnected(gph : Graph) : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         this.dfsUtil(0, visited);
         for(let i : number = 0; i < count; i++) {
@@ -562,7 +562,7 @@ class Graph {
     }
 
     public stronglyConnectedComponent(gph : Graph) {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         let stk : Array<number> =  new Array<number>();
         for(let i : number = 0; i < count; i++) {
@@ -618,7 +618,7 @@ class Graph {
                 }
             }
         };
-        let count : number = this.count;
+        const count : number = this.count;
         for(let i : number = 0; i < count; i++) {
             if(dist[i] === infi) {
                 console.info(" node id " + i + "  prev " + previous[i] + " distance : Unreachable");
@@ -631,7 +631,7 @@ class Graph {
 
     public shortestPath(source : number) {
         let curr : number;
-        let count : number = this.count;
+        const count : number = this.count;
         let distance : Array<number> = new Array<number>(count);
         let path : Array<number> = new Array<number>(count);
         for(let i : number = 0; i < count; i++) {
@@ -689,7 +689,7 @@ class Graph {
                 }
             }
         };
-        let count : number = this.count;
+        const count : number = this.count;
         for(let i : number = 0; i < count; i++) {
             if(dist[i] === infi) {
                 console.info("node id " + i + "  prev " + previous[i] + " distance : Unreachable");
@@ -700,7 +700,7 @@ class Graph {
     }
 
     public bellmanFordshortestPath(source : number) {
-        let count : number = this.count;
+        const count : number = this.count;
         let distance : Array<number> = new Array<number>(count);
         let path : Array<number> = new Array<number>(count);
         for(let i : number = 0; i < count; i++) {
@@ -728,7 +728,7 @@ class Graph {
 
 
     public heightTreeParentArr(arr :  Array<number>) : number {
-        let count : number = arr.length;
+        const count : number = arr.length;
         let heightArr : Array<number> = new Array<number>(count);
         let gph : Graph = new Graph(count);
         let source : number = 0;
@@ -773,7 +773,7 @@ class Graph {
     }
 
     public heightTreeParentArr2(arr :  Array<number>) : number {
-        let count : number = arr.length;
+        const count : number = arr.length;
         let height : Array<number> = new Array<number>(count);
         let maxHeight : number = -1;
         for(let i : number = 0; i < count; i++) {
@@ -825,7 +825,7 @@ class Graph {
     }
 
     public isConnected() : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         let adl : Array<GraphEdge>;
         for(let i : number = 0; i < count; i++) {
@@ -843,7 +843,7 @@ class Graph {
     }
 
     public isEulerian() : number {
-        let count : number = this.count;
+        const count : number = this.count;
         let odd : number;
         let inDegree :  Array<number>;
         let outDegree :  Array<number>;
@@ -882,7 +882,7 @@ class Graph {
     }
 
     public isEulerianCycle() : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let inDegree : Array<number> = new Array<number>(count);
         let outDegree : Array<number> = new Array<number>(count);
         if(!this.isStronglyConnected2()) return false;
@@ -905,7 +905,7 @@ class Graph {
 
 
     public isStronglyConnected2() : boolean {
-        let count : number = this.count;
+        const count : number = this.count;
         let visited : Array<boolean> = new Array<boolean>(count).fill(false);
         let gReversed : Graph;
         let index : number;

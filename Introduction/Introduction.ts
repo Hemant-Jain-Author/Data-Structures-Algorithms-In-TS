@@ -248,11 +248,11 @@ function SmallestPositiveMissingNumber(arr : Array<number>, size : number) : num
 
 function SmallestPositiveMissingNumber2(arr : Array<number>, size : number) : number {
     let hs = new Set();
-    for (var i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         hs.add(arr[i]);
     }
 
-    for (var i = 1; i < size + 1; i++) {
+    for (let i = 1; i < size + 1; i++) {
         if (hs.has(i) === false)
             return i;
     }
@@ -262,13 +262,13 @@ function SmallestPositiveMissingNumber2(arr : Array<number>, size : number) : nu
 function SmallestPositiveMissingNumber3(arr : Array<number>, size : number) : number {
     let aux = new Array(size).fill(-1);
 
-    for (var i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         if (arr[i] > 0 && arr[i] <= size) {
             aux[arr[i] - 1] = arr[i];
         }
     }
     
-    for (var i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         if (aux[i] !== i + 1) {
             return i + 1;
         }
@@ -303,7 +303,7 @@ function test9() {
 }
 
 function MaxMinArr(arr : Array<number>, size : number) {
-    let aux : Array<number> = /* copyOf */arr.slice(0,size);
+    let aux : Array<number> = arr.slice(0,size);
     let start : number = 0;
     let stop : number = size - 1;
     for(let i : number = 0; i < size; i++) {

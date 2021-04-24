@@ -7,7 +7,7 @@ class PriorityQueue<T> {
 
     public constructor(cmp : (a:T, b:T) => boolean) {
             this.compare = cmp;
-            this.arr = new Array<T>(PriorityQueue<T>.CAPACITY);
+            this.arr = new Array<T>(PriorityQueue.CAPACITY);
             this.size = 0;
     }
 

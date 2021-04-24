@@ -109,7 +109,7 @@ class Tree {
 
     
     public NthPreOrder(index : number) {
-        let counter :  Array<number> = [0];
+        let counter = [0];
         this.NthPreOrderUtil(this.root, index, counter);
     }
 
@@ -137,7 +137,7 @@ class Tree {
     }
 
     public NthPostOrder(index : number) {
-        let counter :  Array<number> = [0];
+        let counter = [0];
         this.NthPostOrderUtil(this.root, index, counter);
     }
 
@@ -165,7 +165,7 @@ class Tree {
     }
 
     public NthInOrder(index : number) {
-        let counter :  Array<number> = [0];
+        let counter = [0];
         this.NthInOrderUtil(this.root, index, counter);
     }
 
@@ -216,8 +216,8 @@ class Tree {
         let temp : TNode = null;
         if(this.root != null) 
             que1.add(this.root);
-        while(<number>que1.size() > 0 || <number>que2.size() > 0) {
-            while(<number>que1.size() > 0) {
+        while(que1.size() > 0 || que2.size() > 0) {
+            while(que1.size() > 0) {
                 temp = que1.remove();
                 console.info(" " + temp.value);
                 if(temp.lChild != null) 
@@ -226,8 +226,8 @@ class Tree {
                     que2.add(temp.rChild);
             };
             console.info("");
-            while(<number>que2.size() > 0) {
-                temp = <TNode>que2.remove();
+            while(que2.size() > 0) {
+                temp = que2.remove();
                 console.info(" " + temp.value);
                 if(temp.lChild != null) 
                     que1.add(temp.lChild);
@@ -243,8 +243,8 @@ class Tree {
         let temp : TNode = null;
         let count : number = 0;
         if(this.root != null) que.add(this.root);
-        while(<number>que.size() !== 0) {
-            count = <number>que.size();
+        while(que.size() !== 0) {
+            count = que.size();
             while(count > 0) {
                 temp = que.remove();
                 console.info(" " + temp.value);
@@ -681,7 +681,7 @@ class Tree {
         let noChild : number = 0;
         if(this.root != null) 
             que.add(this.root);
-        while(<number>que.size() > 0) {
+        while(que.size() > 0) {
             temp = que.remove();
             if(temp.lChild != null) {
                 if(noChild === 1) 

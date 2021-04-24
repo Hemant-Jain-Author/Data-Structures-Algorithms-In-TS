@@ -658,10 +658,8 @@ function findTriplet(arr :  Array<number>, size : number, value : number) {
     for (let i = 0; i < (size - 2); i++) {
         for (let j = i + 1; j < (size - 1); j++) {
             for (let k = j + 1; k < size; k++) {
-                {
-                    if ((arr[i] + arr[j] + arr[k]) === value)
-                        console.info(`Triplet :: ${arr[i]}, ${arr[j]}, ${arr[k]}`);
-                };
+                if ((arr[i] + arr[j] + arr[k]) === value)
+                    console.info(`Triplet :: ${arr[i]}, ${arr[j]}, ${arr[k]}`);
             };
         };
     }
@@ -1413,7 +1411,7 @@ function isAP2(arr :  Array<number>, size : number) : boolean {
     let second : number = MAX_VALUE;
     let value : number;
     const hs = new Set();
-    for (var i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         if (arr[i] < first) {
             second = first;
             first = arr[i];
@@ -1422,13 +1420,13 @@ function isAP2(arr :  Array<number>, size : number) : boolean {
     }
     let diff = second - first;
 
-    for (var i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         if (hs.has(arr[i]))
             return false;
         hs.add(arr[i]);
     }
 
-    for (var i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         value = first + i * diff;
         if (!hs.has(value))
             return false;
@@ -1455,7 +1453,7 @@ function isAP3(arr :  Array<number>, size : number) : boolean {
             return false;
         count[index] = 1;
     }
-    for (var i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         if (count[i] !== 1)
             return false;
     }
@@ -1602,7 +1600,7 @@ function test38() {
 
 function KLargestElements(arrIn :  Array<number>, size : number, k : number) : number {
     let arr :  Array<number> = new Array(size);
-    for (var i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         arr[i] = arrIn[i];
     }
     arr.sort(function cmp(a, b) { return (a - b); });
@@ -1737,9 +1735,9 @@ function MaxConSubArr(A :  Array<number>, sizeA : number, B :  Array<number>, si
     let currMax : number = 0;
     let maximum : number = 0;
     let hs = new Set();
-    for (var i = 0; i < sizeB; i++)
+    for (let i = 0; i < sizeB; i++)
         hs.add(B[i]);
-    for (var i = 0; i < sizeA; i++){
+    for (let i = 0; i < sizeA; i++){
         if (hs.has(A[i]))
             currMax = 0;
         else

@@ -672,7 +672,7 @@ function RottenFruitUtil(arr : Array<Array<number>>, maxCol : number, maxRow : n
 
 function RottenFruit(arr : Array<Array<number>>, maxCol : number, maxRow : number) : number {
     let traversed : Array<Array<number>> = new Array(maxRow);
-    for (var i = 0; i < maxRow; i++) {
+    for (let i = 0; i < maxRow; i++) {
         traversed[i] = Array(maxCol).fill(2147483647)
     }
 
@@ -747,7 +747,7 @@ function DistNearestFillUtil(arr : Array<Array<number>>, maxCol : number, maxRow
 
 function DistNearestFill(arr : Array<Array<number>>, maxCol : number, maxRow : number) {
     let traversed : Array<Array<number>> = new Array(maxRow);
-    for (var i = 0; i < maxRow; i++) {
+    for (let i = 0; i < maxRow; i++) {
         traversed[i] = new Array(maxCol).fill(2147483647)
     }
     
@@ -785,7 +785,7 @@ function findLargestIsland(arr : Array<Array<number>>, maxCol : number, maxRow :
     let maxVal : number = 0;
     let currVal : number = 0;
     let traversed : Array<Array<number>> = new Array(maxRow);
-    for (var i = 0; i < maxRow; i++) {
+    for (let i = 0; i < maxRow; i++) {
         traversed[i] = new Array(maxCol).fill(2147483647)
     }
 

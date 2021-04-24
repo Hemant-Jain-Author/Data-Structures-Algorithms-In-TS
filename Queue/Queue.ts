@@ -82,7 +82,7 @@ function main0() {
     };
 }
 
-function CircularTour(arr :  Array<number>[], n : number) : number {
+function CircularTour(arr :  Array<[number, number]>, n : number) : number {
     let que : Queue<number> = new Queue<number>();
     let nextPump : number = 0;
     let prevPump : number;
@@ -108,7 +108,7 @@ function CircularTour(arr :  Array<number>[], n : number) : number {
 }
 
 function main1() {
-    let tour :  Array<number>[] = [[8, 6], [1, 4], [7, 6]];
+    let tour :  Array<[number, number]> = [[8, 6], [1, 4], [7, 6]];
     console.info(" Circular Tour : " + CircularTour(tour, 3));
 }
 
@@ -185,9 +185,10 @@ function main4() {
     minOfMaxSlidingWindows(arr, 7, 3);
 }
 
+const NEGATIVE_INFI  = -2147483647;
 function maxOfMinSlidingWindows(arr :  Array<number>, size : number, k : number) {
     let que : Queue<number> = new Queue<number>();
-    let maxVal : number = -999999;
+    let maxVal : number = NEGATIVE_INFI;
     for (let i = 0; i < size; i++) {
         if (que.size() > 0 && que.peek() <= i - k)
             que.remove();

@@ -1,4 +1,4 @@
-const errorValue = 2147483647;
+const ErrorValue = 2147483647;
 
 function isAnagram(str1 : string, str2 : string) : boolean {
     let size1 : number = str1.length;
@@ -47,7 +47,7 @@ function findMissing(arr : Array<number>, start : number, end : number) : number
         if(hs.has(curr) == false)
             return curr;
     };
-    return errorValue;
+    return ErrorValue;
 }
 
 function printRepeating(arr : Array<number>) {
@@ -68,7 +68,7 @@ function printFirstRepeating(arr : Array<number>) {
     let i : number;
     let size : number = arr.length;
     let hs : Set<number> = new Set<number>();
-    let firstRepeating : number = errorValue;
+    let firstRepeating : number = ErrorValue;
     for(i = size - 1; i >= 0; i--) {
         if(hs.has(arr[i])) {
             firstRepeating = arr[i];

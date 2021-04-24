@@ -1,6 +1,8 @@
-let EMPTY_VALUE : number = 0;
-let FILLED_VALUE : number = 1;
-let DELETED_VALUE : number = 2;
+enum FlagState {
+    Empty,
+    Filled,
+    Deleted
+};
 
 class HashTableLP {
 
@@ -13,7 +15,7 @@ class HashTableLP {
         this.tableSize = tSize;
         this.KeyArr = new Array(tSize + 1);
         this.DataArr = new Array(tSize + 1);
-        this.FlagArr = new Array(tSize + 1).fill(EMPTY_VALUE);
+        this.FlagArr = new Array(tSize + 1).fill(FlagState.Empty);
     }
 
     computeHash(key : number) : number {
@@ -31,15 +33,15 @@ class HashTableLP {
     add(key : number, value : number) : boolean {
         let hashValue : number = this.computeHash(key);
         for(let i : number = 0; i < this.tableSize; i++) {
-            if(this.FlagArr[hashValue] === EMPTY_VALUE || 
-                this.FlagArr[hashValue] === DELETED_VALUE) 
+            if(this.FlagArr[hashValue] === FlagState.Empty || 
+                this.FlagArr[hashValue] === FlagState.Deleted) 
             {
                 this.KeyArr[hashValue] = key;
                 this.DataArr[hashValue] = value;
-                this.FlagArr[hashValue] = FILLED_VALUE;
+                this.FlagArr[hashValue] = FlagState.Filled;
                 return true;
             }
-            else if (this.FlagArr[hashValue] === FILLED_VALUE && 
+            else if (this.FlagArr[hashValue] === FlagState.Filled && 
                 this.KeyArr[hashValue] === key) 
             {
                 this.DataArr[hashValue] = value;
@@ -54,10 +56,10 @@ class HashTableLP {
     find(key : number) : boolean {
         let hashValue : number = this.computeHash(key);
         for(let i : number = 0; i < this.tableSize; i++) {
-            if (this.FlagArr[hashValue] === EMPTY_VALUE) {
+            if (this.FlagArr[hashValue] === FlagState.Empty) {
                 return false;
             }
-            if (this.FlagArr[hashValue] === FILLED_VALUE
+            if (this.FlagArr[hashValue] === FlagState.Filled
                 && this.KeyArr[hashValue] === key) {
                 return true;
             }
@@ -70,10 +72,10 @@ class HashTableLP {
     get(key : number) : number {
         let hashValue : number = this.computeHash(key);
         for (let i = 0; i < this.tableSize; i++) {
-            if (this.FlagArr[hashValue] === EMPTY_VALUE) {
+            if (this.FlagArr[hashValue] === FlagState.Empty) {
                 return 0;
             }
-            if (this.FlagArr[hashValue] === FILLED_VALUE
+            if (this.FlagArr[hashValue] === FlagState.Filled
                 && this.KeyArr[hashValue] === key) {
                 return this.DataArr[hashValue];
             }
@@ -86,12 +88,12 @@ class HashTableLP {
     delete(key : number) : boolean {
         let hashValue : number = this.computeHash(key);
         for (let i = 0; i < this.tableSize; i++) {
-            if (this.FlagArr[hashValue] === EMPTY_VALUE) {
+            if (this.FlagArr[hashValue] === FlagState.Empty) {
                 return false;
             }
-            if (this.FlagArr[hashValue] === FILLED_VALUE
+            if (this.FlagArr[hashValue] === FlagState.Filled
                 && this.KeyArr[hashValue] === key) {
-                this.FlagArr[hashValue] = DELETED_VALUE;
+                this.FlagArr[hashValue] = FlagState.Deleted;
                 return true;
             }
             hashValue += this.resolverFun(i);
@@ -102,7 +104,7 @@ class HashTableLP {
 
     print() {
         for(let i : number = 0; i < this.tableSize; i++) {
-            if(this.FlagArr[i] === FILLED_VALUE) {
+            if(this.FlagArr[i] === FlagState.Filled) {
                 console.info("Node at index [" + i + " ] :: " + this.DataArr[i]);
             }
         };
