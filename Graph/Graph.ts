@@ -207,7 +207,9 @@ class Graph {
         stk.push(source);
         visited[source] = true;
         while(stk.length !== 0) {
-            let curr : number = stk.pop();
+            
+            let curr : number
+            curr = stk.pop()!;
             let adl : Array<GraphEdge> = this.Adj[curr];
             for(let index=0; index < adl.length; index++) {
                 let adn = adl[index];
@@ -576,7 +578,7 @@ class Graph {
         };
         let stk2 : Array<number> =  new Array<number>();
         while(stk.length !== 0) {
-            let index : number = stk.pop();
+            let index : number = stk.pop()!;
             if(visited[index] === false) {
                 stk2.length = 0;
                 gReversed.dfsUtil2(index, visited, stk2);

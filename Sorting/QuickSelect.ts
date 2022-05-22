@@ -27,8 +27,8 @@ function swap(arr :  Array<number>, first : number, second : number) {
 }
 
 function QuickSelect(arr :  Array<number>, k : number) : number {
-    quickSelect(arr, 0, arr.length - 1, k);
-    return arr[4];
+    quickSelect(arr, 0, arr.length - 1, k-1);
+    return arr[k-1];
 }
 
 function main() {
