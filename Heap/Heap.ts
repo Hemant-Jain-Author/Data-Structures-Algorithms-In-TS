@@ -9,7 +9,7 @@ function more(x:number, y: number) : boolean {
 class Heap {
     size : number;
     arr :  Array<number>;
-    compare : (numbrer, number) => boolean;
+    compare : (arg0: number, arg1: number) => boolean;
 
     public constructor(array? : any, cmp? : (a:number, b:number) => boolean) {
         if(cmp === null || cmp === undefined)
@@ -352,7 +352,6 @@ test8();
 function sortK(arr :  Array<number>, size : number, k : number) {
     let pq : Heap = new Heap([], less); 
     let i : number = 0;
-    let output :  Array<number> = new Array(size);
     let index : number = 0;
 
     for (i = 0; i < k; i++) {
@@ -360,18 +359,13 @@ function sortK(arr :  Array<number>, size : number, k : number) {
     };
 
     for(i = k; i < size; i++) {
-        output[index++] = pq.remove();
+        arr[index++] = pq.remove();
         pq.add(arr[i]);
     };
 
     while(pq.isEmpty() === false) {
-        output[index++] = pq.remove()
+        arr[index++] = pq.remove()
     };
-    
-    for(i = 0; i < size; i++) {
-        arr[i] = output[i];
-    };
-    console.info(arr);
 }
 
 function test9() {
@@ -379,8 +373,9 @@ function test9() {
     let arr :  Array<number> = [1, 5, 4, 10, 50, 9];
     let size : number = arr.length;
     sortK(arr, size, k);
+    console.info(arr);
 };
-
+// [ 1, 4, 5, 9, 10, 50 ]
 test9();
 
 function ChotaBhim(cups :  Array<number>, size : number) : number {
