@@ -3,7 +3,7 @@ function BucketSort(array :  Array<number>, lowerRange : number, upperRange : nu
     let j : number;
     let size : number = array.length;
     let range : number = upperRange - lowerRange;
-    let count :  Array<number> = new Array<number>(range);
+    let count :  Array<number> = new Array<number>(range).fill(0);
     for(i = 0; i < size; i++) {
         count[array[i] - lowerRange]++;
     }
@@ -15,12 +15,6 @@ function BucketSort(array :  Array<number>, lowerRange : number, upperRange : nu
     }
 }
 
-function main() {
-    let array :  Array<number> = [23, 24, 22, 21, 26, 25, 27, 28, 21, 21];
-    BucketSort(array, 20, 30);
-    for(let i : number = 0; i < array.length; i++) {
-        console.info(array[i] + " ");
-    }
-}
-
-main(null);
+let array :  Array<number> = [23, 24, 22, 21, 26, 25, 27, 28, 21, 21];
+BucketSort(array, 20, 30);
+console.info(array);

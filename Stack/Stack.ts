@@ -42,21 +42,20 @@ class Stack<T> {
     }
 
     public print() {
+        let output = "Stack: ";
         for(let i : number = this.__top; i > -1; i--) {
-            console.info(this.data[i] + " ");
+            output += (this.data[i] + " ");
         };
+        console.log(output);
     }
 
 }
-function main() {
-    let s : Stack<number> = new Stack<number>();
-    s.push(1);
-    s.push(2);
-    s.push(3);
-    s.print();
-    console.info(s.pop());
-    console.info(s.pop());
-    s.print();
-}
 
-main();
+let s : Stack<number> = new Stack<number>();
+s.push(1);
+s.push(2);
+s.push(3);
+s.print();
+console.info(s.pop());
+console.info(s.pop());
+s.print();

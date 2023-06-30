@@ -58,14 +58,10 @@ class QueueLL<T> {
     }
 }
 
-function main() {
-    let q : QueueLL<number> = new QueueLL<number>();
-    q.add(1);
-    q.add(2);
-    q.add(3);
-    for(let i : number = 0; i < 3; i++) {
-        console.info(q.remove());
-    }
+let q : QueueLL<number> = new QueueLL<number>();
+q.add(1);
+q.add(2);
+q.add(3);
+for(let i : number = 0; i < 3; i++) {
+    console.info(q.remove());
 }
-
-main();

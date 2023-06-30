@@ -1,52 +1,43 @@
-import java.util.Arrays;
+const INF: number = Number.MAX_VALUE;
 
-public class MultipleStageGraph {
-	static int INF = Integer.MAX_VALUE;
+function shortestDist(graph: number[][], n: number): number {
+  const dist: number[] = new Array(n).fill(INF);
+  const path: number[] = new Array(n);
+  let value: number;
 
-	// Returns shortest distance from 0 to N-1.
-	public static int shortestDist(int[][] graph, int n) {
-		// dist[i] is going to store shortest
-		// distance from node i to node n-1.
-		int[] dist = new int[n];
-		Arrays.fill(dist, INF);
-		int[] path = new int[n];
-		int value;
-		dist[0] = 0;
-		path[0] = -1;
+  dist[0] = 0;
+  path[0] = -1;
 
-		// Calculating shortest path for the nodes
-		for (int i = 0; i < n; i++) {
-			// Check all nodes of next
-			for (int j = i; j < n; j++) {
-				// Reject if no edge exists
-				if (graph[i][j] == INF)
-					continue;
-				value = graph[i][j] + dist[i];
-				if (dist[j] > value) {
-					dist[j] = value;
-					path[j] = i;
-				}
-			}
-		}
-		value = n - 1;
-		while (value != -1) {
-			System.out.print(" " + value);
-			value = path[value];
-		}
-		System.out.println();
+  for (let i = 0; i < n; i++) {
+    for (let j = i; j < n; j++) {
+      if (graph[i][j] === INF) continue;
 
-		return dist[n - 1];
-	}
+      value = graph[i][j] + dist[i];
+      if (dist[j] > value) {
+        dist[j] = value;
+        path[j] = i;
+      }
+    }
+  }
 
-	// Testing code.
-	public static void main(String[] args) {
-		// Graph stored in the form of an
-		// adjacency Matrix
-		int[][] graph = new int[][] { { INF, 1, 2, 5, INF, INF, INF, INF }, { INF, INF, INF, INF, 4, 11, INF, INF },
-				{ INF, INF, INF, INF, 9, 5, 16, INF }, { INF, INF, INF, INF, INF, INF, 2, INF },
-				{ INF, INF, INF, INF, INF, INF, INF, 18 }, { INF, INF, INF, INF, INF, INF, INF, 13 },
-				{ INF, INF, INF, INF, INF, INF, INF, 2 }, { INF, INF, INF, INF, INF, INF, INF, INF } };
-
-		System.out.println(shortestDist(graph, 8));
-	}
+  value = n - 1;
+  var output = "";
+  while (value !== -1) {
+    output += ( value + " " );
+    value = path[value];
+  }
+  console.log(output);
+  return dist[n - 1];
 }
+
+const graph: number[][] = [
+  [INF, 1, 2, 5, INF, INF, INF, INF],
+  [INF, INF, INF, INF, 4, 11, INF, INF],
+  [INF, INF, INF, INF, 9, 5, 16, INF],
+  [INF, INF, INF, INF, INF, INF, 2, INF],
+  [INF, INF, INF, INF, INF, INF, INF, 18],
+  [INF, INF, INF, INF, INF, INF, INF, 13],
+  [INF, INF, INF, INF, INF, INF, INF, 2],
+  [INF, INF, INF, INF, INF, INF, INF, INF],
+];
+console.log(shortestDist(graph, 8));

@@ -40,15 +40,12 @@ function SelectionSort2(arr :  Array<number>) {
     }
 }
 
-function main() {
-    let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
-    SelectionSort(array);
-    console.info(array);
-    
-    console.info();
-    let array2 :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
-    SelectionSort2(array2);
-    console.info(array2);
-}
+let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+SelectionSort(array);
+console.info(array);
 
-main();
+console.info();
+let array2 :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+SelectionSort2(array2);
+console.info(array2);
+

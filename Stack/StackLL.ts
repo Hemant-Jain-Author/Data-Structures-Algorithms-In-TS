@@ -54,7 +54,7 @@ class StackLL {
 
     public print() {
         let temp : StackNode = this.head;
-        let result : string = "";
+        let result : string = "Stack: ";
         while((temp != null)) {
             result += (temp.value + " ");
             temp = temp.next;
@@ -64,15 +64,11 @@ class StackLL {
 
 }
 
-function main() {
-    let s : StackLL = new StackLL();
-    s.push(1);
-    s.push(2);
-    s.push(3);
-    s.print();
-    console.info(s.pop());
-    console.info(s.pop());
-    s.print();
-}
- 
-main();
+let s : StackLL = new StackLL();
+s.push(1);
+s.push(2);
+s.push(3);
+s.print();
+console.info(s.pop());
+console.info(s.pop());
+s.print();

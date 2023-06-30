@@ -1,72 +1,162 @@
-import java.util.PriorityQueue;
-import java.util.Arrays;
-import java.util.Collections;
+class PriorityQueue<T> {
+	static CAPACITY: number = 32;
+	size: number;
+	arr: Array<T>;
+	compare: (a: T, b: T) => boolean;
 
-public class ChotaBhim {
-	public static void reverse(int cups[], int size) {
-		int temp = 0;
-		for (int i = 0, j = size - 1; i < j; i++, j--) {
-			temp = cups[i];
-			cups[i] = cups[j];
-			cups[j] = temp;
+	public constructor(cmp: (a: T, b: T) => boolean) {
+		this.compare = cmp;
+		this.arr = new Array<T>(PriorityQueue.CAPACITY);
+		this.size = 0;
+	}
+
+	proclateDown(parent: number) {
+		let lChild: number = 2 * parent + 1;
+		let rChild: number = lChild + 1;
+		let child: number = -1;
+		let temp: T;
+		if (lChild < this.size) {
+			child = lChild;
+		}
+		if (rChild < this.size && this.compare(this.arr[lChild], this.arr[rChild])) {
+			child = rChild;
+		}
+		if (child !== -1 && this.compare(this.arr[parent], this.arr[child])) {
+			temp = this.arr[parent];
+			this.arr[parent] = this.arr[child];
+			this.arr[child] = temp;
+			this.proclateDown(child);
 		}
 	}
 
-	public static int chotaBhim(int cups[]) {
-		int size = cups.length;
-		int time = 60;
-		Arrays.sort(cups);
-		reverse(cups, size);
-		int total = 0;
-		int index, temp;
-		while (time > 0) {
-			total += cups[0];
-			cups[0] = (int) Math.ceil(cups[0] / 2.0);
-			index = 0;
-			temp = cups[0];
-			while (index < size - 1 && temp < cups[index + 1]) {
-				cups[index] = cups[index + 1];
-				index += 1;
-			}
-			cups[index] = temp;
-			time -= 1;
+	proclateUp(child: number) {
+		let parent: number = Math.floor((child - 1) / 2);
+		let temp: T;
+		if (parent < 0) {
+			return;
 		}
-		System.out.println("Total : " + total);
-		return total;
+		if (this.compare(this.arr[parent], this.arr[child])) {
+			temp = this.arr[child];
+			this.arr[child] = this.arr[parent];
+			this.arr[parent] = temp;
+			this.proclateUp(parent);
+		}
 	}
 
-	public static int chotaBhim2(int cups[]) {
-		int size = cups.length;
-		int time = 60;
-		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder());
-		int i = 0;
-		for (i = 0; i < size; i++) {
-			pq.add(cups[i]);
+	public add(value: T) {
+		if (this.size === this.arr.length) {
+			this.doubleSize();
 		}
 
-		int total = 0;
-		int value;
-		while (time > 0) {
-			value = pq.remove();
-			total += value;
-			value = (int) Math.ceil(value / 2.0);
-			pq.add(value);
-			time -= 1;
+		this.arr[this.size++] = value;
+		this.proclateUp(this.size - 1);
+	}
+
+	private doubleSize() {
+		let old: Array<T> = this.arr;
+		let newSize = this.size * 2;
+		this.arr = new Array<T>(newSize);
+		/* arraycopy */
+		var size = this.size;
+		for (let i = 0; i < size; i++) {
+			this.arr[i] = old[i];
 		}
-		System.out.println("Total : " + total);
-		return total;
 	}
 
-	// Testing code.
-	public static void main(String[] args) {
-		int cups[] = { 2, 1, 7, 4, 2 };
-		chotaBhim(cups);
-		int cups2[] = { 2, 1, 7, 4, 2 };
-		chotaBhim2(cups2);
+	public remove(): T {
+		if (this.isEmpty()) {
+			throw new Error("IllegalStateException");
+		}
+		let value: T = this.arr[0];
+		this.arr[0] = this.arr[this.size - 1];
+		this.size--;
+		this.proclateDown(0);
+		return value;
 	}
 
-	/*
-	 * Total : 76 
-	 * Total : 76
-	 */
+	public PrintTree() {
+		console.info(this.arr);
+	}
+
+	public isEmpty(): boolean {
+		return this.size === 0;
+	}
+
+	public length(): number {
+		return this.size;
+	}
+
+	public peek(): T {
+		if (this.isEmpty()) {
+			throw new Error("IllegalStateException");
+		}
+		return this.arr[0];
+	}
 }
+
+function reverse(cups: number[], size: number): void {
+	let temp: number = 0;
+	for (let i = 0, j = size - 1; i < j; i++, j--) {
+		temp = cups[i];
+		cups[i] = cups[j];
+		cups[j] = temp;
+	}
+}
+  
+function chotaBhim(cups: number[]): number {
+	const size: number = cups.length;
+	let time: number = 60;
+	cups.sort();
+	reverse(cups, size);
+	let total: number = 0;
+	let index: number, temp: number;
+
+	while (time > 0) {
+		total += cups[0];
+		cups[0] = Math.ceil(cups[0] / 2);
+		index = 0;
+		temp = cups[0];
+		while (index < size - 1 && temp < cups[index + 1]) {
+			cups[index] = cups[index + 1];
+			index += 1;
+		}
+		cups[index] = temp;
+		time -= 1;
+	}
+	console.log("Total: " + total);
+	return total;
+}
+  
+function chotaBhim2(cups: number[]): number {
+	const size: number = cups.length;
+	let time: number = 60;
+	const pq:  PriorityQueue<number> = new PriorityQueue<number>((a, b) => a < b );
+
+	for (let i = 0; i < size; i++) {
+		pq.add(cups[i]);
+	}
+
+	let total: number = 0;
+	let value: number;
+	while (time > 0) {
+		value = pq.peek();
+        pq.remove();
+		total += value;
+		value = Math.ceil(value / 2);
+		pq.add(value);
+		time -= 1;
+	}
+	console.log("Total: " + total);
+	return total;
+}
+  
+  // Testing code.
+  const cups: number[] = [2, 1, 7, 4, 2];
+  chotaBhim(cups);
+  const cups2: number[] = [2, 1, 7, 4, 2];
+  chotaBhim2(cups2);
+  
+/*
+Total: 76
+Total: 76
+*/

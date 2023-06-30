@@ -207,24 +207,20 @@ class DoublyLinkedList {
     }
 }
 
-function main() {
-    let ll : DoublyLinkedList = new DoublyLinkedList();
-    ll.addHead(1);
-    ll.addHead(2);
-    ll.addHead(3);
-    ll.addHead(4);
-    ll.addHead(5);
-    ll.addHead(6);
-    ll.removeHead();
-    ll.deleteList();
-    ll.print();
-    ll.addHead(11);
-    ll.addHead(21);
-    ll.addHead(31);
-    ll.addHead(41);
-    ll.addHead(51);
-    ll.addHead(61);
-    ll.print();
-}
-
-main();
+let ll : DoublyLinkedList = new DoublyLinkedList();
+ll.addHead(1);
+ll.addHead(2);
+ll.addHead(3);
+ll.addHead(4);
+ll.addHead(5);
+ll.addHead(6);
+ll.removeHead();
+ll.deleteList();
+ll.print();
+ll.addHead(11);
+ll.addHead(21);
+ll.addHead(31);
+ll.addHead(41);
+ll.addHead(51);
+ll.addHead(61);
+ll.print();

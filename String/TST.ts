@@ -65,16 +65,12 @@ class TST {
     }
 }
 
-function main() {
-    let tt : TST = new TST();
-    tt.add("banana");
-    tt.add("apple");
-    tt.add("mango");
+let tt : TST = new TST();
+tt.add("banana");
+tt.add("apple");
+tt.add("mango");
 
-    console.log("Apple Found :", tt.find("apple"));
-    console.log("Banana Found :", tt.find("banana"));
-    console.log("Mango Found :", tt.find("mango"));
-    console.log("Grapes Found :", tt.find("grapes"));
-}
-
-main();
+console.log("Apple Found :", tt.find("apple"));
+console.log("Banana Found :", tt.find("banana"));
+console.log("Mango Found :", tt.find("mango"));
+console.log("Grapes Found :", tt.find("grapes"));

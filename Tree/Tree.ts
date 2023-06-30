@@ -117,7 +117,7 @@ class Tree {
         if(node != null) {
             counter[0]++;
             if(counter[0] === index) {
-                console.info(node.value);
+                console.info("NthPreOrder:", node.value);
             }
             this.NthPreOrderUtil(node.lChild, index, counter);
             this.NthPreOrderUtil(node.rChild, index, counter);
@@ -147,7 +147,7 @@ class Tree {
             this.NthPostOrderUtil(node.rChild, index, counter);
             counter[0]++;
             if(counter[0] === index) {
-                console.info(" " + node.value);
+                console.info("NthPostOrder: " + node.value);
             }
         }
     }
@@ -167,6 +167,7 @@ class Tree {
     public NthInOrder(index : number) {
         let counter = [0];
         this.NthInOrderUtil(this.root, index, counter);
+
     }
 
     public NthInOrderUtil(node : TNode, index : number, counter :  Array<number>) {
@@ -174,7 +175,7 @@ class Tree {
             this.NthInOrderUtil(node.lChild, index, counter);
             counter[0]++;
             if(counter[0] === index) {
-                console.info(" " + node.value);
+                console.info("NthInOrder: " + node.value);
             }
             this.NthInOrderUtil(node.rChild, index, counter);
         }
@@ -1013,9 +1014,9 @@ function main() {
     console.info("printAllPath : ");
     t.printAllPath();
 
-    console.info("NthInOrder : " + t.NthInOrder(4));
-    console.info("NthPostOrder : " + t.NthPostOrder(4));
-    console.info("NthPreOrder : " + t.NthPreOrder(4));
+    t.NthInOrder(4);
+    t.NthPostOrder(4);
+    t.NthPreOrder(4);
 }
 
 main();

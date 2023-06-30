@@ -1,20 +1,17 @@
-public class IsPrime {
-	public static boolean isPrime(int n) {
-		boolean answer = (n > 1) ? true : false;
-		for (int i = 2; i * i <= n; ++i) {
-			if (n % i == 0) {
-				answer = false;
-				break;
-			}
+function isPrime(n: number): boolean {
+	let answer: boolean = n > 1;
+	for (let i = 2; i * i <= n; ++i) {
+		if (n % i === 0) {
+			answer = false;
+			break;
 		}
-		return answer;
 	}
-
-	public static void main(String[] args) {
-		System.out.println(IsPrime.isPrime(8));
-		System.out.println(IsPrime.isPrime(11));
-	}
+	return answer;
 }
+  
+console.log(isPrime(8));
+console.log(isPrime(11));
+  
 
 /*
 false

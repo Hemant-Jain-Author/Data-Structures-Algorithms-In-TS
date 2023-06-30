@@ -1,28 +1,50 @@
-import java.util.PriorityQueue;
+const INF: number = Number.MAX_VALUE;
 
-public class OptimalMergePattern {
-	public static int merge(int lists[], int size) {
-		PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
-		int i = 0;
-		for (i = 0; i < size; i++) {
-			pq.add(lists[i]);
-		}
+function shortestDist(graph: number[][], n: number): number {
+  const dist: number[] = new Array<number>(n).fill(INF);
+  const path: number[] = new Array<number>(n);
+  let value: number;
 
-		int total = 0;
-		int value = 0;
-		while (pq.size() > 1) {
-			value = pq.remove();
-			value += pq.remove();
-			pq.add(value);
-			total += value;
-		}
-		System.out.println("Total : " + total);
-		return total;
-	}
+  dist[0] = 0;
+  path[0] = -1;
 
-	// Testing code.
-	public static void main(String[] args) {
-		int lists[] = { 4, 3, 2, 6 };
-		merge(lists, lists.length);
-	}
+  for (let i = 0; i < n; i++) {
+    for (let j = i; j < n; j++) {
+      if (graph[i][j] == INF) continue;
+      value = graph[i][j] + dist[i];
+      if (dist[j] > value) {
+        dist[j] = value;
+        path[j] = i;
+      }
+    }
+  }
+
+  value = n - 1;
+ let output = "Path: " 
+  while (value !== -1) {
+    output += (value + " ");
+    value = path[value];
+  }
+  console.log(output);
+
+  return dist[n - 1];
 }
+
+// Testing code.
+const graph: number[][] = [
+[INF, 1, 2, 5, INF, INF, INF, INF],
+[INF, INF, INF, INF, 4, 11, INF, INF],
+[INF, INF, INF, INF, 9, 5, 16, INF],
+[INF, INF, INF, INF, INF, INF, 2, INF],
+[INF, INF, INF, INF, INF, INF, INF, 18],
+[INF, INF, INF, INF, INF, INF, INF, 13],
+[INF, INF, INF, INF, INF, INF, INF, 2],
+[INF, INF, INF, INF, INF, INF, INF, INF]
+];
+
+console.log("Shortest Dist:", shortestDist(graph, 8));
+
+/*
+Path: 7 6 3 0 
+Shortest Dist: 9
+*/

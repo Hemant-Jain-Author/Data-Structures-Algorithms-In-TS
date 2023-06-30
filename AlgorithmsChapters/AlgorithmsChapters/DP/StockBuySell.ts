@@ -1,61 +1,67 @@
-public class StockBuySell {
-	public static int maxProfit(int[] arr) {
-		int buyProfit = -arr[0]; // Buy stock profit
-		int sellProfit = 0; // Sell stock profit
-		int n = arr.length;
-		for (int i = 1; i < n; i++) {
-			int newBuyProfit = (sellProfit - arr[i] > buyProfit) ? sellProfit - arr[i] : buyProfit;
-			int newSellProfit = (buyProfit + arr[i] > sellProfit) ? buyProfit + arr[i] : sellProfit;
-			buyProfit = newBuyProfit;
-			sellProfit = newSellProfit;
-		}
-		return sellProfit;
+function maxProfit(arr: number[]): number {
+	let buyProfit = -arr[0]; // Buy stock profit
+	let sellProfit = 0; // Sell stock profit
+	const n = arr.length;
+	
+	for (let i = 1; i < n; i++) {
+		const newBuyProfit = sellProfit - arr[i] > buyProfit ? sellProfit - arr[i] : buyProfit;
+		const newSellProfit = buyProfit + arr[i] > sellProfit ? buyProfit + arr[i] : sellProfit;
+		buyProfit = newBuyProfit;
+		sellProfit = newSellProfit;
 	}
-
-	public static int maxProfitTC(int[] arr, int t) {
-		int buyProfit = -arr[0];
-		int sellProfit = 0;
-		int n = arr.length;
-		for (int i = 1; i < n; i++) {
-			int newBuyProfit = ((sellProfit - arr[i]) > buyProfit) ? (sellProfit - arr[i]) : buyProfit;
-			int newSellProfit = ((buyProfit + arr[i] - t) > sellProfit) ? (buyProfit + arr[i] - t) : sellProfit;
-			buyProfit = newBuyProfit;
-			sellProfit = newSellProfit;
-		}
-		return sellProfit;
-	}
-
-	public static int maxProfit2(int[] arr) {
-		int n = arr.length;
-		int[][] dp = new int[n][2];
-		dp[0][0] = -arr[0]; // Buy stock profit
-		dp[0][1] = 0; // Sell stock profit
-
-		for (int i = 1; i < n; i++) {
-			dp[i][0] = (dp[i - 1][1] - arr[i] > dp[i - 1][0]) ? dp[i - 1][1] - arr[i] : dp[i - 1][0];
-			dp[i][1] = (dp[i - 1][0] + arr[i] > dp[i - 1][1]) ? dp[i - 1][0] + arr[i] : dp[i - 1][1];
-		}
-		return dp[n - 1][1];
-	}
-
-	public static int maxProfitTC2(int[] arr, int t) {
-		int n = arr.length;
-		int[][] dp = new int[n][2];
-		dp[0][0] = -arr[0];
-		dp[0][1] = 0;
-
-		for (int i = 1; i < n; i++) {
-			dp[i][0] = ((dp[i - 1][1] - arr[i]) > dp[i - 1][0]) ? (dp[i - 1][1] - arr[i]) : dp[i - 1][0];
-			dp[i][1] = ((dp[i - 1][0] + arr[i] - t) > dp[i - 1][1]) ? (dp[i - 1][0] + arr[i] - t) : dp[i - 1][1];
-		}
-		return dp[n - 1][1];
-	}
-
-	public static void main(String args[]) {
-		int arr[] = { 10, 12, 9, 23, 25, 55, 49, 70 };
-		System.out.println("Total profit: " + maxProfit(arr));
-		System.out.println("Total profit: " + maxProfit2(arr));
-		System.out.println("Total profit: " + maxProfitTC(arr, 2));
-		System.out.println("Total profit: " + maxProfitTC2(arr, 2));
-	}
+	return sellProfit;
 }
+
+function maxProfitTC(arr: number[], t: number): number {
+	let buyProfit = -arr[0];
+	let sellProfit = 0;
+	const n = arr.length;
+ 
+	for (let i = 1; i < n; i++) {
+		const newBuyProfit = sellProfit - arr[i] > buyProfit ? sellProfit - arr[i] : buyProfit;
+		const newSellProfit = buyProfit + arr[i] - t > sellProfit ? buyProfit + arr[i] - t : sellProfit;
+		buyProfit = newBuyProfit;
+		sellProfit = newSellProfit;
+	}
+	return sellProfit;
+}
+ 
+function maxProfit2(arr: number[]): number {
+	const n = arr.length;
+	const dp: number[][] = new Array(n).fill([]).map(() => new Array(2));
+
+	dp[0][0] = -arr[0]; // Buy stock profit
+	dp[0][1] = 0; // Sell stock profit
+
+	for (let i = 1; i < n; i++) {
+		dp[i][0] = dp[i - 1][1] - arr[i] > dp[i - 1][0] ? dp[i - 1][1] - arr[i] : dp[i - 1][0];
+		dp[i][1] = dp[i - 1][0] + arr[i] > dp[i - 1][1] ? dp[i - 1][0] + arr[i] : dp[i - 1][1];
+	}
+	return dp[n - 1][1];
+}
+
+function maxProfitTC2(arr: number[], t: number): number {
+	const n = arr.length;
+	const dp: number[][] = new Array(n).fill([]).map(() => new Array(2));
+	dp[0][0] = -arr[0];
+	dp[0][1] = 0;
+
+	for (let i = 1; i < n; i++) {
+		dp[i][0] = dp[i - 1][1] - arr[i] > dp[i - 1][0] ? dp[i - 1][1] - arr[i] : dp[i - 1][0];
+		dp[i][1] = dp[i - 1][0] + arr[i] - t > dp[i - 1][1] ? dp[i - 1][0] + arr[i] - t : dp[i - 1][1];
+	}
+	return dp[n - 1][1];
+}
+
+const arr = [10, 12, 9, 23, 25, 55, 49, 70];
+console.log("Total profit: " + maxProfit(arr));
+console.log("Total profit: " + maxProfit2(arr));
+console.log("Total profit: " + maxProfitTC(arr, 2));
+console.log("Total profit: " + maxProfitTC2(arr, 2));
+
+/*
+Total profit: 69
+Total profit: 69
+Total profit: 63
+Total profit: 63
+*/

@@ -130,15 +130,11 @@ class DoublyCircularLinkedList {
 }
 
 
-function main() {
-    let ll : DoublyCircularLinkedList = new DoublyCircularLinkedList();
-    ll.addHead(1);
-    ll.addHead(2);
-    ll.addHead(3);
-    ll.addHead(1);
-    ll.addHead(2);
-    ll.addHead(3);
-    ll.print();
-}
-
-main();
+let ll : DoublyCircularLinkedList = new DoublyCircularLinkedList();
+ll.addHead(1);
+ll.addHead(2);
+ll.addHead(3);
+ll.addHead(1);
+ll.addHead(2);
+ll.addHead(3);
+ll.print();

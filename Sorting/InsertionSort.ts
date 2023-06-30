@@ -15,12 +15,6 @@ function InsertionSort(arr :  Array<number>) {
     }
 }
 
-function main() {
-    let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
-    InsertionSort(array);
-    for(let i : number = 0; i < array.length; i++) {
-        console.info(array[i] + " ");
-    }
-}
-
-main();
+let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+InsertionSort(array);
+console.info(array);

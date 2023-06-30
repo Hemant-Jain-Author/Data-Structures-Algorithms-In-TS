@@ -112,12 +112,8 @@ function KMPFindCount(text : string, pattern : string) : number {
     return count;
 }
 
-function main() {
-    let st1 : string = "hello, world!";
-    let st2 : string = "world";
-    console.info("BruteForceSearch return : " + bruteForceSearch(st1, st2));
-    console.info("RobinKarp return : " + robinKarp(st1, st2));
-    console.info("KMP return : " + KMP(st1, st2));
-}
-
-main();
+let st1 : string = "hello, world!";
+let st2 : string = "world";
+console.info("BruteForceSearch return : " + bruteForceSearch(st1, st2));
+console.info("RobinKarp return : " + robinKarp(st1, st2));
+console.info("KMP return : " + KMP(st1, st2));

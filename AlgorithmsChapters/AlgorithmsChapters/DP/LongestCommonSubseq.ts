@@ -1,46 +1,49 @@
-public class LongestCommonSubseq {
-	static int LCSubStr(String st1, String st2) {
-		char X[] = st1.toCharArray();
-		char Y[] = st2.toCharArray();
-		int m = st1.length();
-		int n = st2.length();
-		int dp[][] = new int[m + 1][n + 1]; // Dynamic programming array.
-		int p[][] = new int[m + 1][n + 1]; // For printing the substring.
-
-		// Fill dp array in bottom up fashion.
-		for (int i = 1; i <= m; i++) {
-			for (int j = 1; j <= n; j++) {
-				if (X[i - 1] == Y[j - 1]) {
-					dp[i][j] = dp[i - 1][j - 1] + 1;
-					p[i][j] = 0;
-				} else {
-					dp[i][j] = (dp[i - 1][j] > dp[i][j - 1]) ? dp[i - 1][j] : dp[i][j - 1];
-					p[i][j] = (dp[i - 1][j] > dp[i][j - 1]) ? 1 : 2;
-				}
-			}
+function LCSubStr(st1: string, st2: string): number {
+	const X: string[] = st1.split("");
+	const Y: string[] = st2.split("");
+	const m: number = st1.length;
+	const n: number = st2.length;
+	const dp: number[][] = new Array(m + 1);
+	const p: number[][] = new Array(m + 1);
+  
+	for (let i = 0; i <= m; i++) {
+	  dp[i] = new Array(n + 1).fill(0);
+	  p[i] = new Array(n + 1).fill(0);
+	}
+  
+	for (let i = 1; i <= m; i++) {
+	  for (let j = 1; j <= n; j++) {
+		if (X[i - 1] === Y[j - 1]) {
+		  dp[i][j] = dp[i - 1][j - 1] + 1;
+		  p[i][j] = 0;
+		} else {
+		  dp[i][j] = dp[i - 1][j] > dp[i][j - 1] ? dp[i - 1][j] : dp[i][j - 1];
+		  p[i][j] = dp[i - 1][j] > dp[i][j - 1] ? 1 : 2;
 		}
-		PrintLCS(p, X, m, n);
-		return dp[m][n];
+	  }
 	}
+  
+	console.log(PrintLCS(p, X, m, n));
+	return dp[m][n];
+  }
+  
+  function PrintLCS(p: number[][], X: string[], i: number, j: number): string {
+	if (i === 0 || j === 0) return "";
+	let str = ""
+	if (p[i][j] === 0) {
+	  str += PrintLCS(p, X, i - 1, j - 1);
+	  str += X[i - 1];
+	} else if (p[i][j] === 1) 
+		str += PrintLCS(p, X, i - 1, j);
+	else 
+		str += PrintLCS(p, X, i, j - 1);
+	return str;
+  }
+  
+  const X = "carpenter";
+  const Y = "sharpener";
+  console.log(LCSubStr(X, Y));
+  
 
-	static void PrintLCS(int[][] p, char[] X, int i, int j) {
-		if (i == 0 || j == 0)
-			return;
-
-		if (p[i][j] == 0) {
-			PrintLCS(p, X, i - 1, j - 1);
-			System.out.print(X[i - 1]);
-		} else if (p[i][j] == 1)
-			PrintLCS(p, X, i - 1, j);
-		else
-			PrintLCS(p, X, i, j - 1);
-	}
-
-	public static void main(String[] args) {
-		String X = "carpenter";
-		String Y = "sharpener";
-		System.out.println(LCSubStr(X, Y));
-	}
-}
-
-//arpener7
+//arpener
+// 7

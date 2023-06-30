@@ -10,7 +10,7 @@ class Deque<T> {
     }
 
     public add(val : T) {
-        this.data.push(T);
+        this.data.push(val);
     }
 
     public remove() : T {

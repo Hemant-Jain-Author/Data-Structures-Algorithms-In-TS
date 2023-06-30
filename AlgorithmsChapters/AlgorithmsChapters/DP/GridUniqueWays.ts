@@ -1,52 +1,66 @@
-public class GridUniqueWays {
-
-	private static int gridUniqueWays(int m, int n) {
-		int[][] dp = new int[m][n];
-		dp[0][0] = 1;
-
-		// Initialize first column.
-		for (int i = 1; i < m; i++) {
-			dp[i][0] = dp[i - 1][0];
-		}
-		// Initialize first row.
-		for (int j = 1; j < n; j++) {
-			dp[0][j] = dp[0][j - 1];
-		}
-
-		for (int i = 1; i < m; i++) {
-			for (int j = 1; j < n; j++)
-				dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
-		}
-		return dp[m - 1][n - 1];
+function gridUniqueWays(m: number, n: number): number {
+	const dp: number[][] = [];
+	for (let i = 0; i < m; i++) {
+	  dp[i] = [];
+	  for (let j = 0; j < n; j++) {
+		dp[i][j] = 0;
+	  }
 	}
-
-	// Diagonal movement allowed.
-	private static int gridUnique3Ways(int m, int n) {
-		int[][] dp = new int[m][n];
-		dp[0][0] = 1;
-
-		// Initialize first column.
-		for (int i = 1; i < m; i++) {
-			dp[i][0] = dp[i - 1][0];
-		}
-		// Initialize first row.
-		for (int j = 1; j < n; j++) {
-			dp[0][j] = dp[0][j - 1];
-		}
-
-		for (int i = 1; i < m; i++) {
-			for (int j = 1; j < n; j++)
-				dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j] + dp[i][j - 1];
-		}
-		return dp[m - 1][n - 1];
+  
+	dp[0][0] = 1;
+  
+	// Initialize first column.
+	for (let i = 1; i < m; i++) {
+	  dp[i][0] = dp[i - 1][0];
 	}
-
-	public static void main(String args[]) {
-		System.out.println(gridUniqueWays(3, 3));
-		System.out.println(gridUnique3Ways(3, 3));
+  
+	// Initialize first row.
+	for (let j = 1; j < n; j++) {
+	  dp[0][j] = dp[0][j - 1];
 	}
-}
-
+  
+	for (let i = 1; i < m; i++) {
+	  for (let j = 1; j < n; j++) {
+		dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+	  }
+	}
+  
+	return dp[m - 1][n - 1];
+  }
+  
+  function gridUnique3Ways(m: number, n: number): number {
+	const dp: number[][] = [];
+	for (let i = 0; i < m; i++) {
+	  dp[i] = [];
+	  for (let j = 0; j < n; j++) {
+		dp[i][j] = 0;
+	  }
+	}
+  
+	dp[0][0] = 1;
+  
+	// Initialize first column.
+	for (let i = 1; i < m; i++) {
+	  dp[i][0] = dp[i - 1][0];
+	}
+  
+	// Initialize first row.
+	for (let j = 1; j < n; j++) {
+	  dp[0][j] = dp[0][j - 1];
+	}
+  
+	for (let i = 1; i < m; i++) {
+	  for (let j = 1; j < n; j++) {
+		dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j] + dp[i][j - 1];
+	  }
+	}
+  
+	return dp[m - 1][n - 1];
+  }
+  
+  console.log(gridUniqueWays(3, 3)); // 6
+  console.log(gridUnique3Ways(3, 3)); // 13
+  
 /*
  * 6
  * 13

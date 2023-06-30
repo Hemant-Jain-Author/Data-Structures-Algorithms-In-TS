@@ -387,6 +387,7 @@ class LinkedList {
         return 0;
     }
 }
+
 function main() {
     let ll : LinkedList = new LinkedList();
     ll.addHead(1);

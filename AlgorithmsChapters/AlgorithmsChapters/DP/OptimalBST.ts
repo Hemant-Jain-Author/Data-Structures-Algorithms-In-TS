@@ -1,131 +1,127 @@
-import java.util.Arrays;
-
-public class OptimalBST {
-	static int optBstCost(int[] freq, int i, int j) {
-		if (i > j)
-			return 0;
-
-		if (j == i) // one element in this subarray
-			return freq[i];
-
-		int min = Integer.MAX_VALUE;
-		for (int r = i; r <= j; r++) {
-			min = Math.min(min, optBstCost(freq, i, r - 1) + optBstCost(freq, r + 1, j));
+function optBstCost(freq: number[], i: number, j: number): number {
+	if (i > j) return 0;
+  
+	if (j === i) return freq[i];
+  
+	let min = Infinity;
+	for (let r = i; r <= j; r++) {
+	  min = Math.min( min,
+		optBstCost(freq, i, r - 1) + optBstCost(freq, r + 1, j));
+	}
+	return min + sum(freq, i, j);
+  }
+  
+  function optBstCostRecursive(keys: number[], freq: number[]): number {
+	const n = freq.length;
+	return optBstCost(freq, 0, n - 1);
+  }
+  
+  function optBstCostTopDown(keys: number[], freq: number[]): number {
+	const n = freq.length;
+	const cost: number[][] = new Array(n).fill(0).map(() => new Array(n).fill(Infinity));
+	for (let i = 0; i < n; i++) {
+	  cost[i][i] = freq[i];
+	}
+	return optBstCostTD(freq, cost, 0, n - 1);
+  }
+  
+  function optBstCostTD(freq: number[], cost: number[][], i: number, j: number): number {
+	if (i > j) return 0;
+  
+	if (cost[i][j] !== Infinity) return cost[i][j];
+  
+	const s = sum(freq, i, j);
+	for (let r = i; r <= j; r++) {
+	  cost[i][j] = Math.min( cost[i][j],
+		optBstCostTD(freq, cost, i, r - 1) + optBstCostTD(freq, cost, r + 1, j) + s);
+	}
+	return cost[i][j];
+  }
+  
+  function sum(freq: number[], i: number, j: number): number {
+	let s = 0;
+	for (let k = i; k <= j; k++) {
+	  s += freq[k];
+	}
+	return s;
+  }
+  
+  function sumInit(freq: number[], n: number): number[] {
+	const sum: number[] = new Array(n).fill(0);
+	sum[0] = freq[0];
+	for (let i = 1; i < n; i++) {
+	  sum[i] = sum[i - 1] + freq[i];
+	}
+	return sum;
+  }
+  
+  function sumRange(sum: number[], i: number, j: number): number {
+	if (i === 0) return sum[j];
+	return sum[j] - sum[i - 1];
+  }
+  
+  function optBstCostBU(keys: number[], freq: number[]): number {
+	const n = freq.length;
+	const cost: number[][] = new Array(n).fill(0).map(() => new Array(n).fill(Infinity));
+  
+	for (let i = 0; i < n; i++) {
+	  cost[i][i] = freq[i];
+	}
+  
+	let sm = 0;
+	for (let l = 1; l < n; l++) {
+	  for (let i = 0, j = i + l; j < n; i++, j++) {
+		sm = sum(freq, i, j);
+		for (let r = i; r <= j; r++) {
+		  cost[i][j] = Math.min(
+			cost[i][j],
+			sm +
+			  ((r - 1 >= i) ? cost[i][r - 1] : 0) +
+			  ((r + 1 <= j) ? cost[r + 1][j] : 0)
+		  );
 		}
-		return min + sum(freq, i, j);
+	  }
 	}
-
-	static int optBstCost(int[] keys, int[] freq) {
-		int n = freq.length;
-		return optBstCost(freq, 0, n - 1);
+	return cost[0][n - 1];
+  }
+  
+  function optBstCostBU2(keys: number[], freq: number[]): number {
+	const n = freq.length;
+	const cost: number[][] = new Array(n).fill(0).map(() => new Array(n).fill(Infinity));
+  
+	const sumArr = sumInit(freq, n);
+	for (let i = 0; i < n; i++) {
+	  cost[i][i] = freq[i];
 	}
-
-	static int optBstCostTD(int[] keys, int[] freq) {
-		int n = freq.length;
-		int[][] cost = new int[n][n];
-		for (int[] row : cost)
-			Arrays.fill(row, Integer.MAX_VALUE);
-
-		for (int i = 0; i < n; i++)
-			cost[i][i] = freq[i];
-
-		return optBstCostTD(freq, cost, 0, n - 1);
-	}
-
-	static int optBstCostTD(int[] freq, int[][] cost, int i, int j) {
-		if (i > j)
-			return 0;
-
-		if (cost[i][j] != Integer.MAX_VALUE)
-			return cost[i][j];
-
-		int s = sum(freq, i, j);
-		for (int r = i; r <= j; r++) {
-			cost[i][j] = Math.min(cost[i][j],
-					optBstCostTD(freq, cost, i, r - 1) + optBstCostTD(freq, cost, r + 1, j) + s);
+  
+	let sm = 0;
+	for (let l = 1; l < n; l++) {
+	  for (let i = 0, j = i + l; j < n; i++, j++) {
+		sm = sumRange(sumArr, i, j);
+		for (let r = i; r <= j; r++) {
+		  cost[i][j] = Math.min(
+			cost[i][j],
+			sm +
+			  ((r - 1 >= i) ? cost[i][r - 1] : 0) +
+			  ((r + 1 <= j) ? cost[r + 1][j] : 0)
+		  );
 		}
-		return cost[i][j];
+	  }
 	}
-
-	static int sum(int[] freq, int i, int j) {
-		int s = 0;
-		for (int k = i; k <= j; k++)
-			s += freq[k];
-		return s;
-	}
-
-	static int[] sumInit(int[] freq, int n) {
-		int[] sum = new int[n];
-		sum[0] = freq[0];
-		for (int i = 1; i < n; i++)
-			sum[i] = sum[i - 1] + freq[i];
-		return sum;
-	}
-
-	static int sumRange(int[] sum, int i, int j) {
-		if (i == 0)
-			return sum[j];
-		return sum[j] - sum[i - 1];
-	}
-
-	static int optBstCostBU(int[] keys, int[] freq) {
-		int n = freq.length;
-		int[][] cost = new int[n][n];
-		for (int[] row : cost)
-			Arrays.fill(row, Integer.MAX_VALUE);
-
-		for (int i = 0; i < n; i++)
-			cost[i][i] = freq[i];
-
-		int sm = 0;
-		for (int l = 1; l < n; l++) { // l is length of range.
-			for (int i = 0, j = i + l; j < n; i++, j++) {
-				sm = sum(freq, i, j);
-				for (int r = i; r <= j; r++) {
-					cost[i][j] = Math.min(cost[i][j],
-							sm + ((r - 1 >= i) ? cost[i][r - 1] : 0) + ((r + 1 <= j) ? cost[r + 1][j] : 0));
-				}
-			}
-		}
-		return cost[0][n - 1];
-	}
-
-	static int optBstCostBU2(int[] keys, int[] freq) {
-		int n = freq.length;
-		int[][] cost = new int[n][n];
-		for (int[] row : cost)
-			Arrays.fill(row, Integer.MAX_VALUE);
-
-		int[] sumArr = sumInit(freq, n);
-		for (int i = 0; i < n; i++)
-			cost[i][i] = freq[i];
-
-		int sm = 0;
-		for (int l = 1; l < n; l++) { // l is length of range.
-			for (int i = 0, j = i + l; j < n; i++, j++) {
-				sm = sumRange(sumArr, i, j);
-				for (int r = i; r <= j; r++) {
-					cost[i][j] = Math.min(cost[i][j],
-							sm + ((r - 1 >= i) ? cost[i][r - 1] : 0) + ((r + 1 <= j) ? cost[r + 1][j] : 0));
-				}
-			}
-		}
-		return cost[0][n - 1];
-	}
-
-	public static void main(String[] args) {
-		int[] keys = { 9, 15, 25 };
-		int[] freq = { 30, 10, 40 };
-		System.out.println("OBST cost:" + optBstCost(keys, freq));
-		System.out.println("OBST cost:" + optBstCostTD(keys, freq));
-		System.out.println("OBST cost:" + optBstCostBU(keys, freq));
-		System.out.println("OBST cost:" + optBstCostBU2(keys, freq));
-	}
-}
+	return cost[0][n - 1];
+  }
+  
+const keys: number[] = [9, 15, 25];
+const freq: number[] = [30, 10, 40];
+console.log("OBST cost: " + optBstCostRecursive(keys, freq));
+console.log("OBST cost: " + optBstCostTopDown(keys, freq));
+console.log("OBST cost: " + optBstCostBU(keys, freq));
+console.log("OBST cost: " + optBstCostBU2(keys, freq));
+  
 
 /*
-OBST cost:130
-OBST cost:130
-OBST cost:130
-OBST cost:130
+OBST cost: 130
+OBST cost: 130
+OBST cost: 130
+OBST cost: 130
 */

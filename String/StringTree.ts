@@ -95,26 +95,22 @@ class StringTree {
     }
 }
 
-function main() {
-    let tt : StringTree = new StringTree();
-    tt.add("banana");
-    tt.add("apple");
-    tt.add("mango");
-    tt.add("banana");
-    tt.add("apple");
-    tt.add("mango");
-    console.info("\nSearch results for apple, banana, grapes and mango :\n");
-    tt.find("apple");
-    tt.find("banana");
-    tt.find("banan");
-    tt.find("applkhjkhkj");
-    tt.find("grapes");
-    tt.find("mango");
-    tt.print();
-    console.info("frequency returned :: " + tt.frequency("apple"));
-    console.info("frequency returned :: " + tt.frequency("banana"));
-    console.info("frequency returned :: " + tt.frequency("mango"));
-    console.info("frequency returned :: " + tt.frequency("hemant"));
-}
-
-main();
+let tt : StringTree = new StringTree();
+tt.add("banana");
+tt.add("apple");
+tt.add("mango");
+tt.add("banana");
+tt.add("apple");
+tt.add("mango");
+console.info("\nSearch results for apple, banana, grapes and mango :\n");
+tt.find("apple");
+tt.find("banana");
+tt.find("banan");
+tt.find("applkhjkhkj");
+tt.find("grapes");
+tt.find("mango");
+tt.print();
+console.info("frequency returned :: " + tt.frequency("apple"));
+console.info("frequency returned :: " + tt.frequency("banana"));
+console.info("frequency returned :: " + tt.frequency("mango"));
+console.info("frequency returned :: " + tt.frequency("hemant"));

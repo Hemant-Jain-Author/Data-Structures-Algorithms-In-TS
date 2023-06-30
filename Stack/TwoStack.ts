@@ -47,18 +47,14 @@ class TwoStack {
     }
 }
 
-function main() {
-    let st : TwoStack = new TwoStack();
-    for(let i : number = 0; i < 10; i++) {
-        st.Push1(i);
-    };
-    for(let j : number = 0; j < 10; j++) {
-        st.Push2(j + 10);
-    };
-    for(let i : number = 0; i < 10; i++) {
-        console.info("stack one pop value is : " + st.Pop1());
-        console.info("stack two pop value is : " + st.Pop2());
-    };
-}
-
-main();
+let st : TwoStack = new TwoStack();
+for(let i : number = 0; i < 10; i++) {
+    st.Push1(i);
+};
+for(let j : number = 0; j < 10; j++) {
+    st.Push2(j + 10);
+};
+for(let i : number = 0; i < 10; i++) {
+    console.info("stack one pop value is : " + st.Pop1());
+    console.info("stack two pop value is : " + st.Pop2());
+};

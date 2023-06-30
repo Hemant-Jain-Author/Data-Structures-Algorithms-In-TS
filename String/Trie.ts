@@ -81,20 +81,16 @@ class Trie {
 
 
 
-function main(args : string[]) {
-    let t : Trie = new Trie();
-    let a : string = "hemant";
-    let b : string = "heman";
-    let c : string = "hemantjain";
-    let d : string = "jain";
-    t.Add(a);
-    t.Add(d);
-    console.info(t.Find(a));
-    t.Remove(a);
-    t.Remove(d);
-    console.info(t.Find(a));
-    console.info(t.Find(c));
-    console.info(t.Find(d));
-}
-
-main(null);
+let t : Trie = new Trie();
+let a : string = "hemant";
+let b : string = "heman";
+let c : string = "hemantjain";
+let d : string = "jain";
+t.Add(a);
+t.Add(d);
+console.info(t.Find(a));
+t.Remove(a);
+t.Remove(d);
+console.info(t.Find(a));
+console.info(t.Find(c));
+console.info(t.Find(d));

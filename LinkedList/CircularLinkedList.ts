@@ -158,15 +158,11 @@ class CircularLinkedList {
     }
 }
 
-function main() {
-    let ll : CircularLinkedList = new CircularLinkedList();
-    ll.addHead(1);
-    ll.addHead(2);
-    ll.addHead(3);
-    ll.addHead(1);
-    ll.addHead(2);
-    ll.addHead(3);
-    ll.print();
-}
-
-main();
+let ll : CircularLinkedList = new CircularLinkedList();
+ll.addHead(1);
+ll.addHead(2);
+ll.addHead(3);
+ll.addHead(1);
+ll.addHead(2);
+ll.addHead(3);
+ll.print();
