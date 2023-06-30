@@ -123,8 +123,7 @@ function joinRopes(ropes: number[], size: number): number {
 }
 
 function joinRopes2(ropes: number[], size: number): number {
-	const pq: PriorityQueue<number> = 
-	new PriorityQueue<number>((a, b) => a > b);
+	const pq: PriorityQueue<number> = new PriorityQueue<number>((a, b) => a > b);
 	let i = 0;
 	for (i = 0; i < size; i++) {
 		pq.add(ropes[i]);

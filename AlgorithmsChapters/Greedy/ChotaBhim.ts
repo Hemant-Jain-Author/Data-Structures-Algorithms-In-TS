@@ -139,8 +139,7 @@ function chotaBhim2(cups: number[]): number {
 	let total: number = 0;
 	let value: number;
 	while (time > 0) {
-		value = pq.peek();
-        pq.remove();
+		value = pq.remove();
 		total += value;
 		value = Math.ceil(value / 2);
 		pq.add(value);

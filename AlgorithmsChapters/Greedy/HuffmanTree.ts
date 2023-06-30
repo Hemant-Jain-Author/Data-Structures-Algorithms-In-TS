@@ -107,26 +107,22 @@ class NodeStr {
         this.right = r;
     }
 
-    compareTo(n2: NodeStr): number {
-        return this.freq - n2.freq;
+    compareTo(n2: NodeStr): boolean {
+        return this.freq > n2.freq;
     }
 }
 
 function HuffmanTree(arr: string[], freq: number[]): void {
     const n = arr.length;
-    const que: PriorityQueue<NodeStr> = new PriorityQueue<NodeStr>((a, b) => a.compareTo(b) > 0);
-
+    const que: PriorityQueue<NodeStr> = new PriorityQueue<NodeStr>((a, b) => a.compareTo(b));
     for (let i = 0; i < n; i++) {
         const node = new NodeStr(arr[i], freq[i], null, null);
         que.add(node);
     }
 
     while (que.size > 1) {
-        const lt = que.peek();
-        que.remove();
-        const rt = que.peek();
-        que.remove();
-
+        const lt = que.remove();
+        const rt = que.remove();
         const nd = new NodeStr('+', lt.freq + rt.freq, lt, rt);
         que.add(nd);
     }
