@@ -8,24 +8,24 @@ function printSubset(flags: boolean[], arr: number[], size: number): void {
 	}
 	console.log(result);
 }
-  
+
 function subsetSum(arr: number[], n: number, target: number): void {
 	const flags: boolean[] = new Array(n);
 	subsetSumHelper(arr, n, flags, 0, 0, target);
 }
-  
-function subsetSumHelper( arr: number[], n: number, flags: boolean[],
-	sum: number, curr: number, target: number ): void {
+
+function subsetSumHelper(arr: number[], n: number, flags: boolean[],
+	sum: number, curr: number, target: number): void {
 	if (target === sum) {
 		printSubset(flags, arr, n); // Solution found.
 		return;
 	}
-  
+
 	if (curr >= n || sum > target) {
 		// Constraint check and backtracking.
 		return;
 	}
-  
+
 	// Current element included.
 	flags[curr] = true;
 	subsetSumHelper(arr, n, flags, sum + arr[curr], curr + 1, target);
@@ -33,7 +33,7 @@ function subsetSumHelper( arr: number[], n: number, flags: boolean[],
 	flags[curr] = false;
 	subsetSumHelper(arr, n, flags, sum, curr + 1, target);
 }
-  
+
 const arr: number[] = [15, 22, 14, 26, 32, 9, 16, 8];
 const target: number = 53;
 const n: number = arr.length;

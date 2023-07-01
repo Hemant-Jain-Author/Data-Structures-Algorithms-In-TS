@@ -102,7 +102,7 @@ function reverse(cups: number[], size: number): void {
 		cups[j] = temp;
 	}
 }
-  
+
 function chotaBhim(cups: number[]): number {
 	const size: number = cups.length;
 	let time: number = 60;
@@ -126,11 +126,11 @@ function chotaBhim(cups: number[]): number {
 	console.log("Total: " + total);
 	return total;
 }
-  
+
 function chotaBhim2(cups: number[]): number {
 	const size: number = cups.length;
 	let time: number = 60;
-	const pq:  PriorityQueue<number> = new PriorityQueue<number>((a, b) => a < b );
+	const pq: PriorityQueue<number> = new PriorityQueue<number>((a, b) => a < b);
 
 	for (let i = 0; i < size; i++) {
 		pq.add(cups[i]);
@@ -148,13 +148,13 @@ function chotaBhim2(cups: number[]): number {
 	console.log("Total: " + total);
 	return total;
 }
-  
-  // Testing code.
-  const cups: number[] = [2, 1, 7, 4, 2];
-  chotaBhim(cups);
-  const cups2: number[] = [2, 1, 7, 4, 2];
-  chotaBhim2(cups2);
-  
+
+// Testing code.
+const cups: number[] = [2, 1, 7, 4, 2];
+chotaBhim(cups);
+const cups2: number[] = [2, 1, 7, 4, 2];
+chotaBhim2(cups2);
+
 /*
 Total: 76
 Total: 76

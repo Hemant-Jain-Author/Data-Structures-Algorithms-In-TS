@@ -2,7 +2,7 @@ function maxProfit(arr: number[]): number {
 	let buyProfit = -arr[0]; // Buy stock profit
 	let sellProfit = 0; // Sell stock profit
 	const n = arr.length;
-	
+
 	for (let i = 1; i < n; i++) {
 		const newBuyProfit = sellProfit - arr[i] > buyProfit ? sellProfit - arr[i] : buyProfit;
 		const newSellProfit = buyProfit + arr[i] > sellProfit ? buyProfit + arr[i] : sellProfit;
@@ -16,7 +16,7 @@ function maxProfitTC(arr: number[], t: number): number {
 	let buyProfit = -arr[0];
 	let sellProfit = 0;
 	const n = arr.length;
- 
+
 	for (let i = 1; i < n; i++) {
 		const newBuyProfit = sellProfit - arr[i] > buyProfit ? sellProfit - arr[i] : buyProfit;
 		const newSellProfit = buyProfit + arr[i] - t > sellProfit ? buyProfit + arr[i] - t : sellProfit;
@@ -25,7 +25,7 @@ function maxProfitTC(arr: number[], t: number): number {
 	}
 	return sellProfit;
 }
- 
+
 function maxProfit2(arr: number[]): number {
 	const n = arr.length;
 	const dp: number[][] = new Array(n).fill([]).map(() => new Array(2));

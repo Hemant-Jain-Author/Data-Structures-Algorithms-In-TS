@@ -1,5 +1,4 @@
-class SegmentTree
-{
+class SegmentTree {
 	constructor(input) {
 		this.size = input.length; // Height of segment tree.
 		let x = parseInt(Math.ceil(Math.log(this.size) / Math.log(2))); //Maximum size of segment tree
@@ -21,7 +20,7 @@ class SegmentTree
 		this.segArr[index] = this.constructST(input, start, mid, index * 2 + 1) + this.constructST(input, mid + 1, end, index * 2 + 2);
 		return this.segArr[index];
 	}
-    
+
 	getSum(start, end) {
 		// Check for error conditions.
 		if (start > end || start < 0 || end > this.size - 1) {
@@ -44,8 +43,8 @@ class SegmentTree
 		let mid = parseInt((segStart + segEnd) / 2);
 		return this.getSumUtil(segStart, mid, queryStart, queryEnd, 2 * index + 1) + this.getSumUtil(mid + 1, segEnd, queryStart, queryEnd, 2 * index + 2);
 	}
-	
-    set(arr, ind, val) {
+
+	set(arr, ind, val) {
 		// Check for error conditions.
 		if (ind < 0 || ind > this.size - 1) {
 			console.log("Invalid Input.");
@@ -55,8 +54,8 @@ class SegmentTree
 		// Set new value in segment tree
 		this.setUtil(0, this.size - 1, ind, val, 0);
 	}
-	
-    // Always diff will be returned.
+
+	// Always diff will be returned.
 	setUtil(segStart, segEnd, ind, val, index) {
 		// set index lies outside the range of current segment.
 		// So diff to its parent node will be zero.

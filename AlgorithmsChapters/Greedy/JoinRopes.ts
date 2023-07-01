@@ -96,49 +96,49 @@ class PriorityQueue<T> {
 
 
 function joinRopes(ropes: number[], size: number): number {
-	ropes.sort();
-	for (let i = 0, j = size - 1; i < j; i++, j--) {
-		let temp = ropes[i];
-		ropes[i] = ropes[j];
-		ropes[j] = temp;
-	}
-	let total = 0;
-	let value = 0;
-	let index: number;
-	let length = size;
+    ropes.sort();
+    for (let i = 0, j = size - 1; i < j; i++, j--) {
+        let temp = ropes[i];
+        ropes[i] = ropes[j];
+        ropes[j] = temp;
+    }
+    let total = 0;
+    let value = 0;
+    let index: number;
+    let length = size;
 
-	while (length >= 2) {
-		value = ropes[length - 1] + ropes[length - 2];
-		total += value;
-		index = length - 2;
-		while (index > 0 && ropes[index - 1] < value) {
-			ropes[index] = ropes[index - 1];
-			index -= 1;
-		}
-		ropes[index] = value;
-		length--;
-	}
-	console.log("Total : " + total);
-	return total;
+    while (length >= 2) {
+        value = ropes[length - 1] + ropes[length - 2];
+        total += value;
+        index = length - 2;
+        while (index > 0 && ropes[index - 1] < value) {
+            ropes[index] = ropes[index - 1];
+            index -= 1;
+        }
+        ropes[index] = value;
+        length--;
+    }
+    console.log("Total : " + total);
+    return total;
 }
 
 function joinRopes2(ropes: number[], size: number): number {
-	const pq: PriorityQueue<number> = new PriorityQueue<number>((a, b) => a > b);
-	let i = 0;
-	for (i = 0; i < size; i++) {
-		pq.add(ropes[i]);
-	}
+    const pq: PriorityQueue<number> = new PriorityQueue<number>((a, b) => a > b);
+    let i = 0;
+    for (i = 0; i < size; i++) {
+        pq.add(ropes[i]);
+    }
 
-	let total = 0;
-	let value = 0;
-	while (pq.length() > 1) {
-		value = pq.remove();
-		value += pq.remove();
-		pq.add(value);
-		total += value;
-	}
-	console.log("Total : " + total);
-	return total;
+    let total = 0;
+    let value = 0;
+    while (pq.length() > 1) {
+        value = pq.remove();
+        value += pq.remove();
+        pq.add(value);
+        total += value;
+    }
+    console.log("Total : " + total);
+    return total;
 }
 
 const ropes: number[] = [4, 3, 2, 6];

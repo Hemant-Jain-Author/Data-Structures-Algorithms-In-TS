@@ -4,7 +4,7 @@ function printArray(arr: number[], n: number): void {
 	}
 	console.log();
 }
-  
+
 function swap(arr: number[], i: number, j: number): void {
 	const temp = arr[i];
 	arr[i] = arr[j];
@@ -77,7 +77,7 @@ console.log();
 permutation2(arr, 0, 4);
 console.log();
 permutation3(arr, 0, 4);
-  
+
 
 /*
 [ 1, 2, 3, 4 ]

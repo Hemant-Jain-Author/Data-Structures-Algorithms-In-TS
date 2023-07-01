@@ -14,7 +14,7 @@ class Activity {
 		this.stop = f;
 	}
 }
-  
+
 function maxActivities(s: number[], f: number[], n: number): void {
 	const act: Activity[] = [];
 	for (let i = 0; i < n; i++) {
@@ -27,8 +27,8 @@ function maxActivities(s: number[], f: number[], n: number): void {
 
 	for (let j = 1; j < n; j++) {
 		if (act[j].start >= act[i].stop) {
-		output += (`, (${act[j].start},${act[j].stop})`);
-		i = j;
+			output += (`, (${act[j].start},${act[j].stop})`);
+			i = j;
 		}
 	}
 	console.log(output);
@@ -39,7 +39,7 @@ const s = [1, 5, 0, 3, 5, 6, 8];
 const f = [2, 6, 5, 4, 9, 7, 9];
 const n = s.length;
 maxActivities(s, f, n);
-  
+
 
 /*
  * Activities are : (1,2), (3,4), (5,6), (6,7), (8,9)

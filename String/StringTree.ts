@@ -1,8 +1,8 @@
 class TreeNode {
-    value : string;
-    count : number;
-    lChild : TreeNode;
-    rChild : TreeNode;
+    value: string;
+    count: number;
+    lChild: TreeNode;
+    rChild: TreeNode;
 
     constructor() {
         this.value = null;
@@ -13,14 +13,14 @@ class TreeNode {
 }
 
 class StringTree {
-    root : TreeNode = null;
+    root: TreeNode = null;
 
     public print() {
         this.printUtil(this.root);
     }
 
-    private printUtil(curr : TreeNode) {
-        if(curr != null) {
+    private printUtil(curr: TreeNode) {
+        if (curr != null) {
             console.info(" value is ::" + curr.value);
             console.info(" count is :: " + curr.count);
             this.printUtil(curr.lChild);
@@ -29,63 +29,63 @@ class StringTree {
     }
 
 
-    public Add(value : string) {
+    public Add(value: string) {
         this.root = this.addUtil(value, this.root);
     }
 
-    private addUtil(value : string, curr : TreeNode) : TreeNode {
-        if(curr == null) {
+    private addUtil(value: string, curr: TreeNode): TreeNode {
+        if (curr == null) {
             curr = new TreeNode();
             curr.value = value;
             curr.lChild = curr.rChild = null;
             curr.count = 1;
         } else {
-            let compare : number = curr.value.localeCompare(value);
-            if(compare === 0) 
-                curr.count++; 
-            else if(compare === 1) 
-                curr.lChild = this.addUtil(value, curr.lChild); 
-            else 
+            let compare: number = curr.value.localeCompare(value);
+            if (compare === 0)
+                curr.count++;
+            else if (compare === 1)
+                curr.lChild = this.addUtil(value, curr.lChild);
+            else
                 curr.rChild = this.addUtil(value, curr.rChild);
         }
         return curr;
     }
 
-    public Find(value : string) : boolean {
-        let ret : boolean = this.findUtil(this.root, value);
+    public Find(value: string): boolean {
+        let ret: boolean = this.findUtil(this.root, value);
         console.info("Find " + value + " Return " + ret);
         return ret;
     }
 
-    private findUtil(curr : TreeNode, value : string) : boolean {
-        if(curr == null) 
+    private findUtil(curr: TreeNode, value: string): boolean {
+        if (curr == null)
             return false;
-        let compare : number = curr.value.localeCompare(value);
-        if(compare === 0) 
-            return true; 
+        let compare: number = curr.value.localeCompare(value);
+        if (compare === 0)
+            return true;
         else {
-            if(compare === 1) 
-                return this.findUtil(curr.lChild, value); 
-            else 
+            if (compare === 1)
+                return this.findUtil(curr.lChild, value);
+            else
                 return this.findUtil(curr.rChild, value);
         }
     }
 
 
-    public Frequency(value : string) : number {
+    public Frequency(value: string): number {
         return this.frequencyUtil(this.root, value);
     }
 
-    private frequencyUtil(curr : TreeNode, value : string) : number {
-        if(curr == null) 
+    private frequencyUtil(curr: TreeNode, value: string): number {
+        if (curr == null)
             return 0;
-        let compare : number = curr.value.localeCompare(value);
-        if(compare === 0) 
-            return curr.count; 
+        let compare: number = curr.value.localeCompare(value);
+        if (compare === 0)
+            return curr.count;
         else {
-            if(compare > 0) 
-                return this.frequencyUtil(curr.lChild, value); 
-            else 
+            if (compare > 0)
+                return this.frequencyUtil(curr.lChild, value);
+            else
                 return this.frequencyUtil(curr.rChild, value);
         }
     }
@@ -96,7 +96,7 @@ class StringTree {
 }
 
 // Testing code.
-let tt : StringTree = new StringTree();
+let tt: StringTree = new StringTree();
 tt.Add("banana");
 tt.Add("apple");
 tt.Add("mango");

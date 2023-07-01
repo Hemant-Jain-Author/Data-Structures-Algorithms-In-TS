@@ -23,7 +23,7 @@ function shortestDist(graph: number[][], n: number): number {
   value = n - 1;
   var output = "";
   while (value !== -1) {
-    output += ( value + " " );
+    output += (value + " ");
     value = path[value];
   }
   console.log(output);

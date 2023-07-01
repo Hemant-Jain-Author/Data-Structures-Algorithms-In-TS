@@ -2,9 +2,9 @@
 function isSafe2(graph: boolean[][], colour: number[], V: number): boolean {
 	for (let i = 0; i < V; i++) {
 		for (let j = i + 1; j < V; j++) {
-		if (graph[i][j] && colour[j] === colour[i]) {
-			return false;
-		}
+			if (graph[i][j] && colour[j] === colour[i]) {
+				return false;
+			}
 		}
 	}
 	return true;
@@ -18,7 +18,7 @@ function graphColouring2Util(graph: boolean[][], V: number, m: number, colour: n
 		}
 		return false;
 	}
-	
+
 	for (let j = 1; j <= m; j++) {
 		colour[i] = j;
 		if (graphColouring2Util(graph, V, m, colour, i + 1)) {
@@ -39,7 +39,7 @@ function graphColouring2(graph: boolean[][], V: number, m: number): boolean {
 
 // Is it safe to colour vth vertice with c colour.
 function isSafe(graph: boolean[][], V: number, colour: number[], v: number, c: number): boolean {
-  	for (let i = 0; i < V; i++) {
+	for (let i = 0; i < V; i++) {
 		if (graph[v][i] && c === colour[i]) {
 			return false;
 		}
@@ -65,7 +65,7 @@ function graphColouringUtil(graph: boolean[][], V: number, m: number, colour: nu
 }
 
 function graphColouring(graph: boolean[][], V: number, m: number): boolean {
-  const colour: number[] = new Array(V);
+	const colour: number[] = new Array(V);
 	if (graphColouringUtil(graph, V, m, colour, 0)) {
 		return true;
 	}

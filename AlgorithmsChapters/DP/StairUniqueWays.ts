@@ -23,10 +23,10 @@ function stairUniqueWaysBU2(n: number): number {
 
 	return ways[n - 1];
 }
-  
+
 console.log("Unique way to reach top: " + stairUniqueWaysBU(4));
 console.log("Unique way to reach top: " + stairUniqueWaysBU2(4));
-  
+
 /*
 Unique way to reach top: 5
 Unique way to reach top: 5 

@@ -1,9 +1,9 @@
 class LNode {
-    public value : number;
-    public next : LNode;
+    public value: number;
+    public next: LNode;
 
-    public constructor(v : number, n : LNode = null) {
-        this.value= v;
+    public constructor(v: number, n: LNode = null) {
+        this.value = v;
         this.next = n;
     }
 }
@@ -11,76 +11,76 @@ class LNode {
 const ErrorValue = 2147483647;
 
 class LinkedList {
-    head : LNode;
-    _size : number = 0;
+    head: LNode;
+    _size: number = 0;
 
     constructor() {
         this.head = null;
     }
 
-    public size() : number {
+    public size(): number {
         return this._size;
     }
 
-    public isEmpty() : boolean {
+    public isEmpty(): boolean {
         return this._size === 0;
     }
 
-    public peek() : number {
-        if(this.isEmpty()) 
+    public peek(): number {
+        if (this.isEmpty())
             throw "EmptyListException";
         return this.head.value;
     }
 
-    public addHead(value : number) {
+    public addHead(value: number) {
         this.head = new LNode(value, this.head);
         this._size++;
     }
 
-    public addTail(value : number) {
-        let newNode : LNode = new LNode(value, null);
-        let curr : LNode = this.head;
-        if(this.head == null) {
+    public addTail(value: number) {
+        let newNode: LNode = new LNode(value, null);
+        let curr: LNode = this.head;
+        if (this.head == null) {
             this.head = newNode;
         }
-        while(curr.next != null) {
+        while (curr.next != null) {
             curr = curr.next;
         }
         curr.next = newNode;
     }
 
-    public removeHead() : number {
-        if(this.isEmpty()) 
+    public removeHead(): number {
+        if (this.isEmpty())
             throw "EmptyListException";
-        
-        let value : number = this.head.value;
+
+        let value: number = this.head.value;
         this.head = this.head.next;
         this._size--;
         return value;
     }
 
-    public searchList(data : number) : boolean {
-        let temp : LNode = this.head;
-        while(temp != null) {
-            if(temp.value === data) 
+    public searchList(data: number): boolean {
+        let temp: LNode = this.head;
+        while (temp != null) {
+            if (temp.value === data)
                 return true;
             temp = temp.next;
         }
         return false;
     }
 
-    public deleteNode(delValue : number) : boolean {
-        let temp : LNode = this.head;
-        if(this.isEmpty()) 
+    public deleteNode(delValue: number): boolean {
+        let temp: LNode = this.head;
+        if (this.isEmpty())
             return false;
-        
-        if(delValue === this.head.value) {
+
+        if (delValue === this.head.value) {
             this.head = this.head.next;
             this._size--;
             return true;
         }
-        while(temp.next != null) {
-            if(temp.next.value === delValue) {
+        while (temp.next != null) {
+            if (temp.next.value === delValue) {
                 temp.next = temp.next.next;
                 this._size--;
                 return true;
@@ -90,16 +90,16 @@ class LinkedList {
         return false;
     }
 
-    public deleteNodes(delValue : number) {
-        let currNode : LNode = this.head;
-        let nextNode : LNode;
-        while(currNode != null && currNode.value === delValue) {
+    public deleteNodes(delValue: number) {
+        let currNode: LNode = this.head;
+        let nextNode: LNode;
+        while (currNode != null && currNode.value === delValue) {
             this.head = currNode.next;
             currNode = this.head;
         }
-        while(currNode != null) {
+        while (currNode != null) {
             nextNode = currNode.next;
-            if(nextNode != null && nextNode.value === delValue) {
+            if (nextNode != null && nextNode.value === delValue) {
                 currNode.next = nextNode.next;
             } else {
                 currNode = nextNode;
@@ -107,12 +107,12 @@ class LinkedList {
         }
     }
 
-    public reverseRecurseUtil(currentNode : LNode, nextNode : LNode) : LNode {
-        let ret : LNode;
-        if(currentNode == null) 
+    public reverseRecurseUtil(currentNode: LNode, nextNode: LNode): LNode {
+        let ret: LNode;
+        if (currentNode == null)
             return null;
-        
-        if(currentNode.next == null) {
+
+        if (currentNode.next == null) {
             currentNode.next = nextNode;
             return currentNode;
         }
@@ -126,10 +126,10 @@ class LinkedList {
     }
 
     public reverse() {
-        let curr : LNode = this.head;
-        let prev : LNode = null;
-        let next : LNode = null;
-        while(curr != null) {
+        let curr: LNode = this.head;
+        let prev: LNode = null;
+        let next: LNode = null;
+        while (curr != null) {
             next = curr.next;
             curr.next = prev;
             prev = curr;
@@ -138,147 +138,147 @@ class LinkedList {
         this.head = prev;
     }
 
-    public copyListReversed() : LinkedList {
-        let tempNode : LNode = null;
-        let tempNode2 : LNode = null;
-        let curr : LNode = this.head;
-        while(curr != null) {
+    public copyListReversed(): LinkedList {
+        let tempNode: LNode = null;
+        let tempNode2: LNode = null;
+        let curr: LNode = this.head;
+        while (curr != null) {
             tempNode2 = new LNode(curr.value, tempNode);
             curr = curr.next;
             tempNode = tempNode2;
         }
-        let ll2 : LinkedList = new LinkedList();
+        let ll2: LinkedList = new LinkedList();
         ll2.head = tempNode;
         return ll2;
     }
 
-    public copyList() : LinkedList {
-        let headNode : LNode = null;
-        let tailNode : LNode = null;
-        let tempNode : LNode = null;
-        let curr : LNode = this.head;
+    public copyList(): LinkedList {
+        let headNode: LNode = null;
+        let tailNode: LNode = null;
+        let tempNode: LNode = null;
+        let curr: LNode = this.head;
 
-        if(curr == null) 
+        if (curr == null)
             return null;
 
         headNode = new LNode(curr.value, null);
         tailNode = headNode;
         curr = curr.next;
 
-        while(curr != null) {
+        while (curr != null) {
             tempNode = new LNode(curr.value, null);
             tailNode.next = tempNode;
             tailNode = tempNode;
             curr = curr.next;
         }
-        let ll2 : LinkedList = new LinkedList();
+        let ll2: LinkedList = new LinkedList();
         ll2.head = headNode;
         return ll2;
     }
 
-    public compareList(ll : LinkedList) : boolean {
+    public compareList(ll: LinkedList): boolean {
         return this.compareListUtil(this.head, ll.head);
     }
 
-    public compareListUtil(head1? : LNode, head2? : LNode) : boolean {
-        if(head1 == null && head2 == null) 
-            return true; 
-        else if((head1 == null) || (head2 == null) || (head1.value !== head2.value)) 
-            return false; 
-        else 
+    public compareListUtil(head1?: LNode, head2?: LNode): boolean {
+        if (head1 == null && head2 == null)
+            return true;
+        else if ((head1 == null) || (head2 == null) || (head1.value !== head2.value))
+            return false;
+        else
             return this.compareListUtil(head1.next, head2.next);
     }
 
-    public compareList2(ll2 : LinkedList) : boolean {
-        let head1 : LNode = this.head;
-        let head2 : LNode = ll2.head;
-        while(head1 == null && head2 == null) {
-            if(head1.value !== head2.value) 
+    public compareList2(ll2: LinkedList): boolean {
+        let head1: LNode = this.head;
+        let head2: LNode = ll2.head;
+        while (head1 == null && head2 == null) {
+            if (head1.value !== head2.value)
                 return false;
             head1 = head1.next;
             head2 = head2.next;
         }
-        if(head1 == null && head2 == null) 
+        if (head1 == null && head2 == null)
             return true;
         return false;
     }
 
-    public findLength() : number {
-        let curr : LNode = this.head;
-        let count : number = 0;
-        while(curr != null) {
+    public findLength(): number {
+        let curr: LNode = this.head;
+        let count: number = 0;
+        while (curr != null) {
             count++;
             curr = curr.next;
         }
         return count;
     }
 
-    public nthNodeFromBegining(index : number) : number {
-        if(index > this.size() || index < 1) 
+    public nthNodeFromBegining(index: number): number {
+        if (index > this.size() || index < 1)
             return ErrorValue;
-        let count : number = 0;
-        let curr : LNode = this.head;
-        while(curr != null && count < index - 1) {
+        let count: number = 0;
+        let curr: LNode = this.head;
+        while (curr != null && count < index - 1) {
             count++;
             curr = curr.next;
         }
         return curr.value;
     }
 
-    public nthNodeFromEnd(index : number) : number {
-        let size : number = this.findLength();
-        let startIndex : number;
-        if(size !== 0 && size < index) {
+    public nthNodeFromEnd(index: number): number {
+        let size: number = this.findLength();
+        let startIndex: number;
+        if (size !== 0 && size < index) {
             return ErrorValue;
         }
         startIndex = size - index + 1;
         return this.nthNodeFromBegining(startIndex);
     }
 
-    public nthNodeFromEnd2(index : number) : number {
-        let count : number = 1;
-        let forward : LNode = this.head;
-        let curr : LNode = this.head;
-        while(forward != null && count <= index) {
+    public nthNodeFromEnd2(index: number): number {
+        let count: number = 1;
+        let forward: LNode = this.head;
+        let curr: LNode = this.head;
+        while (forward != null && count <= index) {
             count++;
             forward = forward.next;
         }
-        if(forward == null) 
+        if (forward == null)
             return ErrorValue;
-        while(forward != null) {
+        while (forward != null) {
             forward = forward.next;
             curr = curr.next;
         }
         return curr.value;
     }
 
-    public findIntersection(lst2 : LinkedList) : LNode {
-        let head2 : LNode = lst2.head;
-        let l1 : number = 0;
-        let l2 : number = 0;
-        let tempHead : LNode = this.head;
-        let tempHead2 : LNode = head2;
-        while(tempHead != null) {
+    public findIntersection(lst2: LinkedList): LNode {
+        let head2: LNode = lst2.head;
+        let l1: number = 0;
+        let l2: number = 0;
+        let tempHead: LNode = this.head;
+        let tempHead2: LNode = head2;
+        while (tempHead != null) {
             l1++;
             tempHead = tempHead.next;
         }
-        while(tempHead2 != null) {
+        while (tempHead2 != null) {
             l2++;
             tempHead2 = tempHead2.next;
         }
-        let diff : number;
-        if(l1 < 12) {
-            let temp : LNode = this.head;
+        let diff: number;
+        if (l1 < 12) {
+            let temp: LNode = this.head;
             this.head = head2;
             head2 = temp;
             diff = l2 - l1;
         } else {
             diff = l1 - l2;
         }
-        for(; diff > 0; diff--) {
+        for (; diff > 0; diff--) {
             this.head = this.head.next;
         }
-        while(this.head !== head2) {
+        while (this.head !== head2) {
             this.head = this.head.next;
             head2 = head2.next;
         }
@@ -291,24 +291,24 @@ class LinkedList {
     }
 
     public print() {
-        let temp : LNode = this.head;
-        let result : string = "";
-        while(temp != null) {
+        let temp: LNode = this.head;
+        let result: string = "";
+        while (temp != null) {
             result += (temp.value + " ");
             temp = temp.next;
         }
         console.info(result);
     }
 
-    public sortedInsert(value : number) {
-        let newNode : LNode = new LNode(value, null);
-        let curr : LNode = this.head;
-        if(curr == null || curr.value > value) {
+    public sortedInsert(value: number) {
+        let newNode: LNode = new LNode(value, null);
+        let curr: LNode = this.head;
+        if (curr == null || curr.value > value) {
             newNode.next = this.head;
             this.head = newNode;
             return;
         }
-        while(curr.next != null && curr.next.value < value) {
+        while (curr.next != null && curr.next.value < value) {
             curr = curr.next;
         }
         newNode.next = curr.next;
@@ -316,9 +316,9 @@ class LinkedList {
     }
 
     public removeDuplicate() {
-        let curr : LNode = this.head;
-        while(curr != null) {
-            if(curr.next != null && curr.value === curr.next.value) {
+        let curr: LNode = this.head;
+        while (curr != null) {
+            if (curr.next != null && curr.value === curr.next.value) {
                 curr.next = curr.next.next;
             } else {
                 curr = curr.next;
@@ -327,9 +327,9 @@ class LinkedList {
     }
 
     public makeLoop() {
-        let temp : LNode = this.head;
-        while(temp != null) {
-            if(temp.next == null) {
+        let temp: LNode = this.head;
+        while (temp != null) {
+            if (temp.next == null) {
                 temp.next = this.head;
                 return;
             }
@@ -337,14 +337,14 @@ class LinkedList {
         }
     }
 
-    public loopDetect() : boolean {
-        let slowPtr : LNode;
-        let fastPtr : LNode;
+    public loopDetect(): boolean {
+        let slowPtr: LNode;
+        let fastPtr: LNode;
         slowPtr = fastPtr = this.head;
-        while(fastPtr.next != null && fastPtr.next.next != null) {
+        while (fastPtr.next != null && fastPtr.next.next != null) {
             slowPtr = slowPtr.next;
             fastPtr = fastPtr.next.next;
-            if(slowPtr === fastPtr) {
+            if (slowPtr === fastPtr) {
                 console.info("loop found");
                 return true;
             }
@@ -353,10 +353,10 @@ class LinkedList {
         return false;
     }
 
-    public reverseListLoopDetect() : boolean {
-        let tempHead : LNode = this.head;
+    public reverseListLoopDetect(): boolean {
+        let tempHead: LNode = this.head;
         this.reverse();
-        if(tempHead === this.head) {
+        if (tempHead === this.head) {
             this.reverse();
             console.info("loop found");
             return true;
@@ -367,18 +367,18 @@ class LinkedList {
         }
     }
 
-    public loopTypeDetect() : number {
-        let slowPtr : LNode;
-        let fastPtr : LNode;
+    public loopTypeDetect(): number {
+        let slowPtr: LNode;
+        let fastPtr: LNode;
         slowPtr = fastPtr = this.head;
-        while(fastPtr.next != null && fastPtr.next.next != null) {
-            if(this.head === fastPtr.next || this.head === fastPtr.next.next) {
+        while (fastPtr.next != null && fastPtr.next.next != null) {
+            if (this.head === fastPtr.next || this.head === fastPtr.next.next) {
                 console.info("circular list loop found");
                 return 2;
             }
             slowPtr = slowPtr.next;
             fastPtr = fastPtr.next.next;
-            if(slowPtr === fastPtr) {
+            if (slowPtr === fastPtr) {
                 console.info("loop found");
                 return 1;
             }
@@ -389,12 +389,12 @@ class LinkedList {
 }
 
 function main() {
-    let ll : LinkedList = new LinkedList();
+    let ll: LinkedList = new LinkedList();
     ll.addHead(1);
     ll.addHead(2);
-    let nd : LNode = ll.head;
+    let nd: LNode = ll.head;
     ll.addHead(3);
-    let ll2 : LinkedList = new LinkedList();
+    let ll2: LinkedList = new LinkedList();
     ll2.addHead(1);
     ll2.head.next = nd;
     ll2.addHead(2);

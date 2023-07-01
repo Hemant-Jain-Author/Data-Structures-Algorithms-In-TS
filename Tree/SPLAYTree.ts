@@ -1,15 +1,13 @@
-class Node
-{
-    constructor(d, l, r) {
-        this.data = d;
-        this.left = l;
-        this.right = r;
-        this.parent = null;
-    }
+class Node {
+	constructor(d, l, r) {
+		this.data = d;
+		this.left = l;
+		this.right = r;
+		this.parent = null;
+	}
 }
 
-class SPLAYTree
-{
+class SPLAYTree {
 	constructor() {
 		this.root = null;
 	}
@@ -23,7 +21,7 @@ class SPLAYTree
 		if (node == null) {
 			return;
 		}
-        let output = "";
+		let output = "";
 		if (isLeft) {
 			output += (indent + "L:");
 			indent += "|  ";
@@ -96,8 +94,7 @@ class SPLAYTree
 				this.root = node;
 			} else if (grand == null) {
 				// single rotation case.
-				if (parent.left == node)
-				{
+				if (parent.left == node) {
 					node = this.rightRotate(parent);
 				} else {
 					node = this.leftRotate(parent);
@@ -256,8 +253,8 @@ R:3
    L:2
    |  L:1
    R:6
-      L:4
-      |  R:5
+	  L:4
+	  |  R:5
 
 Value 2 found: true
 R:4

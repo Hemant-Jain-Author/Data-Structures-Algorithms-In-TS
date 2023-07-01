@@ -22,10 +22,10 @@ function nQueens(Q: number[], k: number, n: number): void {
 
 const Q: number[] = new Array(8);
 nQueens(Q, 0, 8);
-  
-  
-  /*
-  0,4,7,5,2,6,1,3
+
+
+/*
+0,4,7,5,2,6,1,3
 0,5,7,2,6,3,1,4
 0,6,3,5,7,1,4,2
 0,6,4,7,1,3,5,2

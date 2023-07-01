@@ -37,7 +37,7 @@ function partition(arr: number[], low: number, high: number, pivot: number): num
 const nuts = [1, 2, 6, 5, 4, 3];
 const bolts = [6, 4, 5, 1, 3, 2];
 makePairs(nuts, bolts);
-  
+
 
 /*
 Matched nuts and bolts are : 

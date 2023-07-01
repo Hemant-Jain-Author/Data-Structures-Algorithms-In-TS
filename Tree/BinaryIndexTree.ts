@@ -1,35 +1,37 @@
-class BinaryIndexTree
-{
-	constructor(arr) {
+class BinaryIndexTree {
+	size: number;
+	BIT: number[];
+
+	constructor(arr: number[]) {
 		this.size = arr.length;
 		this.BIT = Array(this.size + 1).fill(0);
-		// Populating bit. 
+		// Populating bit.
 		for (let i = 0; i < this.size; i++) {
 			this.update(i, arr[i]);
 		}
 	}
 
-	set(arr, index, val) {
+	set(arr: number[], index: number, val: number): void {
 		let diff = val - arr[index];
 		arr[index] = val;
 		// Difference is propagated.
 		this.update(index, diff);
 	}
 
-	update(index, val) {
+	update(index: number, val: number): void {
 		// Index in bit is 1 more than the input array.
 		index = index + 1;
 		// Traverse to ancestors of nodes.
 		while (index <= this.size) {
 			// Add val to current node of Binary Index Tree.
 			this.BIT[index] += val;
-			// Next element which need to store val.
-			index += index & (-index);
+			// Next element which needs to store val.
+			index += index & -index;
 		}
 	}
 
 	// Range sum in the range start to end.
-	rangeSum(start, end) {
+	rangeSum(start: number, end: number): number {
 		// Check for error conditions.
 		if (start > end || start < 0 || end > this.size - 1) {
 			console.log("Invalid Input.");
@@ -39,7 +41,7 @@ class BinaryIndexTree
 	}
 
 	// Prefix sum in the range 0 to index.
-	prefixSum(index) {
+	prefixSum(index: number): number {
 		let sum = 0;
 		index = index + 1;
 		// Traverse ancestors of Binary Index Tree nodes.
@@ -47,7 +49,7 @@ class BinaryIndexTree
 			// Add current element to sum.
 			sum += this.BIT[index];
 			// Parent index calculation.
-			index -= index & (-index);
+			index -= index & -index;
 		}
 		return sum;
 	}

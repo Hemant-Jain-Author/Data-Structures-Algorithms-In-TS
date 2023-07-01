@@ -1,9 +1,9 @@
 class DLLNode {
-    value : number;
-    next : DLLNode;
-    prev : DLLNode;
+    value: number;
+    next: DLLNode;
+    prev: DLLNode;
 
-    public constructor(v : any, nxt : DLLNode = null, prv : DLLNode = null) {
+    public constructor(v: any, nxt: DLLNode = null, prv: DLLNode = null) {
         this.value = v;
         this.next = nxt;
         this.prev = prv;
@@ -11,32 +11,32 @@ class DLLNode {
 }
 
 class DoublyLinkedList {
-    head : DLLNode;
-    tail : DLLNode;
-    _size : number = 0;
+    head: DLLNode;
+    tail: DLLNode;
+    _size: number = 0;
 
     constructor() {
         this.head = null;
         this.tail = null;
     }
 
-    public size() : number {
+    public size(): number {
         return this._size;
     }
 
-    public isEmpty() : boolean {
+    public isEmpty(): boolean {
         return this._size === 0;
     }
 
-    public peek() : number {
-        if(this.isEmpty()) 
+    public peek(): number {
+        if (this.isEmpty())
             throw "EmptyListException";
         return this.head.value;
     }
 
-    public addHead(value : number) {
-        let newNode : DLLNode = new DLLNode(value, null, null);
-        if(this._size === 0) {
+    public addHead(value: number) {
+        let newNode: DLLNode = new DLLNode(value, null, null);
+        if (this._size === 0) {
             this.tail = this.head = newNode;
         } else {
             this.head.prev = newNode;
@@ -46,9 +46,9 @@ class DoublyLinkedList {
         this._size++;
     }
 
-    public addTail(value : number) {
-        let newNode : DLLNode = new DLLNode(value, null, null);
-        if(this._size === 0) {
+    public addTail(value: number) {
+        let newNode: DLLNode = new DLLNode(value, null, null);
+        if (this._size === 0) {
             this.head = this.tail = newNode;
         } else {
             newNode.prev = this.tail;
@@ -58,38 +58,38 @@ class DoublyLinkedList {
         this._size++;
     }
 
-    public removeHead() : number {
-        if(this.isEmpty()) 
+    public removeHead(): number {
+        if (this.isEmpty())
             throw "EmptyListException";
-        let value : number = this.head.value;
+        let value: number = this.head.value;
         this.head = this.head.next;
-        
-        if(this.head == null) 
-            this.tail = null; 
-        else 
+
+        if (this.head == null)
+            this.tail = null;
+        else
             this.head.prev = null;
         this._size--;
         return value;
     }
 
-    public removeNode(key : number) : boolean {
-        let curr : DLLNode = this.head;
-        if(curr == null) return false;
-        if(curr.value === key) {
+    public removeNode(key: number): boolean {
+        let curr: DLLNode = this.head;
+        if (curr == null) return false;
+        if (curr.value === key) {
             this.head = this.head.next;
             this._size--;
-            if(this.head != null) 
-                this.head.prev = null; 
-            else 
+            if (this.head != null)
+                this.head.prev = null;
+            else
                 this.tail = null;
             return true;
         }
-        while(curr.next != null) {
-            if(curr.next.value === key) {
+        while (curr.next != null) {
+            if (curr.next.value === key) {
                 curr.next = curr.next.next;
-                if(curr.next == null) 
-                    this.tail = curr; 
-                else 
+                if (curr.next == null)
+                    this.tail = curr;
+                else
                     curr.next = curr;
                 this._size--;
                 return true;
@@ -99,10 +99,10 @@ class DoublyLinkedList {
         return false;
     }
 
-    public isPresent(key : number) : boolean {
-        let temp : DLLNode = this.head;
-        while(temp != null) {
-            if(temp.value === key) 
+    public isPresent(key: number): boolean {
+        let temp: DLLNode = this.head;
+        while (temp != null) {
+            if (temp.value === key)
                 return true;
             temp = temp.next;
         }
@@ -116,31 +116,31 @@ class DoublyLinkedList {
     }
 
     public print() {
-        let temp : DLLNode = this.head;
-        let result : string = "";
-        while(temp != null) {
+        let temp: DLLNode = this.head;
+        let result: string = "";
+        while (temp != null) {
             result += (temp.value + " ");
             temp = temp.next;
         }
         console.info(result);
     }
 
-    public sortedInsert(value : number) {
-        let temp : DLLNode = new DLLNode(value);
-        let curr : DLLNode = this.head;
-        if(curr == null) {
+    public sortedInsert(value: number) {
+        let temp: DLLNode = new DLLNode(value);
+        let curr: DLLNode = this.head;
+        if (curr == null) {
             this.head = temp;
             this.tail = temp;
         }
-        if(this.head.value <= value) {
+        if (this.head.value <= value) {
             temp.next = this.head;
             this.head.prev = temp;
             this.head = temp;
         }
-        while(curr.next != null && curr.next.value > value) {
+        while (curr.next != null && curr.next.value > value) {
             curr = curr.next;
         }
-        if(curr.next == null) {
+        if (curr.next == null) {
             this.tail = temp;
             temp.prev = curr;
             curr.next = temp;
@@ -153,13 +153,13 @@ class DoublyLinkedList {
     }
 
     public reverseList() {
-        let curr : DLLNode = this.head;
-        let tempNode : DLLNode;
-        while(curr != null) {
+        let curr: DLLNode = this.head;
+        let tempNode: DLLNode;
+        while (curr != null) {
             tempNode = curr.next;
             curr.next = curr.prev;
             curr.prev = tempNode;
-            if(curr.prev == null) {
+            if (curr.prev == null) {
                 this.tail = this.head;
                 this.head = curr;
                 return;
@@ -170,14 +170,14 @@ class DoublyLinkedList {
     }
 
     public removeDuplicate() {
-        let curr : DLLNode = this.head;
-        let deleteMe : DLLNode;
-        while(curr != null) {
-            if(curr.next != null && curr.value === curr.next.value) {
+        let curr: DLLNode = this.head;
+        let deleteMe: DLLNode;
+        while (curr != null) {
+            if (curr.next != null && curr.value === curr.next.value) {
                 deleteMe = curr.next;
                 curr.next = deleteMe.next;
                 curr.next.prev = curr;
-                if(deleteMe === this.tail) {
+                if (deleteMe === this.tail) {
                     this.tail = curr;
                 }
             } else {
@@ -186,20 +186,20 @@ class DoublyLinkedList {
         }
     }
 
-    public copyListReversed() : DoublyLinkedList {
-        let dll : DoublyLinkedList = new DoublyLinkedList();
-        let curr : DLLNode = this.head;
-        while(curr != null) {
+    public copyListReversed(): DoublyLinkedList {
+        let dll: DoublyLinkedList = new DoublyLinkedList();
+        let curr: DLLNode = this.head;
+        while (curr != null) {
             dll.addHead(curr.value);
             curr = curr.next;
         }
         return dll;
     }
 
-    public copyList() : DoublyLinkedList {
-        let dll : DoublyLinkedList = new DoublyLinkedList();
-        let curr : DLLNode = this.head;
-        while(curr != null) {
+    public copyList(): DoublyLinkedList {
+        let dll: DoublyLinkedList = new DoublyLinkedList();
+        let curr: DLLNode = this.head;
+        while (curr != null) {
             dll.addTail(curr.value);
             curr = curr.next;
         }
@@ -207,7 +207,7 @@ class DoublyLinkedList {
     }
 }
 
-let ll : DoublyLinkedList = new DoublyLinkedList();
+let ll: DoublyLinkedList = new DoublyLinkedList();
 ll.addHead(1);
 ll.addHead(2);
 ll.addHead(3);

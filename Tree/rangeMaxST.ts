@@ -1,5 +1,4 @@
-class rangeMaxST
-{
+class rangeMaxST {
 	constructor(input) {
 		this.n = input.length; 	// Height of segment tree.
 		let x = parseInt(Math.ceil(Math.log(this.n) / Math.log(2))); //Maximum size of segment tree
@@ -17,8 +16,8 @@ class rangeMaxST
 		// If there are more than one elements, then traverse left and right subtrees 
 		// and store the minimum of values in current node.
 		let mid = parseInt((start + end) / 2);
-		this.segArr[index] = Math.max(this.constructST(input, start, mid, index * 2 + 1), 
-                                      this.constructST(input, mid + 1, end, index * 2 + 2));
+		this.segArr[index] = Math.max(this.constructST(input, start, mid, index * 2 + 1),
+			this.constructST(input, mid + 1, end, index * 2 + 2));
 		return this.segArr[index];
 	}
 
@@ -42,8 +41,8 @@ class rangeMaxST
 		}
 		// Segment tree is partly overlaps with the query range.
 		let mid = parseInt((segStart + segEnd) / 2);
-		return Math.max(this.getMaxUtil(segStart, mid, queryStart, queryEnd, 2 * index + 1), 
-                        this.getMaxUtil(mid + 1, segEnd, queryStart, queryEnd, 2 * index + 2));
+		return Math.max(this.getMaxUtil(segStart, mid, queryStart, queryEnd, 2 * index + 1),
+			this.getMaxUtil(mid + 1, segEnd, queryStart, queryEnd, 2 * index + 2));
 	}
 
 	update(ind, val) {
@@ -76,8 +75,8 @@ class rangeMaxST
 		}
 		let mid = parseInt((segStart + segEnd) / 2);
 		// Current node value is updated with min. 
-		this.segArr[index] = Math.max(this.updateUtil(segStart, mid, ind, val, 2 * index + 1), 
-                                      this.updateUtil(mid + 1, segEnd, ind, val, 2 * index + 2));
+		this.segArr[index] = Math.max(this.updateUtil(segStart, mid, ind, val, 2 * index + 1),
+			this.updateUtil(mid + 1, segEnd, ind, val, 2 * index + 2));
 		// Value of diff is propagated to the parent node.
 		return this.segArr[index];
 	}

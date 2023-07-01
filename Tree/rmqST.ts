@@ -1,5 +1,4 @@
-class rmqST
-{
+class rmqST {
 	constructor(input) {
 		this.n = input.length; // Height of segment tree.
 		let x = parseInt(Math.ceil(Math.log(this.n) / Math.log(2))); //Maximum size of segment tree

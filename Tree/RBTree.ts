@@ -1,16 +1,14 @@
-class Node
-{
-    constructor(data, nullNode) {
-        this.data = data;
-        this.left = nullNode;
-        this.right = nullNode;
-        this.colour = true; // true for red, false for black. New node are red in colour.
-        this.parent = nullNode;
-    }
+class Node {
+	constructor(data, nullNode) {
+		this.data = data;
+		this.left = nullNode;
+		this.right = nullNode;
+		this.colour = true; // true for red, false for black. New node are red in colour.
+		this.parent = nullNode;
+	}
 }
 
-class RBTree
-{
+class RBTree {
 	constructor() {
 		this.NullNode = new Node(0, null);
 		this.NullNode.colour = false;
@@ -120,7 +118,7 @@ class RBTree
 		if (node == this.NullNode) {
 			return;
 		}
-        let output = "";
+		let output = "";
 		if (isLeft) {
 			output += indent + "L:";
 			indent += "|  ";
@@ -261,13 +259,11 @@ class RBTree
 				// Sibling colour is red.
 				parent.colour = true;
 				sib.colour = false;
-				if (sib.parent.left == sib)
-				{
+				if (sib.parent.left == sib) {
 					// Sibling is left child.
 					this.rightRotate(parent);
 				}
-				else
-				{
+				else {
 					// Sibling is right child.
 					this.leftRotate(parent);
 				}
@@ -275,38 +271,31 @@ class RBTree
 			} else {
 				// Sibling colour is black
 				// At least one child is red.
-				if (sib.left.colour == true || sib.right.colour == true)
-				{
-					if (sib.parent.left == sib)
-					{
+				if (sib.left.colour == true || sib.right.colour == true) {
+					if (sib.parent.left == sib) {
 						// Sibling is left child.
-						if (sib.left != this.NullNode && sib.left.colour == true)
-						{
+						if (sib.left != this.NullNode && sib.left.colour == true) {
 							// left left case.
 							sib.left.colour = sib.colour;
 							sib.colour = parent.colour;
 							this.rightRotate(parent);
 						}
-						else
-						{
+						else {
 							// left right case.
 							sib.right.colour = parent.colour;
 							this.leftRotate(sib);
 							this.rightRotate(parent);
 						}
 					}
-					else
-					{
+					else {
 						// Sibling is right child.
-						if (sib.left != this.NullNode && sib.left.colour == true)
-						{
+						if (sib.left != this.NullNode && sib.left.colour == true) {
 							// right left case.
 							sib.left.colour = parent.colour;
 							this.rightRotate(sib);
 							this.leftRotate(parent);
 						}
-						else
-						{
+						else {
 							// right right case.
 							sib.right.colour = sib.colour;
 							sib.colour = parent.colour;
@@ -315,16 +304,13 @@ class RBTree
 					}
 					parent.colour = false;
 				}
-				else
-				{
+				else {
 					// Both children black.
 					sib.colour = true;
-					if (parent.colour == false)
-					{
+					if (parent.colour == false) {
 						this.fixDoubleBlack(parent);
 					}
-					else
-					{
+					else {
 						parent.colour = false;
 					}
 				}
@@ -386,25 +372,25 @@ R:4(false)
    |  L:1(false)
    |  R:3(false)
    R:6(true)
-      L:5(false)
-      R:8(false)
-         L:7(true)
-         R:9(true)
+	  L:5(false)
+	  R:8(false)
+		 L:7(true)
+		 R:9(true)
 
 R:5(false)
    L:2(true)
    |  L:1(false)
    |  R:3(false)
    R:7(true)
-      L:6(false)
-      R:8(false)
-         R:9(true)
+	  L:6(false)
+	  R:8(false)
+		 R:9(true)
 
 R:5(false)
    L:2(true)
    |  L:1(false)
    |  R:3(false)
    R:8(true)
-      L:6(false)
-      R:9(false)
+	  L:6(false)
+	  R:9(false)
 */

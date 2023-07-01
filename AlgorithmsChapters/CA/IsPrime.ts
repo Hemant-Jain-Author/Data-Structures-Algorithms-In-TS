@@ -8,10 +8,10 @@ function isPrime(n: number): boolean {
 	}
 	return answer;
 }
-  
+
 console.log(isPrime(8));
 console.log(isPrime(11));
-  
+
 
 /*
 false

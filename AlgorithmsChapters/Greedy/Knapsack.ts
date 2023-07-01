@@ -9,7 +9,7 @@ class Items {
 		this.density = v / w;
 	}
 }
-  
+
 
 function getMaxCostGreedy(wt: number[], cost: number[], capacity: number): number {
 	let totalCost = 0;

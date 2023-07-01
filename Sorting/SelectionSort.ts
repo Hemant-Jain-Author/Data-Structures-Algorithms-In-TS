@@ -1,17 +1,17 @@
-function more(value1 : number, value2 : number) : boolean {
+function more(value1: number, value2: number): boolean {
     return value1 > value2;
 }
 
-function SelectionSort(arr :  Array<number>) {
-    let size : number = arr.length;
-    let i : number;
-    let j : number;
-    let max : number;
-    let temp : number;
-    for(i = 0; i < size - 1; i++) {
+function SelectionSort(arr: Array<number>) {
+    let size: number = arr.length;
+    let i: number;
+    let j: number;
+    let max: number;
+    let temp: number;
+    for (i = 0; i < size - 1; i++) {
         max = 0;
-        for(j = 1; j < size - i; j++) {
-            if(arr[j] > arr[max]) {
+        for (j = 1; j < size - i; j++) {
+            if (arr[j] > arr[max]) {
                 max = j;
             }
         }
@@ -21,16 +21,16 @@ function SelectionSort(arr :  Array<number>) {
     }
 }
 
-function SelectionSort2(arr :  Array<number>) {
-    let size : number = arr.length;
-    let i : number;
-    let j : number;
-    let min : number;
-    let temp : number;
-    for(i = 0; i < size - 1; i++) {
+function SelectionSort2(arr: Array<number>) {
+    let size: number = arr.length;
+    let i: number;
+    let j: number;
+    let min: number;
+    let temp: number;
+    for (i = 0; i < size - 1; i++) {
         min = i;
-        for(j = i + 1; j < size; j++) {
-            if(arr[j] < arr[min]) {
+        for (j = i + 1; j < size; j++) {
+            if (arr[j] < arr[min]) {
                 min = j;
             }
         }
@@ -41,12 +41,12 @@ function SelectionSort2(arr :  Array<number>) {
 }
 
 // Testing code.
-let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+let array: Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
 SelectionSort(array);
 console.info(array);
 
 console.info();
-let array2 :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+let array2: Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
 SelectionSort2(array2);
 console.info(array2);
 

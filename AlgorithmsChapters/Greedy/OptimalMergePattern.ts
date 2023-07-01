@@ -20,7 +20,7 @@ function shortestDist(graph: number[][], n: number): number {
   }
 
   value = n - 1;
- let output = "Path: " 
+  let output = "Path: "
   while (value !== -1) {
     output += (value + " ");
     value = path[value];
@@ -32,14 +32,14 @@ function shortestDist(graph: number[][], n: number): number {
 
 // Testing code.
 const graph: number[][] = [
-[INF, 1, 2, 5, INF, INF, INF, INF],
-[INF, INF, INF, INF, 4, 11, INF, INF],
-[INF, INF, INF, INF, 9, 5, 16, INF],
-[INF, INF, INF, INF, INF, INF, 2, INF],
-[INF, INF, INF, INF, INF, INF, INF, 18],
-[INF, INF, INF, INF, INF, INF, INF, 13],
-[INF, INF, INF, INF, INF, INF, INF, 2],
-[INF, INF, INF, INF, INF, INF, INF, INF]
+  [INF, 1, 2, 5, INF, INF, INF, INF],
+  [INF, INF, INF, INF, 4, 11, INF, INF],
+  [INF, INF, INF, INF, 9, 5, 16, INF],
+  [INF, INF, INF, INF, INF, INF, 2, INF],
+  [INF, INF, INF, INF, INF, INF, INF, 18],
+  [INF, INF, INF, INF, INF, INF, INF, 13],
+  [INF, INF, INF, INF, INF, INF, INF, 2],
+  [INF, INF, INF, INF, INF, INF, INF, INF]
 ];
 
 console.log("Shortest Dist:", shortestDist(graph, 8));

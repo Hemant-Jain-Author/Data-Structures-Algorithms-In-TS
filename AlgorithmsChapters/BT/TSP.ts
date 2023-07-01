@@ -1,7 +1,7 @@
 // Function to find the minimum weight Hamiltonian Cycle 
-function tspUtil( graph: number[][], n: number, path: number[],
-					pSize: number, pCost: number, visited: boolean[],
-					ans: number, ansPath: number[] ): number {
+function tspUtil(graph: number[][], n: number, path: number[],
+	pSize: number, pCost: number, visited: boolean[],
+	ans: number, ansPath: number[]): number {
 	if (pCost > ans)
 		return ans;
 

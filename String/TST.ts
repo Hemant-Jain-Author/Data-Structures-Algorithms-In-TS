@@ -1,11 +1,11 @@
 class TSTNode {
-    data : string;
-    isLastChar : boolean;
-    left : TSTNode;
-    equal : TSTNode;
-    right : TSTNode;
+    data: string;
+    isLastChar: boolean;
+    left: TSTNode;
+    equal: TSTNode;
+    right: TSTNode;
 
-    constructor(d : string) {
+    constructor(d: string) {
         this.data = d;
         this.isLastChar = false;
         this.left = this.equal = this.right = null;
@@ -13,16 +13,16 @@ class TSTNode {
 }
 
 class TST {
-    root : TSTNode = null;
+    root: TSTNode = null;
 
-    public Add(word : string) {
+    public Add(word: string) {
         this.root = this.addUtil(this.root, word, 0);
     }
 
-    private addUtil(curr : TSTNode, word : string, wordIndex : number) : TSTNode {
-        if(curr == null) 
+    private addUtil(curr: TSTNode, word: string, wordIndex: number): TSTNode {
+        if (curr == null)
             curr = new TSTNode(word.charAt(wordIndex));
-        
+
         if ((word.charAt(wordIndex)).charCodeAt(0) < (curr.data).toString().charCodeAt(0))
             curr.left = this.addUtil(curr.left, word, wordIndex);
         else if ((word.charAt(wordIndex)).charCodeAt(0) > (curr.data).toString().charCodeAt(0))
@@ -36,17 +36,17 @@ class TST {
         return curr;
     }
 
-    public Find(word : string) : boolean {
-        let ret : boolean = this.findUtil(this.root, word, 0);
-        if(ret) 
-            console.info(word + " Found"); 
-        else 
+    public Find(word: string): boolean {
+        let ret: boolean = this.findUtil(this.root, word, 0);
+        if (ret)
+            console.info(word + " Found");
+        else
             console.info(word + " Not Found ");
         return ret;
     }
-    
-    private findUtil(curr : TSTNode, word : string, wordIndex : number) : boolean {
-        if(curr == null) 
+
+    private findUtil(curr: TSTNode, word: string, wordIndex: number): boolean {
+        if (curr == null)
             return false;
         if ((word.charAt(wordIndex)).charCodeAt(0) < (curr.data).toString().charCodeAt(0))
             return this.findUtil(curr.left, word, wordIndex);
@@ -61,7 +61,7 @@ class TST {
 }
 
 // Testing code.
-let tt : TST = new TST();
+let tt: TST = new TST();
 tt.Add("banana");
 tt.Add("apple");
 tt.Add("mango");

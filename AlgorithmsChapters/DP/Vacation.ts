@@ -2,7 +2,7 @@ function minCostTravel(days: number[], costs: number[]): number {
 	const n = days.length;
 	const max = days[n - 1];
 	const dp: number[] = new Array(max + 1).fill(0);
-  
+
 	let j = 0;
 	for (let i = 1; i <= max; i++) {
 		if (days[j] === i) {
@@ -16,11 +16,11 @@ function minCostTravel(days: number[], costs: number[]): number {
 	}
 	return dp[max];
 }
-  
+
 const days = [1, 3, 5, 7, 12, 20, 30];
 const costs = [2, 7, 20];
 console.log("Min cost is: " + minCostTravel(days, costs));
-  
+
 /*
  * Min cost is: 13
  */
