@@ -18,6 +18,7 @@ function matchExp(exp : string, str : string) : boolean {
     return matchExpUtil(/* toCharArray */(exp).split(''), /* toCharArray */(str).split(''), 0, 0);
 }
 
+// Testing code.
 function main1() {
     console.info(matchExp("*llo,?World?", "Hello, World!"));
 }
@@ -40,6 +41,7 @@ function match(src : string, ptn : string) : boolean {
     return false;
 }
 
+// Testing code.
 function main2() {
     console.info(match("harrypottermustnotgotoschool", "pottergo"));
 }
@@ -67,6 +69,7 @@ function isPrime(n : number) : boolean {
     return answer;
 }
 
+// Testing code.
 function main3() {
     console.info("Prime numbers under 100 :: ");
     for(let i : number = 0; i < 100; i++) {if(isPrime(i)) console.info(i + " ");;}
@@ -83,6 +86,7 @@ function myAtoi(str : string) : number {
     return value;
 }
 
+// Testing code.
 function main4() {
     console.info(myAtoi("1000"));
 }
@@ -114,6 +118,7 @@ function isUniqueChar(str : string) : boolean {
     return true;
 }
 
+// Testing code.
 function main5() {
     console.info(isUniqueChar("aple"));
     console.info(isUniqueChar("apple"));
@@ -142,6 +147,7 @@ function LowerUpper(s : string) : string {
     return s;
 }
 
+// Testing code.
 function main6() {
     console.info(ToLower('A'));
     console.info(ToUpper('a'));
@@ -175,6 +181,7 @@ function isPermutation(s1 : string, s2 : string) : boolean {
     return true;
 }
 
+// Testing code.
 function main7() {
     console.info(isPermutation("apple", "plepa"));
 }
@@ -195,6 +202,7 @@ function isPalindrome(str : string) : boolean {
     }
 }
 
+// Testing code.
 function main8() {
     console.info(isPalindrome("hello"));
     console.info(isPalindrome("eoloe"));
@@ -213,6 +221,7 @@ function pow(x : number, n : number) : number {
     }
 }
 
+// Testing code.
 function main9() {
     console.info(pow(5, 2));
 }
@@ -239,6 +248,7 @@ function myStrcmp(a : string, b : string) : number {
     }
 }
 
+// Testing code.
 function main10() {
     console.info(myStrcmp("abs", "abs"));
 }
@@ -301,18 +311,19 @@ function reverseWords(str : string) : string {
     return expn;
 }
 
+// Testing code.
 function main11() {
     console.info(reverseString("apple"));
     console.info(reverseWords("hello world"));
 }
 
-function printAnagram$java_lang_String(str : string) {
-    let a : string[] = /* toCharArray */(str).split('');
+function printAnagram(str : string) {
+    let a : string[] = (str).split('');/* toCharArray */
     let n : number = a.length;
-    printAnagram$char_A$int$int(a, n, n);
+    printAnagramUtil(a, n, n);
 }
 
-function printAnagram$char_A$int$int(a : string[], max : number, n : number) {
+function printAnagramUtil(a : string[], max : number, n : number) {
     if(max === 1) {
         console.info(a);
     }
@@ -323,7 +334,7 @@ function printAnagram$char_A$int$int(a : string[], max : number, n : number) {
             a[i] = a[max - 1];
             a[max - 1] = temp;
         }
-        printAnagram$char_A$int$int(a, max - 1, n);
+        printAnagramUtil(a, max - 1, n);
         if(i !== -1) {
             temp = a[i];
             a[i] = a[max - 1];
@@ -332,16 +343,17 @@ function printAnagram$char_A$int$int(a : string[], max : number, n : number) {
     };
 }
 
-function printAnagram(a? : any, max? : any, n? : any) : any {
+function printAnagram2(a? : any, max? : any, n? : any) : any {
     if(((a != null && a instanceof <any>Array && (a.length==0 || a[0] == null ||(typeof a[0] === 'string'))) || a === null) && ((typeof max === 'number') || max === null) && ((typeof n === 'number') || n === null)) {
-        return <any>printAnagram$char_A$int$int(a, max, n);
+        return <any>printAnagramUtil(a, max, n);
     } else if(((typeof a === 'string') || a === null) && max === undefined && n === undefined) {
-        return <any>printAnagram$java_lang_String(a);
+        return <any>printAnagram(a);
     } else throw new Error('invalid overload');
 }
 
+// Testing code.
 function main12() {
-    printAnagram$java_lang_String("123");
+    printAnagram("123");
 }
 
 function shuffle(str : string) {
@@ -364,6 +376,7 @@ function shuffle(str : string) {
     };
 }
 
+// Testing code.
 function main13() {
     shuffle("ABCDE12345");
 }
@@ -401,6 +414,7 @@ function addBinary(firstStr : string, secondStr : string) : string[] {
     return total;
 }
 
+// Testing code.
 function main14() {
     console.info(addBinary("1000", "11111111"));
 }

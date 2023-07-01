@@ -64,6 +64,7 @@ class StackLL {
 
 }
 
+// Testing code.
 let s : StackLL = new StackLL();
 s.push(1);
 s.push(2);

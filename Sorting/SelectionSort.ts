@@ -40,6 +40,7 @@ function SelectionSort2(arr :  Array<number>) {
     }
 }
 
+// Testing code.
 let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
 SelectionSort(array);
 console.info(array);

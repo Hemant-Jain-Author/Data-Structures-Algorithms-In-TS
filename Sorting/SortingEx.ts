@@ -47,6 +47,7 @@ function Partition012(arr :  Array<number>, size : number) {
     };
 }
 
+// Testing code.
 function test1() {
     let arr :  Array<number> = [0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1];
     Partition01(arr, arr.length);
@@ -74,6 +75,7 @@ function RangePartition(arr :  Array<number>, size : number, lower : number, hig
     };
 }
 
+// Testing code.
 function test2() {
     let arr :  Array<number> = [1, 21, 2, 20, 3, 19, 4, 18, 5, 17, 6, 16, 7, 15, 8, 14, 9, 13, 10, 12, 11];
     RangePartition(arr, arr.length, 9, 12);
@@ -130,6 +132,7 @@ function AbsBubbleSort(arr :  Array<number>, size : number, ref : number) {
     }
 }
 
+// Testing code.
 function test3() {
     let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
     let ref : number = 5;
@@ -157,6 +160,7 @@ function ArrayReduction(arr :  Array<number>, size : number) {
     console.info("Total number of reductions " + count);
 }
 
+// Testing code.
 function test4() {
     let arr :  Array<number> = [5, 1, 1, 1, 2, 3, 5];
     ArrayReduction(arr, arr.length);
@@ -200,6 +204,7 @@ function SortByOrder(arr :  Array<number>, size : number, arr2 :  Array<number>,
     }
 }
 
+// Testing code.
 function test5() {
     let arr :  Array<number> = [2, 1, 2, 5, 7, 1, 9, 3, 6, 8, 8];
     let arr2 :  Array<number> = [2, 1, 8, 3];
@@ -223,6 +228,7 @@ function merge(arr1 :  Array<number>, size1 : number, arr2 :  Array<number>, siz
     };
 }
 
+// Testing code.
 function test6() {
     let arr1 :  Array<number> = [1, 5, 9, 10, 15, 20];
     let arr2 :  Array<number> = [2, 3, 8, 13];
@@ -308,6 +314,7 @@ function UnionIntersectionUnsorted(arr1 :  Array<number>, size1 : number, arr2 :
     UnionIntersectionSorted(arr1, size1, arr2, size2);
 }
 
+// Testing code.
 function test7() {
     let arr1 :  Array<number> = [1, 11, 2, 3, 14, 5, 6, 8, 9];
     let arr2 :  Array<number> = [2, 4, 5, 12, 7, 8, 13, 10];

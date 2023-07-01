@@ -31,5 +31,6 @@ function QuickSelect(arr :  Array<number>, k : number) : number {
     return arr[k-1];
 }
 
+// Testing code.
 let array :  Array<number> = [3, 4, 2, 1, 6, 5, 7, 8, 10, 9];
-console.info("value at index 5 is : " + QuickSelect(array, 5));
+console.info("value at index 5 is: " + QuickSelect(array, 5));

@@ -160,20 +160,32 @@ function fun13(n : number) : number {
     return m;
 }
 
-function main() {
-    console.info(fun1(100));
-    console.info(fun2(100));
-    console.info(fun3(100));
-    console.info(fun4(100));
-    console.info(fun5(100));
-    console.info(fun6(100));
-    console.info(fun7(100));
-    console.info(fun8(100));
-    console.info(fun9(100));
-    console.info(fun10(100));
-    console.info(fun11(100));
-    console.info(fun12(100));
-    console.info(fun13(100));
-}
+console.info('Number of instructions O(n):', fun1(100));
+console.info('Number of instructions O(n^2):', fun2(100));
+console.info('Number of instructions O(n^3):', fun3(100));
+console.info('Number of instructions O(n^3):', fun4(100));
+console.info('Number of instructions O(n^2):', fun5(100));
+console.info('Number of instructions O(n^2):', fun6(100));
+console.info('Number of instructions O(n):', fun7(100));
+console.info('Number of instructions O(n):', fun8(100));
+console.info('Number of instructions O(log(n)):', fun9(100));
+console.info('Number of instructions O(log(n)):', fun10(100));
+console.info('Number of instructions O(n^2):', fun11(100));
+console.info('Number of instructions O(n^(3/2)):', fun12(100));
+console.info('Number of instructions O(n):', fun13(100));
 
-main();
+/*
+Number of instructions O(n): 100
+Number of instructions O(n^2): 10000
+Number of instructions O(n^3): 1000000
+Number of instructions O(n^3): 166650
+Number of instructions O(n^2): 4950
+Number of instructions O(n^2): 4950
+Number of instructions O(n): 201
+Number of instructions O(n): 134
+Number of instructions O(log(n)): 7
+Number of instructions O(log(n)): 7
+Number of instructions O(n^2): 20000
+Number of instructions O(n^(3/2)): 1000
+Number of instructions O(n): 100
+*/

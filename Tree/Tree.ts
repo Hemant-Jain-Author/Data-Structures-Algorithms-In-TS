@@ -66,7 +66,7 @@ class Tree {
         this.root = this.levelOrderBinaryTreeUtil(arr, 0);
     }
 
-    public levelOrderBinaryTreeUtil(arr :  Array<number>, start : number) : TNode {
+    private levelOrderBinaryTreeUtil(arr :  Array<number>, start : number) : TNode {
         let size : number = arr.length;
         let curr : TNode = new TNode(arr[start]);
         let left : number = 2 * start + 1;
@@ -82,7 +82,7 @@ class Tree {
         this.root = this.InsertNodeUtil(this.root, value);
     }
 
-    public InsertNodeUtil(node : TNode, value : number) : TNode {
+    private InsertNodeUtil(node : TNode, value : number) : TNode {
         if(node == null) {
             node = new TNode(value, null, null);
         } else {
@@ -99,7 +99,7 @@ class Tree {
         this.PrintPreOrderUtil(this.root);
     }
 
-    public PrintPreOrderUtil(node : TNode) {
+    private PrintPreOrderUtil(node : TNode) {
         if(node != null) {
             console.info(" " + node.value);
             this.PrintPreOrderUtil(node.lChild);
@@ -107,13 +107,12 @@ class Tree {
         }
     }
 
-    
     public NthPreOrder(index : number) {
         let counter = [0];
         this.NthPreOrderUtil(this.root, index, counter);
     }
 
-    public NthPreOrderUtil(node : TNode, index : number, counter :  Array<number>) {
+    private NthPreOrderUtil(node : TNode, index : number, counter :  Array<number>) {
         if(node != null) {
             counter[0]++;
             if(counter[0] === index) {
@@ -128,7 +127,7 @@ class Tree {
         this.PrintPostOrderUtil(this.root);
     }
 
-    public PrintPostOrderUtil(node : TNode) {
+    private PrintPostOrderUtil(node : TNode) {
         if(node != null) {
             this.PrintPostOrderUtil(node.lChild);
             this.PrintPostOrderUtil(node.rChild);
@@ -141,7 +140,7 @@ class Tree {
         this.NthPostOrderUtil(this.root, index, counter);
     }
 
-    public NthPostOrderUtil(node : TNode, index : number, counter :  Array<number>) {
+    private NthPostOrderUtil(node : TNode, index : number, counter :  Array<number>) {
         if(node != null) {
             this.NthPostOrderUtil(node.lChild, index, counter);
             this.NthPostOrderUtil(node.rChild, index, counter);
@@ -156,7 +155,7 @@ class Tree {
         this.PrintInOrderUtil(this.root);
     }
 
-    public PrintInOrderUtil(node : TNode) {
+    private PrintInOrderUtil(node : TNode) {
         if(node != null) {
             this.PrintInOrderUtil(node.lChild);
             console.info(" " + node.value);
@@ -170,7 +169,7 @@ class Tree {
 
     }
 
-    public NthInOrderUtil(node : TNode, index : number, counter :  Array<number>) {
+    private NthInOrderUtil(node : TNode, index : number, counter :  Array<number>) {
         if(node != null) {
             this.NthInOrderUtil(node.lChild, index, counter);
             counter[0]++;
@@ -359,7 +358,7 @@ class Tree {
         this.root = this.DeleteNodeUtil(this.root, value);
     }
 
-    public DeleteNodeUtil(node : TNode, value : number) : TNode {
+    private DeleteNodeUtil(node : TNode, value : number) : TNode {
         let temp : TNode = null;
         if(node != null) {
             if(node.value === value) {
@@ -394,7 +393,7 @@ class Tree {
         return this.TreeDepthUtil(this.root);
     }
 
-    public TreeDepthUtil(curr : TNode) : number {
+    private TreeDepthUtil(curr : TNode) : number {
         if(curr == null) 
             return 0; 
         else {
@@ -411,7 +410,7 @@ class Tree {
         return this.isEqualUtil(this.root, T2.root);
     }
 
-    isEqualUtil(node1 : TNode, node2 : TNode) : boolean {
+    private isEqualUtil(node1 : TNode, node2 : TNode) : boolean {
         if(node1 == null && node2 == null) 
             return true; 
         else if(node1 == null || node2 == null) 
@@ -431,7 +430,7 @@ class Tree {
         return this.AncestorUtil(this.root, first, second);
     }
 
-    public AncestorUtil(curr : TNode, first : number, second : number) : TNode {
+    private AncestorUtil(curr : TNode, first : number, second : number) : TNode {
         if(curr == null) {
             return null;
         }
@@ -450,7 +449,7 @@ class Tree {
         return tree2;
     }
 
-    public CopyTreeUtil(curr : TNode) : TNode {
+    private CopyTreeUtil(curr : TNode) : TNode {
         let temp : TNode;
         if(curr != null) {
             temp = new TNode(curr.value);
@@ -468,7 +467,7 @@ class Tree {
         return tree2;
     }
 
-    public CopyMirrorTreeUtil(curr : TNode) : TNode {
+    private CopyMirrorTreeUtil(curr : TNode) : TNode {
         let temp : TNode;
         if(curr != null) {
             temp = new TNode(curr.value);
@@ -484,7 +483,7 @@ class Tree {
         return this.numNodesUtil(this.root);
     }
 
-    public numNodesUtil(curr : TNode) : number {
+    private numNodesUtil(curr : TNode) : number {
         if(curr == null) 
             return 0; 
         else 
@@ -496,7 +495,7 @@ class Tree {
         return this.numNodesUtil(this.root);
     }
 
-    public numFullNodesBTUtil(curr : TNode) : number {
+    private numFullNodesBTUtil(curr : TNode) : number {
         let count : number;
         if(curr == null) 
             return 0;
@@ -510,7 +509,7 @@ class Tree {
         return this.maxLengthPathBTUtil(this.root);
     }
 
-    public maxLengthPathBTUtil(curr : TNode) : number {
+    private maxLengthPathBTUtil(curr : TNode) : number {
         let max : number;
         let leftPath : number;
         let rightPath : number;
@@ -537,7 +536,7 @@ class Tree {
         return this.numLeafNodesUtil(this.root);
     }
 
-    public numLeafNodesUtil(curr : TNode) : number {
+    private numLeafNodesUtil(curr : TNode) : number {
         if(curr == null) 
             return 0;
         
@@ -551,7 +550,7 @@ class Tree {
         return this.sumAllBTUtil(this.root);
     }
 
-    public sumAllBTUtil(curr : TNode) : number {
+    private sumAllBTUtil(curr : TNode) : number {
         if(curr == null) 
             return 0;
         return (curr.value + this.sumAllBTUtil(curr.lChild) + 
@@ -646,7 +645,7 @@ class Tree {
         return this.isBSTUtil(this.root, MIN_INT, MAX_INT);
     }
 
-    public isBSTUtil(curr : TNode, min : number, max : number) : boolean {
+    private isBSTUtil(curr : TNode, min : number, max : number) : boolean {
         if(curr == null) 
             return true;
 
@@ -661,7 +660,7 @@ class Tree {
         return this.isBST2Util(this.root, count);
     }
 
-    public isBST2Util(root : TNode, count :  Array<number>) : boolean {
+    private isBST2Util(root : TNode, count :  Array<number>) : boolean {
         let ret : boolean;
         if(root != null) {
             ret = this.isBST2Util(root.lChild, count);
@@ -703,7 +702,7 @@ class Tree {
         return true;
     }
 
-    isCompleteTreeUtil(curr : TNode, index : number, count : number) : boolean {
+    public isCompleteTreeUtil(curr : TNode, index : number, count : number) : boolean {
         if(curr == null) 
             return true;
         if(index > count) 
@@ -712,12 +711,12 @@ class Tree {
         this.isCompleteTreeUtil(curr.rChild, index * 2 + 2, count);
     }
 
-    isCompleteTree2() : boolean {
+    public isCompleteTree2() : boolean {
         let count : number = this.numNodes();
         return this.isCompleteTreeUtil(this.root, 0, count);
     }
 
-    isHeapUtil(curr : TNode, parentValue : number) : boolean {
+    private isHeapUtil(curr : TNode, parentValue : number) : boolean {
         if(curr == null) 
             return true;
         if(curr.value < parentValue) 
@@ -726,12 +725,12 @@ class Tree {
         this.isHeapUtil(curr.rChild, curr.value));
     }
 
-    isHeap() : boolean {
+    public isHeap() : boolean {
         let infi : number = MIN_INT;
         return (this.isCompleteTree() && this.isHeapUtil(this.root, infi));
     }
 
-    isHeapUtil2(curr : TNode, index : number, count : number, parentValue : number) : boolean {
+    private isHeapUtil2(curr : TNode, index : number, count : number, parentValue : number) : boolean {
         if(curr == null) 
             return true;
         if(index > count) 
@@ -741,7 +740,7 @@ class Tree {
         return this.isHeapUtil2(curr.lChild, index * 2 + 1, count, curr.value) && this.isHeapUtil2(curr.rChild, index * 2 + 2, count, curr.value);
     }
 
-    isHeap2() : boolean {
+    public isHeap2() : boolean {
         let count : number = this.numNodes();
         let parentValue : number = MIN_INT;
         return this.isHeapUtil2(this.root, 0, count, parentValue);
@@ -753,7 +752,7 @@ class Tree {
         return temp;
     }
 
-    public treeToListRecUtil(curr : TNode) : TNode {
+    private treeToListRecUtil(curr : TNode) : TNode {
         let Head : TNode = null;
         let Tail : TNode = null;
 
@@ -794,7 +793,7 @@ class Tree {
         this.printAllPathUtil(this.root, stk);
     }
 
-    printAllPathUtil(curr : TNode, stk : Array<number>) {
+    private printAllPathUtil(curr : TNode, stk : Array<number>) {
         if(curr == null) 
             return;
         
@@ -817,7 +816,7 @@ class Tree {
             return MIN_INT;
     }
 
-    public LCAUtil(curr : TNode, first : number, second : number) : TNode {
+    private LCAUtil(curr : TNode, first : number, second : number) : TNode {
         let left : TNode;
         let right : TNode;
         if(curr == null) 
@@ -838,7 +837,7 @@ class Tree {
         return this.LcaBSTUtil(this.root, first, second);
     }
 
-    public LcaBSTUtil(curr : TNode, first : number, second : number) : number {
+    private LcaBSTUtil(curr : TNode, first : number, second : number) : number {
         if(curr == null) {
             return MAX_INT;
         }
@@ -855,7 +854,7 @@ class Tree {
         this.trimOutsideRangeUtil(this.root, min, max);
     }
 
-    public trimOutsideRangeUtil(curr : TNode, min : number, max : number) : TNode {
+    private trimOutsideRangeUtil(curr : TNode, min : number, max : number) : TNode {
         if(curr == null) 
             return null;
         curr.lChild = this.trimOutsideRangeUtil(curr.lChild, min, max);
@@ -873,7 +872,7 @@ class Tree {
         this.printInRangeUtil(this.root, min, max);
     }
 
-    public printInRangeUtil(root : TNode, min : number, max : number) {
+    private printInRangeUtil(root : TNode, min : number, max : number) {
         if(root == null) 
             return;
         this.printInRangeUtil(root.lChild, min, max);
@@ -921,7 +920,7 @@ class Tree {
         return ans;
     }
 
-    public findMaxBTUtil(curr : TNode) : number {
+    private findMaxBTUtil(curr : TNode) : number {
         let left : number;
         let right : number;
         if(curr == null) 
@@ -940,7 +939,7 @@ class Tree {
         return this.searchBTUtil(this.root, value);
     }
 
-    public searchBTUtil(curr : TNode, value : number) : boolean {
+    private searchBTUtil(curr : TNode, value : number) : boolean {
         let left : boolean;
         let right : boolean;
         if(curr == null) 
@@ -960,7 +959,7 @@ class Tree {
         this.root = this.CreateBinaryTreeUtil(arr, 0, arr.length - 1);
     }
 
-    public CreateBinaryTreeUtil(arr :  Array<number>, start : number, end : number) : TNode {
+    private CreateBinaryTreeUtil(arr :  Array<number>, start : number, end : number) : TNode {
         let curr : TNode = null;
         if(start > end) 
             return null;
@@ -970,21 +969,21 @@ class Tree {
         curr.rChild = this.CreateBinaryTreeUtil(arr, mid + 1, end);
         return curr;
     }
+}
 
-    isBSTArray(preorder :  Array<number>, size : number) : boolean {
-        let stk : Array<number> = new Array<number>();
-        let value : number;
-        let root : number = MIN_INT;
-        for(let i : number = 0; i < size; i++) {
-            value = preorder[i];
-            if(value < root) return false;
-            while((stk.length > 0) && (stk[stk.length-1]< value)) {
-                root = stk.pop()
-            };
-            stk.push(value);
+function isBSTArray(preorder :  Array<number>, size : number) : boolean {
+    let stk : Array<number> = new Array<number>();
+    let value : number;
+    let root : number = MIN_INT;
+    for(let i : number = 0; i < size; i++) {
+        value = preorder[i];
+        if(value < root) return false;
+        while((stk.length > 0) && (stk[stk.length-1]< value)) {
+            root = stk.pop()
         };
-        return true;
-    }
+        stk.push(value);
+    };
+    return true;
 }
 
 function main() {

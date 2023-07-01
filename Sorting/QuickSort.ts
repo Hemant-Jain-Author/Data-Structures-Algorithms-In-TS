@@ -31,6 +31,7 @@ function swap(arr :  Array<number>, first : number, second : number) {
     arr[second] = temp;
 }
 
+// Testing code.
 let array :  Array<number> = [3, 4, 2, 1, 6, 5, 7, 8];
 QuickSort(array);
 console.info(array);

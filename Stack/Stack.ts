@@ -51,6 +51,7 @@ class Stack<T> {
 
 }
 
+// Testing code.
 let s : Stack<number> = new Stack<number>();
 s.push(1);
 s.push(2);

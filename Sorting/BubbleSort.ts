@@ -41,18 +41,11 @@ function BubbleSort2(arr :  Array<number>) {
     }
 }
 
-function main() {
-    let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
-    BubbleSort(array);
-    for(let i : number = 0; i < array.length; i++) {
-        console.info(array[i] + " ");
-    }
-    console.info();
-    let array2 :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
-    BubbleSort2(array2);
-    for(let i : number = 0; i < array2.length; i++) {
-        console.info(array2[i] + " ");
-    }
-}
+// Testing code.
+let array :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+BubbleSort(array);
+console.info(array);
 
-main();
+let array2 :  Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+BubbleSort2(array2);
+console.info(array2);

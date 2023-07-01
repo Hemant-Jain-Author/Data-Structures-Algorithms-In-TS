@@ -13,17 +13,13 @@ class TSTNode {
 }
 
 class TST {
-    root : TSTNode;
-    
-    constructor() {
-        this.root = null;
-    }
+    root : TSTNode = null;
 
-    public add(word : string) {
+    public Add(word : string) {
         this.root = this.addUtil(this.root, word, 0);
     }
 
-    public addUtil(curr : TSTNode, word : string, wordIndex : number) : TSTNode {
+    private addUtil(curr : TSTNode, word : string, wordIndex : number) : TSTNode {
         if(curr == null) 
             curr = new TSTNode(word.charAt(wordIndex));
         
@@ -40,7 +36,16 @@ class TST {
         return curr;
     }
 
-    public findUtil(curr : TSTNode, word : string, wordIndex : number) : boolean {
+    public Find(word : string) : boolean {
+        let ret : boolean = this.findUtil(this.root, word, 0);
+        if(ret) 
+            console.info(word + " Found"); 
+        else 
+            console.info(word + " Not Found ");
+        return ret;
+    }
+    
+    private findUtil(curr : TSTNode, word : string, wordIndex : number) : boolean {
         if(curr == null) 
             return false;
         if ((word.charAt(wordIndex)).charCodeAt(0) < (curr.data).toString().charCodeAt(0))
@@ -53,24 +58,15 @@ class TST {
             return this.findUtil(curr.equal, word, wordIndex + 1);
         }
     }
-
-
-    public find(word : string) : boolean {
-        let ret : boolean = this.findUtil(this.root, word, 0);
-        if(ret) 
-            console.info(word + " Found"); 
-        else 
-            console.info(word + " Not Found ");
-        return ret;
-    }
 }
 
+// Testing code.
 let tt : TST = new TST();
-tt.add("banana");
-tt.add("apple");
-tt.add("mango");
+tt.Add("banana");
+tt.Add("apple");
+tt.Add("mango");
 
-console.log("Apple Found :", tt.find("apple"));
-console.log("Banana Found :", tt.find("banana"));
-console.log("Mango Found :", tt.find("mango"));
-console.log("Grapes Found :", tt.find("grapes"));
+console.log("Apple Found :", tt.Find("apple"));
+console.log("Banana Found :", tt.Find("banana"));
+console.log("Mango Found :", tt.Find("mango"));
+console.log("Grapes Found :", tt.Find("grapes"));

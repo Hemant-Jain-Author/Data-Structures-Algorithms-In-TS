@@ -39,6 +39,7 @@ function MergeSort(arr :  Array<number>) {
     mergeSrt(arr, tempArray, 0, size - 1);
 }
 
+// Testing code.
 let array :  Array<number> = [3, 4, 2, 1, 6, 5, 7, 8];
 MergeSort(array);
 console.info(array);

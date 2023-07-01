@@ -490,6 +490,11 @@ function printInt(number : number) {
     console.info(conversion.charAt((digit).charCodeAt(0)));
 }
 
+// Testing code.
+console.log(printInt(500, 16));
+  
+
+
 function towerOfHanoi(num : number, src : string, dst : string, temp : string) {
     if(num < 1) {
         return;

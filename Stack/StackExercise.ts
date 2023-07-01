@@ -31,6 +31,7 @@ function isBalancedParenthesis(expn : string) : boolean {
     return (stk.length == 0);
 }
 
+// Testing code.
 function main1() {
     let expn : string = "{()}[]";
     let value : boolean = isBalancedParenthesis(expn);
@@ -116,6 +117,7 @@ function infixToPostfix(expn : string) : string {
     return output;
 }
 
+// Testing code.
 function main2() {
     let expn : string = "10+((3))*5/(16-4)";
     let value : string = infixToPostfix(expn);
@@ -160,6 +162,7 @@ function reverseString(expn : string[]) {
     };
 }
 
+// Testing code.
 function main3() {
     let expn : string = "10+((3))*5/(16-4)";
     let value : string = infixToPrefix(expn);
@@ -194,6 +197,7 @@ function StockSpanRange2(arr : Array<number>) : Array<number> {
     return SR;
 }
 
+// Testing code.
 function main4() {
     let arr : Array<number> = [6, 5, 4, 3, 2, 4, 5, 7, 9];
     let size : number = arr.length;
@@ -258,6 +262,7 @@ function GetMaxArea2(arr : Array<number>) : number {
     return maxArea;
 }
 
+// Testing code.
 function main5() {
     let arr : Array<number> = [7, 6, 5, 4, 4, 1, 6, 3, 1];
     let size : number = arr.length;
@@ -365,6 +370,7 @@ function reverseKElementInQueue(que : Array<number>, k : number) {
     };
 }
 
+// Testing code.
 function main6() {
     let stk : Array<number> = new Array<number>();
     stk.push(1);
@@ -375,6 +381,7 @@ function main6() {
     console.info(stk);
 }
 
+// Testing code.
 function main7() {
     let stk : Array<number> = new Array<number>();
     stk.push(-2);
@@ -436,6 +443,7 @@ function maxDepthParenthesis2(expn : string, size : number) : number {
     return maxDepth;
 }
 
+// Testing code.
 function main8() {
     let expn : string = "((((A)))((((BBB()))))()()()())";
     let size : number = expn.length;
@@ -464,6 +472,7 @@ function longestContBalParen(str : string, size : number) : number {
     return length;
 }
 
+// Testing code.
 function main9() {
     let expn : string = "())((()))(())()(()";
     let size : number = expn.length;
@@ -501,6 +510,7 @@ function reverseParenthesis(expn : string, size : number) : number {
     return reversal;
 }
 
+// Testing code.
 function main10() {
     let expn : string = "())((()))(())()(()()()()))";
     let expn2 : string = ")(())(((";
@@ -531,6 +541,7 @@ function findDuplicateParenthesis(expn : string, size : number) : boolean {
     return false;
 }
 
+// Testing code.
 function main11() {
     let expn : string = "(((a+b))+c)";
     console.info("Given expn : " + expn);
@@ -557,6 +568,7 @@ function printParenthesisNumber(expn : string, size : number) {
     console.info("Parenthesis Count " , output);
 }
 
+// Testing code.
 function main12() {
     let expn1 : string = "(((a+(b))+(c+d)))";
     let expn2 : string = "(((a+b))+c)(((";
@@ -626,6 +638,7 @@ function nextSmallerElement(arr : Array<number>, size : number) {
     console.log(output)
 }
 
+// Testing code.
 function main13() {
     let arr : Array<number> = [13, 21, 3, 6, 20, 3];
     let size : number = arr.length;
@@ -654,6 +667,7 @@ function nextLargerElementCircular(arr : Array<number>, size : number) {
     console.log(output)
 }
 
+// Testing code.
 function main14() {
     let arr : Array<number> = [6, 3, 9, 8, 10, 2, 1, 15, 7];
     let size : number = arr.length;
@@ -693,6 +707,7 @@ function RottenFruit(arr : Array<Array<number>>, maxCol : number, maxRow : numbe
     return maxDay;
 }
 
+// Testing code.
 function main15() {
     let arr : Array<Array<number>> = [
         [1, 0, 1, 1, 0], 
@@ -729,6 +744,7 @@ function StepsOfKnight(size : number, srcX : number, srcY : number, dstX : numbe
     return retval;
 }
 
+// Testing code.
 function main16() {
     console.info(StepsOfKnight(20, 10, 10, 20, 20));
 }
@@ -762,6 +778,7 @@ function DistNearestFill(arr : Array<Array<number>>, maxCol : number, maxRow : n
     };
 }
 
+// Testing code.
 function main17() {
     let arr : Array<Array<number>> = [
         [1, 0, 1, 1, 0], 
@@ -800,6 +817,7 @@ function findLargestIsland(arr : Array<Array<number>>, maxCol : number, maxRow :
     return maxVal;
 }
 
+// Testing code.
 function main18() {
     let arr : Array<Array<number>> = [
         [1, 0, 1, 1, 0], 
@@ -848,6 +866,7 @@ function findCelebrity2(relation : Array<Array<number>>, count : number) : numbe
     return first;
 }
 
+// Testing code.
 function main19() {
     let arr : Array<Array<number>> = [[1, 0, 1, 1, 0], [1, 0, 0, 1, 0], [0, 0, 1, 1, 1], [0, 0, 0, 0, 0], [1, 1, 0, 1, 1]];
     console.info("Celebrity : " + findCelebrity(arr, 5));

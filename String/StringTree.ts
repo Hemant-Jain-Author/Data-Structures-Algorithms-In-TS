@@ -19,7 +19,7 @@ class StringTree {
         this.printUtil(this.root);
     }
 
-    public printUtil(curr : TreeNode) {
+    private printUtil(curr : TreeNode) {
         if(curr != null) {
             console.info(" value is ::" + curr.value);
             console.info(" count is :: " + curr.count);
@@ -29,11 +29,11 @@ class StringTree {
     }
 
 
-    public add(value : string) {
+    public Add(value : string) {
         this.root = this.addUtil(value, this.root);
     }
 
-    public addUtil(value : string, curr : TreeNode) : TreeNode {
+    private addUtil(value : string, curr : TreeNode) : TreeNode {
         if(curr == null) {
             curr = new TreeNode();
             curr.value = value;
@@ -51,13 +51,13 @@ class StringTree {
         return curr;
     }
 
-    find(value : string) : boolean {
+    public Find(value : string) : boolean {
         let ret : boolean = this.findUtil(this.root, value);
         console.info("Find " + value + " Return " + ret);
         return ret;
     }
 
-    public findUtil(curr : TreeNode, value : string) : boolean {
+    private findUtil(curr : TreeNode, value : string) : boolean {
         if(curr == null) 
             return false;
         let compare : number = curr.value.localeCompare(value);
@@ -72,11 +72,11 @@ class StringTree {
     }
 
 
-    frequency(value : string) : number {
+    public Frequency(value : string) : number {
         return this.frequencyUtil(this.root, value);
     }
 
-    public frequencyUtil(curr : TreeNode, value : string) : number {
+    private frequencyUtil(curr : TreeNode, value : string) : number {
         if(curr == null) 
             return 0;
         let compare : number = curr.value.localeCompare(value);
@@ -90,27 +90,28 @@ class StringTree {
         }
     }
 
-    freeTree() {
+    public freeTree() {
         this.root = null;
     }
 }
 
+// Testing code.
 let tt : StringTree = new StringTree();
-tt.add("banana");
-tt.add("apple");
-tt.add("mango");
-tt.add("banana");
-tt.add("apple");
-tt.add("mango");
+tt.Add("banana");
+tt.Add("apple");
+tt.Add("mango");
+tt.Add("banana");
+tt.Add("apple");
+tt.Add("mango");
 console.info("\nSearch results for apple, banana, grapes and mango :\n");
-tt.find("apple");
-tt.find("banana");
-tt.find("banan");
-tt.find("applkhjkhkj");
-tt.find("grapes");
-tt.find("mango");
+tt.Find("apple");
+tt.Find("banana");
+tt.Find("banan");
+tt.Find("applkhjkhkj");
+tt.Find("grapes");
+tt.Find("mango");
 tt.print();
-console.info("frequency returned :: " + tt.frequency("apple"));
-console.info("frequency returned :: " + tt.frequency("banana"));
-console.info("frequency returned :: " + tt.frequency("mango"));
-console.info("frequency returned :: " + tt.frequency("hemant"));
+console.info("frequency returned :: " + tt.Frequency("apple"));
+console.info("frequency returned :: " + tt.Frequency("banana"));
+console.info("frequency returned :: " + tt.Frequency("mango"));
+console.info("frequency returned :: " + tt.Frequency("hemant"));

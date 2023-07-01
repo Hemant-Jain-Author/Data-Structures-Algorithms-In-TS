@@ -47,6 +47,7 @@ class TwoStack {
     }
 }
 
+// Testing code.
 let st : TwoStack = new TwoStack();
 for(let i : number = 0; i < 10; i++) {
     st.Push1(i);

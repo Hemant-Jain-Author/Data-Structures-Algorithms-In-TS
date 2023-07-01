@@ -1,6 +1,6 @@
 
 
-function bruteForceSearch(text : string, pattern : string) : number {
+function BruteForceSearch(text : string, pattern : string) : number {
     let i : number = 0;
     let j : number = 0;
     let n : number = text.length;
@@ -19,7 +19,7 @@ function bruteForceSearch(text : string, pattern : string) : number {
 }
 
 
-function robinKarp(text : string, pattern : string) : number {
+function RobinKarp(text : string, pattern : string) : number {
     let n : number = text.length;
     let m : number = pattern.length;
     let i : number;
@@ -112,8 +112,9 @@ function KMPFindCount(text : string, pattern : string) : number {
     return count;
 }
 
+// Testing code.
 let st1 : string = "hello, world!";
 let st2 : string = "world";
-console.info("BruteForceSearch return : " + bruteForceSearch(st1, st2));
-console.info("RobinKarp return : " + robinKarp(st1, st2));
+console.info("BruteForceSearch return : " + BruteForceSearch(st1, st2));
+console.info("RobinKarp return : " + RobinKarp(st1, st2));
 console.info("KMP return : " + KMP(st1, st2));
