@@ -1,5 +1,10 @@
-class Node {
-	constructor(d, l, r) {
+class TNode {
+	public data: number;
+	public left: TNode;
+	public right: TNode;
+	public parent: TNode;
+
+	constructor(d: number, l: TNode, r: TNode) {
 		this.data = d;
 		this.left = l;
 		this.right = r;
@@ -8,25 +13,27 @@ class Node {
 }
 
 class SPLAYTree {
+	public root: TNode;
+
 	constructor() {
 		this.root = null;
 	}
 
-	printTree() {
+	printTree(): void {
 		this.printTreeUtil(this.root, "", false);
 		console.log();
 	}
 
-	printTreeUtil(node, indent, isLeft) {
+	printTreeUtil(node: TNode, indent: string, isLeft: boolean): void {
 		if (node == null) {
 			return;
 		}
 		let output = "";
 		if (isLeft) {
-			output += (indent + "L:");
+			output += indent + "L:";
 			indent += "|  ";
 		} else {
-			output += (indent + "R:");
+			output += indent + "R:";
 			indent += "   ";
 		}
 		console.log(output + node.data);
@@ -35,7 +42,7 @@ class SPLAYTree {
 	}
 
 	// Function to right rotate subtree rooted with x
-	rightRotate(x) {
+	rightRotate(x: TNode): TNode {
 		let y = x.left;
 		let T = y.right;
 		// Rotation
@@ -56,7 +63,7 @@ class SPLAYTree {
 	}
 
 	// Function to left rotate subtree rooted with x
-	leftRotate(x) {
+	leftRotate(x: TNode): TNode {
 		let y = x.right;
 		let T = y.left;
 		// Rotation
@@ -76,14 +83,14 @@ class SPLAYTree {
 		return y;
 	}
 
-	parent(node) {
+	parent(node: TNode): TNode {
 		if (node == null || node.parent == null) {
 			return null;
 		}
 		return node.parent;
 	}
 
-	splay(node) {
+	splay(node: TNode): void {
 		let parent = null;
 		let grand = null;
 		while (node != this.root) {
@@ -119,7 +126,7 @@ class SPLAYTree {
 		}
 	}
 
-	find(data) {
+	find(data: number): boolean {
 		let curr = this.root;
 		while (curr != null) {
 			if (curr.data == data) {
@@ -134,8 +141,8 @@ class SPLAYTree {
 		return false;
 	}
 
-	insert(data) {
-		let newNode = new Node(data, null, null);
+	insert(data: number): void {
+		let newNode = new TNode(data, null, null);
 		if (this.root == null) {
 			this.root = newNode;
 			return;
@@ -163,7 +170,7 @@ class SPLAYTree {
 		this.splay(newNode);
 	}
 
-	findMinNode(curr) {
+	findMinNode(curr: TNode): TNode {
 		let node = curr;
 		if (node == null) {
 			return null;
@@ -174,7 +181,7 @@ class SPLAYTree {
 		return node;
 	}
 
-	delete(data) {
+	delete(data: number): void {
 		let node = this.root;
 		let parent = null;
 		let next = null;
@@ -218,12 +225,12 @@ class SPLAYTree {
 		this.splay(parent);
 	}
 
-	printInOrder() {
+	printInOrder(): void {
 		this.printInOrderUtil(this.root);
 		console.log();
 	}
 
-	printInOrder(node) {
+	printInOrderUtil(node: TNode): void {
 		/* In order */
 		if (node != null) {
 			this.printInOrderUtil(node.left);
