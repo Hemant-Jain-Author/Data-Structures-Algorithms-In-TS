@@ -1,10 +1,10 @@
-class Node {
+class TNode {
 	data: number;
-	left: Node | null;
-	right: Node | null;
+	left: TNode;
+	right: TNode;
 	height: number;
   
-	constructor(d: number, l: Node | null, r: Node | null) {
+	constructor(d: number, l: TNode, r: TNode) {
 	  this.data = d;
 	  this.left = l;
 	  this.right = r;
@@ -13,30 +13,30 @@ class Node {
   }
   
   class AVLTree {
-	root: Node | null;
+	root: TNode;
   
 	constructor() {
 	  this.root = null;
 	}
   
-	height(n: Node | null): number {
+	private height(n: TNode): number {
 	  if (n == null) {
 		return -1;
 	  }
 	  return n.height;
 	}
   
-	getBalance(node: Node | null): number {
+	private getBalance(node: TNode): number {
 	  return node == null ? 0 : this.height(node.left) - this.height(node.right);
 	}
   
-	insert(data: number): void {
+	public insert(data: number): void {
 	  this.root = this.insertUtil(this.root, data);
 	}
   
-	insertUtil(node: Node | null, data: number): Node {
+	private insertUtil(node: TNode, data: number): TNode {
 	  if (node == null) {
-		return new Node(data, null, null);
+		return new TNode(data, null, null);
 	  }
 	  if (node.data > data) {
 		node.left = this.insertUtil(node.left, data);
@@ -68,7 +68,7 @@ class Node {
 	}
   
 	// Function to right rotate subtree rooted with x
-	rightRotate(x: Node): Node {
+	private rightRotate(x: TNode): TNode {
 	  let y = x.left!;
 	  let T = y.right;
 	  // Rotation
@@ -82,7 +82,7 @@ class Node {
 	}
   
 	// Function to left rotate subtree rooted with x
-	leftRotate(x: Node): Node {
+	private leftRotate(x: TNode): TNode {
 	  let y = x.right!;
 	  let T = y.left;
 	  // Rotation
@@ -96,22 +96,22 @@ class Node {
 	}
 
 	// Function to right then left rotate subtree rooted with x
-	rightLeftRotate(x: Node): Node {
+	private rightLeftRotate(x: TNode): TNode {
 	  x.right = this.rightRotate(x.right!);
 	  return this.leftRotate(x);
 	}
   
 	// Function to left then right rotate subtree rooted with x
-	leftRightRotate(x: Node): Node {
+	private leftRightRotate(x: TNode): TNode {
 	  x.left = this.leftRotate(x.left!);
 	  return this.rightRotate(x);
 	}
   
-	delete(data: number): void {
+	public delete(data: number): void {
 	  this.root = this.deleteUtil(this.root, data);
 	}
   
-	deleteUtil(node: Node | null, data: number): Node | null {
+	private deleteUtil(node: TNode, data: number): TNode {
 	  if (node == null) {
 		return null;
 	  }
@@ -155,7 +155,7 @@ class Node {
 	  return node;
 	}
   
-	findMin(curr: Node | null): Node | null {
+	private findMin(curr: TNode): TNode {
 	  let node = curr;
 	  if (node == null) {
 		return null;
@@ -166,12 +166,12 @@ class Node {
 	  return node;
 	}
   
-	printTree(): void {
+	public printTree(): void {
 	  this.printTreeUtil(this.root, "", false);
 	  console.log();
 	}
   
-	printTreeUtil(node: Node | null, indent: string, isLeft: boolean): void {
+	private printTreeUtil(node: TNode, indent: string, isLeft: boolean): void {
 	  if (node == null) {
 		return;
 	  }
