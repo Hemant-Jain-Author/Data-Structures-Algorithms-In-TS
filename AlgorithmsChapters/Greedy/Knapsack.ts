@@ -18,10 +18,8 @@ function getMaxCostGreedy(wt: number[], cost: number[], capacity: number): numbe
 	for (let i = 0; i < n; i++) {
 		itemList[i] = new Items(wt[i], cost[i]);
 	}
-	console.log(itemList)
 
 	itemList.sort((a: Items, b: Items) => (b.density - a.density));
-	console.log(itemList)
 	for (let i = 0; i < n && capacity > 0; i++) {
 		if (capacity - itemList[i].wt >= 0) {
 			capacity -= itemList[i].wt;
@@ -31,9 +29,13 @@ function getMaxCostGreedy(wt: number[], cost: number[], capacity: number): numbe
 	return totalCost;
 }
 
+// Testing code.
 const wt: number[] = [10, 40, 20, 30];
 const cost: number[] = [60, 40, 90, 120];
 const capacity: number = 50;
-
 const maxCost: number = getMaxCostGreedy(wt, cost, capacity);
-console.log("Maximum cost obtained =", maxCost);
+console.log("Maximum cost obtained:", maxCost);
+
+/*
+Maximum cost obtained: 150
+*/

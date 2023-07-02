@@ -13,6 +13,7 @@ function toh(num: number): void {
 	tohUtil(num, 'A', 'C', 'B');
 }
 
+// Testing code.
 toh(3);
 
 /*

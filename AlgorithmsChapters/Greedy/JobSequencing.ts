@@ -46,7 +46,7 @@ class JobSequencing {
 			}
 		}
 
-		console.log("Profit is : " + profit);
+		console.log("Profit is: " + profit);
 		let output = "Jobs selected are:";
 		for (let i = 0; i < this.maxDL; i++) {
 			if (job[i] !== undefined) {
@@ -65,6 +65,6 @@ const js: JobSequencing = new JobSequencing(id, deadline, profit, 5);
 js.print();
 
 /*
-Profit is : 151
+Profit is: 151
 Jobs selected are: b e a d
 */

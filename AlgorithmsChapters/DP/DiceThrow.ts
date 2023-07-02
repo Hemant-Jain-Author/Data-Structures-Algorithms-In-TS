@@ -17,15 +17,9 @@ function findWays(n: number, m: number, V: number): number {
   return dp[n][V];
 }
 
-for (let i = 1; i <= 6; i++) {
-  console.log(`${findWays(i, 6, 6)} `);
-}
+console.log(`${findWays(i, 6, 6)} `);
+
 
 /*
-1 
-5 
 10 
-10 
-5 
-1 
- */
+*/

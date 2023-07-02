@@ -1,50 +1,122 @@
-const INF: number = Number.MAX_VALUE;
 
-function shortestDist(graph: number[][], n: number): number {
-  const dist: number[] = new Array<number>(n).fill(INF);
-  const path: number[] = new Array<number>(n);
-  let value: number;
+class PriorityQueue<T> {
+  static CAPACITY: number = 32;
+  size: number;
+  arr: Array<T>;
+  compare: (a: T, b: T) => boolean;
 
-  dist[0] = 0;
-  path[0] = -1;
+  public constructor(cmp: (a: T, b: T) => boolean) {
+    this.compare = cmp;
+    this.arr = new Array<T>(PriorityQueue.CAPACITY);
+    this.size = 0;
+  }
 
-  for (let i = 0; i < n; i++) {
-    for (let j = i; j < n; j++) {
-      if (graph[i][j] == INF) continue;
-      value = graph[i][j] + dist[i];
-      if (dist[j] > value) {
-        dist[j] = value;
-        path[j] = i;
-      }
+  proclateDown(parent: number) {
+    let lChild: number = 2 * parent + 1;
+    let rChild: number = lChild + 1;
+    let child: number = -1;
+    let temp: T;
+    if (lChild < this.size) {
+      child = lChild;
+    }
+    if (rChild < this.size && this.compare(this.arr[lChild], this.arr[rChild])) {
+      child = rChild;
+    }
+    if (child !== -1 && this.compare(this.arr[parent], this.arr[child])) {
+      temp = this.arr[parent];
+      this.arr[parent] = this.arr[child];
+      this.arr[child] = temp;
+      this.proclateDown(child);
     }
   }
 
-  value = n - 1;
-  let output = "Path: "
-  while (value !== -1) {
-    output += (value + " ");
-    value = path[value];
+  proclateUp(child: number) {
+    let parent: number = Math.floor((child - 1) / 2);
+    let temp: T;
+    if (parent < 0) {
+      return;
+    }
+    if (this.compare(this.arr[parent], this.arr[child])) {
+      temp = this.arr[child];
+      this.arr[child] = this.arr[parent];
+      this.arr[parent] = temp;
+      this.proclateUp(parent);
+    }
   }
-  console.log(output);
 
-  return dist[n - 1];
+  public add(value: T) {
+    if (this.size === this.arr.length) {
+      this.doubleSize();
+    }
+
+    this.arr[this.size++] = value;
+    this.proclateUp(this.size - 1);
+  }
+
+  private doubleSize() {
+    let old: Array<T> = this.arr;
+    let newSize = this.size * 2;
+    this.arr = new Array<T>(newSize);
+    /* arraycopy */
+    var size = this.size;
+    for (let i = 0; i < size; i++) {
+      this.arr[i] = old[i];
+    }
+  }
+
+  public remove(): T {
+    if (this.isEmpty()) {
+      throw new Error("IllegalStateException");
+    }
+    let value: T = this.arr[0];
+    this.arr[0] = this.arr[this.size - 1];
+    this.size--;
+    this.proclateDown(0);
+    return value;
+  }
+
+  public PrintTree() {
+    console.info(this.arr);
+  }
+
+  public isEmpty(): boolean {
+    return this.size === 0;
+  }
+
+  public length(): number {
+    return this.size;
+  }
+
+  public peek(): T {
+    if (this.isEmpty()) {
+      throw new Error("IllegalStateException");
+    }
+    return this.arr[0];
+  }
 }
 
-// Testing code.
-const graph: number[][] = [
-  [INF, 1, 2, 5, INF, INF, INF, INF],
-  [INF, INF, INF, INF, 4, 11, INF, INF],
-  [INF, INF, INF, INF, 9, 5, 16, INF],
-  [INF, INF, INF, INF, INF, INF, 2, INF],
-  [INF, INF, INF, INF, INF, INF, INF, 18],
-  [INF, INF, INF, INF, INF, INF, INF, 13],
-  [INF, INF, INF, INF, INF, INF, INF, 2],
-  [INF, INF, INF, INF, INF, INF, INF, INF]
-];
+function optimalMerge(lists: number[], size: number): number {
+  const pq = new PriorityQueue<number>((a, b) => a > b);
+  for (let i = 0; i < size; i++) {
+    pq.add(lists[i]);
+  }
 
-console.log("Shortest Dist:", shortestDist(graph, 8));
+  let total = 0;
+  let value = 0;
+  while (pq.length() > 1) {
+    value = pq.remove();
+    value += pq.remove();
+    pq.add(value);
+    total += value;
+  }
+  console.log("Total: " + total);
+  return total;
+}
+
+/* Testing Code */
+const lists = [4, 3, 2, 6];
+optimalMerge(lists, lists.length);
 
 /*
-Path: 7 6 3 0 
-Shortest Dist: 9
+Total : 29
 */

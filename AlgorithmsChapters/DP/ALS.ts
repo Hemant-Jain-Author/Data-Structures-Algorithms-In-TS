@@ -66,13 +66,13 @@ const t: number[][] = [[2, 3, 1, 3, 4], [2, 1, 2, 2, 1]];
 const e: number[] = [2, 4];
 const x: number[] = [3, 2];
 const n: number = 6;
-console.log(fastestWayBU2(a, t, e, x, n));
-console.log(fastestWayBU(a, t, e, x, n));
-console.log(fastestWayTD(a, t, e, x, n));
+console.log("Fastest way:", fastestWayBU2(a, t, e, x, n));
+console.log("Fastest way:", fastestWayBU(a, t, e, x, n));
+console.log("Fastest way:", fastestWayTD(a, t, e, x, n));
 
 
 /*
-38
-38
-38
+Fastest way: 38
+Fastest way: 38
+Fastest way: 38
 */

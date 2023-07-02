@@ -98,6 +98,47 @@ class PriorityQueue<T> {
     }
 }
 
+class Queue<T> {
+    frontIndex: number;
+    data: T[];
+
+    public constructor() {
+        this.frontIndex = 0;
+        this.data = [];
+    }
+
+    public add(value: T) {
+        this.data.push(value);
+    }
+
+    public remove(): T {
+        let value = this.data[this.frontIndex];
+        this.frontIndex++;
+        if (this.data.length > 0 && this.frontIndex * 2 >= this.data.length) {
+            this.data = this.data.slice(this.frontIndex);
+            this.frontIndex = 0;
+        }
+        return value;
+    }
+
+    public peek(): T {
+        let value = this.data[this.frontIndex];
+        return value;
+    }
+
+    public isEmpty(): boolean {
+        return (this.data.length - this.frontIndex) === 0;
+    }
+
+    public size(): number {
+        return (this.data.length - this.frontIndex);
+    }
+
+    public peekLast(): T {
+        return this.data[this.data.length - 1]
+    }
+}
+
 const infi = 2147483647;
 
 class GraphEdge {
@@ -110,79 +151,105 @@ class GraphEdge {
     }
 }
 
-function compare(x: GraphEdge, y: GraphEdge): boolean {
+function EdgeComparator(x: GraphEdge, y: GraphEdge): boolean {
     return x.cost > y.cost
 }
 
-class GraphAM {
+class Graph {
     count: number;
     adj: Array<Array<number>>;
 
     constructor(cnt: number) {
+        if (cnt === undefined)
+            throw new Error('Invalid argument')
+
         this.count = cnt;
         this.adj = new Array<Array<number>>(this.count)
         for (let i = 0; i < this.count; i++)
             this.adj[i] = new Array<number>(this.count).fill(0);
     }
 
-    public addDirectedEdge(src: number, dst: number, cost: number) {
+    public addDirectedEdge(src: number, dst: number, cost: number = 1) {
         this.adj[src][dst] = cost;
     }
 
-    public addUndirectedEdge(src: number, dst: number, cost: number) {
+    public addUndirectedEdge(src: number, dst: number, cost: number = 1) {
         this.addDirectedEdge(src, dst, cost);
         this.addDirectedEdge(dst, src, cost);
     }
 
     public print() {
         for (let i: number = 0; i < this.count; i++) {
-            console.info("Node index [ " + i + " ] is connected with : " + this.adj[i])
-        };
+            let t = `Vertex ${i} is connected to : `;
+            for (let j = 0; j < this.count; j++) {
+                if (this.adj[i][j] !== 0)
+                    t += j +"(cost: " + this.adj[i][j] +") "
+            }
+            console.log(t)
+        }
     }
 
 
     public dijkstra(source: number) {
         let previous: Array<number> = new Array<number>(this.count).fill(-1);
-        let dist: Array<number> = new Array<number>(this.count).fill(0);
+        let dist: Array<number> = new Array<number>(this.count).fill(infi);
         let visited: Array<boolean> = new Array<boolean>(this.count).fill(false);
-        for (let i: number = 0; i < this.count; i++) {
-            previous[i] = -1;
-            dist[i] = infi;
-            visited[i] = false;
-        };
+ 
         dist[source] = 0;
-        previous[source] = -1;
-        let queue: PriorityQueue<GraphEdge> = new PriorityQueue<GraphEdge>(compare);
+        previous[source] = source;
+
+        let queue: PriorityQueue<GraphEdge> = new PriorityQueue<GraphEdge>(EdgeComparator);
         let node: GraphEdge = new GraphEdge(source, 0);
         queue.add(node);
+        let curr: number;
+
         while (queue.isEmpty() === false) {
             node = queue.remove();
-            source = node.dest;
-            visited[source] = true;
+            curr = node.dest;
+            visited[curr] = true;
             for (let dest: number = 0; dest < this.count; dest++) {
-                let cost: number = this.adj[source][dest];
+                let cost: number = this.adj[curr][dest];
                 if (cost !== 0) {
-                    let alt: number = cost + dist[source];
+                    let alt: number = cost + dist[curr];
                     if (dist[dest] > alt && visited[dest] === false) {
                         dist[dest] = alt;
-                        previous[dest] = source;
+                        previous[dest] = curr;
                         node = new GraphEdge(dest, alt);
                         queue.add(node);
                     }
                 }
             };
         };
-        let count: number = this.count;
-        for (let i: number = 0; i < count; i++) {
-            if (dist[i] === infi) {
-                console.info("Node id " + i + "  prev " + previous[i] + " distance : Unreachable");
-            } else {
-                console.info("Node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
-            }
-        };
+        this.printPath(previous, dist, this.count, source);
     }
 
-    public prims() {
+    printPathUtil(previous, source, dest): string {
+        let path = "";
+        if (dest === source) {
+            path += source;
+        } else {
+            path += this.printPathUtil(previous, source, previous[dest]);
+            path += "->" + dest;
+        }
+        return path;
+    }
+
+    printPath(previous, dist, count, source): void {
+        let output = "Shortest Paths: ";
+        for (let i = 0; i < count; i++) {
+            if (dist[i] === 99999) {
+                output += "(" + source + "->" + i + " @ Unreachable) ";
+            } else if (i !== previous[i]) {
+                output += "(";
+                output += this.printPathUtil(previous, source, i);
+                output += " @ " + dist[i] + ") ";
+            }
+        }
+        console.log(output);
+    }
+
+
+    public primsMST() {
         let previous: Array<number> = new Array<number>(this.count).fill(-1);
         let dist: Array<number> = new Array<number>(this.count).fill(0);
         let source: number = 0;
@@ -194,34 +261,41 @@ class GraphAM {
         };
         dist[source] = 0;
         previous[source] = -1;
-        let queue: PriorityQueue<GraphEdge> = new PriorityQueue<GraphEdge>(compare);
+        let queue: PriorityQueue<GraphEdge> = new PriorityQueue<GraphEdge>(EdgeComparator);
         let node: GraphEdge = new GraphEdge(source, 0);
         queue.add(node);
+        let curr: number;
+
         while (queue.isEmpty() === false) {
             node = queue.remove();
-            source = node.dest;
-            visited[source] = true;
+            curr = node.dest;
+            visited[curr] = true;
+
             for (let dest: number = 0; dest < this.count; dest++) {
-                let cost: number = this.adj[source][dest];
+                let cost: number = this.adj[curr][dest];
                 if (cost !== 0) {
                     let alt: number = cost;
                     if (dist[dest] > alt && visited[dest] === false) {
                         dist[dest] = alt;
-                        previous[dest] = source;
+                        previous[dest] = curr;
                         node = new GraphEdge(dest, alt);
                         queue.add(node);
                     }
                 }
             };
         };
-        const count: number = this.count;
-        for (let i: number = 0; i < count; i++) {
-            if (dist[i] === infi) {
-                console.info("Node id " + i + "  prev " + previous[i] + " distance : Unreachable");
-            } else {
-                console.info("Node id " + i + "  prev " + previous[i] + " distance : " + dist[i]);
+        let total = 0;
+        let output = "Edges are " ;
+        for (let i = 0; i < this.count; i++) {
+            if (dist[i] === Infinity) {
+                output += `( ${i},  Unreachable)`
+            } else if (previous[i] != i) {
+                output += `(${previous[i]}->${i} @ ${dist[i]}) `
+                total += dist[i];
             }
-        };
+        }
+        console.log(output);
+        console.log(`Total MST cost : ${total}`)
     }
 
 
@@ -267,13 +341,14 @@ class GraphAM {
                 pSize--;
                 added[vertex] = 0;
             }
-        };
+        }
         return false;
     }
 
     public hamiltonianCycle(): boolean {
         let path: Array<number> = new Array<number>(this.count + 1).fill(0);
         let added: Array<number> = new Array<number>(this.count).fill(0);
+        
         if (this.hamiltonianCycleUtil(path, 0, added)) {
             console.info("Hamiltonian Cycle found :: " + path);
             return true;
@@ -282,17 +357,27 @@ class GraphAM {
         return false;
     }
 }
-function main1() {
-    let graph: GraphAM = new GraphAM(4);
-    graph.addUndirectedEdge(0, 1, 1);
-    graph.addUndirectedEdge(0, 2, 1);
-    graph.addUndirectedEdge(1, 2, 1);
-    graph.addUndirectedEdge(2, 3, 1);
+
+/* Testing Code */
+function test1(){
+    const graph = new Graph(4);
+    graph.addUndirectedEdge(0, 1);
+    graph.addUndirectedEdge(0, 2);
+    graph.addUndirectedEdge(1, 2);
+    graph.addUndirectedEdge(2, 3);
     graph.print();
 }
 
-function main2() {
-    let gph: GraphAM = new GraphAM(9);
+/*
+Vertex 0 is connected to : 1(cost: 1) 2(cost: 1) 
+Vertex 1 is connected to : 0(cost: 1) 2(cost: 1) 
+Vertex 2 is connected to : 0(cost: 1) 1(cost: 1) 3(cost: 1) 
+Vertex 3 is connected to : 2(cost: 1) 
+*/
+
+/* Testing Code */
+function test2(){
+    const gph = new Graph(9);
     gph.addUndirectedEdge(0, 1, 4);
     gph.addUndirectedEdge(0, 7, 8);
     gph.addUndirectedEdge(1, 2, 8);
@@ -307,65 +392,132 @@ function main2() {
     gph.addUndirectedEdge(6, 7, 1);
     gph.addUndirectedEdge(6, 8, 6);
     gph.addUndirectedEdge(7, 8, 7);
-    gph.print();
-    gph.prims();
-    gph.dijkstra(0);
+    console.log("")
+    gph.primsMST();
+    console.log("")
 }
 
-function main3() {
-    let gph: GraphAM = new GraphAM(9);
-    gph.addUndirectedEdge(0, 2, 1);
-    gph.addUndirectedEdge(1, 2, 5);
-    gph.addUndirectedEdge(1, 3, 7);
-    gph.addUndirectedEdge(1, 4, 9);
-    gph.addUndirectedEdge(3, 2, 2);
-    gph.addUndirectedEdge(3, 5, 4);
-    gph.addUndirectedEdge(4, 5, 6);
-    gph.addUndirectedEdge(4, 6, 3);
-    gph.addUndirectedEdge(5, 7, 1);
-    gph.addUndirectedEdge(6, 7, 7);
-    gph.addUndirectedEdge(7, 8, 17);
-    gph.print();
-    gph.prims();
+/*
+Edges are (0->1 @ 4) (5->2 @ 4) (2->3 @ 7) (3->4 @ 9) (6->5 @ 2) (7->6 @ 1) (0->7 @ 8) (2->8 @ 2) 
+Total MST cost : 37
+*/
+
+/* Testing Code */
+function test3(){
+    const gph = new Graph(9);
+    gph.addUndirectedEdge(0, 1, 4)
+    gph.addUndirectedEdge(0, 7, 8)
+    gph.addUndirectedEdge(1, 2, 8)
+    gph.addUndirectedEdge(1, 7, 11)
+    gph.addUndirectedEdge(2, 3, 7)
+    gph.addUndirectedEdge(2, 8, 2)
+    gph.addUndirectedEdge(2, 5, 4)
+    gph.addUndirectedEdge(3, 4, 9)
+    gph.addUndirectedEdge(3, 5, 14)
+    gph.addUndirectedEdge(4, 5, 10)
+    gph.addUndirectedEdge(5, 6, 2)
+    gph.addUndirectedEdge(6, 7, 1)
+    gph.addUndirectedEdge(6, 8, 6)
+    gph.addUndirectedEdge(7, 8, 7)
     gph.dijkstra(1);
 }
 
-function main4() {
-    let count: number = 5;
-    let graph: GraphAM = new GraphAM(count);
-    let adj: Array<Array<number>> = [
-        [0, 1, 0, 1, 0],
+/*
+Shortest Paths: (1->0 @ 4) (1->2 @ 8) (1->2->3 @ 15) (1->2->5->4 @ 22) (1->2->5 @ 12) (1->7->6 @ 12) (1->7 @ 11) (1->2->8 @ 10) 
+*/
+
+/* Testing Code */
+function test4(){
+    const count = 5;
+    const graph = new Graph(count);
+    const adj =
+        [[0, 1, 0, 1, 0],
         [1, 0, 1, 1, 0],
         [0, 1, 0, 0, 1],
         [1, 1, 0, 0, 1],
         [0, 1, 1, 1, 0]];
-    for (let i: number = 0; i < count; i++) {
-        for (let j: number = 0; j < count; j++) {
+
+    for (let i = 0; i < count; i++) {
+        for (let j = 0; j < count; j++) {
             if (adj[i][j] === 1)
                 graph.addDirectedEdge(i, j, 1);
-        };
+        }
     }
-    console.info("hamiltonianPath : " + graph.hamiltonianPath());
-    console.info("hamiltonianCycle : " + graph.hamiltonianCycle());
-    let graph2: GraphAM = new GraphAM(count);
-    let adj2: Array<Array<number>> = [
-        [0, 1, 0, 1, 0],
+
+    console.log(`hamiltonianPath : ${graph.hamiltonianPath()}`);
+
+    const graph2 = new Graph(count);
+    const adj2 =
+        [[0, 1, 0, 1, 0],
         [1, 0, 1, 1, 0],
         [0, 1, 0, 0, 1],
         [1, 1, 0, 0, 0],
         [0, 1, 1, 0, 0]];
-    for (let i: number = 0; i < count; i++) {
-        for (let j: number = 0; j < count; j++) {
+
+    for (let i = 0; i < count; i++) {
+        for (let j = 0; j < count; j++) {
             if (adj2[i][j] === 1)
                 graph2.addDirectedEdge(i, j, 1);
-        };
+        }
     }
-    console.info("hamiltonianPath :  " + graph2.hamiltonianPath());
-    console.info("hamiltonianCycle :  " + graph2.hamiltonianCycle());
+    console.log(`hamiltonianPath :  ${graph2.hamiltonianPath()}`);
 }
 
+/*
+Hamiltonian Path found ::  [ 0, 1, 2, 4, 3 ]
+hamiltonianPath : true
 
-main1();
-main2();
-main3();
-main4();
+Hamiltonian Path found ::  [ 0, 3, 1, 2, 4 ]
+hamiltonianPath :  true
+*/
+
+/* Testing Code */
+function test5(){
+    const count = 5;
+    const graph = new Graph(count);
+    const adj =
+        [[0, 1, 0, 1, 0],
+        [1, 0, 1, 1, 0],
+        [0, 1, 0, 0, 1],
+        [1, 1, 0, 0, 1],
+        [0, 1, 1, 1, 0]];
+
+    for (let i = 0; i < count; i++) {
+        for (let j = 0; j < count; j++) {
+            if (adj[i][j] === 1)
+                graph.addDirectedEdge(i, j, 1);
+        }
+    }
+
+    console.log(`hamiltonianCycle : ${graph.hamiltonianCycle()}`);
+
+    const graph2 = new Graph(count);
+    const adj2 =
+        [[0, 1, 0, 1, 0],
+        [1, 0, 1, 1, 0],
+        [0, 1, 0, 0, 1],
+        [1, 1, 0, 0, 0],
+        [0, 1, 1, 0, 0]];
+
+    for (let i = 0; i < count; i++) {
+        for (let j = 0; j < count; j++) {
+            if (adj2[i][j] === 1)
+                graph2.addDirectedEdge(i, j, 1);
+        }
+    }
+    console.log(`hamiltonianCycle :  ${graph2.hamiltonianCycle()}`);
+}
+
+/*
+Hamiltonian Cycle found ::  [ 0, 1, 2, 4, 3, 0 ]
+hamiltonianCycle : true
+
+Hamiltonian Cycle not found
+hamiltonianCycle :  false
+*/
+
+test1()
+test2()
+test3()
+test4()
+test5()

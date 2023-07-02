@@ -1,107 +1,185 @@
-const ErrorValue = 2147483647;
+class CountMap {
+    private hm: Map<any, number>;
+
+    constructor() {
+        this.hm = new Map();
+    }
+
+    add(key: any): void {
+        if (this.hm.has(key)) {
+            const cnt = this.hm.get(key)!;
+            this.hm.set(key, cnt + 1);
+        } else {
+            this.hm.set(key, 1);
+        }
+    }
+
+    remove(key: any): void {
+        if (this.hm.has(key)) {
+            if (this.hm.get(key) === 1) {
+                this.hm.delete(key);
+            } else {
+                const cnt = this.hm.get(key)!;
+                this.hm.set(key, cnt - 1);
+            }
+        }
+    }
+
+    get(key: any): number {
+        if (this.hm.has(key)) {
+            return this.hm.get(key)!;
+        }
+        return 0;
+    }
+
+    find(key: any): boolean {
+        return this.hm.has(key);
+    }
+
+    size(): number {
+        return this.hm.size;
+    }
+}
+
+/* Testing Code */
+const cm = new CountMap();
+cm.add(2);
+cm.add(2);
+console.log(`count of 2 is : ${cm.get(2)}`);
+cm.remove(2);
+console.log(`count of 2 is : ${cm.get(2)}`);
+cm.remove(2);
+console.log(`count of 2 is : ${cm.get(2)}`);
+console.log(`count of 3 is : ${cm.get(3)}`);
 
 function isAnagram(str1: string, str2: string): boolean {
-    let size1: number = str1.length;
-    let size2: number = str2.length;
-    if (size1 !== size2) return false;
-    let hm: Map<any, number> = new Map<any, number>();
+    const size1 = str1.length;
+    const size2 = str2.length;
+    if (size1 !== size2) {
+        return false;
+    }
 
+    const cm = new CountMap();
     for (let index = 0; index < str1.length; index++) {
         let ch = str1[index];
-        if (hm.has(ch))
-            hm.set(ch, hm.get(ch) + 1);
-        else
-            hm.set(ch, 1);
+        cm.add(ch);
     }
     for (let index = 0; index < str2.length; index++) {
         let ch = str2[index];
-        if (hm.has(ch))
-            hm.set(ch, hm.get(ch) - 1);
-        else
-            return false;
+        cm.remove(ch);
     }
-    return true;
+    return cm.size() === 0;
 }
+
+// Testing code.
+function test1(): void {
+    const first = "hello";
+    const second = "elloh";
+    const third = "world";
+    console.log(`isAnagram : ${isAnagram(first, second)}`);
+    console.log(`isAnagram : ${isAnagram(first, third)}`);
+}
+
+test1();
+/*
+isAnagram : true
+isAnagram : false
+*/
 
 function removeDuplicate(str: string): string {
-    let hs: Set<any> = new Set<any>();
-    let out: string = "";
-    for (let index = 0; index < str.length; index++) {
-        let ch = str[index];
-        if (hs.has(ch) == false) {
-            out += ch;
-            hs.add(ch);
+    let str2 = "";
+    const hs = new Set();
+    for (let ind = 0; ind < str.length; ind++) {
+        const ch = str[ind];
+        if (!hs.has(ch.charCodeAt(0))) {
+            str2 += ch;
+            hs.add(ch.charCodeAt(0));
         }
     }
-    return out;
+    return str2;
 }
 
+// Testing code.
+function test2(): void {
+    const first = "hello";
+    console.log(removeDuplicate(first));
+}
 
-function findMissing(arr: Array<number>, start: number, end: number): number {
-    let hs: Set<number> = new Set<number>();
-    for (let index = 0; index < arr.length; index++) {
-        let i = arr[index];
-        hs.add(i);
-    }
-    for (let curr: number = start; curr <= end; curr++) {
-        if (hs.has(curr) == false)
+test2();
+/*
+helo
+*/
+
+function findMissing(arr: number[], start: number, end: number): number {
+    const hs = new Set(arr);
+    for (let curr = start; curr <= end; curr++) {
+        if (!hs.has(curr)) {
             return curr;
-    };
-    return ErrorValue;
+        }
+    }
+    return -1;
 }
 
-function printRepeating(arr: Array<number>) {
-    let hs: Set<number> = new Set<number>();
-    console.info("Repeating elements are:");
-    for (let index = 0; index < arr.length; index++) {
-        let val = arr[index];
+// Testing code.
+function test3(): void {
+    const arr = [1, 2, 3, 5, 6, 7, 8, 9, 10];
+    console.log("Missing element is :", findMissing(arr, 1, 10));
+}
+
+test3();
+/*
+Missing element is : 4
+*/
+
+function printRepeating(arr: number[]): void {
+    const hs = new Set();
+    console.log("Repeating elements are:");
+    for (let insert = 0; insert < arr.length; insert++) {
+        const val = arr[insert];
 
         if (hs.has(val)) {
-            console.info(" " + val);
-        }
-        else
+            console.log(val);
+        } else {
             hs.add(val);
+        }
     }
 }
 
-function printFirstRepeating(arr: Array<number>) {
-    let i: number;
-    let size: number = arr.length;
-    let hs: Set<number> = new Set<number>();
-    let firstRepeating: number = ErrorValue;
-    for (i = size - 1; i >= 0; i--) {
-        if (hs.has(arr[i])) {
-            firstRepeating = arr[i];
-        }
+function printFirstRepeating(arr: number[]): void {
+    const size = arr.length;
+    const hs = new CountMap();
+    for (let i = 0; i < size; i++) {
         hs.add(arr[i]);
-    };
-    console.info("First Repeating number is : " + firstRepeating);
+    }
+    for (let i = 0; i < size; i++) {
+        hs.remove(arr[i]);
+        if (hs.find(arr[i])) {
+            console.log(`First Repeating number is : ${arr[i]}`);
+            return;
+        }
+    }
 }
 
-function hornerHash(key: string[], tableSize: number): number {
-    let size: number = key.length;
-    let h: number = 0;
-    let i: number;
-    for (i = 0; i < size; i++) {
-        h = (32 * h + ((+key[i]) % tableSize));
-    };
-    return h;
-}
-
-
-function main() {
-    let first: string = "hello";
-    let second: string = "elloh";
-    let third: string = "world";
-    console.info("isAnagram : " + isAnagram(first, second));
-    console.info("isAnagram : " + isAnagram(first, third));
-    first = removeDuplicate(first);
-    console.info(first);
-    let arr: Array<number> = [1, 2, 3, 5, 6, 7, 8, 9, 10];
-    console.info(findMissing(arr, 1, 10));
-    let arr1: Array<number> = [1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 1];
+// Testing code.
+function test4(): void {
+    const arr1 = [1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 1];
     printRepeating(arr1);
     printFirstRepeating(arr1);
 }
 
-main();
+test4();
+/*
+Repeating elements are:
+4
+1
+First Repeating number is : 1
+*/
+
+function hornerHash(key: string, tableSize: number): number {
+    const size = key.length;
+    let h = 0;
+    for (let i = 0; i < size; i++) {
+        h = (32 * h + key[i].charCodeAt(0)) % tableSize;
+    }
+    return h;
+}

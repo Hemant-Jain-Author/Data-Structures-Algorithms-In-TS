@@ -92,13 +92,7 @@ function closestPairDC(arr: number[][]): number {
 	return closestPairUtil(p, 0, n - 1, q, n);
 }
 
-const arr = [
-	[648, 896],
-	[269, 879],
-	[250, 922],
-	[453, 347],
-	[213, 17],
-];
+const arr = [[648, 896],[269, 879],[250, 922],[453, 347],[213, 17]];
 
 console.log("Smallest distance is:" + closestPairBF(arr));
 console.log("Smallest distance is:" + closestPairDC(arr));

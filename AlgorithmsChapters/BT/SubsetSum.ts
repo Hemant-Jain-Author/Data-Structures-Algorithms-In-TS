@@ -34,7 +34,13 @@ function subsetSumHelper(arr: number[], n: number, flags: boolean[],
 	subsetSumHelper(arr, n, flags, sum, curr + 1, target);
 }
 
+// Testing code.
 const arr: number[] = [15, 22, 14, 26, 32, 9, 16, 8];
 const target: number = 53;
-const n: number = arr.length;
-subsetSum(arr, n, target);
+subsetSum(arr, arr.length, target);
+
+/*
+15 22 16 
+15 14 16 8 
+22 14 9 8 
+*/

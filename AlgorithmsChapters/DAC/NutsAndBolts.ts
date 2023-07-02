@@ -40,7 +40,5 @@ makePairs(nuts, bolts);
 
 
 /*
-Matched nuts and bolts are : 
-1 2 3 4 5 6 
-1 2 3 4 5 6 
+Matched nuts and bolts are :  [ 1, 2, 3, 4, 5, 6 ] [ 1, 2, 3, 4, 5, 6 ] 
 */

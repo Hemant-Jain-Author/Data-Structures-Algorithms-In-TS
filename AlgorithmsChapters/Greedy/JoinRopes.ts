@@ -118,7 +118,7 @@ function joinRopes(ropes: number[], size: number): number {
         ropes[index] = value;
         length--;
     }
-    console.log("Total : " + total);
+    console.log("Total: " + total);
     return total;
 }
 
@@ -137,11 +137,17 @@ function joinRopes2(ropes: number[], size: number): number {
         pq.add(value);
         total += value;
     }
-    console.log("Total : " + total);
+    console.log("Total: " + total);
     return total;
 }
 
+/* Testing Code */
 const ropes: number[] = [4, 3, 2, 6];
 joinRopes(ropes, ropes.length);
 const rope2: number[] = [4, 3, 2, 6];
 joinRopes2(rope2, rope2.length);
+
+/*
+Total: 29
+Total: 29
+*/

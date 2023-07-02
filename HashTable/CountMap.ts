@@ -1,49 +1,53 @@
-class CountMap<T> {
-    hm: Map<T, number> = new Map<T, number>();
+class CountMap {
+    private hm: Map<any, number>;
 
-    public add(key: T) {
+    constructor() {
+        this.hm = new Map();
+    }
+
+    add(key: any): void {
         if (this.hm.has(key)) {
-            this.hm.set(key, this.hm.get(key) + 1);
+            const cnt = this.hm.get(key)!;
+            this.hm.set(key, cnt + 1);
         } else {
             this.hm.set(key, 1);
         }
     }
 
-    public remove(key: T) {
+    remove(key: any): void {
         if (this.hm.has(key)) {
-            if (this.hm.get(key) == 1)
+            if (this.hm.get(key) === 1) {
                 this.hm.delete(key);
-            else {
-                this.hm.set(key, this.hm.get(key) - 1);
+            } else {
+                const cnt = this.hm.get(key)!;
+                this.hm.set(key, cnt - 1);
             }
         }
     }
 
-    public get(key: T): number {
-        if (this.hm.has(key))
-            return this.hm.get(key);
+    get(key: any): number {
+        if (this.hm.has(key)) {
+            return this.hm.get(key)!;
+        }
         return 0;
-
     }
 
-    public containsKey(key: T): boolean {
+    find(key: any): boolean {
         return this.hm.has(key);
     }
 
-    public size(): number {
+    size(): number {
         return this.hm.size;
     }
 }
 
-function main1() {
-    let cm: CountMap<number> = new CountMap<number>();
-    cm.add(2);
-    cm.add(2);
-    console.info("count is : " + cm.get(2));
-    cm.remove(2);
-    console.info("count is : " + cm.get(2));
-    cm.remove(2);
-    console.info("count is : " + cm.get(2));
-}
-
-main1();
+/* Testing Code */
+const cm = new CountMap();
+cm.add(2);
+cm.add(2);
+console.log(`count of 2 is : ${cm.get(2)}`);
+cm.remove(2);
+console.log(`count of 2 is : ${cm.get(2)}`);
+cm.remove(2);
+console.log(`count of 2 is : ${cm.get(2)}`);
+console.log(`count of 3 is : ${cm.get(3)}`);
