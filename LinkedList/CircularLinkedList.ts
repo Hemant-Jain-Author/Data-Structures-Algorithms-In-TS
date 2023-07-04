@@ -10,14 +10,19 @@ class CLNode {
 
 class CircularLinkedList {
     tail: CLNode;
-    _size: number = 0;
+    length: number;
+
+    constructor() {
+        this.length = 0;
+        this.tail = null;
+    }
 
     public size(): number {
-        return this._size;
+        return this.length;
     }
 
     public isEmpty(): boolean {
-        return this._size === 0;
+        return this.length === 0;
     }
 
     public peek(): number {
@@ -36,7 +41,7 @@ class CircularLinkedList {
             this.tail.next = temp;
             this.tail = temp;
         }
-        this._size++;
+        this.length++;
     }
 
     public addHead(value: number) {
@@ -48,7 +53,7 @@ class CircularLinkedList {
             temp.next = this.tail.next;
             this.tail.next = temp;
         }
-        this._size++;
+        this.length++;
     }
 
     public removeHead(): number {
@@ -60,7 +65,7 @@ class CircularLinkedList {
             this.tail = null;
         else
             this.tail.next = this.tail.next.next;
-        this._size--;
+        this.length--;
         return value;
     }
 
@@ -123,9 +128,9 @@ class CircularLinkedList {
         return cl;
     }
 
-    public searchList(data: number): boolean {
+    public find(data: number): boolean {
         let temp: CLNode = this.tail;
-        for (let i: number = 0; i < this._size; i++) {
+        for (let i: number = 0; i < this.length; i++) {
             if (temp.value === data)
                 return true;
             temp = temp.next;
@@ -133,13 +138,14 @@ class CircularLinkedList {
         return false;
     }
 
-    public deleteList() {
+    public freeList() {
         this.tail = null;
-        this._size = 0;
+        this.length = 0;
     }
 
     public print() {
         if (this.isEmpty()) {
+            console.log("Empty list.");
             return;
         }
         let result: string = "";
@@ -151,18 +157,96 @@ class CircularLinkedList {
         result += temp.value
         console.info(result);
     }
-
-
-    constructor() {
-        if (this.tail === undefined) this.tail = null;
-    }
 }
 
-let ll: CircularLinkedList = new CircularLinkedList();
-ll.addHead(1);
-ll.addHead(2);
-ll.addHead(3);
-ll.addHead(1);
-ll.addHead(2);
-ll.addHead(3);
-ll.print();
+function main1() {
+	let ll = new CircularLinkedList();
+	ll.addHead(1);
+	ll.addHead(2);
+	ll.addHead(3);
+	ll.print();
+	console.log(ll.size());
+	console.log(ll.isEmpty());
+	console.log(ll.peek());
+	console.log(ll.find(3));
+}
+
+/*
+3 2 1
+3
+false
+3
+true
+*/
+
+function main2() {
+	let ll = new CircularLinkedList();
+	ll.addTail(1);
+	ll.addTail(2);
+	ll.addTail(3);
+	ll.print();
+}
+
+/*
+1 2 3
+*/
+
+function main3() {
+	let ll = new CircularLinkedList();
+	ll.addHead(1);
+	ll.addHead(2);
+	ll.addHead(3);
+	ll.print();
+	ll.removeHead();
+	ll.print();
+	ll.removeNode(2);
+	ll.print();
+	ll.freeList();
+	ll.print();
+}
+
+/*
+3 2 1
+2 1
+1
+Empty List.
+*/
+
+function main4() {
+	let ll = new CircularLinkedList();
+	ll.addHead(1);
+	ll.addHead(2);
+	ll.addHead(3);
+	ll.print();
+	let ll2 = ll.copyList();
+	ll2.print();
+	let ll3 = ll.copyListReversed();
+	ll3.print();
+}
+
+/*
+3 2 1
+3 2 1
+1 2 3
+*/
+
+function main5() {
+	let ll = new CircularLinkedList();
+	ll.addHead(1);
+	ll.addHead(2);
+	ll.addHead(3);
+	ll.print();
+	ll.removeNode(2);
+	ll.print();
+}
+
+/*
+3 2 1
+3 1
+*/
+
+main1();
+main2();
+main3();
+main4();
+main5();

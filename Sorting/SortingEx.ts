@@ -1,8 +1,4 @@
 
-function printArray(arr: Array<number>, count: number) {
-    console.info(arr);
-}
-
 function swap(arr: Array<number>, x: number, y: number) {
     let temp: number = arr[x];
     arr[x] = arr[y];
@@ -29,6 +25,38 @@ function Partition01(arr: Array<number>, size: number): number {
     return count;
 }
 
+function partition012_(arr: number[], size: number): void {
+	let zero = 0;
+	let one = 0;
+	let two = 0;
+	for (let i = 0; i < size; i++) {
+		if (arr[i] === 0) {
+			zero += 1;
+		} else if (arr[i] === 1) {
+			one += 1;
+		} else {
+			two += 1;
+		}
+	}
+
+	let index = 0;
+	while (zero > 0) {
+		arr[index++] = 0;
+		zero -= 1;
+	}
+
+	while (one > 0) {
+		arr[index++] = 1;
+		one -= 1;
+	}
+
+	while (two > 0) {
+		arr[index++] = 2;
+		two -= 1;
+	}
+}
+
+
 function Partition012(arr: Array<number>, size: number) {
     let left: number = 0;
     let right: number = size - 1;
@@ -51,11 +79,25 @@ function Partition012(arr: Array<number>, size: number) {
 function test1() {
     let arr: Array<number> = [0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1];
     Partition01(arr, arr.length);
-    printArray(arr, arr.length);
+    console.info(arr);
+
     let arr2: Array<number> = [0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1];
     Partition012(arr2, arr2.length);
-    printArray(arr2, arr2.length);
+    console.info(arr2);
+
+    arr2 = [0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1];
+    partition012_(arr2, arr2.length);
+    console.log(JSON.stringify(arr2));
 }
+
+test1();
+
+/*
+[0,0,0,0,0,0,1,1,1,1,1,1]
+[0,0,0,0,0,1,1,1,1,1,2,2]
+[0,0,0,0,0,1,1,1,1,1,2,2]
+*/
+
 
 function RangePartition(arr: Array<number>, size: number, lower: number, higher: number) {
     let start: number = 0;
@@ -78,9 +120,15 @@ function RangePartition(arr: Array<number>, size: number, lower: number, higher:
 // Testing code.
 function test2() {
     let arr: Array<number> = [1, 21, 2, 20, 3, 19, 4, 18, 5, 17, 6, 16, 7, 15, 8, 14, 9, 13, 10, 12, 11];
-    RangePartition(arr, arr.length, 9, 12);
-    printArray(arr, arr.length);
+    RangePartition(arr, arr.length, 9, 15);
+    console.info(arr);
 }
+
+test2();
+
+/*
+[1,2,3,4,5,6,7,8,11,9,10,14,12,15,13,16,17,18,19,20,21]
+*/
 
 function minSwaps(arr: Array<number>, size: number, val: number): number {
     let swapCount: number = 0;
@@ -102,7 +150,69 @@ function minSwaps(arr: Array<number>, size: number, val: number): number {
     return swapCount;
 }
 
-function seperateEvenAndOdd(data: Array<number>, size: number) {
+// Testing code.
+function test3(){
+    let arr = [2, 7, 5, 6, 1, 3, 4, 9, 10, 8];
+    let val = 5;
+    console.log(minSwaps(arr, 10, val));
+}
+
+test3();
+// 3
+
+function AbsGreater(value1: number, value2: number, ref: number): boolean {
+    return (Math.abs(value1 - ref) > Math.abs(value2 - ref));
+}
+
+function AbsBubbleSort(arr: Array<number>, size: number, ref: number) {
+    for (let i: number = 0; i < (size - 1); i++) {
+        for (let j: number = 0; j < (size - i - 1); j++) {
+            if (AbsGreater(arr[j], arr[j + 1], ref)) {
+                swap(arr, j, j + 1);
+            }
+        }
+    }
+}
+
+// Testing code.
+function test4() {
+    let array: Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+    let ref: number = 5;
+    AbsBubbleSort(array, array.length, ref);
+    console.info(array);
+}
+
+test4();
+/*
+[5,6,4,7,3,8,2,9,1]
+*/
+
+function EqGreater(value1: number, value2: number, A: number): boolean {
+    value1 = A * value1 * value1;
+    value2 = A * value2 * value2;
+    return value1 > value2;
+}
+
+function separateEvenAndOdd(data: number[], size: number): void {
+	let left = 0;
+	let right = size - 1;
+	let aux: number[] = Array(size).fill(0);
+	for (let i = 0; i < size; i++) {
+		if (data[i] % 2 === 0) {
+			aux[left] = data[i];
+			left++;
+		} else if (data[i] % 2 === 1) {
+			aux[right] = data[i];
+			right--;
+		}
+	}
+	for (let i = 0; i < size; i++) {
+		data[i] = aux[i];
+	}
+}
+
+
+function separateEvenAndOdd2(data: number[], size: number) {
     let left: number = 0;
     let right: number = size - 1;
     while (left < right) {
@@ -118,33 +228,24 @@ function seperateEvenAndOdd(data: Array<number>, size: number) {
     };
 }
 
-function AbsMore(value1: number, value2: number, ref: number): boolean {
-    return (Math.abs(value1 - ref) > Math.abs(value2 - ref));
-}
-
-function AbsBubbleSort(arr: Array<number>, size: number, ref: number) {
-    for (let i: number = 0; i < (size - 1); i++) {
-        for (let j: number = 0; j < (size - i - 1); j++) {
-            if (AbsMore(arr[j], arr[j + 1], ref)) {
-                swap(arr, j, j + 1);
-            }
-        }
-    }
-}
 
 // Testing code.
-function test3() {
-    let array: Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
-    let ref: number = 5;
-    AbsBubbleSort(array, array.length, ref);
-    printArray(array, array.length);
+function test5() {
+    let array = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+    separateEvenAndOdd(array, array.length);
+    console.log(JSON.stringify(array));
+    let array2 = [9, 1, 8, 2, 7, 3, 6, 4, 5];
+    separateEvenAndOdd2(array2, array2.length);
+    console.log(JSON.stringify(array2));
 }
 
-function EqMore(value1: number, value2: number, A: number): boolean {
-    value1 = A * value1 * value1;
-    value2 = A * value2 * value2;
-    return value1 > value2;
-}
+test5();
+
+/*
+[8,2,6,4,5,3,7,1,9]
+[4,6,8,2,7,3,1,9,5]
+*/
+
 
 function ArrayReduction(arr: Array<number>, size: number) {
     arr.sort(function cmp(a, b) { return (a - b); });
@@ -152,7 +253,6 @@ function ArrayReduction(arr: Array<number>, size: number) {
     let reduction: number = arr[0];
     for (let i: number = 0; i < size; i++) {
         if (arr[i] - reduction > 0) {
-            console.info(size - i);
             reduction = arr[i];
             count += 1;
         }
@@ -161,10 +261,11 @@ function ArrayReduction(arr: Array<number>, size: number) {
 }
 
 // Testing code.
-function test4() {
+function test6() {
     let arr: Array<number> = [5, 1, 1, 1, 2, 3, 5];
     ArrayReduction(arr, arr.length);
 }
+test6();
 
 function SortByOrder(arr: Array<number>, size: number, arr2: Array<number>, size2: number) {
     let ht: any = new Map();
@@ -205,37 +306,55 @@ function SortByOrder(arr: Array<number>, size: number, arr2: Array<number>, size
 }
 
 // Testing code.
-function test5() {
+function test7() {
     let arr: Array<number> = [2, 1, 2, 5, 7, 1, 9, 3, 6, 8, 8];
     let arr2: Array<number> = [2, 1, 8, 3];
     SortByOrder(arr, arr.length, arr2, arr2.length);
+    console.log(arr)
 }
+
+test7();
 
 function merge(arr1: Array<number>, size1: number, arr2: Array<number>, size2: number) {
     let index: number = 0;
+    let temp;
     while (index < size1) {
         if (arr1[index] <= arr2[0]) {
             index += 1;
         } else {
-            arr1[index] ^= arr2[0] ^= arr1[index] ^= arr2[0];
+            temp = arr1[index]
+            arr1[index] = arr2[0];
+            arr2[0] = temp;
+
             index += 1;
-            for (let i: number = 0; i < (size2 - 1); i++) {
+            for (let i = 0; i < (size2 - 1); i++) {
                 if (arr2[i] < arr2[i + 1])
                     break;
-                arr2[i] ^= arr2[i + 1] ^= arr2[i] ^= arr2[i + 1];
+
+                temp = arr2[i]
+                arr2[i] = arr2[i + 1];
+                arr2[i + 1] = temp;
+
             }
         }
-    };
+    }
 }
 
 // Testing code.
-function test6() {
+function test8() {
     let arr1: Array<number> = [1, 5, 9, 10, 15, 20];
     let arr2: Array<number> = [2, 3, 8, 13];
     merge(arr1, arr1.length, arr2, arr2.length);
-    printArray(arr1, arr1.length);
-    printArray(arr2, arr2.length);
+    console.info(arr1);
+    console.info(arr2);
 }
+
+test8();
+
+/*
+[ 1, 2, 3, 5, 8, 9 ]
+[ 10, 13, 15, 20 ]
+*/
 
 function checkReverse(arr: Array<number>, size: number): boolean {
     let start: number = -1;
@@ -256,8 +375,10 @@ function checkReverse(arr: Array<number>, size: number): boolean {
     }
     if (stop === -1)
         return true;
+
     if (arr[start - 1] > arr[stop] || arr[stop + 1] < arr[start])
         return false;
+
     for (let i: number = stop + 1; i < size - 1; i++) {
         if (arr[i] > arr[i + 1]) {
             return false;
@@ -265,6 +386,19 @@ function checkReverse(arr: Array<number>, size: number): boolean {
     }
     return true;
 }
+
+
+// Testing code.
+function test9() {
+    const arr = [1, 3, 8, 5, 4, 3, 10, 11, 12, 18, 28];
+    console.log("checkReverse :", checkReverse(arr, arr.length));
+}
+
+test9();
+
+/*
+checkReverse : true
+*/
 
 function min(X: number, Y: number): number {
     if (X < Y) {
@@ -280,8 +414,6 @@ function UnionIntersectionSorted(arr1: Array<number>, size1: number, arr2: Array
     let interArr: Array<number> = new Array(min(size1, size2));
     let uIndex: number = 0;
     let iIndex: number = 0;
-    console.log(arr1)
-    console.log(arr2)
     while (first < size1 && second < size2) {
         if (arr1[first] === arr2[second]) {
             unionArr[uIndex++] = arr1[first];
@@ -295,17 +427,17 @@ function UnionIntersectionSorted(arr1: Array<number>, size1: number, arr2: Array
             unionArr[uIndex++] = arr2[second];
             second += 1;
         }
-    };
+    }
     while ((first < size1)) {
         unionArr[uIndex++] = arr1[first];
         first += 1;
-    };
+    }
     while ((second < size2)) {
         unionArr[uIndex++] = arr2[second];
         second += 1;
-    };
-    printArray(unionArr, uIndex);
-    printArray(interArr, iIndex);
+    }
+    console.log("Union :", JSON.stringify(unionArr));
+    console.log("Intersection :", JSON.stringify(interArr));
 }
 
 function UnionIntersectionUnsorted(arr1: Array<number>, size1: number, arr2: Array<number>, size2: number) {
@@ -315,11 +447,330 @@ function UnionIntersectionUnsorted(arr1: Array<number>, size1: number, arr2: Arr
 }
 
 // Testing code.
-function test7() {
+function test10() {
     let arr1: Array<number> = [1, 11, 2, 3, 14, 5, 6, 8, 9];
     let arr2: Array<number> = [2, 4, 5, 12, 7, 8, 13, 10];
     UnionIntersectionUnsorted(arr1, arr1.length, arr2, arr2.length);
 }
+
+
+test10();
+/*
+Union : [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+Intersection : [2,5,8]
+*/
+
+function rotateArray(a: number[], n: number, k: number): void {
+    reverseArray(a, 0, k - 1);
+    reverseArray(a, k, n - 1);
+    reverseArray(a, 0, n - 1);
+}
+
+function reverseArray(a: number[], start: number, end: number): void {
+    if (Array.isArray(a) && typeof start === 'number' && typeof end === 'number') {
+        for (let i = start, j = end; i < j; i++, j--) {
+            const temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    } else {
+        throw new Error('invalid overload');
+    }
+}
+
+function reverseArray2(a: number[]): void {
+    const start = 0;
+    const end = a.length - 1;
+    for (let i = start, j = end; i < j; i++, j--) {
+        const temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}
+
+// Testing code.
+function test11(): void {
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    rotateArray(numbers, numbers.length, 7);
+    console.log(JSON.stringify(numbers));
+    const numbers2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    rotateArray(numbers2, numbers2.length, 4);
+    console.log(JSON.stringify(numbers2));
+
+}
+
+test11();
+/*
+[8,9,10,1,2,3,4,5,6,7]
+[5,6,7,8,9,10,1,2,3,4]
+*/
+
+function SumArray(arr: number[]): number {
+    const size = arr.length;
+    let total = 0;
+    for (let index = 0; index < size; index++) {
+        total = total + arr[index];
+    }
+    return total;
+}
+
+// Testing code.
+function test12(): void {
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const sum = SumArray(numbers);
+    console.log(`Sum is :: ${sum}`);
+}
+
+test12();
+
+/*
+Sum is :: 55
+*/
+
+function maxSubArraySum(a: number[]): number {
+    const size = a.length;
+    let maxSoFar = 0;
+    let maxEndingHere = 0;
+
+    for (let i = 0; i < size; i++) {
+        maxEndingHere = maxEndingHere + a[i];
+        if (maxEndingHere < 0) {
+            maxEndingHere = 0;
+        }
+        if (maxSoFar < maxEndingHere) {
+            maxSoFar = maxEndingHere;
+        }
+    }
+    return maxSoFar;
+}
+
+// Testing code.
+function test13(): void {
+    const arr = [1, -2, 3, 4, -4, 6, -4, 8, 2];
+    console.log(maxSubArraySum(arr));
+}
+
+test13();
+
+/*
+15
+*/
+
+function WaveArray2(arr: number[]): void {
+    const size = arr.length;
+    for (let i = 1; i < size; i += 2) {
+        if (i - 1 >= 0 && arr[i] > arr[i - 1]) {
+            swap(arr, i, i - 1);
+        }
+
+        if (i + 1 < size && arr[i] > arr[i + 1]) {
+            swap(arr, i, i + 1);
+        }
+    }
+}
+
+function WaveArray(arr: number[]): void {
+    const size = arr.length;
+    arr.sort();
+    for (let i = 0; i < size - 1; i += 2) {
+        swap(arr, i, i + 1);
+    }
+}
+
+// Testing code.
+function test14(): void {
+    const arr = [8, 1, 2, 3, 4, 5, 6, 4, 2];
+    WaveArray(arr);
+    console.log(JSON.stringify(arr));
+
+    const arr2 = [8, 1, 2, 3, 4, 5, 6, 4, 2];
+    WaveArray2(arr2);
+    console.log(JSON.stringify(arr2));
+}
+
+test14();
+/*
+[2,1,3,2,4,4,6,5,8]
+[8,1,3,2,5,4,6,2,4]
+*/
+
+function indexArray(arr: number[], size: number): void {
+    for (let i = 0; i < size; i++) {
+        let curr = i;
+        let value = -1;
+
+        while (arr[curr] !== -1 && arr[curr] !== curr) {
+            const temp = arr[curr];
+            arr[curr] = value;
+            value = curr = temp;
+        }
+
+        if (value !== -1) {
+            arr[curr] = value;
+        }
+    }
+}
+
+function indexArray2(arr: number[], size: number): void {
+    let temp;
+    for (let i = 0; i < size; i++) {
+        while (arr[i] !== -1 && arr[i] !== i) {
+            temp = arr[i];
+            arr[i] = arr[temp];
+            arr[temp] = temp;
+        }
+    }
+}
+
+// Testing code.
+function test15(): void {
+    const arr = [8, -1, 6, 1, 9, 3, 2, 7, 4, -1];
+    let size = arr.length;
+    indexArray2(arr, size);
+    console.log(JSON.stringify(arr));
+
+    const arr2 = [8, -1, 6, 1, 9, 3, 2, 7, 4, -1];
+    size = arr2.length;
+    indexArray(arr2, size);
+    console.log(JSON.stringify(arr2));
+}
+
+test15();
+/*
+[-1,1,2,3,4,-1,6,7,8,9]
+[-1,1,2,3,4,-1,6,7,8,9]
+*/
+
+function Sort1toN(arr: number[], size: number): void {
+    let curr: number;
+    let value: number;
+    let next: number;
+    for (let i = 0; i < size; i++) {
+        curr = i;
+        value = -1;
+
+        while (curr >= 0 && curr < size && arr[curr] !== curr + 1) {
+            next = arr[curr];
+            arr[curr] = value;
+            value = next;
+            curr = next - 1;
+        }
+    }
+}
+
+function Sort1toN2(arr: number[], size: number): void {
+    let temp: number;
+    for (let i = 0; i < size; i++) {
+        while (arr[i] !== i + 1 && arr[i] > 1) {
+            temp = arr[i];
+            arr[i] = arr[temp - 1];
+            arr[temp - 1] = temp;
+        }
+    }
+}
+
+// Testing code.
+function test16(): void {
+    const arr = [8, 5, 6, 1, 9, 3, 2, 7, 4, 10];
+    let size = arr.length;
+    Sort1toN2(arr, size);
+    console.log(JSON.stringify(arr));
+
+    const arr2 = [8, 5, 6, 1, 9, 3, 2, 7, 4, 10];
+    size = arr2.length;
+    Sort1toN(arr2, size);
+    console.log(JSON.stringify(arr2));
+}
+
+test16();
+/*
+[1,2,3,4,5,6,7,8,9,10]
+[1,2,3,4,5,6,7,8,9,10]
+*/
+
+function MaxMinArr(arr: number[], size: number): void {
+    const aux = arr.slice(0, size);
+    let start = 0;
+    let stop = size - 1;
+    for (let i = 0; i < size; i++) {
+        if (i % 2 === 0) {
+            arr[i] = aux[stop];
+            stop -= 1;
+        } else {
+            arr[i] = aux[start];
+            start += 1;
+        }
+    }
+}
+
+function ReverseArr(arr: number[], start: number, stop: number): void {
+    while (start < stop) {
+        swap(arr, start, stop);
+        start += 1;
+        stop -= 1;
+    }
+}
+
+function MaxMinArr2(arr: number[], size: number): void {
+    for (let i = 0; i < size - 1; i++) {
+        ReverseArr(arr, i, size - 1);
+    }
+}
+
+// Testing code.
+function test18(): void {
+    const arr = [1, 2, 3, 4, 5, 6, 7];
+    const size = arr.length;
+    MaxMinArr(arr, size);
+    console.log(JSON.stringify(arr));
+
+    const arr2 = [1, 2, 3, 4, 5, 6, 7];
+    const size2 = arr.length;
+    MaxMinArr2(arr2, size2);
+    console.log(JSON.stringify(arr2));
+}
+
+test18();
+/*
+[7,1,6,2,5,3,4]
+[7,1,6,2,5,3,4]
+*/
+
+function maxCircularSum(arr: number[], size: number): number {
+    let sumAll = 0;
+    let currVal = 0;
+    let maxVal: number;
+    for (let i = 0; i < size; i++) {
+        sumAll += arr[i];
+        currVal += i * arr[i];
+    }
+
+    maxVal = currVal;
+    for (let i = 1; i < size; i++) {
+        currVal = currVal + sumAll - size * arr[size - i];
+        if (currVal > maxVal) {
+            maxVal = currVal;
+        }
+    }
+    return maxVal;
+}
+
+// Testing code.
+function test19(): void {
+    const arr = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+    console.log(`Max Circular Sum: ${maxCircularSum(arr, arr.length)}`);
+}
+
+test19();
+// Max Circular Sum: 290
+
+
+
+
+
+
+
+
 
 test1();
 test2();

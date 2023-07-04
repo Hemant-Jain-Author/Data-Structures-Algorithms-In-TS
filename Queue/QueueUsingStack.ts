@@ -32,9 +32,10 @@ class QueueUsingStack<T> {
     }
 }
 
+// Testing code.
 let que: QueueUsingStack<number> = new QueueUsingStack<number>();
 que.add(1);
-que.add(11);
-que.add(111);
+que.add(2);
+que.add(3);
 console.info(que.remove());
 console.info(que.remove());

@@ -1,62 +1,56 @@
-class Stack<T> {
-    capacity: number = 1000;
-    data: Array<T>;
-    __top: number = -1;
+class Stack {
+    private arr: any[];
 
-    public constructor(size: number = 1000) {
-        this.capacity = size;
-        this.__top = -1;
-        this.data = new Array<T>(size);
+    constructor() {
+        this.arr = [];
     }
 
-    public size(): number {
-        return (this.__top + 1);
+    /* other methods */
+
+    size(): number {
+        return this.arr.length;
     }
 
-    public isEmpty(): boolean {
-        return (this.__top === -1);
+    isEmpty(): boolean {
+        return this.arr.length === 0;
     }
 
-    public push(value: T) {
-        if (this.size() === this.data.length) {
-            throw "StackOvarflowException";
-        }
-        this.__top++;
-        this.data[this.__top] = value;
+    push(value: any): void {
+        this.arr.push(value);
     }
 
-    public top(): T {
+    top(): any {
         if (this.isEmpty()) {
-            throw "StackEmptyException";
+            throw new Error("Stack Empty Exception");
         }
-        return this.data[this.__top];
+        return this.arr[this.arr.length - 1];
     }
 
-    public pop(): T {
+    pop(): any {
         if (this.isEmpty()) {
-            throw "StackEmptyException";
+            throw new Error("Stack Empty Exception");
         }
-        let topVal: T = this.data[this.__top];
-        this.__top--;
-        return topVal;
+        return this.arr.pop();
     }
 
-    public print() {
-        let output = "Stack: ";
-        for (let i: number = this.__top; i > -1; i--) {
-            output += (this.data[i] + " ");
-        };
-        console.log(output);
+    print(): void {
+        console.log(this.arr);
     }
-
 }
 
 // Testing code.
-let s: Stack<number> = new Stack<number>();
+const s = new Stack();
 s.push(1);
 s.push(2);
 s.push(3);
 s.print();
-console.info(s.pop());
-console.info(s.pop());
-s.print();
+console.log(s.pop());
+console.log(s.pop());
+console.log(s.pop());
+
+/*
+[ 1, 2, 3 ]
+3
+2
+1
+*/

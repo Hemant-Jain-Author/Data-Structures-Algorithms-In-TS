@@ -1,67 +1,83 @@
 class QueueNode<T> {
     value: T;
-    next: QueueNode<T>;
+    next: QueueNode<T> | null;
 
-    public constructor(v: T, n: QueueNode<T>) {
+    constructor(v: T, n: QueueNode<T> | null) {
         this.value = v;
         this.next = n;
     }
 }
 
-class QueueLL<T> {
-    tail: QueueNode<T> = null;
-    _size: number = 0;
+class Queue<T> {
+    head: QueueNode<T> | null;
+    tail: QueueNode<T> | null;
+    length: number;
 
-    public size(): number {
-        return this._size;
+    constructor() {
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
     }
 
-    public isEmpty(): boolean {
-        return this._size === 0;
+    size(): number {
+        return this.length;
     }
 
-    public peek(): T {
+    isEmpty(): boolean {
+        return this.length === 0;
+    }
+
+    peek(): T {
         if (this.isEmpty())
-            throw "StackEmptyException";
-        if (this.tail === this.tail.next)
-            return this.tail.value;
-        else
-            return this.tail.next.value;
+            throw new Error("StackEmptyError");
+        return this.head!.value;
     }
 
-    public add(value: T) {
-        let temp: QueueNode<T> = new QueueNode<T>(value, null);
-        if (this.tail == null) {
-            this.tail = temp;
-            this.tail.next = this.tail;
-        } else {
-            temp.next = this.tail.next;
-            this.tail.next = temp;
+    add(value: T): void {
+        const temp = new QueueNode(value, null);
+        if (this.head === null)
+            this.head = this.tail = temp;
+        else {
+            this.tail!.next = temp;
             this.tail = temp;
         }
-        this._size++;
+        this.length++;
     }
 
-    public remove(): T {
+    remove(): T {
         if (this.isEmpty())
-            throw "StackEmptyException";
-        let value: T;
-        if (this.tail === this.tail.next) {
-            value = this.tail.value;
-            this.tail = null;
-        } else {
-            value = this.tail.next.value;
-            this.tail.next = this.tail.next.next;
-        }
-        this._size--;
+            throw new Error("StackEmptyError");
+        const value = this.head!.value;
+        this.head = this.head!.next;
+        this.length--;
         return value;
     }
+
+    print(): void {
+        let output = "", temp = this.head;
+        while (temp !== null) {
+            output += `${temp.value} `;
+            temp = temp.next;
+        }
+        console.log(output);
+    }
 }
 
-let q: QueueLL<number> = new QueueLL<number>();
-q.add(1);
-q.add(2);
-q.add(3);
-for (let i: number = 0; i < 3; i++) {
-    console.info(q.remove());
-}
+// Testing code.
+const que = new Queue<number>();
+que.add(1);
+que.add(2);
+que.add(3);
+que.print();
+console.log("IsEmpty : " + que.isEmpty());
+console.log("Size : " + que.size());
+console.log("Queue remove : " + que.remove());
+console.log("Queue remove : " + que.remove());
+
+/*
+1 2 3 
+IsEmpty : false
+Size : 3
+Queue remove : 1
+Queue remove : 2
+*/

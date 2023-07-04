@@ -12,18 +12,18 @@ const ErrorValue = 2147483647;
 
 class LinkedList {
     head: LNode;
-    _size: number = 0;
+    length: number = 0;
 
     constructor() {
         this.head = null;
     }
 
     public size(): number {
-        return this._size;
+        return this.length;
     }
 
     public isEmpty(): boolean {
-        return this._size === 0;
+        return this.length === 0;
     }
 
     public peek(): number {
@@ -34,7 +34,7 @@ class LinkedList {
 
     public addHead(value: number) {
         this.head = new LNode(value, this.head);
-        this._size++;
+        this.length++;
     }
 
     public addTail(value: number) {
@@ -55,11 +55,11 @@ class LinkedList {
 
         let value: number = this.head.value;
         this.head = this.head.next;
-        this._size--;
+        this.length--;
         return value;
     }
 
-    public searchList(data: number): boolean {
+    public find(data: number): boolean {
         let temp: LNode = this.head;
         while (temp != null) {
             if (temp.value === data)
@@ -76,13 +76,13 @@ class LinkedList {
 
         if (delValue === this.head.value) {
             this.head = this.head.next;
-            this._size--;
+            this.length--;
             return true;
         }
         while (temp.next != null) {
             if (temp.next.value === delValue) {
                 temp.next = temp.next.next;
-                this._size--;
+                this.length--;
                 return true;
             }
             temp = temp.next;
@@ -192,7 +192,7 @@ class LinkedList {
     public compareList2(ll2: LinkedList): boolean {
         let head1: LNode = this.head;
         let head2: LNode = ll2.head;
-        while (head1 == null && head2 == null) {
+        while (head1 !== null && head2 !== null) {
             if (head1.value !== head2.value)
                 return false;
             head1 = head1.next;
@@ -213,7 +213,7 @@ class LinkedList {
         return count;
     }
 
-    public nthNodeFromBegining(index: number): number {
+    public nthNodeFromBeginning(index: number): number {
         if (index > this.size() || index < 1)
             return ErrorValue;
         let count: number = 0;
@@ -232,7 +232,7 @@ class LinkedList {
             return ErrorValue;
         }
         startIndex = size - index + 1;
-        return this.nthNodeFromBegining(startIndex);
+        return this.nthNodeFromBeginning(startIndex);
     }
 
     public nthNodeFromEnd2(index: number): number {
@@ -285,9 +285,9 @@ class LinkedList {
         return this.head;
     }
 
-    public deleteList() {
+    public freeList() {
         this.head = null;
-        this._size = 0;
+        this.length = 0;
     }
 
     public print() {
@@ -386,21 +386,339 @@ class LinkedList {
         console.info("loop not found");
         return 0;
     }
+
+
+    loopPointDetect() {
+        let slowPtr = this.head;
+        let fastPtr = this.head;
+        while (fastPtr.next != null && fastPtr.next.next != null) {
+            slowPtr = slowPtr.next;
+            fastPtr = fastPtr.next.next;
+            if (slowPtr === fastPtr) {
+                return slowPtr;
+            }
+        }
+        return null;
+    }
+
+    removeLoop() {
+        const loopPoint = this.loopPointDetect();
+        if (loopPoint == null)
+            return;
+        let firstPtr = this.head;
+        if (loopPoint === this.head) {
+            while (firstPtr.next !== this.head)
+                firstPtr = firstPtr.next;
+            firstPtr.next = null;
+            return;
+        }
+        let secondPtr = loopPoint;
+        while (firstPtr.next !== secondPtr.next) {
+            firstPtr = firstPtr.next;
+            secondPtr = secondPtr.next;
+        }
+        secondPtr.next = null;
+    }
+
+    bubbleSort() {
+        let curr, end = null;
+        let temp;
+
+        if (this.head == null || this.head.next == null) {
+            return;
+        }
+
+        let flag = true;
+        while (flag) {
+            flag = false;
+            curr = this.head;
+            while (curr.next != end) {
+                if (curr.value > curr.next.value) {
+                    flag = true;
+                    temp = curr.value;
+                    curr.value = curr.next.value;
+                    curr.next.value = temp;
+                }
+                curr = curr.next;
+            }
+            end = curr;
+        }
+    }
+
+    selectionSort() {
+        let curr, end = null, maxNode;
+        let temp, max;
+
+        if (this.head == null || this.head.next == null) {
+            return;
+        }
+
+        while (this.head != end) {
+            curr = this.head;
+            max = curr.value;
+            maxNode = curr;
+            while (curr.next != end) {
+                if (max < curr.next.value) {
+                    maxNode = curr.next;
+                    max = curr.next.value;
+                }
+                curr = curr.next;
+            }
+            end = curr;
+            if (curr.value < max) {
+                temp = curr.value;
+                curr.value = max;
+                maxNode.value = temp;
+            }
+        }
+    }
+
+    insertionSort() {
+        let curr, stop;
+        let temp;
+
+        if (this.head == null || this.head.next == null) {
+            return;
+        }
+
+        stop = this.head.next;
+        while (stop != null) {
+            curr = this.head;
+            while (curr != stop) {
+                if (curr.value > stop.value) {
+                    temp = curr.value;
+                    curr.value = stop.value;
+                    stop.value = temp;
+                }
+                curr = curr.next;
+            }
+            stop = stop.next;
+        }
+    }
 }
 
-function main() {
-    let ll: LinkedList = new LinkedList();
+
+
+// Testing code.
+function main1() {
+    const ll = new LinkedList();
     ll.addHead(1);
     ll.addHead(2);
-    let nd: LNode = ll.head;
     ll.addHead(3);
-    let ll2: LinkedList = new LinkedList();
-    ll2.addHead(1);
-    ll2.head.next = nd;
-    ll2.addHead(2);
-    ll2.addHead(3);
-    ll2.print();
-    //console.info(ll.findIntersection(ll2).value);
+    ll.print();
+
+    console.log("Size : " + ll.size());
+    console.log("Size : " + ll.findLength());
+    console.log("Is empty : " + ll.isEmpty());
+    console.log("Peek : " + ll.peek());
+    ll.addTail(4);
+    ll.print();
 }
 
-main();
+//main1();
+
+/*
+3 2 1 
+Size : 3
+Size : 3
+Is empty : false
+Peek : 3
+3 2 1 4 
+*/
+
+function main2() {
+    const ll = new LinkedList();
+    ll.addHead(1);
+    ll.addHead(2);
+    ll.addHead(3);
+    ll.print();
+    console.log("search : " + ll.find(2));
+    ll.removeHead();
+    ll.print();
+}
+
+//main2();
+
+/*
+3 2 1 
+search : true
+2 1
+*/
+
+function main3() {
+    const ll = new LinkedList();
+    ll.addHead(1);
+    ll.addHead(2);
+    ll.addHead(1);
+    ll.addHead(2);
+    ll.addHead(1);
+    ll.addHead(3);
+    ll.print();
+    ll.deleteNode(2);
+    ll.print();
+    ll.deleteNodes(1);
+    ll.print();
+}
+//main3();
+/*
+3 1 2 1 2 1 
+3 1 1 2 1 
+3 2 
+*/
+
+function main4() {
+    const ll = new LinkedList();
+    ll.addHead(1);
+    ll.addHead(2);
+    ll.addHead(3);
+    ll.print();
+
+    ll.reverse();
+    ll.print();
+
+    ll.reverseRecurse();
+    ll.print();
+
+    const l2 = ll.copyList();
+    l2.print();
+    const l3 = ll.copyListReversed();
+    l3.print();
+}
+//main4();
+/*
+3 2 1 
+1 2 3 
+3 2 1 
+3 2 1 
+1 2 3 
+*/
+
+function main5() {
+    const ll = new LinkedList();
+    ll.addHead(1);
+    ll.addHead(2);
+    ll.addHead(3);
+    ll.print();
+
+    const l2 = ll.copyList();
+    l2.print();
+    const l3 = ll.copyListReversed();
+    l3.print();
+    console.log("compareList : " + ll.compareList(l2));
+    console.log("compareList : " + ll.compareList2(l2));
+    console.log("compareList : " + ll.compareList(l3));
+    console.log("compareList : " + ll.compareList2(l3));
+}
+//main5();
+/*
+3 2 1 
+3 2 1 
+1 2 3 
+compareList : true
+compareList : true
+compareList : false
+compareList : false
+*/
+
+function main6() {
+    const ll = new LinkedList();
+    ll.addHead(1);
+    ll.addHead(2);
+    ll.addHead(3);
+    console.log(ll.nthNodeFromBeginning(2));
+    console.log(ll.nthNodeFromEnd(2));
+    console.log(ll.nthNodeFromEnd2(2));
+}
+//main6();
+/*
+3 2 1 
+2
+2
+2
+*/
+
+function main7() {
+    const ll = new LinkedList();
+    ll.sortedInsert(1);
+    ll.sortedInsert(2);
+    ll.sortedInsert(3);
+    ll.sortedInsert(1);
+    ll.sortedInsert(2);
+    ll.sortedInsert(3);
+    ll.print();
+    ll.removeDuplicate();
+    ll.print();
+}
+//main7();
+/*
+1 1 2 2 3 3 
+1 2 3
+*/
+
+function main8() {
+    const ll = new LinkedList();
+    ll.addHead(1);
+    ll.addHead(2);
+    ll.addHead(3);
+    ll.print();
+    ll.makeLoop();
+    ll.loopDetect();
+    ll.reverseListLoopDetect();
+    ll.loopTypeDetect();
+    ll.removeLoop();
+    ll.loopDetect();
+}
+//main8();
+/*
+3 2 1 
+loop found
+circular list loop found
+loop not found
+*/
+
+function main9() {
+    const ll = new LinkedList();
+    ll.addHead(1);
+    ll.addHead(2);
+    const ll2 = new LinkedList();
+    ll2.addHead(3);
+    ll2.head.next = ll.head;
+    ll.addHead(4);
+    ll2.addHead(5);
+    ll.print();
+    ll2.print();
+
+    const nd = ll.findIntersection(ll2);
+    if (nd != null)
+        console.log("Intersection:: " + nd.value);
+}
+//main9();
+/*
+4 2 1 
+5 3 2 1 
+Intersection:: 2
+*/
+
+function main10() {
+    const ll = new LinkedList();
+    ll.addHead(1);
+    ll.addHead(10);
+    ll.addHead(9);
+    ll.addHead(7);
+    ll.addHead(2);
+    ll.addHead(3);
+    ll.addHead(5);
+    ll.addHead(4);
+    ll.addHead(6);
+    ll.addHead(8);
+    ll.print();
+    //ll.bubbleSort();
+    //ll.print();
+    //ll.selectionSort();
+    //ll.print();
+    ll.insertionSort();
+    ll.print();
+}
+
+main10();
+

@@ -1,96 +1,44 @@
-class Deque<T> {
-    data: Array<T>;
-
-    public constructor() {
-        this.data = new Array<T>();
+class Deque {
+    constructor() {
+        this.arr = [];
     }
-
-    public size(): number {
-        return this.data.length;
+    size() {
+        return this.arr.length;
     }
-
-    public add(val: T) {
-        this.data.push(val);
+    isEmpty() {
+        return this.arr.length === 0;
     }
-
-    public remove(): T {
-        return this.data.shift();
+    add(val) {
+        this.arr.push(val);
     }
-
-    public removeLast(): T {
-        return this.data.pop()
+    remove() {
+        return this.arr.shift();
     }
-
-    public front(): T {
-        return this.data[0]
+    front() {
+        return this.arr[0];
     }
-
-    public back(): T {
-        return this.data[this.data.length - 1]
+    back() {
+        return this.arr[this.arr.length - 1];
+    }
+    removeLast() {
+        return this.arr.pop();
     }
 }
-
-class Queue<T> {
-    frontIndex: number;
-    data: Array<T>;
-
-    public constructor() {
-        this.frontIndex = 0;
-        this.data = new Array<T>();
-    }
-
-    public add(value: T) {
-        this.data.push(value);
-    }
-
-    public remove(): T {
-        let value = this.data[this.frontIndex];
-        this.frontIndex++;
-        if (this.data.length > 0 && this.frontIndex * 2 >= this.data.length) {
-            this.data = this.data.slice(this.frontIndex);
-            this.frontIndex = 0;
-        }
-        return value;
-    }
-
-    public front(): T {
-        let value = this.data[this.frontIndex];
-        return value;
-    }
-
-    public isEmpty(): boolean {
-        return (this.data.length - this.frontIndex) === 0;
-    }
-
-    public size(): number {
-        return (this.data.length - this.frontIndex);
-    }
-
-    public back(): T {
-        return this.data[this.data.length - 1]
-    }
-}
-
-
 function function2() {
     console.log("fun2 line 1");
 }
-
 function function1() {
     console.log("fun1 line 1");
     function2();
     console.log("fun1 line 2");
 }
-
 // Testing code.
 function test1() {
     console.log("test line 1");
     function1();
     console.log("test line 2");
 }
-
 test1();
-
 /*
 test line 1
 fun1 line 1
@@ -98,9 +46,8 @@ fun2 line 1
 fun1 line 2
 test line 2
 */
-
-function sortedInsert(stk: Array<number>, element: number) {
-    let temp: number;
+function sortedInsert(stk, element) {
+    let temp;
     if ((stk.length == 0) || element > stk[stk.length - 1])
         stk.push(element);
     else {
@@ -109,7 +56,6 @@ function sortedInsert(stk: Array<number>, element: number) {
         stk.push(temp);
     }
 }
-
 // Testing code.
 function test2() {
     const stk = [];
@@ -117,39 +63,34 @@ function test2() {
     stk.push(2);
     stk.push(4);
     stk.push(5);
-    sortedInsert(stk, 3)
+    sortedInsert(stk, 3);
     console.log(stk);
 }
-
-test2()
-
+test2();
 // [ 1, 2, 3, 4, 5 ]
-
-function sortStack(stk: Array<number>) {
-    let temp: number;
+function sortStack(stk) {
+    let temp;
     if (stk.length != 0) {
         temp = stk.pop();
         sortStack(stk);
         stk.push(temp);
     }
 }
-
-function sortStack2(stk: Array<number>) {
-    let temp: number;
-    let stk2: Array<number> = new Array<number>();
+function sortStack2(stk) {
+    let temp;
+    let stk2 = new Array();
     while (stk.length != 0) {
         temp = stk.pop();
         while ((stk.length != 0) &&
             (stk2[stk2.length - 1] < temp)) {
-            stk.push(stk2.pop())
+            stk.push(stk2.pop());
         }
         stk2.push(temp);
     }
     while (stk2.length !== 0) {
-        stk.push(stk2.pop())
+        stk.push(stk2.pop());
     }
 }
-
 // Testing code.
 function test3() {
     const stk = [];
@@ -157,16 +98,13 @@ function test3() {
     stk.push(3);
     stk.push(2);
     stk.push(4);
-    sortStack(stk)
+    sortStack(stk);
     console.log(stk);
 }
-
-test3()
-
+test3();
 // [ 1, 2, 3, 4, 5 ]
-
-function bottomInsert(stk: Array<number>, element: number) {
-    let temp: number;
+function bottomInsert(stk, element) {
+    let temp;
     if (stk.length == 0)
         stk.push(element);
     else {
@@ -175,50 +113,44 @@ function bottomInsert(stk: Array<number>, element: number) {
         stk.push(temp);
     }
 }
-
 // Testing code.
 function test4() {
     const stk = [];
     stk.push(1);
     stk.push(2);
     stk.push(3);
-    bottomInsert(stk, 4)
+    bottomInsert(stk, 4);
     console.log(stk);
 }
-
-test4()
-
+test4();
 // [ 4, 1, 2, 3 ]
-
-function reverseStack(stk: any[]): void {
+function reverseStack(stk) {
     if (stk.length == 0) {
         return;
-    } else {
+    }
+    else {
         const value = stk.pop();
         reverseStack(stk);
         bottomInsert(stk, value);
     }
 }
-
-function reverseStack2(stk: any[]): void {
-    let que: Array<number> = new Array<number>();
-
+function reverseStack2(stk) {
+    const que = new Deque();
     while (stk.length > 0) {
         que.push(stk.pop());
     }
-
     while (que.isEmpty() === false) {
         stk.push(que.remove());
     }
 }
-
-function reverseStack3(stk: any[]): void {
+function reverseStack3(stk) {
     if (stk.length == 0) {
         return;
-    } else {
+    }
+    else {
         let lower = 0;
         let upper = stk.length - 1;
-        let temp: any;
+        let temp;
         while (lower < upper) {
             temp = stk[lower];
             stk[lower] = stk[upper];
@@ -228,10 +160,9 @@ function reverseStack3(stk: any[]): void {
         }
     }
 }
-
 // Testing code.
-function test5(): void {
-    const stk: any[] = [];
+function test5() {
+    const stk = [];
     stk.push(1);
     stk.push(2);
     stk.push(3);
@@ -239,27 +170,22 @@ function test5(): void {
     reverseStack(stk);
     console.log("Stack after reversal", stk);
 }
-
-test5()
-
+test5();
 /*
 Stack before reversal [ 1, 2, 3 ]
 Stack after reversal [ 3, 2, 1 ]
 */
-
-function reverseKElementInStack(stk: Array<number>, k: number) {
-    let que: Array<number> = new Array<number>();
-    let i: number = 0;
+function reverseKElementInStack(stk, k) {
+    let que = new Array();
+    let i = 0;
     while (stk.length != 0 && i < k) {
         que.push(stk.pop());
         i++;
     }
     while (que.length !== 0) {
-        stk.push(que.pop())
+        stk.push(que.pop());
     }
 }
-
-
 // Testing code.
 function test6() {
     const stk = [];
@@ -267,52 +193,42 @@ function test6() {
     stk.push(2);
     stk.push(3);
     stk.push(4);
-    reverseKElementInStack(stk, 2)
+    reverseKElementInStack(stk, 2);
     console.log(stk);
 }
-
-test6()
-
+test6();
 /*
 [ 1, 2, 4, 3 ]
 */
-
-
-function reverseQueue(que: Array<number>) {
-    let stk: Array<number> = new Array<number>();
+function reverseQueue(que) {
+    let stk = new Array();
     while (que.length !== 0) {
-        stk.push(que.pop())
+        stk.push(que.pop());
     }
     while (stk.length != 0) {
-        que.push(stk.pop())
+        que.push(stk.pop());
     }
 }
-
-
 // Testing code.
 function test7() {
-    let que: Array<number> = new Array<number>();
+    let que = new Array();
     que.push(1);
     que.push(2);
     que.push(3);
-    console.log(que)
-    reverseQueue(que)
+    console.log(que);
+    reverseQueue(que);
     console.log(que);
 }
-
-test7()
-
+test7();
 /*
 Deque { arr: [ 1, 2, 3 ] }
 Deque { arr: [ 3, 2, 1 ] }
 */
-
-
-function reverseKElementInQueue(que: Array<number>, k: number) {
-    let stk: Array<number> = new Array<number>();
-    let i: number = 0;
-    let diff: number;
-    let temp: number;
+function reverseKElementInQueue(que, k) {
+    let stk = new Array();
+    let i = 0;
+    let diff;
+    let temp;
     while (que.length !== 0 && i < k) {
         stk.push(que.pop());
         i++;
@@ -327,34 +243,26 @@ function reverseKElementInQueue(que: Array<number>, k: number) {
         diff -= 1;
     }
 }
-
-
 // Testing code.
 function test8() {
-    let que: Array<number> = new Array<number>();
+    let que = new Array();
     que.push(1);
     que.push(2);
     que.push(3);
     que.push(4);
-    console.log(que)
-    reverseKElementInQueue(que, 2)
+    console.log(que);
+    reverseKElementInQueue(que, 2);
     console.log(que);
 }
-
-test8()
-
+test8();
 /*
 Deque { arr: [ 1, 2, 3, 4 ] }
 Deque { arr: [ 2, 1, 3, 4 ] }
 */
-
-
-function isBalancedParenthesis(expn: string): boolean {
-    let stk: Array<string> = new Array<string>();
-
+function isBalancedParenthesis(expn) {
+    let stk = new Array();
     for (let index = 0; index < expn.length; index++) {
         let ch = expn[index];
-
         switch (ch) {
             case '{':
             case '[':
@@ -378,11 +286,8 @@ function isBalancedParenthesis(expn: string): boolean {
                 break;
         }
     }
-
     return (stk.length == 0);
 }
-
-
 // Testing code.
 function test9() {
     const expn = "{()}[]";
@@ -390,39 +295,36 @@ function test9() {
     console.log(`Given Expn:${expn}`);
     console.log(`Is Balanced Parenthesis : ${value}`);
 }
-
-test9()
-
+test9();
 /*
 Given Expn:{()}[]
 Is Balanced Parenthesis : true
 */
-
-
-function maxDepthParenthesis(expn: string, size: number): number {
-    let stk: Array<string> = new Array<string>();
-    let maxDepth: number = 0;
-    let depth: number = 0;
-    let ch: string;
-    for (let i: number = 0; i < size; i++) {
+function maxDepthParenthesis(expn, size) {
+    let stk = new Array();
+    let maxDepth = 0;
+    let depth = 0;
+    let ch;
+    for (let i = 0; i < size; i++) {
         ch = expn.charAt(i);
         if (ch == '(') {
             stk.push(ch);
             depth += 1;
-        } else if (ch == ')') {
+        }
+        else if (ch == ')') {
             stk.pop();
             depth -= 1;
         }
-        if (depth > maxDepth) maxDepth = depth;
+        if (depth > maxDepth)
+            maxDepth = depth;
     }
     return maxDepth;
 }
-
-function maxDepthParenthesis2(expn: string, size: number): number {
-    let maxDepth: number = 0;
-    let depth: number = 0;
-    let ch: string;
-    for (let i: number = 0; i < size; i++) {
+function maxDepthParenthesis2(expn, size) {
+    let maxDepth = 0;
+    let depth = 0;
+    let ch;
+    for (let i = 0; i < size; i++) {
         ch = expn.charAt(i);
         if (ch == '(')
             depth += 1;
@@ -433,7 +335,6 @@ function maxDepthParenthesis2(expn: string, size: number): number {
     }
     return maxDepth;
 }
-
 // Testing code.
 function test10() {
     const expn = "((((A)))((((BBB()))))()()()())";
@@ -444,19 +345,16 @@ function test10() {
     console.log(`Max depth parenthesis is ${value}`);
     console.log(`Max depth parenthesis is ${value2}`);
 }
-
-test10()
-
+test10();
 /*
 Max depth parenthesis is 6
 Max depth parenthesis is 6
 */
-
-function longestContBalParen(str: string, size: number): number {
-    let stk: Array<number> = new Array<number>();
+function longestContBalParen(str, size) {
+    let stk = new Array();
     stk.push(-1);
-    let length: number = 0;
-    for (let i: number = 0; i < size; i++) {
+    let length = 0;
+    for (let i = 0; i < size; i++) {
         if (str[i] == '(')
             stk.push(i);
         else {
@@ -469,7 +367,6 @@ function longestContBalParen(str: string, size: number): number {
     }
     return length;
 }
-
 // Testing code.
 function test11() {
     const expn = "())((()))(())()(()";
@@ -477,22 +374,18 @@ function test11() {
     const value = longestContBalParen(expn, size);
     console.log(`longestContBalParen : ${value}`);
 }
-
-test11()
-
+test11();
 //longestContBalParen : 12
-
-
-function reverseParenthesis(expn: string, size: number): number {
-    let stk: Array<string> = new Array<string>();
-    let openCount: number = 0;
-    let closeCount: number = 0;
-    let ch: string;
+function reverseParenthesis(expn, size) {
+    let stk = new Array();
+    let openCount = 0;
+    let closeCount = 0;
+    let ch;
     if (size % 2 === 1) {
         console.info("Invalid odd length " + size);
         return -1;
     }
-    for (let i: number = 0; i < size; i++) {
+    for (let i = 0; i < size; i++) {
         ch = expn.charAt(i);
         if (ch == '(')
             stk.push(ch);
@@ -508,11 +401,10 @@ function reverseParenthesis(expn: string, size: number): number {
         else
             closeCount += 1;
     }
-    let reversal: number = Math.ceil(openCount / 2.0) +
+    let reversal = Math.ceil(openCount / 2.0) +
         Math.ceil(closeCount / 2.0);
     return reversal;
 }
-
 // Testing code.
 function test12() {
     const expn = ")(())(((";
@@ -520,17 +412,13 @@ function test12() {
     const value = reverseParenthesis(expn, size);
     console.log(`Reverse Parenthesis is: ${value}`);
 }
-
-test12()
-
+test12();
 // Reverse Parenthesis is: 3
-
-
-function findDuplicateParenthesis(expn: string, size: number): boolean {
-    let stk: Array<string> = new Array<string>();
-    let ch: string;
-    let count: number;
-    for (let i: number = 0; i < size; i++) {
+function findDuplicateParenthesis(expn, size) {
+    let stk = new Array();
+    let ch;
+    let count;
+    for (let i = 0; i < size; i++) {
         ch = expn[i];
         if (ch == ')') {
             count = 0;
@@ -546,7 +434,6 @@ function findDuplicateParenthesis(expn: string, size: number): boolean {
     }
     return false;
 }
-
 // Testing code.
 function test13() {
     const expn = "(((a+b))+c)";
@@ -554,17 +441,14 @@ function test13() {
     const value = findDuplicateParenthesis(expn, size);
     console.log(`Duplicate Found: ${value}`);
 }
-
-test13()
-
+test13();
 //Duplicate Found: true
-
-function printParenthesisNumber(expn: string, size: number) {
-    let ch: string;
-    let stk: Array<number> = new Array<number>();
-    let output: string = "";
-    let count: number = 1;
-    for (let i: number = 0; i < size; i++) {
+function printParenthesisNumber(expn, size) {
+    let ch;
+    let stk = new Array();
+    let output = "";
+    let count = 1;
+    for (let i = 0; i < size; i++) {
         ch = expn[i];
         if (ch == '(') {
             stk.push(count);
@@ -576,7 +460,6 @@ function printParenthesisNumber(expn: string, size: number) {
     }
     console.info("Parenthesis Count ", output);
 }
-
 // Testing code.
 function test14() {
     const expn1 = "(((a+(b))+(c+d)))";
@@ -588,17 +471,14 @@ function test14() {
     console.log(`Given expn ${expn2}`);
     printParenthesisNumber(expn2, size);
 }
-
-test14()
-
+test14();
 /*
 Given expn (((a+(b))+(c+d)))
 Parenthesis Count :  1234435521
 Given expn (((a+b))+c)(((
 Parenthesis Count :  123321456
 */
-
-function precedence(x: number): number {
+function precedence(x) {
     if (x == '('.charCodeAt(0)) {
         return (0);
     }
@@ -613,16 +493,16 @@ function precedence(x: number): number {
     }
     return (4);
 }
-
-function infixToPostfix(expn: string): string {
-    let stk: Array<string> = new Array<string>();
-    let output: string = "";
-    let out: string;
+function infixToPostfix(expn) {
+    let stk = new Array();
+    let output = "";
+    let out;
     for (let index = 0; index < expn.length; index++) {
         let ch = expn[index];
         if (ch <= '9' && ch >= '0') {
             output = output + ch;
-        } else {
+        }
+        else {
             switch (ch) {
                 case '+':
                 case '-':
@@ -655,7 +535,6 @@ function infixToPostfix(expn: string): string {
     }
     return output;
 }
-
 // Testing code.
 function test15() {
     const expn = "10+((3))*5/(16-4)";
@@ -663,16 +542,13 @@ function test15() {
     console.log(`Infix Expn: ${expn}`);
     console.log(`Postfix Expn: ${value}`);
 }
-
-test15()
-
+test15();
 /*
 Infix Expn: 10+((3))*5/(16-4)
 Postfix Expn: 10 3 5 * 16 4 -  / +
 */
-
-function infixToPrefix(expn: string): string {
-    let arr: string[] = (expn).split('');
+function infixToPrefix(expn) {
+    let arr = (expn).split('');
     reverseString(arr);
     replaceParanthesis(arr);
     let str = infixToPostfix(arr.join(''));
@@ -681,24 +557,23 @@ function infixToPrefix(expn: string): string {
     expn = arr.join('');
     return expn;
 }
-
-function replaceParanthesis(expn: string[]) {
-    let lower: number = 0;
-    let upper: number = expn.length - 1;
+function replaceParanthesis(expn) {
+    let lower = 0;
+    let upper = expn.length - 1;
     while (lower <= upper) {
         if (expn[lower].charCodeAt(0) == '('.charCodeAt(0)) {
             expn[lower] = ')';
-        } else if (expn[lower].charCodeAt(0) == ')'.charCodeAt(0)) {
+        }
+        else if (expn[lower].charCodeAt(0) == ')'.charCodeAt(0)) {
             expn[lower] = '(';
         }
         lower++;
     }
 }
-
-function reverseString(expn: string[]) {
-    let lower: number = 0;
-    let upper: number = expn.length - 1;
-    let tempChar: string;
+function reverseString(expn) {
+    let lower = 0;
+    let upper = expn.length - 1;
+    let tempChar;
     while (lower < upper) {
         tempChar = expn[lower];
         expn[lower] = expn[upper];
@@ -707,7 +582,6 @@ function reverseString(expn: string[]) {
         upper--;
     }
 }
-
 // Testing code.
 function test16() {
     const expn = "10+((3))*5/(16-4)";
@@ -715,23 +589,21 @@ function test16() {
     console.log(`Infix Expn: ${expn}`);
     console.log(`Prefix Expn: ${value}`);
 }
-
-test16()
-
+test16();
 /*
 Infix Expn: 10+((3))*5/(16-4)
 Prefix Expn: + 10 * 3 / 5  - 16 4
 */
-
-function postfixEvaluate(expn: string): number {
-    const stk: number[] = [];
-    let temp: number;
-    const tokens: string[] = expn.split(" ");
+function postfixEvaluate(expn) {
+    const stk = [];
+    let temp;
+    const tokens = expn.split(" ");
     for (const tok of tokens) {
         temp = parseInt(tok);
         if (!isNaN(temp)) {
             stk.push(temp);
-        } else {
+        }
+        else {
             const num1 = stk.pop();
             const num2 = stk.pop();
             const op = tok;
@@ -753,40 +625,35 @@ function postfixEvaluate(expn: string): number {
     }
     return stk.pop();
 }
-
 // Testing code.
-function test17(): void {
+function test17() {
     const expn = "6 5 2 3 + 8 * + 3 + *";
     const value = postfixEvaluate(expn);
     console.log(`Given Postfix Expn: ${expn}`);
     console.log(`Result after Evaluation: ${value}`);
 }
-
 test17();
-
 /*
 Given Postfix Expn: 6 5 2 3 + 8 * + 3 + *
 Result after Evaluation: 288
 */
-
-function StockSpanRange(arr: Array<number>): Array<number> {
-    let SR: Array<number> = new Array<number>(arr.length);
+function StockSpanRange(arr) {
+    let SR = new Array(arr.length);
     SR[0] = 1;
-    for (let i: number = 1; i < arr.length; i++) {
+    for (let i = 1; i < arr.length; i++) {
         SR[i] = 1;
-        for (let j: number = i - 1; (j >= 0) && (arr[i] >= arr[j]); j--) {
+        for (let j = i - 1; (j >= 0) && (arr[i] >= arr[j]); j--) {
             SR[i]++;
         }
     }
     return SR;
 }
-
-function StockSpanRange2(arr: Array<number>): Array<number> {
-    let stk: Array<number> = new Array<number>();
-    let SR: Array<number> = new Array<number>(arr.length);
+function StockSpanRange2(arr) {
+    let stk = new Array();
+    let SR = new Array(arr.length);
     stk.push(0);
     SR[0] = 1;
-    for (let i: number = 1; i < arr.length; i++) {
+    for (let i = 1; i < arr.length; i++) {
         while ((stk.length != 0) && arr[stk[stk.length - 1]] <= arr[i]) {
             stk.pop();
         }
@@ -795,33 +662,28 @@ function StockSpanRange2(arr: Array<number>): Array<number> {
     }
     return SR;
 }
-
 // Testing code.
 function test18() {
     let arr = [6, 5, 4, 3, 2, 4, 5, 7, 9];
     let value = StockSpanRange(arr);
     console.log("StockSpanRange:", value);
-
     arr = [6, 5, 4, 3, 2, 4, 5, 7, 9];
     value = StockSpanRange2(arr);
     console.log("StockSpanRange:", value);
 }
-
-test18()
-
+test18();
 /*
 StockSpanRange: [ 1, 1, 1, 1, 1, 4, 6, 8, 9 ]
 StockSpanRange: [ 1, 1, 1, 1, 1, 4, 6, 8, 9 ]
 */
-
-function GetMaxArea(arr: Array<number>): number {
-    let size: number = arr.length;
-    let maxArea: number = -1;
-    let currArea: number;
-    let minHeight: number = 0;
-    for (let i: number = 1; i < size; i++) {
+function GetMaxArea(arr) {
+    let size = arr.length;
+    let maxArea = -1;
+    let currArea;
+    let minHeight = 0;
+    for (let i = 1; i < size; i++) {
         minHeight = arr[i];
-        for (let j: number = i - 1; j >= 0; j--) {
+        for (let j = i - 1; j >= 0; j--) {
             if (minHeight > arr[j]) {
                 minHeight = arr[j];
             }
@@ -833,14 +695,13 @@ function GetMaxArea(arr: Array<number>): number {
     }
     return maxArea;
 }
-
-function GetMaxArea2(arr: Array<number>): number {
-    let size: number = arr.length;
-    let stk: Array<number> = new Array<number>();
-    let maxArea: number = 0;
-    let top: number;
-    let topArea: number;
-    let i: number = 0;
+function GetMaxArea2(arr) {
+    let size = arr.length;
+    let stk = new Array();
+    let maxArea = 0;
+    let top;
+    let topArea;
+    let i = 0;
     while (i < size) {
         while ((i < size) && ((stk.length == 0)
             || arr[stk[stk.length - 1]] <= arr[i])) {
@@ -860,46 +721,38 @@ function GetMaxArea2(arr: Array<number>): number {
     }
     return maxArea;
 }
-
 // Testing code.
 function test19() {
     const arr = [7, 6, 5, 4, 4, 1, 6, 3, 1];
     const size = arr.length;
     let value = GetMaxArea(arr);
     console.log(`GetMaxArea: ${value}`);
-
     value = GetMaxArea2(arr);
     console.log(`GetMaxArea: ${value}`);
 }
-
-test19()
-
+test19();
 /*
 GetMaxArea: 20
 GetMaxArea: 20
 */
-
-function stockAnalystAdd(stk: number[], value: number): void {
+function stockAnalystAdd(stk, value) {
     while (stk.length > 0 && stk[stk.length - 1] <= value)
         stk.pop();
     stk.push(value);
 }
-
-function test19a(): void {
-    let arr: number[] = [20, 19, 10, 21, 40, 35, 39, 50, 45, 42];
-    let stk: number[] = [];
+function test19a() {
+    let arr = [20, 19, 10, 21, 40, 35, 39, 50, 45, 42];
+    let stk = [];
     for (let i = arr.length - 1; i >= 0; i--)
         stockAnalystAdd(stk, arr[i]);
     console.log(stk);
 }
-
 test19a();
 // [50, 40, 21, 20]
-
-function nextLargerElement(arr: number[], size: number): void {
-    const output: number[] = new Array(size);
+function nextLargerElement(arr, size) {
+    const output = new Array(size);
     let outIndex = 0;
-    let next: number;
+    let next;
     for (let i = 0; i < size; i++) {
         next = -1;
         for (let j = i + 1; j < size; j++) {
@@ -910,15 +763,13 @@ function nextLargerElement(arr: number[], size: number): void {
         }
         output[outIndex++] = next;
     }
-
     console.log(output);
 }
-
-function nextLargerElement2(arr: number[], size: number): void {
-    const stk: number[] = [];
-    const output: number[] = new Array(size);
+function nextLargerElement2(arr, size) {
+    const stk = [];
+    const output = new Array(size);
     let index = 0;
-    let curr: number;
+    let curr;
     for (let i = 0; i < size; i++) {
         curr = arr[i];
         while (stk.length > 0 && arr[stk[stk.length - 1]] <= curr) {
@@ -927,16 +778,14 @@ function nextLargerElement2(arr: number[], size: number): void {
         }
         stk.push(i);
     }
-
     while (stk.length > 0) {
         index = stk.pop();
         output[index] = -1;
     }
     console.log(output);
 }
-
-function nextSmallerElement(arr: number[], size: number): void {
-    const output: number[] = new Array(size);
+function nextSmallerElement(arr, size) {
+    const output = new Array(size);
     output.fill(-1);
     for (let i = 0; i < size; i++) {
         for (let j = i + 1; j < size; j++) {
@@ -948,12 +797,11 @@ function nextSmallerElement(arr: number[], size: number): void {
     }
     console.log(output);
 }
-
-function nextSmallerElement2(arr: number[], size: number): void {
-    const stk: number[] = [];
-    const output: number[] = new Array(size);
-    let curr: number;
-    let index: number;
+function nextSmallerElement2(arr, size) {
+    const stk = [];
+    const output = new Array(size);
+    let curr;
+    let index;
     for (let i = 0; i < size; i++) {
         curr = arr[i];
         while (stk.length > 0 && arr[stk[stk.length - 1]] > curr) {
@@ -962,37 +810,30 @@ function nextSmallerElement2(arr: number[], size: number): void {
         }
         stk.push(i);
     }
-
     while (stk.length > 0) {
         index = stk.pop();
         output[index] = -1;
     }
-
     console.log(output);
 }
-
 // Testing code.
-function test20(): void {
-    const arr: number[] = [13, 21, 3, 6, 20, 3];
-    const size: number = arr.length;
+function test20() {
+    const arr = [13, 21, 3, 6, 20, 3];
+    const size = arr.length;
     nextLargerElement(arr, size);
     nextLargerElement2(arr, size);
     nextSmallerElement(arr, size);
     nextSmallerElement2(arr, size);
 }
-
 test20();
-
 /*
 [ 21, -1, 6, 20, -1, -1 ]
 [ 21, -1, 6, 20, -1, -1 ]
 [ 3, 3, -1, 3, 3, -1 ]
 [ 3, 3, -1, 3, 3, -1 ]
 */
-
-
-function nextLargerElementCircular(arr: number[], size: number): void {
-    const output: number[] = new Array(size);
+function nextLargerElementCircular(arr, size) {
+    const output = new Array(size);
     output.fill(-1);
     for (let i = 0; i < size; i++) {
         for (let j = 1; j < size; j++) {
@@ -1004,12 +845,11 @@ function nextLargerElementCircular(arr: number[], size: number): void {
     }
     console.log(output);
 }
-
-function nextLargerElementCircular2(arr: number[], size: number): void {
-    const stk: number[] = [];
-    let curr: number;
-    let index: number;
-    const output: number[] = new Array(size);
+function nextLargerElementCircular2(arr, size) {
+    const stk = [];
+    let curr;
+    let index;
+    const output = new Array(size);
     for (let i = 0; i < 2 * size - 1; i++) {
         curr = arr[i % size];
         while (stk.length > 0 && arr[stk[stk.length - 1]] <= curr) {
@@ -1018,36 +858,30 @@ function nextLargerElementCircular2(arr: number[], size: number): void {
         }
         stk.push(i % size);
     }
-
     while (stk.length > 0) {
         index = stk.pop();
         output[index] = -1;
     }
     console.log(output);
 }
-
 // Testing code.
-function test21(): void {
-    const arr: number[] = [6, 3, 9, 8, 10, 2, 1, 15, 7];
-    const size: number = arr.length;
+function test21() {
+    const arr = [6, 3, 9, 8, 10, 2, 1, 15, 7];
+    const size = arr.length;
     nextLargerElementCircular(arr, size);
     nextLargerElementCircular2(arr, size);
 }
-
 test21();
-
 /*
 [ 9, 9, 10, 10, 15, 15, 15, -1, 9 ]
 */
-
-function isKnown(relation: number[][], a: number, b: number): boolean {
+function isKnown(relation, a, b) {
     if (relation[a][b] === 1)
         return true;
     return false;
 }
-
-function findCelebrity(relation: number[][], count: number): number {
-    let cel: boolean = true;
+function findCelebrity(relation, count) {
+    let cel = true;
     for (let i = 0; i < count; i++) {
         cel = true;
         for (let j = 0; j < count; j++) {
@@ -1061,21 +895,18 @@ function findCelebrity(relation: number[][], count: number): number {
     }
     return -1;
 }
-
-function findCelebrity2(relation: number[][], count: number): number {
-    const stk: number[] = [];
-    let first: number = 0, second: number = 0;
+function findCelebrity2(relation, count) {
+    const stk = [];
+    let first = 0, second = 0;
     for (let i = 0; i < count; i++) {
         stk.push(i);
     }
     first = stk.pop();
-
     while (stk.length !== 0) {
         second = stk.pop();
         if (isKnown(relation, first, second))
             first = second;
     }
-
     for (let i = 0; i < count; i++) {
         if (first !== i && isKnown(relation, first, i))
             return -1;
@@ -1084,17 +915,14 @@ function findCelebrity2(relation: number[][], count: number): number {
     }
     return first;
 }
-
-function findCelebrity3(relation: number[][], count: number): number {
-    let first: number = 0;
-    let second: number = 1;
-
+function findCelebrity3(relation, count) {
+    let first = 0;
+    let second = 1;
     for (let i = 0; i < count - 1; i++) {
         if (isKnown(relation, first, second))
             first = second;
         second = second + 1;
     }
-
     for (let i = 0; i < count; i++) {
         if (first !== i && isKnown(relation, first, i))
             return -1;
@@ -1103,24 +931,20 @@ function findCelebrity3(relation: number[][], count: number): number {
     }
     return first;
 }
-
 // Testing code.
-function test26(): void {
-    const arr: number[][] = [
+function test26() {
+    const arr = [
         [1, 0, 1, 1, 0],
         [1, 0, 0, 1, 0],
         [0, 0, 1, 1, 1],
         [0, 0, 0, 0, 0],
         [1, 1, 0, 1, 1]
     ];
-
     console.log(`Celebrity : ${findCelebrity(arr, 5)}`);
     console.log(`Celebrity : ${findCelebrity2(arr, 5)}`);
     console.log(`Celebrity : ${findCelebrity3(arr, 5)}`);
 }
-
 test26();
-
 /*
 Celebrity : 3
 Celebrity : 3
