@@ -1,11 +1,9 @@
-class Stack {
-    private arr: any[];
+class Stack<T> {
+    private arr: T[];
 
     constructor() {
         this.arr = [];
     }
-
-    /* other methods */
 
     size(): number {
         return this.arr.length;
@@ -15,22 +13,22 @@ class Stack {
         return this.arr.length === 0;
     }
 
-    push(value: any): void {
+    push(value: T): void {
         this.arr.push(value);
     }
 
-    top(): any {
+    top(): T {
         if (this.isEmpty()) {
             throw new Error("Stack Empty Exception");
         }
         return this.arr[this.arr.length - 1];
     }
 
-    pop(): any {
+    pop(): T {
         if (this.isEmpty()) {
             throw new Error("Stack Empty Exception");
         }
-        return this.arr.pop();
+        return this.arr.pop()!;
     }
 
     print(): void {
@@ -39,7 +37,7 @@ class Stack {
 }
 
 // Testing code.
-const s = new Stack();
+const s = new Stack<number>();
 s.push(1);
 s.push(2);
 s.push(3);

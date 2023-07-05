@@ -1,61 +1,62 @@
-class TwoStack {
-    MAX_SIZE: number = 50;
-    top1: number;
-    top2: number;
-    data: Array<number>;
+class TwoStack<T> {
+    private readonly MAX_SIZE: number;
+    private top1: number;
+    private top2: number;
+    private data: T[];
 
-    public constructor() {
+    constructor() {
+        this.MAX_SIZE = 1000;
         this.top1 = -1;
         this.top2 = this.MAX_SIZE;
-        this.data = new Array(this.MAX_SIZE);
+        this.data = new Array<T>(this.MAX_SIZE);
     }
 
-    public Push1(value: number) {
+    push1(value: T): void {
         if (this.top1 < this.top2 - 1) {
             this.data[++this.top1] = value;
         } else {
-            console.info("Stack is Full!");
+            console.log("Stack is Full!");
         }
     }
 
-    public Push2(value: number) {
+    push2(value: T): void {
         if (this.top1 < this.top2 - 1) {
             this.data[--this.top2] = value;
         } else {
-            console.info("Stack is Full!");
+            console.log("Stack is Full!");
         }
     }
 
-    public Pop1(): number {
+    pop1(): T {
         if (this.top1 >= 0) {
-            let value: number = this.data[this.top1--];
+            const value = this.data[this.top1--];
             return value;
         } else {
-            console.info("Stack Empty!");
+            console.log("Stack Empty!");
+            return undefined!;
         }
-        return -999;
     }
 
-    public Pop2(): number {
+    pop2(): T {
         if (this.top2 < this.MAX_SIZE) {
-            let value: number = this.data[this.top2++];
+            const value = this.data[this.top2++];
             return value;
         } else {
-            console.info("Stack Empty!");
+            console.log("Stack Empty!");
+            return undefined!;
         }
-        return -999;
     }
 }
 
 // Testing code.
-let st: TwoStack = new TwoStack();
-for (let i: number = 0; i < 10; i++) {
-    st.Push1(i);
-};
-for (let j: number = 0; j < 10; j++) {
-    st.Push2(j + 10);
-};
-for (let i: number = 0; i < 10; i++) {
-    console.info("stack one pop value is : " + st.Pop1());
-    console.info("stack two pop value is : " + st.Pop2());
-};
+const st = new TwoStack<number>();
+st.push1(1);
+st.push1(2);
+st.push1(3);
+st.push2(4);
+st.push2(5);
+st.push2(6);
+console.log("stk1 pop: " + st.pop1());
+console.log("stk1 pop: " + st.pop1());
+console.log("stk2 pop: " + st.pop2());
+console.log("stk2 pop: " + st.pop2());

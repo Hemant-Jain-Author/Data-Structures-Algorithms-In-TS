@@ -1,73 +1,66 @@
 class Deque<T> {
-    data: Array<T>;
+    private arr: T[];
 
-    public constructor() {
-        this.data = new Array<T>();
+    constructor() {
+        this.arr = [];
     }
 
-    public size(): number {
-        return this.data.length;
+    size(): number {
+        return this.arr.length;
     }
 
-    public add(val: T) {
-        this.data.push(val);
+    add(val: T): void {
+        this.arr.push(val);
     }
 
-    public remove(): T {
-        return this.data.shift();
+    remove(): T {
+        return this.arr.shift();
     }
 
-    public removeLast(): T {
-        return this.data.pop()
+    front(): T {
+        return this.arr[0];
     }
 
-    public front(): T {
-        return this.data[0]
+    back(): T {
+        return this.arr[this.arr.length - 1];
     }
 
-    public back(): T {
-        return this.data[this.data.length - 1]
+    removeLast(): T {
+        return this.arr.pop();
     }
 }
 
 class Queue<T> {
-    frontIndex: number;
-    data: Array<T>;
+    private arr: T[];
 
-    public constructor() {
-        this.frontIndex = 0;
-        this.data = new Array<T>();
+    constructor() {
+        this.arr = [];
     }
 
-    public add(value: T) {
-        this.data.push(value);
+    add(value: T): void {
+        this.arr.push(value);
     }
 
-    public remove(): T {
-        let value = this.data[this.frontIndex];
-        this.frontIndex++;
-        if (this.data.length > 0 && this.frontIndex * 2 >= this.data.length) {
-            this.data = this.data.slice(this.frontIndex);
-            this.frontIndex = 0;
-        }
+    remove(): T {
+        const value = this.arr[0];
+        this.arr.shift();
         return value;
     }
 
-    public front(): T {
-        let value = this.data[this.frontIndex];
-        return value;
+    front(): T {
+        return this.arr[0];
     }
 
-    public isEmpty(): boolean {
-        return (this.data.length - this.frontIndex) === 0;
+    back(): T {
+        return this.arr[this.arr.length - 1];
     }
 
-    public size(): number {
-        return (this.data.length - this.frontIndex);
+    isEmpty(): boolean {
+        return this.arr.length === 0;
     }
 
-    public back(): T {
-        return this.data[this.data.length - 1]
+    size(): number {
+        return this.arr.length;
     }
 }
 
@@ -89,7 +82,7 @@ function test1() {
     console.log("test line 2");
 }
 
-test1();
+//test1();
 
 /*
 test line 1
@@ -121,7 +114,7 @@ function test2() {
     console.log(stk);
 }
 
-test2()
+//test2()
 
 // [ 1, 2, 3, 4, 5 ]
 
@@ -130,7 +123,7 @@ function sortStack(stk: Array<number>) {
     if (stk.length != 0) {
         temp = stk.pop();
         sortStack(stk);
-        stk.push(temp);
+        sortedInsert(stk, temp);
     }
 }
 
@@ -157,11 +150,12 @@ function test3() {
     stk.push(3);
     stk.push(2);
     stk.push(4);
-    sortStack(stk)
+    console.log(stk);
+    sortStack2(stk)
     console.log(stk);
 }
 
-test3()
+//test3()
 
 // [ 1, 2, 3, 4, 5 ]
 
@@ -186,7 +180,7 @@ function test4() {
     console.log(stk);
 }
 
-test4()
+//test4()
 
 // [ 4, 1, 2, 3 ]
 
@@ -201,10 +195,10 @@ function reverseStack(stk: any[]): void {
 }
 
 function reverseStack2(stk: any[]): void {
-    let que: Array<number> = new Array<number>();
+    let que: Queue<number> = new Queue<number>();
 
     while (stk.length > 0) {
-        que.push(stk.pop());
+        que.add(stk.pop());
     }
 
     while (que.isEmpty() === false) {
@@ -238,9 +232,14 @@ function test5(): void {
     console.log("Stack before reversal", stk);
     reverseStack(stk);
     console.log("Stack after reversal", stk);
+    reverseStack2(stk);
+    console.log("Stack after reversal", stk);
+    reverseStack3(stk);
+    console.log("Stack after reversal", stk);
+
 }
 
-test5()
+//test5()
 
 /*
 Stack before reversal [ 1, 2, 3 ]
@@ -248,14 +247,14 @@ Stack after reversal [ 3, 2, 1 ]
 */
 
 function reverseKElementInStack(stk: Array<number>, k: number) {
-    let que: Array<number> = new Array<number>();
+    let que: Queue<number> = new Queue<number>();
     let i: number = 0;
     while (stk.length != 0 && i < k) {
-        que.push(stk.pop());
+        que.add(stk.pop());
         i++;
     }
-    while (que.length !== 0) {
-        stk.push(que.pop())
+    while (!que.isEmpty()) {
+        stk.push(que.remove())
     }
 }
 
@@ -271,36 +270,36 @@ function test6() {
     console.log(stk);
 }
 
-test6()
+//test6()
 
 /*
 [ 1, 2, 4, 3 ]
 */
 
 
-function reverseQueue(que: Array<number>) {
-    let stk: Array<number> = new Array<number>();
-    while (que.length !== 0) {
-        stk.push(que.pop())
+function reverseQueue<T>(que: Queue<T>): void {
+    const stk: T[] = [];
+    while (!que.isEmpty()) {
+        stk.push(que.remove());
     }
-    while (stk.length != 0) {
-        que.push(stk.pop())
+    while (stk.length > 0) {
+        que.add(stk.pop()!);
     }
 }
 
 
 // Testing code.
 function test7() {
-    let que: Array<number> = new Array<number>();
-    que.push(1);
-    que.push(2);
-    que.push(3);
+    let que: Queue<number> = new Queue<number>();
+    que.add(1);
+    que.add(2);
+    que.add(3);
     console.log(que)
     reverseQueue(que)
     console.log(que);
 }
 
-test7()
+//test7()
 
 /*
 Deque { arr: [ 1, 2, 3 ] }
@@ -308,22 +307,22 @@ Deque { arr: [ 3, 2, 1 ] }
 */
 
 
-function reverseKElementInQueue(que: Array<number>, k: number) {
+function reverseKElementInQueue(que: Queue<number>, k: number) {
     let stk: Array<number> = new Array<number>();
     let i: number = 0;
     let diff: number;
     let temp: number;
-    while (que.length !== 0 && i < k) {
-        stk.push(que.pop());
+    while (!que.isEmpty() && i < k) {
+        stk.push(que.remove());
         i++;
     }
     while (stk.length != 0) {
-        que.push(stk.pop());
+        que.add(stk.pop());
     }
-    diff = que.length - k;
+    diff = que.size() - k;
     while (diff > 0) {
-        temp = que.pop();
-        que.push(temp);
+        temp = que.remove();
+        que.add(temp);
         diff -= 1;
     }
 }
@@ -331,11 +330,11 @@ function reverseKElementInQueue(que: Array<number>, k: number) {
 
 // Testing code.
 function test8() {
-    let que: Array<number> = new Array<number>();
-    que.push(1);
-    que.push(2);
-    que.push(3);
-    que.push(4);
+    let que: Queue<number> = new Queue<number>();
+    que.add(1);
+    que.add(2);
+    que.add(3);
+    que.add(4);
     console.log(que)
     reverseKElementInQueue(que, 2)
     console.log(que);

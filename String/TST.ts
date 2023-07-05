@@ -13,60 +13,68 @@ class TSTNode {
 }
 
 class TST {
-    root: TSTNode = null;
+    root: TSTNode;
 
-    public Add(word: string) {
-        this.root = this.addUtil(this.root, word, 0);
+    constructor() {
+        this.root = null;
     }
 
-    private addUtil(curr: TSTNode, word: string, wordIndex: number): TSTNode {
-        if (curr == null)
-            curr = new TSTNode(word.charAt(wordIndex));
+    insert(word: string): void {
+        this.root = this.insertUtil(this.root, word, 0);
+    }
 
-        if ((word.charAt(wordIndex)).charCodeAt(0) < (curr.data).toString().charCodeAt(0))
-            curr.left = this.addUtil(curr.left, word, wordIndex);
-        else if ((word.charAt(wordIndex)).charCodeAt(0) > (curr.data).toString().charCodeAt(0))
-            curr.right = this.addUtil(curr.right, word, wordIndex);
-        else {
-            if (wordIndex < word.length - 1)
-                curr.equal = this.addUtil(curr.equal, word, wordIndex + 1);
-            else
+    insertUtil(curr: TSTNode, word: string, wordIndex: number): TSTNode {
+        if (curr == null) {
+            curr = new TSTNode(word.charAt(wordIndex));
+        }
+
+        if (word.charAt(wordIndex).charCodeAt(0) < curr.data.charCodeAt(0)) {
+            curr.left = this.insertUtil(curr.left, word, wordIndex);
+        } else if (word.charAt(wordIndex).charCodeAt(0) > curr.data.charCodeAt(0)) {
+            curr.right = this.insertUtil(curr.right, word, wordIndex);
+        } else {
+            if (wordIndex < word.length - 1) {
+                curr.equal = this.insertUtil(curr.equal, word, wordIndex + 1);
+            } else {
                 curr.isLastChar = true;
+            }
         }
         return curr;
     }
 
-    public Find(word: string): boolean {
-        let ret: boolean = this.findUtil(this.root, word, 0);
-        if (ret)
-            console.info(word + " Found");
-        else
-            console.info(word + " Not Found ");
-        return ret;
-    }
-
-    private findUtil(curr: TSTNode, word: string, wordIndex: number): boolean {
-        if (curr == null)
+    findUtil(curr: TSTNode, word: string, wordIndex: number): boolean {
+        if (curr == null) {
             return false;
-        if ((word.charAt(wordIndex)).charCodeAt(0) < (curr.data).toString().charCodeAt(0))
+        }
+        if (word.charAt(wordIndex).charCodeAt(0) < curr.data.charCodeAt(0)) {
             return this.findUtil(curr.left, word, wordIndex);
-        else if ((word.charAt(wordIndex)).charCodeAt(0) > (curr.data).toString().charCodeAt(0))
+        } else if (word.charAt(wordIndex).charCodeAt(0) > curr.data.charCodeAt(0)) {
             return this.findUtil(curr.right, word, wordIndex);
-        else {
-            if (wordIndex === word.length - 1)
+        } else {
+            if (wordIndex === word.length - 1) {
                 return curr.isLastChar;
+            }
             return this.findUtil(curr.equal, word, wordIndex + 1);
         }
+    }
+
+    find(word: string): boolean {
+        const ret = this.findUtil(this.root, word, 0);
+        return ret;
     }
 }
 
 // Testing code.
-let tt: TST = new TST();
-tt.Add("banana");
-tt.Add("apple");
-tt.Add("mango");
+const tt = new TST();
+tt.insert("banana");
+tt.insert("apple");
+tt.insert("mango");
+console.log("Apple Found:", tt.find("apple"));
+console.log("Grapes Found:", tt.find("grapes"));
+console.log("Banana Found:", tt.find("banana"));
 
-console.log("Apple Found :", tt.Find("apple"));
-console.log("Banana Found :", tt.Find("banana"));
-console.log("Mango Found :", tt.Find("mango"));
-console.log("Grapes Found :", tt.Find("grapes"));
+/*
+Apple Found: true
+Grapes Found: false
+Banana Found: true
+*/

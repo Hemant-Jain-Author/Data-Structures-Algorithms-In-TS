@@ -1,77 +1,71 @@
 class Deque<T> {
-    data: Array<T>;
+    private arr: T[];
 
-    public constructor() {
-        this.data = new Array<T>();
+    constructor() {
+        this.arr = [];
     }
 
-    public size(): number {
-        return this.data.length;
+    size(): number {
+        return this.arr.length;
     }
 
-    public add(val: T) {
-        this.data.push(val);
+    add(val: T): void {
+        this.arr.push(val);
     }
 
-    public remove(): T {
-        return this.data.shift();
+    remove(): T | undefined {
+        return this.arr.shift();
     }
 
-    public removeLast(): T {
-        return this.data.pop()
+    front(): T | undefined {
+        return this.arr[0];
     }
 
-    public front(): T {
-        return this.data[0]
+    back(): T | undefined {
+        return this.arr[this.arr.length - 1];
     }
 
-    public back(): T {
-        return this.data[this.data.length - 1]
+    removeLast(): T | undefined {
+        return this.arr.pop();
     }
 }
+
 class Queue<T> {
-    frontIndex: number;
-    data: Array<T>;
+    private arr: T[];
 
-    public constructor() {
-        this.frontIndex = 0;
-        this.data = new Array<T>();
+    constructor() {
+        this.arr = [];
     }
 
-    public add(value: T) {
-        this.data.push(value);
+    add(value: T): void {
+        this.arr.push(value);
     }
 
-    public remove(): T {
-        let value = this.data[this.frontIndex];
-        this.frontIndex++;
-        if (this.data.length > 0 && this.frontIndex * 2 >= this.data.length) {
-            this.data = this.data.slice(this.frontIndex);
-            this.frontIndex = 0;
-        }
+    remove(): T | undefined {
+        const value = this.arr[0];
+        this.arr.shift();
         return value;
     }
 
-    public front(): T {
-        let value = this.data[this.frontIndex];
-        return value;
+    front(): T | undefined {
+        return this.arr[0];
     }
 
-    public isEmpty(): boolean {
-        return (this.data.length - this.frontIndex) === 0;
+    back(): T | undefined {
+        return this.arr[this.arr.length - 1];
     }
 
-    public size(): number {
-        return (this.data.length - this.frontIndex);
+    isEmpty(): boolean {
+        return this.arr.length === 0;
     }
 
-    public back(): T {
-        return this.data[this.data.length - 1]
+    size(): number {
+        return this.arr.length;
     }
 }
 
 function main0() {
-    let que: Queue<number> = new Queue();
+    let que: Queue<number> = new Queue<number>();
     for (let i: number = 0; i < 20; i++) {
         que.add(i);
     };
@@ -133,7 +127,7 @@ function test1() {
     console.log(`Circular Tour : ${CircularTour2(tour, 3)}`);
 }
 
-//test1();
+test1();
 /*
 Circular Tour : 2
 Circular Tour : 2
@@ -166,7 +160,7 @@ function test2() {
     convertXY(2, 7);
 }
 
-//test2()
+test2()
 /*
 Steps countr :: 3
 */
@@ -208,7 +202,7 @@ function test3() {
 
 }
 
-//test3()
+test3()
 
 /*
 75 92 92 92 90 
@@ -238,7 +232,7 @@ function test4() {
     minOfMaxSlidingWindows(arr, 7, 3);
 }
 
-//test4()
+test4()
 
 /*
 Min of max is :: 75
@@ -268,7 +262,7 @@ function test5() {
     maxOfMinSlidingWindows(arr, 7, 3);
 }
 
-//test5()
+test5()
 
 /*
 Max of min is :: 59
@@ -446,7 +440,10 @@ function test22() {
 
 test22();
 
-//3
+/*
+rottenFruit : 3
+rottenFruit : 3
+*/
 
 
 function stepsOfKnightUtil(size: number, currCol: number, currRow: number, traversed: number[][], dist: number): void {
@@ -511,7 +508,10 @@ function test23() {
 
 test23();
 
-// 8
+/*
+stepsOfKnight : 8
+stepsOfKnight : 8
+*/
 
 function distNearestFillUtil(arr: number[][], maxCol: number, maxRow: number, currCol: number, currRow: number, traversed: number[][], dist: number): void {
     const dir: [number, number][] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
@@ -668,4 +668,6 @@ function test25(): void {
 
 test25();
 
-
+/*
+Largest Island: 12
+*/

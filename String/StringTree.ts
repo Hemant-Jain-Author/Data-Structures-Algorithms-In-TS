@@ -1,63 +1,62 @@
-class TreeNode {
+class StringTreeNode {
     value: string;
     count: number;
-    lChild: TreeNode;
-    rChild: TreeNode;
+    left: StringTreeNode;
+    right: StringTreeNode;
 
     constructor() {
         this.value = null;
         this.count = 0;
-        this.lChild = null;
-        this.rChild = null;
+        this.left = null;
+        this.right = null;
     }
 }
 
 class StringTree {
-    root: TreeNode = null;
+    root: StringTreeNode = null;
 
     public print() {
         this.printUtil(this.root);
     }
 
-    private printUtil(curr: TreeNode) {
+    private printUtil(curr: StringTreeNode) {
         if (curr != null) {
-            console.info(" value is ::" + curr.value);
-            console.info(" count is :: " + curr.count);
-            this.printUtil(curr.lChild);
-            this.printUtil(curr.rChild);
+            console.info(" value is: " + curr.value);
+            console.info(" count is: " + curr.count);
+            this.printUtil(curr.left);
+            this.printUtil(curr.right);
         }
     }
 
 
-    public Add(value: string) {
-        this.root = this.addUtil(value, this.root);
+    public insert(value: string) {
+        this.root = this.insertUtil(value, this.root);
     }
 
-    private addUtil(value: string, curr: TreeNode): TreeNode {
+    private insertUtil(value: string, curr: StringTreeNode): StringTreeNode {
         if (curr == null) {
-            curr = new TreeNode();
+            curr = new StringTreeNode();
             curr.value = value;
-            curr.lChild = curr.rChild = null;
+            curr.left = curr.right = null;
             curr.count = 1;
         } else {
             let compare: number = curr.value.localeCompare(value);
             if (compare === 0)
                 curr.count++;
             else if (compare === 1)
-                curr.lChild = this.addUtil(value, curr.lChild);
+                curr.left = this.insertUtil(value, curr.left);
             else
-                curr.rChild = this.addUtil(value, curr.rChild);
+                curr.right = this.insertUtil(value, curr.right);
         }
         return curr;
     }
 
-    public Find(value: string): boolean {
+    public find(value: string): boolean {
         let ret: boolean = this.findUtil(this.root, value);
-        console.info("Find " + value + " Return " + ret);
         return ret;
     }
 
-    private findUtil(curr: TreeNode, value: string): boolean {
+    private findUtil(curr: StringTreeNode, value: string): boolean {
         if (curr == null)
             return false;
         let compare: number = curr.value.localeCompare(value);
@@ -65,18 +64,18 @@ class StringTree {
             return true;
         else {
             if (compare === 1)
-                return this.findUtil(curr.lChild, value);
+                return this.findUtil(curr.left, value);
             else
-                return this.findUtil(curr.rChild, value);
+                return this.findUtil(curr.right, value);
         }
     }
 
 
-    public Frequency(value: string): number {
+    public frequency(value: string): number {
         return this.frequencyUtil(this.root, value);
     }
 
-    private frequencyUtil(curr: TreeNode, value: string): number {
+    private frequencyUtil(curr: StringTreeNode, value: string): number {
         if (curr == null)
             return 0;
         let compare: number = curr.value.localeCompare(value);
@@ -84,9 +83,9 @@ class StringTree {
             return curr.count;
         else {
             if (compare > 0)
-                return this.frequencyUtil(curr.lChild, value);
+                return this.frequencyUtil(curr.left, value);
             else
-                return this.frequencyUtil(curr.rChild, value);
+                return this.frequencyUtil(curr.right, value);
         }
     }
 
@@ -96,22 +95,16 @@ class StringTree {
 }
 
 // Testing code.
-let tt: StringTree = new StringTree();
-tt.Add("banana");
-tt.Add("apple");
-tt.Add("mango");
-tt.Add("banana");
-tt.Add("apple");
-tt.Add("mango");
-console.info("\nSearch results for apple, banana, grapes and mango :\n");
-tt.Find("apple");
-tt.Find("banana");
-tt.Find("banan");
-tt.Find("applkhjkhkj");
-tt.Find("grapes");
-tt.Find("mango");
-tt.print();
-console.info("frequency returned :: " + tt.Frequency("apple"));
-console.info("frequency returned :: " + tt.Frequency("banana"));
-console.info("frequency returned :: " + tt.Frequency("mango"));
-console.info("frequency returned :: " + tt.Frequency("hemant"));
+const tt = new StringTree();
+tt.insert("banana");
+tt.insert("apple");
+tt.insert("mango");
+console.log("Apple Found :", tt.find("apple"));
+console.log("Grapes Found :", tt.find("grapes"));
+console.log("Banana Found :", tt.find("banana"));
+
+/*
+Apple Found : true
+Grapes Found : false
+Banana Found : true
+*/

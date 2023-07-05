@@ -1,95 +1,106 @@
 let CharCount: number = 26;
 
 class TrieNode {
-    isLastChar: boolean;
     child: TrieNode[];
+    isLastChar: boolean;
+    ch: string;
 
-    public constructor(c: string) {
-        this.isLastChar = false;
+    constructor(c: string) {
         this.child = new Array(CharCount).fill(null);
         this.isLastChar = false;
+        this.ch = c;
     }
 }
 
 class Trie {
-    root: TrieNode = null;
+    root: TrieNode;
 
-    public constructor() {
+    constructor() {
         this.root = new TrieNode(' ');
     }
 
-    public Add(str: string): TrieNode {
+    insert(str: string): void {
         if (str == null) {
-            return this.root;
+            return;
         }
-        return this.AddUtil(this.root, str.toLowerCase(), 0);
+        const temp = str.toString().toLowerCase();
+        this.insertUtil(this.root, temp, 0);
     }
 
-    private AddUtil(curr: TrieNode, str: string, index: number): TrieNode {
+    insertUtil(curr: TrieNode, str: string, index: number): TrieNode {
         if (curr == null) {
-            curr = new TrieNode(str.charAt(index - 1));
+            curr = new TrieNode(str[index - 1]);
         }
+
         if (str.length === index) {
             curr.isLastChar = true;
         } else {
-            curr.child[str[index].charCodeAt(0) - 'a'.charCodeAt(0)] =
-                this.AddUtil(curr.child[str[index].charCodeAt(0) - 'a'.charCodeAt(0)], str, index + 1);
+            curr.child[str.charCodeAt(index) - 'a'.charCodeAt(0)] =
+             this.insertUtil(
+                curr.child[str.charCodeAt(index) - 'a'.charCodeAt(0)],
+                str, index + 1 );
         }
         return curr;
     }
 
-    public Remove(str: string) {
+    remove(str: string): void {
         if (str == null) {
             return;
         }
         str = str.toLowerCase();
-        this.RemoveUtil(this.root, str, 0);
+        this.removeUtil(this.root, str, 0);
     }
 
-    private RemoveUtil(curr: TrieNode, str: string, index: number) {
+    removeUtil(curr: TrieNode, str: string, index: number): void {
         if (curr == null) {
             return;
         }
+
         if (str.length === index) {
             if (curr.isLastChar) {
                 curr.isLastChar = false;
             }
             return;
         }
-        this.RemoveUtil(curr.child[str[index].charCodeAt(0) - 'a'.charCodeAt(0)], str, index + 1);
+        this.removeUtil(
+            curr.child[str.charCodeAt(index) - 'a'.charCodeAt(0)],
+            str,
+            index + 1
+        );
     }
 
-    public Find(str: string): boolean {
+    find(str: string): boolean {
         if (str == null) {
             return false;
         }
         str = str.toLowerCase();
-        return this.FindUtil(this.root, str, 0);
+        return this.findUtil(this.root, str, 0);
     }
 
-    private FindUtil(curr: TrieNode, str: string, index: number): boolean {
+    findUtil(curr: TrieNode, str: string, index: number): boolean {
         if (curr == null) {
             return false;
         }
         if (str.length === index) {
             return curr.isLastChar;
         }
-        return this.FindUtil(curr.child[str[index].charCodeAt(0) - 'a'.charCodeAt(0)], str, index + 1);
+        return this.findUtil(
+            curr.child[str.charCodeAt(index) - 'a'.charCodeAt(0)],
+            str, index + 1);
     }
 }
 
-
 // Testing code.
-let t: Trie = new Trie();
-let a: string = "hemant";
-let b: string = "heman";
-let c: string = "hemantjain";
-let d: string = "jain";
-t.Add(a);
-t.Add(d);
-console.info(t.Find(a));
-t.Remove(a);
-t.Remove(d);
-console.info(t.Find(a));
-console.info(t.Find(c));
-console.info(t.Find(d));
+const tt = new Trie();
+tt.insert("banana");
+tt.insert("apple");
+tt.insert("mango");
+console.log("Apple Found:", tt.find("apple"));
+console.log("Grapes Found:", tt.find("grapes"));
+console.log("Banana Found:", tt.find("banana"));
+
+/*
+Apple Found: true
+Grapes Found: false
+Banana Found: true
+*/

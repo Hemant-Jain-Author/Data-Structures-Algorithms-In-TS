@@ -1,75 +1,78 @@
-class StackNode {
-    value: number;
-    next: StackNode;
+class StackNode<T> {
+    value: T;
+    next: StackNode<T> | null;
 
-    public constructor(v: number, n: StackNode) {
+    constructor(v: T, n: StackNode<T> | null) {
         this.value = v;
         this.next = n;
     }
 }
 
-class StackLL {
-    head: StackNode = null;
-    __size: number = 0;
+class Stack<T> {
+    head: StackNode<T> | null;
+    length: number;
 
-    public size(): number {
-        return this.__size;
+    constructor() {
+        this.head = null;
+        this.length = 0;
     }
 
-    public isEmpty(): boolean {
-        return this.__size === 0;
+    size(): number {
+        return this.length;
     }
 
-    public peek(): number {
+    isEmpty(): boolean {
+        return this.length === 0;
+    }
+
+    peek(): T {
         if (this.isEmpty()) {
-            throw "StackEmptyException";
+            throw new Error("StackEmptyError");
         }
-        return this.head.value;
+        return this.head!.value;
     }
 
-    public push(value: number) {
+    push(value: T): void {
         this.head = new StackNode(value, this.head);
-        this.__size++;
+        this.length++;
     }
 
-    public pop(): number {
+    pop(): T {
         if (this.isEmpty()) {
-            throw "StackEmptyException";
+            throw new Error("StackEmptyError");
         }
-        let value: number = this.head.value;
-        this.head = this.head.next;
-        this.__size--;
+        const value = this.head!.value;
+        this.head = this.head!.next;
+        this.length--;
         return value;
     }
 
-    public insertAtBottom(value: number) {
+    insertAtBottom(value: T): void {
         if (this.isEmpty()) {
             this.push(value);
         } else {
-            let temp: number = this.pop();
+            const temp = this.pop();
             this.insertAtBottom(value);
             this.push(temp);
         }
     }
 
-    public print() {
-        let temp: StackNode = this.head;
-        let result: string = "Stack: ";
-        while ((temp != null)) {
-            result += (temp.value + " ");
+    print(): void {
+        let out = "";
+        let temp = this.head;
+        while (temp !== null) {
+            out += temp.value + " ";
             temp = temp.next;
-        };
-        console.log(result);
+        }
+        console.log(out);
     }
-
 }
 
 // Testing code.
-let s: StackLL = new StackLL();
+const s = new Stack<number>();
 s.push(1);
 s.push(2);
 s.push(3);
 s.print();
-console.info(s.pop());
-console.info(s.pop());
-s.print();
+console.log(s.pop());
+console.log(s.pop());

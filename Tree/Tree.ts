@@ -1,404 +1,415 @@
+class Queue<T> {
+    arr: T[];
 
-class Queue {
-    frontIndex: number;
-    data: any[];
-
-    public constructor() {
-        this.frontIndex = 0;
-        this.data = [];
+    constructor() {
+        this.arr = [];
     }
 
-    public add(value: any) {
-        this.data.push(value);
+    add(value: T): void {
+        this.arr.push(value);
     }
 
-    public remove(): any {
-        let value = this.data[this.frontIndex];
-        this.frontIndex++;
-        if (this.data.length > 0 && this.frontIndex * 2 >= this.data.length) {
-            this.data = this.data.slice(this.frontIndex);
-            this.frontIndex = 0;
-        }
-        return value;
+    remove(): T | undefined {
+        return this.arr.shift();
     }
 
-    public peek(): any {
-        let value = this.data[this.frontIndex];
-        return value;
+    front(): T | undefined {
+        return this.arr[0];
     }
 
-    public isEmpty(): boolean {
-        return (this.data.length - this.frontIndex) === 0;
+    isEmpty(): boolean {
+        return this.arr.length === 0;
     }
 
-    public size(): number {
-        return (this.data.length - this.frontIndex);
-    }
-
-    public peekLast(): any {
-        return this.data[this.data.length - 1]
+    length(): number {
+        return this.arr.length;
     }
 }
 
 const MAX_INT = 2147483647;
 const MIN_INT = -2147483647;
 
-class TNode {
-    value: number;
-    lChild: TNode;
-    rChild: TNode;
+class TreeNode {
+    value: any;
+    left: TreeNode | null;
+    right: TreeNode | null;
 
-    public constructor(v: number, l: TNode = null, r: TNode = null) {
-        this.value = v;
-        this.lChild = l;
-        this.rChild = r;
+    constructor(data: any, left: TreeNode | null = null, right: TreeNode | null = null) {
+        this.value = data;
+        this.left = left;
+        this.right = right;
     }
 }
 
 class Tree {
-    root: TNode;
+    root: TreeNode | null;
 
-    public constructor() {
+    constructor() {
         this.root = null;
     }
 
-    public levelOrderBinaryTree(arr: Array<number>) {
-        this.root = this.levelOrderBinaryTreeUtil(arr, 0);
+    /* Other Functions */
+
+    createCompleteBinaryTree(arr: any[]): void {
+        this.root = this.createCompleteBinaryTreeUtil(arr, 0);
     }
 
-    private levelOrderBinaryTreeUtil(arr: Array<number>, start: number): TNode {
-        let size: number = arr.length;
-        let curr: TNode = new TNode(arr[start]);
-        let left: number = 2 * start + 1;
-        let right: number = 2 * start + 2;
+    createCompleteBinaryTreeUtil(arr: any[], start: number): TreeNode | null {
+        const size = arr.length;
+        const curr = new TreeNode(arr[start]);
+        const left = 2 * start + 1;
+        const right = 2 * start + 2;
+
         if (left < size)
-            curr.lChild = this.levelOrderBinaryTreeUtil(arr, left);
+            curr.left = this.createCompleteBinaryTreeUtil(arr, left);
         if (right < size)
-            curr.rChild = this.levelOrderBinaryTreeUtil(arr, right);
+            curr.right = this.createCompleteBinaryTreeUtil(arr, right);
+
         return curr;
     }
 
-    public InsertNode(value: number) {
-        this.root = this.InsertNodeUtil(this.root, value);
+    printPreOrder(): void {
+        let output = "Pre Order Tree: ";
+        output += this.printPreOrderUtil(this.root);
+        console.log(output);
     }
 
-    private InsertNodeUtil(node: TNode, value: number): TNode {
-        if (node == null) {
-            node = new TNode(value, null, null);
-        } else {
-            if (node.value > value) {
-                node.lChild = this.InsertNodeUtil(node.lChild, value);
-            } else {
-                node.rChild = this.InsertNodeUtil(node.rChild, value);
-            }
-        }
-        return node;
-    }
-
-    public PrintPreOrder() {
-        this.PrintPreOrderUtil(this.root);
-    }
-
-    private PrintPreOrderUtil(node: TNode) {
+    printPreOrderUtil(node: TreeNode | null): string {
+        let output: string = "";
         if (node != null) {
-            console.info(" " + node.value);
-            this.PrintPreOrderUtil(node.lChild);
-            this.PrintPreOrderUtil(node.rChild);
+            output += `${node.value} `;
+            output += this.printPreOrderUtil(node.left);
+            output += this.printPreOrderUtil(node.right);
         }
+        return output;
     }
 
-    public NthPreOrder(index: number) {
-        let counter = [0];
-        this.NthPreOrderUtil(this.root, index, counter);
+    printPostOrder(): void {
+        let output = "Post Order Tree: ";
+        output += this.printPostOrderUtil(this.root);
+        console.log(output);
     }
 
-    private NthPreOrderUtil(node: TNode, index: number, counter: Array<number>) {
+    printPostOrderUtil(node: TreeNode | null): string {
+        let output: string = "";
         if (node != null) {
-            counter[0]++;
-            if (counter[0] === index) {
-                console.info("NthPreOrder:", node.value);
-            }
-            this.NthPreOrderUtil(node.lChild, index, counter);
-            this.NthPreOrderUtil(node.rChild, index, counter);
+            output += this.printPostOrderUtil(node.left);
+            output += this.printPostOrderUtil(node.right);
+            output += `${node.value} `;
         }
+        return output;
     }
 
-    public PrintPostOrder() {
-        this.PrintPostOrderUtil(this.root);
+    printInOrder(): void {
+        let output = "In Order Tree: ";
+        output += this.printInOrderUtil(this.root);
+        console.log(output);
     }
 
-    private PrintPostOrderUtil(node: TNode) {
+    printInOrderUtil(node: TreeNode | null): string {
+        let output: string = "";
         if (node != null) {
-            this.PrintPostOrderUtil(node.lChild);
-            this.PrintPostOrderUtil(node.rChild);
-            console.info(" " + node.value);
+            output = this.printInOrderUtil(node.left);
+            output += `${node.value} `;
+            output += this.printInOrderUtil(node.right);
         }
+        return output;
     }
 
-    public NthPostOrder(index: number) {
-        let counter = [0];
-        this.NthPostOrderUtil(this.root, index, counter);
-    }
+    printBreadthFirst(): void {
+        const que = new Queue<TreeNode>();
+        let temp: TreeNode | null;
 
-    private NthPostOrderUtil(node: TNode, index: number, counter: Array<number>) {
-        if (node != null) {
-            this.NthPostOrderUtil(node.lChild, index, counter);
-            this.NthPostOrderUtil(node.rChild, index, counter);
-            counter[0]++;
-            if (counter[0] === index) {
-                console.info("NthPostOrder: " + node.value);
-            }
-        }
-    }
-
-    public PrintInOrder() {
-        this.PrintInOrderUtil(this.root);
-    }
-
-    private PrintInOrderUtil(node: TNode) {
-        if (node != null) {
-            this.PrintInOrderUtil(node.lChild);
-            console.info(" " + node.value);
-            this.PrintInOrderUtil(node.rChild);
-        }
-    }
-
-    public NthInOrder(index: number) {
-        let counter = [0];
-        this.NthInOrderUtil(this.root, index, counter);
-
-    }
-
-    private NthInOrderUtil(node: TNode, index: number, counter: Array<number>) {
-        if (node != null) {
-            this.NthInOrderUtil(node.lChild, index, counter);
-            counter[0]++;
-            if (counter[0] === index) {
-                console.info("NthInOrder: " + node.value);
-            }
-            this.NthInOrderUtil(node.rChild, index, counter);
-        }
-    }
-
-    public PrintBredthFirst() {
-        let que: Queue = new Queue();;
-        let temp: TNode;
         if (this.root != null)
             que.add(this.root);
+
+        let output: string = "Breadth First: ";
         while (que.isEmpty() === false) {
             temp = que.remove();
-            console.info(" " + temp.value);
-            if (temp.lChild != null)
-                que.add(temp.lChild);
-            if (temp.rChild != null)
-                que.add(temp.rChild);
-        };
+            output += `${temp.value} `;
+            if (temp.left != null)
+                que.add(temp.left);
+            if (temp.right != null)
+                que.add(temp.right);
+        }
+        console.log(output);
     }
 
-    public PrintDepthFirst() {
-        let stk: Array<TNode> = new Array<TNode>();
-        let temp: TNode;
+    printDepthFirst(): void {
+        const stk: TreeNode[] = [];
+        let temp: TreeNode | null;
         if (this.root != null)
             stk.push(this.root);
+
+        let output: string = "Depth First: ";
         while (stk.length > 0) {
             temp = stk.pop();
-            console.info(temp.value);
-            if (temp.lChild != null)
-                stk.push(temp.lChild);
-            if (temp.rChild != null)
-                stk.push(temp.rChild);
-        };
+            output += `${temp.value} `;
+            if (temp.right != null)
+                stk.push(temp.right);
+            if (temp.left != null)
+                stk.push(temp.left);
+        }
+        console.log(output);
     }
 
-    PrintLevelOrderLineByLine() {
-        let que1: Queue = new Queue();
-        let que2: Queue = new Queue();
-        let temp: TNode = null;
+    printLevelOrderLineByLine(): void {
+        const que1 = new Queue<TreeNode>();
+        const que2 = new Queue<TreeNode>();
+        let temp: TreeNode | null = null;
         if (this.root != null)
             que1.add(this.root);
-        while (que1.size() > 0 || que2.size() > 0) {
-            while (que1.size() > 0) {
+
+        let output: string;
+        while (que1.length() !== 0 || que2.length() !== 0) {
+            output = "";
+            while (que1.length() !== 0) {
                 temp = que1.remove();
-                console.info(" " + temp.value);
-                if (temp.lChild != null)
-                    que2.add(temp.lChild);
-                if (temp.rChild != null)
-                    que2.add(temp.rChild);
-            };
-            console.info("");
-            while (que2.size() > 0) {
+                output += `${temp.value} `;
+                if (temp.left != null)
+                    que2.add(temp.left);
+                if (temp.right != null)
+                    que2.add(temp.right);
+            }
+            console.log(output);
+            output = "";
+            while (que2.length() !== 0) {
                 temp = que2.remove();
-                console.info(" " + temp.value);
-                if (temp.lChild != null)
-                    que1.add(temp.lChild);
-                if (temp.rChild != null)
-                    que1.add(temp.rChild);
-            };
-            console.info("");
-        };
+                output += `${temp.value} `;
+                if (temp.left != null)
+                    que1.add(temp.left);
+                if (temp.right != null)
+                    que1.add(temp.right);
+            }
+            console.log(output);
+        }
     }
 
-    PrintLevelOrderLineByLine2() {
-        let que: Queue = new Queue();
-        let temp: TNode = null;
-        let count: number = 0;
-        if (this.root != null) que.add(this.root);
-        while (que.size() !== 0) {
-            count = que.size();
+    printLevelOrderLineByLine2(): void {
+        const que = new Queue<TreeNode>();
+        let temp: TreeNode | null = null;
+        let count = 0;
+        if (this.root != null)
+            que.add(this.root);
+
+        let output: string;
+        while (que.length() !== 0) {
+            output = "";
+            count = que.length();
             while (count > 0) {
                 temp = que.remove();
-                console.info(" " + temp.value);
-                if (temp.lChild != null)
-                    que.add(temp.lChild);
-                if (temp.rChild != null)
-                    que.add(temp.rChild);
+                output += `${temp.value} `;
+                if (temp.left != null)
+                    que.add(temp.left);
+                if (temp.right != null)
+                    que.add(temp.right);
                 count -= 1;
-            };
-            console.info("");
-        };
+            }
+            console.log(output);
+        }
     }
 
-    PrintSpiralTree() {
-        let stk1: Array<TNode> = new Array<TNode>();
-        let stk2: Array<TNode> = new Array<TNode>();
-        let temp: TNode;
+    printSpiralTree(): void {
+        const stk1: TreeNode[] = [];
+        const stk2: TreeNode[] = [];
+        let temp: TreeNode | null;
         if (this.root != null)
             stk1.push(this.root);
-        while (stk1.length > 0 || stk2.length > 0) {
-            while (stk1.length > 0) {
+
+        let output: string = "Spiral Tree:";
+        while (stk1.length !== 0 || stk2.length !== 0) {
+            while (stk1.length !== 0) {
                 temp = stk1.pop();
-                console.info(" " + temp.value);
-                if (temp.rChild != null)
-                    stk2.push(temp.rChild);
-                if (temp.lChild != null)
-                    stk2.push(temp.lChild);
-            };
-            while (stk2.length > 0) {
+                output += ` ${temp.value}`;
+                if (temp.right != null)
+                    stk2.push(temp.right);
+                if (temp.left != null)
+                    stk2.push(temp.left);
+            }
+            while (stk2.length !== 0) {
                 temp = stk2.pop();
-                console.info(" " + temp.value);
-                if (temp.lChild != null)
-                    stk1.push(temp.lChild);
-                if (temp.rChild != null)
-                    stk1.push(temp.rChild);
-            };
-        };
+                output += ` ${temp.value}`;
+                if (temp.left != null)
+                    stk1.push(temp.left);
+                if (temp.right != null)
+                    stk1.push(temp.right);
+            }
+        }
+        console.log(output);
+
     }
 
-    public Find(value: number): boolean {
-        let curr: TNode = this.root;
-        while (curr != null) {
-            if (curr.value === value) {
-                return true;
-            } else if (curr.value > value) {
-                curr = curr.lChild;
-            } else {
-                curr = curr.rChild;
+
+    nthPreOrder(index: number): void {
+        const counter: number[] = [0];
+        this.nthPreOrderUtil(this.root, index, counter);
+    }
+
+    nthPreOrderUtil(node: TreeNode | null, index: number, counter: number[]): void {
+        if (node != null) {
+            counter[0]++;
+            if (counter[0] === index) {
+                console.log(`Nth Preorder node is: ${node.value}`);
+                return;
             }
-        };
+            this.nthPreOrderUtil(node.left, index, counter);
+            this.nthPreOrderUtil(node.right, index, counter);
+        }
+    }
+
+    nthPostOrder(index: number): void {
+        const counter: number[] = [0];
+        this.nthPostOrderUtil(this.root, index, counter);
+    }
+
+    nthPostOrderUtil(node: TreeNode | null, index: number, counter: number[]): void {
+        if (node != null) {
+            this.nthPostOrderUtil(node.left, index, counter);
+            this.nthPostOrderUtil(node.right, index, counter);
+            counter[0]++;
+            if (counter[0] === index) {
+                console.log(`Nth Post order : ${node.value}`);
+            }
+        }
+    }
+
+    nthInOrder(index: number): void {
+        const counter: number[] = [0];
+        this.nthInOrderUtil(this.root, index, counter);
+    }
+
+    nthInOrderUtil(node: TreeNode | null, index: number, counter: number[]): void {
+        if (node != null) {
+            this.nthInOrderUtil(node.left, index, counter);
+            counter[0]++;
+            if (counter[0] === index) {
+                console.log(`Nth InOrder Node : ${node.value}`);
+                return;
+            }
+            this.nthInOrderUtil(node.right, index, counter);
+        }
+    }
+
+    printAllPath(): void {
+        const stk: any[] = [];
+        console.log("Print All Path : ");
+        this.printAllPathUtil(this.root, stk);
+    }
+
+    printAllPathUtil(curr: TreeNode | null, stk: any[]): void {
+        if (curr == null)
+            return;
+        stk.push(curr.value);
+
+        if (curr.left == null && curr.right == null) {
+            console.log(stk);
+            stk.pop();
+            return;
+        }
+
+        this.printAllPathUtil(curr.right, stk);
+        this.printAllPathUtil(curr.left, stk);
+        stk.pop();
+    }
+
+    numNodes(): number {
+        return this.numNodesUtil(this.root);
+    }
+
+    numNodesUtil(curr: TreeNode | null): number {
+        if (curr == null)
+            return 0;
+        else
+            return 1 + this.numNodesUtil(curr.right) + this.numNodesUtil(curr.left);
+    }
+
+    sumAllBT(): number {
+        return this.sumAllBTUtil(this.root);
+    }
+
+    sumAllBTUtil(curr: TreeNode | null): number {
+        if (curr == null)
+            return 0;
+        return curr.value + this.sumAllBTUtil(curr.left) + this.sumAllBTUtil(curr.right);
+    }
+
+    numLeafNodes(): number {
+        return this.numLeafNodesUtil(this.root);
+    }
+
+    numLeafNodesUtil(curr: TreeNode | null): number {
+        if (curr == null)
+            return 0;
+
+        if (curr.left == null && curr.right == null)
+            return 1;
+        else
+            return this.numLeafNodesUtil(curr.right) + this.numLeafNodesUtil(curr.left);
+    }
+
+
+    numFullNodesBT(): number {
+        return this.numFullNodesBTUtil(this.root);
+    }
+
+    numFullNodesBTUtil(curr: TreeNode | null): number {
+        let count: number;
+        if (curr == null)
+            return 0;
+
+        count = this.numFullNodesBTUtil(curr.right) + this.numFullNodesBTUtil(curr.left);
+        if (curr.right != null && curr.left != null)
+            count++;
+        return count;
+    }
+
+    searchBT(value: number): boolean {
+        return this.searchBTUtil(this.root, value);
+    }
+
+    searchBTUtil(curr: TreeNode | null, val: number): boolean {
+        if (curr == null)
+            return false;
+
+        if (curr.value === val || this.searchBTUtil(curr.left, val) || this.searchBTUtil(curr.right, val))
+            return true;
+
         return false;
     }
 
-    public Find2(value: number): boolean {
-        let curr: TNode = this.root;
-        while (curr != null && curr.value !== value) {
-            curr = (curr.value > value) ? curr.lChild : curr.rChild
-        };
-        return curr != null;
+    findMaxBT(): number {
+        const ans = this.findMaxBTUtil(this.root);
+        return ans;
     }
 
-    public FindMin(): number {
-        let node: TNode = this.root;
-        if (node == null) {
-            return MAX_INT;
-        }
-        while (node.lChild != null) {
-            node = node.lChild;
-        };
-        return node.value;
-    }
-
-    public FindMax(): number {
-        let node: TNode = this.root;
-        if (node == null) {
+    findMaxBTUtil(curr: TreeNode | null): number {
+        if (curr == null)
             return MIN_INT;
-        }
-        while (node.rChild != null) {
-            node = node.rChild;
-        };
-        return node.value;
+
+        let max = curr.value;
+        const left = this.findMaxBTUtil(curr.left);
+        const right = this.findMaxBTUtil(curr.right);
+
+        if (left > max)
+            max = left;
+
+        if (right > max)
+            max = right;
+
+        return max;
     }
 
-    public FindMaxNode(curr: TNode): TNode {
-        let node: TNode = curr;
-        if (node == null) {
-            return null;
-        }
-        while (node.rChild != null) {
-            node = node.rChild;
-        };
-        return node;
+    treeDepth(): number {
+        return this.treeDepthUtil(this.root);
     }
 
-    public FindMinNode(curr: TNode): TNode {
-        let node: TNode = curr;
-        if (node == null) {
-            return null;
-        }
-        while (node.lChild != null) {
-            node = node.lChild;
-        };
-        return node;
-    }
-
-    public Free() {
-        this.root = null;
-    }
-
-    public DeleteNode(value: number) {
-        this.root = this.DeleteNodeUtil(this.root, value);
-    }
-
-    private DeleteNodeUtil(node: TNode, value: number): TNode {
-        let temp: TNode = null;
-        if (node != null) {
-            if (node.value === value) {
-                if (node.lChild == null && node.rChild == null) {
-                    return null;
-                } else {
-                    if (node.lChild == null) {
-                        temp = node.rChild;
-                        return temp;
-                    }
-                    if (node.rChild == null) {
-                        temp = node.lChild;
-                        return temp;
-                    }
-                    let minNode: TNode = this.FindMinNode(node.rChild);
-                    let minValue: number = minNode.value;
-                    node.value = minValue;
-                    node.rChild = this.DeleteNodeUtil(node.rChild, minValue);
-                }
-            } else {
-                if (node.value > value) {
-                    node.lChild = this.DeleteNodeUtil(node.lChild, value);
-                } else {
-                    node.rChild = this.DeleteNodeUtil(node.rChild, value);
-                }
-            }
-        }
-        return node;
-    }
-
-    public TreeDepth(): number {
-        return this.TreeDepthUtil(this.root);
-    }
-
-    private TreeDepthUtil(curr: TNode): number {
+    treeDepthUtil(curr: TreeNode | null): number {
         if (curr == null)
             return 0;
         else {
-            let lDepth: number = this.TreeDepthUtil(curr.lChild);
-            let rDepth: number = this.TreeDepthUtil(curr.rChild);
+            const lDepth = this.treeDepthUtil(curr.left);
+            const rDepth = this.treeDepthUtil(curr.right);
+
             if (lDepth > rDepth)
                 return lDepth + 1;
             else
@@ -406,425 +417,653 @@ class Tree {
         }
     }
 
-    public isEqual(T2: Tree): boolean {
-        return this.isEqualUtil(this.root, T2.root);
+    maxLengthPathBT(): number {
+        return this.maxLengthPathBTUtil(this.root);
     }
 
-    private isEqualUtil(node1: TNode, node2: TNode): boolean {
+    maxLengthPathBTUtil(curr: TreeNode | null): number {
+        if (curr == null)
+            return 0;
+
+        const leftPath = this.treeDepthUtil(curr.left);
+        const rightPath = this.treeDepthUtil(curr.right);
+        let max = leftPath + rightPath + 1;
+
+        const leftMax = this.maxLengthPathBTUtil(curr.left);
+        const rightMax = this.maxLengthPathBTUtil(curr.right);
+
+        if (leftMax > max)
+            max = leftMax;
+
+        if (rightMax > max)
+            max = rightMax;
+
+        return max;
+    }
+
+    copyTree(): Tree {
+        const tree2 = new Tree();
+        tree2.root = this.copyTreeUtil(this.root);
+        return tree2;
+    }
+
+    copyTreeUtil(curr: TreeNode | null): TreeNode | null {
+        if (curr != null) {
+            const temp = new TreeNode(curr.value);
+            temp.left = this.copyTreeUtil(curr.left);
+            temp.right = this.copyTreeUtil(curr.right);
+            return temp;
+        } else {
+            return null;
+        }
+    }
+
+    copyMirrorTree(): Tree {
+        const tree2 = new Tree();
+        tree2.root = this.copyMirrorTreeUtil(this.root);
+        return tree2;
+    }
+
+    copyMirrorTreeUtil(curr: TreeNode | null): TreeNode | null {
+        if (curr != null) {
+            const temp = new TreeNode(curr.value);
+            temp.right = this.copyMirrorTreeUtil(curr.left);
+            temp.left = this.copyMirrorTreeUtil(curr.right);
+            return temp;
+        } else {
+            return null;
+        }
+    }
+
+    isEqual(tree: Tree): boolean {
+        return this.isEqualUtil(this.root, tree.root);
+    }
+
+    isEqualUtil(node1: TreeNode | null, node2: TreeNode | null): boolean {
         if (node1 == null && node2 == null)
             return true;
         else if (node1 == null || node2 == null)
             return false;
         else
-            return (this.isEqualUtil(node1.lChild, node2.lChild) &&
-                this.isEqualUtil(node1.rChild, node2.rChild) &&
-                (node1.value === node2.value));
+            return (
+                this.isEqualUtil(node1.left, node2.left) &&
+                this.isEqualUtil(node1.right, node2.right) &&
+                node1.value === node2.value
+            );
     }
 
-    public Ancestor(first: number, second: number): TNode {
-        if (first > second) {
-            let temp: number = first;
-            first = second;
-            second = temp;
+    free(): void {
+        this.root = null;
+    }
+
+    isCompleteTree(): boolean {
+        const que = new Queue();
+        let temp = null;
+        let noChild = 0;
+        if (this.root != null)
+            que.add(this.root);
+
+        while (que.length() !== 0) {
+            temp = que.remove();
+            if (temp.left != null) {
+                if (noChild === 1)
+                    return false;
+                que.add(temp.left);
+            } else
+                noChild = 1;
+
+            if (temp.right != null) {
+                if (noChild === 1)
+                    return false;
+                que.add(temp.right);
+            } else
+                noChild = 1;
         }
-        return this.AncestorUtil(this.root, first, second);
+        return true;
     }
 
-    private AncestorUtil(curr: TNode, first: number, second: number): TNode {
-        if (curr == null) {
+    isCompleteTreeUtil(curr: TreeNode | null, index: number, count: number): boolean {
+        if (curr == null)
+            return true;
+
+        if (index > count)
+            return false;
+
+        return (
+            this.isCompleteTreeUtil(curr.left, index * 2 + 1, count) &&
+            this.isCompleteTreeUtil(curr.right, index * 2 + 2, count)
+        );
+    }
+
+    isCompleteTree2(): boolean {
+        const count = this.numNodes();
+        return this.isCompleteTreeUtil(this.root, 0, count);
+    }
+
+
+    isHeapUtil(curr: TreeNode | null, parentValue: number): boolean {
+        if (curr == null)
+            return true;
+
+        if (curr.value < parentValue)
+            return false;
+
+        return (
+            this.isHeapUtil(curr.left, curr.value) &&
+            this.isHeapUtil(curr.right, curr.value)
+        );
+    }
+
+    isHeap(): boolean {
+        const infi = MIN_INT;
+        return this.isCompleteTree() && this.isHeapUtil(this.root, infi);
+    }
+
+    isHeapUtil2(curr: TreeNode | null, index: number, count: number, parentValue: number): boolean {
+        if (curr == null)
+            return true;
+
+        if (index > count)
+            return false;
+
+        if (curr.value < parentValue)
+            return false;
+
+        return (
+            this.isHeapUtil2(curr.left, index * 2 + 1, count, curr.value) &&
+            this.isHeapUtil2(curr.right, index * 2 + 2, count, curr.value)
+        );
+    }
+
+    isHeap2(): boolean {
+        const count = this.numNodes();
+        const parentValue = MIN_INT;
+        return this.isHeapUtil2(this.root, 0, count, parentValue);
+    }
+
+    iterativePreOrder(): void {
+        const stk: TreeNode[] = [];
+        let output: string = "Iterative Pre Order : ";
+        let curr: TreeNode | undefined;
+
+        if (this.root != null)
+            stk.push(this.root);
+
+        while (stk.length > 0) {
+            curr = stk.pop();
+            if (curr) {
+                output += ` ${curr.value}`;
+                if (curr.right != null)
+                    stk.push(curr.right);
+                if (curr.left != null)
+                    stk.push(curr.left);
+            }
+        }
+        console.log(output);
+    }
+
+    iterativePostOrder(): void {
+        const stk: TreeNode[] = [];
+        const visited: number[] = [];
+        let curr: TreeNode | undefined;
+        let vtd: number | undefined;
+
+        if (this.root != null) {
+            stk.push(this.root);
+            visited.push(0);
+        }
+
+        let output: string = "Iterative Post Order : ";
+        while (stk.length > 0) {
+            curr = stk.pop();
+            vtd = visited.pop();
+            if (vtd === 1) {
+                if (curr)
+                    output += ` ${curr.value}`;
+            } else {
+                if (curr) {
+                    stk.push(curr);
+                    visited.push(1);
+                    if (curr.right != null) {
+                        stk.push(curr.right);
+                        visited.push(0);
+                    }
+                    if (curr.left != null) {
+                        stk.push(curr.left);
+                        visited.push(0);
+                    }
+                }
+            }
+        }
+        console.log(output);
+    }
+
+    iterativeInOrder(): void {
+        const stk: TreeNode[] = [];
+        const visited: number[] = [];
+        let curr: TreeNode | undefined;
+        let vtd: number | undefined;
+
+        if (this.root != null) {
+            stk.push(this.root);
+            visited.push(0);
+        }
+
+        let output: string = "Iterative In Order : ";
+        while (stk.length > 0) {
+            curr = stk.pop();
+            vtd = visited.pop();
+            if (vtd === 1) {
+                if (curr)
+                    output += ` ${curr.value}`;
+            } else {
+                if (curr) {
+                    if (curr.right != null) {
+                        stk.push(curr.right);
+                        visited.push(0);
+                    }
+                    stk.push(curr);
+                    visited.push(1);
+                    if (curr.left != null) {
+                        stk.push(curr.left);
+                        visited.push(0);
+                    }
+                }
+            }
+        }
+        console.log(output);
+    }
+
+    treeToListRec(): Tree {
+        const t2 = this.copyTree();
+        const root = this.treeToListRecUtil(t2.root);
+        t2.root = root;
+        return t2;
+    }
+
+    treeToListRecUtil(curr: TreeNode | null): TreeNode | null {
+        let head: TreeNode | null = null;
+        let tail: TreeNode | null = null;
+        if (curr == null)
             return null;
+
+        if (curr.left == null && curr.right == null) {
+            curr.left = curr;
+            curr.right = curr;
+            return curr;
         }
-        if (curr.value > first && curr.value > second) {
-            return this.AncestorUtil(curr.lChild, first, second);
+
+        if (curr.left != null) {
+            head = this.treeToListRecUtil(curr.left);
+            tail = head!.left;
+            curr.left = tail;
+            tail!.right = curr;
+        } else
+            head = curr;
+
+        if (curr.right != null) {
+            const tempHead = this.treeToListRecUtil(curr.right);
+            tail = tempHead!.left;
+            curr.right = tempHead;
+            tempHead!.left = curr;
+        } else
+            tail = curr;
+
+        head!.left = tail;
+        tail!.right = head;
+        return head;
+    }
+
+    printDLL(): void {
+        if (this.root == null) {
+            return;
         }
-        if (curr.value < first && curr.value < second) {
-            return this.AncestorUtil(curr.rChild, first, second);
+        let curr = this.root;
+        let tail = curr!.left;
+        let output: string = `DLL nodes are : `;
+        while (curr !== tail) {
+            output += `${curr.value} `;
+            curr = curr.right!;
         }
+        output += `${curr.value}`;
+        console.log(output);
+    }
+
+    createBinarySearchTree(arr: number[]): void {
+        this.root = this.createBinarySearchTreeUtil(arr, 0, arr.length - 1);
+    }
+
+    createBinarySearchTreeUtil(arr: number[], start: number, end: number): TreeNode | null {
+        if (start > end)
+            return null;
+
+        const mid = Math.floor((start + end) / 2);
+        const curr = new TreeNode(arr[mid]);
+        curr.left = this.createBinarySearchTreeUtil(arr, start, mid - 1);
+        curr.right = this.createBinarySearchTreeUtil(arr, mid + 1, end);
         return curr;
     }
 
-    public CopyTree(): Tree {
-        let tree2: Tree = new Tree();
-        tree2.root = this.CopyTreeUtil(this.root);
-        return tree2;
+    insertNode(value: number): void {
+        this.root = this.insertNodeUtil(this.root, value);
     }
 
-    private CopyTreeUtil(curr: TNode): TNode {
-        let temp: TNode;
-        if (curr != null) {
-            temp = new TNode(curr.value);
-            temp.lChild = this.CopyTreeUtil(curr.lChild);
-            temp.rChild = this.CopyTreeUtil(curr.rChild);
-            return temp;
-        }
-        else
-            return null;
-    }
-
-    public CopyMirrorTree(): Tree {
-        let tree2: Tree = new Tree();
-        tree2.root = this.CopyMirrorTreeUtil(this.root);
-        return tree2;
-    }
-
-    private CopyMirrorTreeUtil(curr: TNode): TNode {
-        let temp: TNode;
-        if (curr != null) {
-            temp = new TNode(curr.value);
-            temp.rChild = this.CopyMirrorTreeUtil(curr.lChild);
-            temp.lChild = this.CopyMirrorTreeUtil(curr.rChild);
-            return temp;
-        }
-        else
-            return null;
-    }
-
-    public numNodes(): number {
-        return this.numNodesUtil(this.root);
-    }
-
-    private numNodesUtil(curr: TNode): number {
-        if (curr == null)
-            return 0;
-        else
-            return (1 + this.numNodesUtil(curr.rChild) +
-                this.numNodesUtil(curr.lChild));
-    }
-
-    public numFullNodesBT(): number {
-        return this.numNodesUtil(this.root);
-    }
-
-    private numFullNodesBTUtil(curr: TNode): number {
-        let count: number;
-        if (curr == null)
-            return 0;
-        count = this.numFullNodesBTUtil(curr.rChild) + this.numFullNodesBTUtil(curr.lChild);
-        if (curr.rChild != null && curr.lChild != null)
-            count++;
-        return count;
-    }
-
-    public maxLengthPathBT(): number {
-        return this.maxLengthPathBTUtil(this.root);
-    }
-
-    private maxLengthPathBTUtil(curr: TNode): number {
-        let max: number;
-        let leftPath: number;
-        let rightPath: number;
-        let leftMax: number;
-        let rightMax: number;
-
-        if (curr == null)
-            return 0;
-
-        leftPath = this.TreeDepthUtil(curr.lChild);
-        rightPath = this.TreeDepthUtil(curr.rChild);
-        max = leftPath + rightPath + 1;
-        leftMax = this.maxLengthPathBTUtil(curr.lChild);
-        rightMax = this.maxLengthPathBTUtil(curr.rChild);
-
-        if (leftMax > max)
-            max = leftMax;
-        if (rightMax > max)
-            max = rightMax;
-        return max;
-    }
-
-    public numLeafNodes(): number {
-        return this.numLeafNodesUtil(this.root);
-    }
-
-    private numLeafNodesUtil(curr: TNode): number {
-        if (curr == null)
-            return 0;
-
-        if (curr.lChild == null && curr.rChild == null)
-            return 1;
-        else
-            return (this.numLeafNodesUtil(curr.rChild) + this.numLeafNodesUtil(curr.lChild));
-    }
-
-    public sumAllBT(): number {
-        return this.sumAllBTUtil(this.root);
-    }
-
-    private sumAllBTUtil(curr: TNode): number {
-        if (curr == null)
-            return 0;
-        return (curr.value + this.sumAllBTUtil(curr.lChild) +
-            this.sumAllBTUtil(curr.lChild));
-    }
-
-    public iterativePreOrder() {
-        let stk: Array<TNode> = new Array<TNode>();
-        let curr: TNode;
-        if (this.root != null)
-            stk.push(this.root);
-        while (stk.length > 0) {
-            curr = stk.pop();
-            console.info(curr.value + " ");
-            if (curr.rChild != null)
-                stk.push(curr.rChild);
-            if (curr.lChild != null)
-                stk.push(curr.lChild);
-        };
-    }
-
-    public iterativePostOrder() {
-        let stk: Array<TNode> = new Array<TNode>();
-        let visited: Array<number> = new Array<number>();
-        let curr: TNode;
-        let vtd: number;
-        if (this.root != null) {
-            stk.push(this.root);
-            visited.push(0);
-        }
-        while (stk.length > 0) {
-            curr = stk.pop();
-            vtd = visited.pop();
-            if (vtd === 1) {
-                console.info(curr.value + " ");
+    insertNodeUtil(node: TreeNode | null, value: number): TreeNode {
+        if (node == null) {
+            node = new TreeNode(value, null, null);
+        } else {
+            if (node.value > value) {
+                node.left = this.insertNodeUtil(node.left, value);
             } else {
-                stk.push(curr);
-                visited.push(1);
-                if (curr.rChild != null) {
-                    stk.push(curr.rChild);
-                    visited.push(0);
-                }
-                if (curr.lChild != null) {
-                    stk.push(curr.lChild);
-                    visited.push(0);
-                }
+                node.right = this.insertNodeUtil(node.right, value);
             }
-        };
-    }
-
-    public iterativeInOrder() {
-        let stk: Array<TNode> = new Array<TNode>();
-        let visited: Array<number> = new Array<number>();
-        let curr: TNode;
-        let vtd: number;
-        if (this.root != null) {
-            stk.push(this.root);
-            visited.push(0);
         }
-        while (stk.length > 0) {
-            curr = stk.pop();
-            vtd = visited.pop();
-            if (vtd === 1) {
-                console.info(curr.value + " ");
-            } else {
-                if (curr.rChild != null) {
-                    stk.push(curr.rChild);
-                    visited.push(0);
-                }
-                stk.push(curr);
-                visited.push(1);
-                if (curr.lChild != null) {
-                    stk.push(curr.lChild);
-                    visited.push(0);
-                }
-            }
-        };
+        return node;
     }
 
-    public isBST3(root: TNode): boolean {
+    find(value: number): boolean {
+        let curr = this.root;
+        while (curr != null) {
+            if (curr.value === value) {
+                return true;
+            } else if (curr.value > value) {
+                curr = curr.left;
+            } else {
+                curr = curr.right;
+            }
+        }
+        return false;
+    }
+
+    find2(value: number): boolean {
+        let curr = this.root;
+        while (curr != null && curr.value !== value) {
+            curr = (curr.value > value) ? curr.left : curr.right;
+        }
+        return curr != null;
+    }
+
+    findMin(): number {
+        let node = this.root;
+        if (node == null) {
+            return Number.MAX_VALUE;
+        }
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node.value;
+    }
+
+    findMinNode(curr: TreeNode | null): TreeNode | null {
+        let node = curr;
+        if (node == null) {
+            return null;
+        }
+
+        while (node.left != null) {
+            node = node.left;
+        }
+
+        return node;
+    }
+
+    findMax(): number {
+        let node = this.root;
+        if (node == null) {
+            return Number.MIN_VALUE;
+        }
+        while (node.right != null) {
+            node = node.right;
+        }
+        return node.value;
+    }
+
+    findMaxNode(curr: TreeNode | null): TreeNode | null {
+        let node = curr;
+        if (node == null) {
+            return null;
+        }
+
+        while (node.right != null) {
+            node = node.right;
+        }
+
+        return node;
+    }
+
+    isBST3(): boolean {
+        return this.isBST3Util(this.root);
+    }
+
+    isBST3Util(root: TreeNode | null): boolean {
         if (root == null)
             return true;
 
-        if (root.lChild != null && this.FindMaxNode(root.lChild).value > root.value)
+        if (root.left != null && this.findMaxNode(root.left)!.value > root.value)
             return false;
-        if (root.rChild != null && this.FindMinNode(root.rChild).value <= root.value)
+
+        if (root.right != null && this.findMinNode(root.right)!.value <= root.value)
             return false;
-        return (this.isBST3(root.lChild) && this.isBST3(root.rChild));
+
+        return (this.isBST3Util(root.left) && this.isBST3Util(root.right));
     }
 
-    public isBST(): boolean {
-        return this.isBSTUtil(this.root, MIN_INT, MAX_INT);
+    isBST(): boolean {
+        return this.isBSTUtil(this.root, Number.MIN_VALUE, Number.MAX_VALUE);
     }
 
-    private isBSTUtil(curr: TNode, min: number, max: number): boolean {
+    isBSTUtil(curr: TreeNode | null, min: number, max: number): boolean {
         if (curr == null)
             return true;
 
         if (curr.value < min || curr.value > max)
             return false;
-        return this.isBSTUtil(curr.lChild, min, curr.value) &&
-            this.isBSTUtil(curr.rChild, curr.value, max);
+
+        return this.isBSTUtil(curr.left, min, curr.value) && this.isBSTUtil(curr.right, curr.value, max);
     }
 
-    public isBST2(): boolean {
-        let count: Array<number> = [0];
+    isBST2(): boolean {
+        const count: number[] = [Number.MIN_VALUE];
         return this.isBST2Util(this.root, count);
     }
 
-    private isBST2Util(root: TNode, count: Array<number>): boolean {
-        let ret: boolean;
+    isBST2Util(root: TreeNode | null, count: number[]): boolean {
+        let ret;
         if (root != null) {
-            ret = this.isBST2Util(root.lChild, count);
+            ret = this.isBST2Util(root.left, count);
             if (!ret)
                 return false;
+
             if (count[0] > root.value)
                 return false;
+
             count[0] = root.value;
-            ret = this.isBST2Util(root.rChild, count);
-            if (!ret) return false;
+            ret = this.isBST2Util(root.right, count);
+            if (!ret)
+                return false;
         }
         return true;
     }
 
-    isCompleteTree(): boolean {
-        let que: Queue = new Queue();
-        let temp: TNode = null;
-        let noChild: number = 0;
-        if (this.root != null)
-            que.add(this.root);
-        while (que.size() > 0) {
-            temp = que.remove();
-            if (temp.lChild != null) {
-                if (noChild === 1)
-                    return false;
-                que.add(temp.lChild);
+    deleteNode(value: number): void {
+        this.root = this.deleteNodeUtil(this.root, value);
+    }
+
+    deleteNodeUtil(node: TreeNode | null, value: number): TreeNode | null {
+        let temp: TreeNode | null = null;
+        if (node != null) {
+            if (node.value === value) {
+                if (node.left == null && node.right == null) {
+                    return null;
+                } else {
+                    if (node.left == null) {
+                        temp = node.right;
+                        return temp;
+                    }
+                    if (node.right == null) {
+                        temp = node.left;
+                        return temp;
+                    }
+                    const minNode = this.findMinNode(node.right);
+                    const minValue = minNode!.value;
+                    node.value = minValue;
+                    node.right = this.deleteNodeUtil(node.right, minValue);
+                }
+            } else {
+                if (node.value > value) {
+                    node.left = this.deleteNodeUtil(node.left, value);
+                } else {
+                    node.right = this.deleteNodeUtil(node.right, value);
+                }
             }
-            else
-                noChild = 1;
-
-            if (temp.rChild != null) {
-                if (noChild === 1)
-                    return false;
-                que.add(temp.rChild);
-            }
-            else
-                noChild = 1;
-        };
-        return true;
+        }
+        return node;
     }
 
-    public isCompleteTreeUtil(curr: TNode, index: number, count: number): boolean {
+    lcaBST(first: number, second: number): number {
+        let result: number;
+        if (first > second)
+            result = this.lcaBSTUtil(this.root, second, first);
+        else
+            result = this.lcaBSTUtil(this.root, first, second);
+
+        return result;
+    }
+
+    lcaBSTUtil(curr: TreeNode | null, first: number, second: number): number {
+        if (curr == null) {
+            return Number.MAX_VALUE;
+        }
+
+        if (curr.value > second) {
+            return this.lcaBSTUtil(curr.left, first, second);
+        }
+
+        if (curr.value < first) {
+            return this.lcaBSTUtil(curr.right, first, second);
+        }
+
+        if (this.find(first) && this.find(second))
+            return curr.value;
+
+        return Number.MAX_VALUE;
+    }
+
+    printInRange(min: number, max: number): void {
+        let output: string = "Print In Range : ";
+        output += this.printInRangeUtil(this.root, min, max);
+        console.log(output);
+    }
+
+    printInRangeUtil(curr: TreeNode | null, min: number, max: number): string {
         if (curr == null)
-            return true;
-        if (index > count)
-            return false;
-        return this.isCompleteTreeUtil(curr.lChild, index * 2 + 1, count) &&
-            this.isCompleteTreeUtil(curr.rChild, index * 2 + 2, count);
+            return "";
+        let output: string = "";
+        output += this.printInRangeUtil(curr.left, min, max);
+        if (curr.value >= min && curr.value <= max)
+            output += `${curr.value} `;
+        output += this.printInRangeUtil(curr.right, min, max);
+        return output;
     }
 
-    public isCompleteTree2(): boolean {
-        let count: number = this.numNodes();
-        return this.isCompleteTreeUtil(this.root, 0, count);
+    trimOutsideRange(min: number, max: number): void {
+        this.root = this.trimOutsideRangeUtil(this.root, min, max);
     }
 
-    private isHeapUtil(curr: TNode, parentValue: number): boolean {
-        if (curr == null)
-            return true;
-        if (curr.value < parentValue)
-            return false;
-        return (this.isHeapUtil(curr.lChild, curr.value) &&
-            this.isHeapUtil(curr.rChild, curr.value));
-    }
-
-    public isHeap(): boolean {
-        let infi: number = MIN_INT;
-        return (this.isCompleteTree() && this.isHeapUtil(this.root, infi));
-    }
-
-    private isHeapUtil2(curr: TNode, index: number, count: number, parentValue: number): boolean {
-        if (curr == null)
-            return true;
-        if (index > count)
-            return false;
-        if (curr.value < parentValue)
-            return false;
-        return this.isHeapUtil2(curr.lChild, index * 2 + 1, count, curr.value) && this.isHeapUtil2(curr.rChild, index * 2 + 2, count, curr.value);
-    }
-
-    public isHeap2(): boolean {
-        let count: number = this.numNodes();
-        let parentValue: number = MIN_INT;
-        return this.isHeapUtil2(this.root, 0, count, parentValue);
-    }
-
-    public treeToListRec(): TNode {
-        let head: TNode = this.treeToListRecUtil(this.root);
-        let temp: TNode = head;
-        return temp;
-    }
-
-    private treeToListRecUtil(curr: TNode): TNode {
-        let Head: TNode = null;
-        let Tail: TNode = null;
-
+    trimOutsideRangeUtil(curr: TreeNode | null, min: number, max: number): TreeNode | null {
         if (curr == null)
             return null;
 
-        if (curr.lChild == null && curr.rChild == null) {
-            curr.lChild = curr;
-            curr.rChild = curr;
-            return curr;
+        curr.left = this.trimOutsideRangeUtil(curr.left, min, max);
+        curr.right = this.trimOutsideRangeUtil(curr.right, min, max);
+
+        if (curr.value < min) {
+            return curr.right;
         }
 
-        if (curr.lChild != null) {
-            Head = this.treeToListRecUtil(curr.lChild);
-            Tail = Head.lChild;
-            curr.lChild = Tail;
-            Tail.rChild = curr;
+        if (curr.value > max) {
+            return curr.left;
         }
-        else
-            Head = curr;
 
-        if (curr.rChild != null) {
-            let tempHead: TNode = this.treeToListRecUtil(curr.rChild);
-            Tail = tempHead.lChild;
-            curr.rChild = tempHead;
-            tempHead.lChild = curr;
-        }
-        else
-            Tail = curr;
-
-        Head.lChild = Tail;
-        Tail.rChild = Head;
-        return Head;
+        return curr;
     }
 
-    public printAllPath() {
-        let stk: Array<number> = new Array<number>();
-        this.printAllPathUtil(this.root, stk);
-    }
-
-    private printAllPathUtil(curr: TNode, stk: Array<number>) {
-        if (curr == null)
-            return;
-
-        stk.push(curr.value);
-        if (curr.lChild == null && curr.rChild == null) {
-            console.info(stk);
-            stk.pop();
-            return;
+    ceilBST(val: number): number {
+        let curr = this.root;
+        let ceil = Number.MIN_VALUE;
+        while (curr != null) {
+            if (curr.value === val) {
+                ceil = curr.value;
+                break;
+            } else if (curr.value > val) {
+                ceil = curr.value;
+                curr = curr.left;
+            } else {
+                curr = curr.right;
+            }
         }
-        this.printAllPathUtil(curr.rChild, stk);
-        this.printAllPathUtil(curr.lChild, stk);
-        stk.pop();
+        return ceil;
     }
 
-    public LCA(first: number, second: number): number {
-        let ans: TNode = this.LCAUtil(this.root, first, second);
+    floorBST(val: number): number {
+        let curr = this.root;
+        let floor = Number.MAX_VALUE;
+        while (curr != null) {
+            if (curr.value === val) {
+                floor = curr.value;
+                break;
+            } else if (curr.value > val) {
+                curr = curr.left;
+            } else {
+                floor = curr.value;
+                curr = curr.right;
+            }
+        }
+        return floor;
+    }
+
+    ancestor(first: number, second: number): TreeNode | null {
+        if (first > second) {
+            const temp = first;
+            first = second;
+            second = temp;
+        }
+        return this.ancestorUtil(this.root, first, second);
+    }
+
+    ancestorUtil(curr: TreeNode | null, first: number, second: number): TreeNode | null {
+        if (curr == null) {
+            return null;
+        }
+        if (curr.value > first && curr.value > second) {
+            return this.ancestorUtil(curr.left, first, second);
+        }
+        if (curr.value < first && curr.value < second) {
+            return this.ancestorUtil(curr.right, first, second);
+        }
+        return curr;
+    }
+
+    LCA(first: number, second: number): number {
+        const ans = this.LCAUtil(this.root, first, second);
         if (ans != null)
             return ans.value;
         else
-            return MIN_INT;
+            return Number.MIN_VALUE;
     }
 
-    private LCAUtil(curr: TNode, first: number, second: number): TNode {
-        let left: TNode;
-        let right: TNode;
+    LCAUtil(curr: TreeNode | null, first: number, second: number): TreeNode | null {
+        let left: TreeNode | null;
+        let right: TreeNode | null;
+
         if (curr == null)
             return null;
         if (curr.value === first || curr.value === second)
             return curr;
-        left = this.LCAUtil(curr.lChild, first, second);
-        right = this.LCAUtil(curr.rChild, first, second);
+
+        left = this.LCAUtil(curr.left, first, second);
+        right = this.LCAUtil(curr.right, first, second);
+
         if (left != null && right != null)
             return curr;
         else if (left != null)
@@ -832,190 +1071,279 @@ class Tree {
         else
             return right;
     }
-
-    public LcaBST(first: number, second: number): number {
-        return this.LcaBSTUtil(this.root, first, second);
-    }
-
-    private LcaBSTUtil(curr: TNode, first: number, second: number): number {
-        if (curr == null) {
-            return MAX_INT;
-        }
-        if (curr.value > first && curr.value > second) {
-            return this.LcaBSTUtil(curr.lChild, first, second);
-        }
-        if (curr.value < first && curr.value < second) {
-            return this.LcaBSTUtil(curr.rChild, first, second);
-        }
-        return curr.value;
-    }
-
-    public trimOutsideRange(min: number, max: number) {
-        this.trimOutsideRangeUtil(this.root, min, max);
-    }
-
-    private trimOutsideRangeUtil(curr: TNode, min: number, max: number): TNode {
-        if (curr == null)
-            return null;
-        curr.lChild = this.trimOutsideRangeUtil(curr.lChild, min, max);
-        curr.rChild = this.trimOutsideRangeUtil(curr.rChild, min, max);
-        if (curr.value < min) {
-            return curr.rChild;
-        }
-        if (curr.value > max) {
-            return curr.lChild;
-        }
-        return curr;
-    }
-
-    public printInRange(min: number, max: number) {
-        this.printInRangeUtil(this.root, min, max);
-    }
-
-    private printInRangeUtil(root: TNode, min: number, max: number) {
-        if (root == null)
-            return;
-        this.printInRangeUtil(root.lChild, min, max);
-        if (root.value >= min && root.value <= max)
-            console.info(root.value + " ");
-        this.printInRangeUtil(root.rChild, min, max);
-    }
-
-    public FloorBST(val: number): number {
-        let curr: TNode = this.root;
-        let floor: number = MAX_INT;
-        while (curr != null) {
-            if (curr.value === val) {
-                floor = curr.value;
-                break;
-            } else if (curr.value > val) {
-                curr = curr.lChild;
-            } else {
-                floor = curr.value;
-                curr = curr.rChild;
-            }
-        };
-        return floor;
-    }
-
-    public CeilBST(val: number): number {
-        let curr: TNode = this.root;
-        let ceil: number = MIN_INT;
-        while (curr != null) {
-            if (curr.value === val) {
-                ceil = curr.value;
-                break;
-            } else if (curr.value > val) {
-                ceil = curr.value;
-                curr = curr.lChild;
-            } else {
-                curr = curr.rChild;
-            }
-        };
-        return ceil;
-    }
-
-    public findMaxBT(): number {
-        let ans: number = this.findMaxBTUtil(this.root);
-        return ans;
-    }
-
-    private findMaxBTUtil(curr: TNode): number {
-        let left: number;
-        let right: number;
-        if (curr == null)
-            return MIN_INT;
-        let max: number = curr.value;
-        left = this.findMaxBTUtil(curr.lChild);
-        right = this.findMaxBTUtil(curr.rChild);
-        if (left > max)
-            max = left;
-        if (right > max)
-            max = right;
-        return max;
-    }
-
-    public searchBT(value: number): boolean {
-        return this.searchBTUtil(this.root, value);
-    }
-
-    private searchBTUtil(curr: TNode, value: number): boolean {
-        let left: boolean;
-        let right: boolean;
-        if (curr == null)
-            return false;
-        if (curr.value === value)
-            return true;
-        left = this.searchBTUtil(curr.lChild, value);
-        if (left)
-            return true;
-        right = this.searchBTUtil(curr.rChild, value);
-        if (right)
-            return true;
-        return false;
-    }
-
-    public CreateBinaryTree(arr: Array<number>) {
-        this.root = this.CreateBinaryTreeUtil(arr, 0, arr.length - 1);
-    }
-
-    private CreateBinaryTreeUtil(arr: Array<number>, start: number, end: number): TNode {
-        let curr: TNode = null;
-        if (start > end)
-            return null;
-        let mid: number = ((start + end) / 2 | 0);
-        curr = new TNode(arr[mid]);
-        curr.lChild = this.CreateBinaryTreeUtil(arr, start, mid - 1);
-        curr.rChild = this.CreateBinaryTreeUtil(arr, mid + 1, end);
-        return curr;
-    }
+    // Other methods in the BinarySearchTree class...
 }
 
-function isBSTArray(preorder: Array<number>, size: number): boolean {
-    let stk: Array<number> = new Array<number>();
+function isBSTArray(preorder: number[], size: number): boolean {
+    const stk: number[] = [];
     let value: number;
-    let root: number = MIN_INT;
-    for (let i: number = 0; i < size; i++) {
+    let root: number = Number.MIN_VALUE;
+
+    for (let i = 0; i < size; i++) {
         value = preorder[i];
-        if (value < root) return false;
-        while ((stk.length > 0) && (stk[stk.length - 1] < value)) {
-            root = stk.pop()
-        };
+        // If value of the right child is less than root.
+        if (value < root)
+            return false;
+        // First left child values will be popped
+        // Last popped value will be the root.
+        while (stk.length > 0 && stk[stk.length - 1] < value) {
+            root = stk.pop()!;
+        }
+        // add current value to the stack.
         stk.push(value);
-    };
+    }
     return true;
 }
 
-function main() {
-    let t: Tree = new Tree();
-    let arr: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    t.levelOrderBinaryTree(arr);
 
-    console.info("isHeap : " + t.isHeap());
-    console.info("isHeap2 : " + t.isHeap2());
-    console.info("isCompleteTree : " + t.isCompleteTree());
+function main1() {
+    let t = new Tree();
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    t.createCompleteBinaryTree(arr);
+    t.printPreOrder();
+    //Pre Order Tree: 1 2 4 8 9 5 10 3 6 7 
 
-    console.info("PrintBredthFirst : ");
-    t.PrintBredthFirst();
+    t.printPostOrder();
+    // Post Order Tree: 8 9 4 10 5 2 6 7 3 1 
 
-    console.info("PrintPreOrder : ");
-    t.PrintPreOrder();
+    t.printInOrder();
+    // In Order Tree: 8 4 9 2 10 5 1 6 3 7 
 
-    console.info("PrintLevelOrderLineByLine : ");
-    t.PrintLevelOrderLineByLine();
+    t.iterativePreOrder();
+    // Iterative Pre Order :  1 2 4 8 9 5 10 3 6 7 
 
-    console.info("PrintLevelOrderLineByLine2 : ");
-    t.PrintLevelOrderLineByLine2();
+    t.iterativePostOrder();
+    //Iterative Post Order :  8 9 4 10 5 2 6 7 3 1
 
-    console.info("PrintSpiralTree : ");
-    t.PrintSpiralTree();
+    t.iterativeInOrder();
+    // Iterative In Order :  8 4 9 2 10 5 1 6 3 7
 
-    console.info("printAllPath : ");
+    t.printBreadthFirst();
+    // Breadth First: 1 2 3 4 5 6 7 8 9 10  
+
+    t.printDepthFirst();
+    // Depth First: 1 2 4 8 9 5 10 3 6 7 
+
+    t.printLevelOrderLineByLine();
+    /*
+    1 
+    2 3 
+    4 5 6 7 
+    8 9 10 
+    */
+
+    t.printLevelOrderLineByLine2();
+    /*
+    1 
+    2 3 
+    4 5 6 7 
+    8 9 10 
+    */
+
+    t.printSpiralTree();
+    // Spiral Tree: 1 2 3 7 6 5 4 8 9 10
+
+
+    t.nthInOrder(2);
+    t.nthPostOrder(2);
+    t.nthPreOrder(2);
+
+    /*
+    Nth InOrder Node : 4
+    Nth Post order : 9
+    Nth Preorder node is : 2
+    */
+
     t.printAllPath();
 
-    t.NthInOrder(4);
-    t.NthPostOrder(4);
-    t.NthPreOrder(4);
+/*
+[1, 3, 7]
+[1, 3, 6]
+[1, 2, 5, 10]
+[1, 2, 4, 9]
+[1, 2, 4, 8]
+*/
 }
 
-main();
+function main2() {
+    let t = new Tree();
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    t.createCompleteBinaryTree(arr);
+
+    console.log("numNodes:", t.numNodes());
+    // numNodes: 10
+
+    console.log("sumAllBT:", t.sumAllBT());
+    // sumAllBT: 55
+
+    console.log("numLeafNodes:", t.numLeafNodes());
+    // numLeafNodes: 5
+
+    console.log("numFullNodesBT:", t.numFullNodesBT());
+    // numFullNodesBT: 4
+
+    console.log("searchBT:", t.searchBT(9));
+    // searchBT: true
+
+    console.log("findMaxBT:", t.findMaxBT());
+    // findMaxBT: 10
+
+    console.log("treeDepth:", t.treeDepth());
+    // treeDepth: 4
+
+    console.log("maxLengthPathBT:", t.maxLengthPathBT());
+    // maxLengthPathBT: 6
+}
+
+function main3() {
+    let t = new Tree();
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    t.createCompleteBinaryTree(arr);
+
+    let t2 = t.copyTree();
+    t2.printInOrder();
+    /*
+In Order Tree: 8 4 9 2 10 5 1 6 3 7 
+    */
+    let t3 = t.copyMirrorTree();
+    t3.printInOrder();
+    /*
+In Order Tree: 7 3 6 1 5 10 2 9 4 8 
+    */
+    console.log("isEqual:", t.isEqual(t2));
+    /*
+isEqual: true
+    */
+    console.log("isHeap:", t.isHeap());
+    console.log("isHeap:", t.isHeap2());
+    console.log("isCompleteTree:", t.isCompleteTree());
+    console.log("isCompleteTree:", t.isCompleteTree2());
+    /*
+isHeap: true
+isHeap: true
+isCompleteTree: true
+isCompleteTree: true
+    */
+}
+
+function main4() {
+    let t = new Tree();
+    t.insertNode(6);
+    t.insertNode(4);
+    t.insertNode(2);
+    t.insertNode(5);
+    t.insertNode(1);
+    t.insertNode(3);
+    t.insertNode(8);
+    t.insertNode(7);
+    t.insertNode(9);
+    t.insertNode(10);
+    t.printInOrder();
+
+    /*
+In Order Tree: 1 2 3 4 5 6 7 8 9 10 
+    */
+    console.log(t.find(3));
+    console.log(t.find(16));
+    /*
+    true
+    false
+    */
+    console.log("isBST:", t.isBST());
+    console.log("isBST:", t.isBST2());
+    console.log("isBST:", t.isBST3());
+    /*
+isBST: true
+isBST: true
+isBST: true
+    */
+
+}
+
+
+function main5() {
+    let t = new Tree();
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    t.createBinarySearchTree(arr);
+    console.log("findMin:", t.findMin());
+    console.log("findMax:", t.findMax());
+    console.log("LCA :", t.lcaBST(3, 4));
+    console.log("LCA :", t.lcaBST(1, 4));
+    console.log("LCA :", t.lcaBST(10, 4));
+}
+
+/*
+findMin: 1
+findMax: 10
+LCA : 3
+LCA : 2
+LCA : 5
+*/
+
+function main6() {
+    let t = new Tree();
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    t.createBinarySearchTree(arr);
+    t.printInOrder();
+    t.printInRange(4, 7);
+    t.trimOutsideRange(4, 7);
+    t.printInOrder();
+}
+
+/*
+In Order Tree: 1 2 3 4 5 6 7 8 9 10 
+Print In Range : 4 5 6 7 
+In Order Tree: 4 5 6 7
+*/
+
+function main7() {
+    let t = new Tree();
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    t.createBinarySearchTree(arr);
+    console.log("ancestor:", t.ancestor(1, 10).value);
+    // ancestor: 5
+
+    console.log("ceilBST:", t.ceilBST(5.5));
+    // ceilBST: 6
+
+    console.log("floorBST:", t.floorBST(5.5));
+    // floorBST: 5
+
+    let arr1 = [5, 2, 4, 6, 9, 10];
+    let arr2 = [5, 2, 6, 4, 7, 9, 10];
+    console.log("isBSTArray:", isBSTArray(arr1, 6));
+    console.log("isBSTArray:", isBSTArray(arr2, 7));
+    /*
+isBSTArray: true
+isBSTArray: false
+    */
+}
+
+function main8() {
+    let t = new Tree();
+    t.insertNode(2);
+    t.insertNode(1);
+    t.insertNode(3);
+    t.insertNode(4);
+
+    console.log("Before delete operation.");
+    t.printInOrder();
+    t.deleteNode(2);
+    console.log("After delete operation.");
+    t.printInOrder();
+}
+/*
+Before delete operation.
+1 2 3 4 
+After delete operation.
+1 3 4 
+*/
+
+main1();
+main2();
+main3();
+main4();
+main5();
+main6();
+main7();
+main8()
