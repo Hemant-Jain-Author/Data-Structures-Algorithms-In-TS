@@ -78,6 +78,7 @@ class PriorityQueue<T> {
         if (parent < 0) {
             return;
         }
+        
         if (this.compare(this.arr[parent], this.arr[child])) {
             temp = this.arr[child];
             this.arr[child] = this.arr[parent];
