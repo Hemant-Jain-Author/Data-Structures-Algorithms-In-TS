@@ -506,8 +506,10 @@ class Graph {
             let adn = adl[index];
             dest = adn.dest;
             if (visited[dest] === false) {
-                if (this.isCyclePresentUndirectedDFS(dest, index, visited)) return true;
-            } else if (parentIndex !== dest) return true;
+                if (this.isCyclePresentUndirectedDFS(dest, index, visited)) 
+                    return true;
+            } else if (parentIndex !== dest) 
+                return true;
         }
         return false;
     }
@@ -516,8 +518,8 @@ class Graph {
         const count: number = this.count;
         let visited: Array<boolean> = new Array<boolean>(count).fill(false);
         for (let i: number = 0; i < count; i++) {
-            if (visited[i] === false)
-                if (this.isCyclePresentUndirectedDFS(i, -1, visited))
+            if (visited[i] === false && 
+                this.isCyclePresentUndirectedDFS(i, -1, visited))
                     return true;;
         }
         return false;
@@ -835,6 +837,8 @@ class Graph {
         let que: Queue<number> = new Queue<number>();;
         que.add(source);
         distance[source] = 0;
+        previous[source] = source;
+
         while (que.isEmpty() === false) {
             curr = que.remove();
             let adl: Array<GraphEdge> = this.adj[curr];
@@ -1096,16 +1100,16 @@ class Graph {
                 }
             }
         }
-        Graph.printSolution(dist, path, V);
+        this.printSolution(dist, path, V);
     }
 
-    static printSolution(cost: number[][], path: number[][], V: number): void {
+    printSolution(cost: number[][], path: number[][], V: number): void {
         let output = "Shortest Paths : ";
         for (let u = 0; u < V; u++) {
             for (let v = 0; v < V; v++) {
                 if (u !== v && path[u][v] !== -1) {
                     output += "(";
-                    output += Graph.printPath(path, u, v);
+                    output += this.printPath2(path, u, v);
                     output += " @ " + cost[u][v] + ") ";
                 }
             }
@@ -1113,16 +1117,14 @@ class Graph {
         console.log(output);
     }
 
-    static printPath(path: number[][], u: number, v: number): string {
+    printPath2(path: number[][], u: number, v: number): string {
         if (path[u][v] === u) {
             return u + "->" + v;
         }
-        let output = Graph.printPath(path, u, path[u][v]);
+        let output = this.printPath2(path, u, path[u][v]);
         output += "->" + v;
         return output;
     }
-
-
 }
 
 /* Testing Code */
@@ -1286,13 +1288,13 @@ function test8() {
     gph.addUndirectedEdge(3, 4)
     gph.addUndirectedEdge(4, 2)
     gph.addUndirectedEdge(2, 5)
-    console.log(gph.isCyclePresentUndirected())
-    console.log(gph.isCyclePresentUndirected2());
-    console.log(gph.isCyclePresentUndirected3());
+    console.log("isCyclePresentUndirected:", gph.isCyclePresentUndirected())
+    console.log("isCyclePresentUndirected:", gph.isCyclePresentUndirected2());
+    console.log("isCyclePresentUndirected:", gph.isCyclePresentUndirected3());
     gph.addUndirectedEdge(3, 5, 1)
-    console.log(gph.isCyclePresentUndirected())
-    console.log(gph.isCyclePresentUndirected2());
-    console.log(gph.isCyclePresentUndirected3());
+    console.log("isCyclePresentUndirected:", gph.isCyclePresentUndirected())
+    console.log("isCyclePresentUndirected:", gph.isCyclePresentUndirected2());
+    console.log("isCyclePresentUndirected:", gph.isCyclePresentUndirected3());
     console.log("IsConnectedUndirected :", gph.isConnectedUndirected())
 }
 
@@ -1460,7 +1462,6 @@ function test15() {
 }
 
 /*
-Shortest Paths: (1->2->0 @ 6) (1->2 @ 5) (1->3 @ 7) (1->4 @ 9) (1->3->5 @ 11) (1->4->6 @ 12) (1->3->5->7 @ 12) (1->3->5->7->8 @ 29) 
 
 isConnectedUndirected :: true
 */
@@ -1602,15 +1603,17 @@ function test20() {
 Shortest Paths : (0->1 @ 5) (0->1->2 @ 8) (0->1->2->3 @ 9) (1->2 @ 3) (1->2->3 @ 4) (2->3 @ 1) 
 */
 
-test1()
+/*test1()
 test2()
 test3()
 test4()
 test5()
 test6()
 test7()
+*/
 test8()
 test9()
+/*
 test10()
 test11()
 test12()
@@ -1622,3 +1625,4 @@ test17()
 test18()
 test19()
 test20()
+*/

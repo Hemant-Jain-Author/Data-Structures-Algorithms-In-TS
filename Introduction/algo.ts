@@ -1,32 +1,37 @@
 function fibonacci(n: number): number {
-    if (n <= 1) {
+    if (n < 2) {
         return n;
     }
     return fibonacci(n - 1) + fibonacci(n - 2);
 }
 
 function fibonacci2(n: number): number {
+    if (n < 2) {
+        return n;
+    }
+    
     let first: number = 0;
     let second: number = 1;
     let temp: number = 0;
-    if (n === 0)
-        return first;
-    else if (n === 1)
-        return second;
-
-    let i: number = 2;
-    while (i <= n) {
+    
+    for(let i: number = 2; i <= n; i += 1) {
         temp = first + second;
         first = second;
         second = temp;
-        i += 1;
-    };
+    }
     return temp;
 }
 
 function main1() {
-    console.log("fibonacci(10) : ", fibonacci(10))
+    console.log("fibonacci(10):", fibonacci(10))
+    console.log("fibonacci2(10):", fibonacci2(10))
 }
+
+
+/*
+fibonacci(10): 55
+fibonacci2(10): 55
+*/
 
 function Feasible(Q: Array<number>, k: number): boolean {
     for (let i: number = 0; i < k; i++) {
@@ -55,6 +60,15 @@ function main2() {
     NQueens(Q, 0, 8);
 }
 
+/*
+[ 0, 4, 7, 5, 2, 6, 1, 3 ]
+[ 0, 5, 7, 2, 6, 3, 1, 4 ]
+.....
+[ 7, 2, 0, 5, 1, 4, 6, 3 ]
+[ 7, 3, 0, 2, 5, 1, 6, 4 ]
+*/
+
+
 function TOHUtil(num: number, from: string, to: string, temp: string) {
     if (num < 1) {
         return;
@@ -73,21 +87,38 @@ function main3() {
     TowersOfHanoi(3);
 }
 
-function isPrime(n: number): number {
-    let answer: number = (n > 1) ? 1 : 0;
+/*
+The sequence of moves involved in the Tower of Hanoi are :
+Move disk 1 from peg A to peg C
+Move disk 2 from peg A to peg B
+Move disk 1 from peg C to peg B
+Move disk 3 from peg A to peg C
+Move disk 1 from peg B to peg A
+Move disk 2 from peg B to peg C
+Move disk 1 from peg A to peg C
+*/
+
+
+function isPrime(n: number): boolean {
+    let answer: boolean = (n > 1) ? true : false;
     for (let i: number = 2; i * i <= n; ++i) {
         if (n % i === 0) {
-            answer = 1;
+            answer = false;
             break;
         }
-    };
+    }
     return answer;
 }
 
 function main4() {
-    console.log(isPrime(7));
+    console.log(isPrime(6));
+    console.log(isPrime(11));
 }
 
+/*
+false
+true
+*/
 
 main1()
 main2()
