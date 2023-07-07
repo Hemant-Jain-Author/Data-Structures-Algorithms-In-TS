@@ -114,8 +114,6 @@ function fibonacciSearch(arr: number[], value: number): boolean {
     return false;
 }
 
-
-
 function test1() {
     const first: Array<number> = [1, 3, 5, 7, 9, 25, 30];
     console.info(linearSearchUnsorted(first, 8));
@@ -451,7 +449,6 @@ function test5() {
 6
 */
 
-
 function missingValues(arr: number[], size: number): void {
     let max = arr[0];
     let min = arr[0];
@@ -528,6 +525,7 @@ function test6() {
 }
 
 //test6();
+
 /*
 12 15 16 20 22
 12 15 16 20 22
@@ -3023,6 +3021,7 @@ function test51() {
 }
 
 test51();
+
 /*
 ArrayIndexMaxDiff: 7
 ArrayIndexMaxDiff: 7
@@ -3071,6 +3070,7 @@ function test52() {
 }
 
 test52();
+
 // Max Path Sum: 201
 
 function swap(arr: any[], x: number, y: number) {
@@ -3099,6 +3099,7 @@ function test53() {
 }
 
 test53();
+
 /*
 [ 1, 2, 3 ]
 [ 1, 3, 2 ]

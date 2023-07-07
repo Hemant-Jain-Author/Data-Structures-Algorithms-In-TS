@@ -21,7 +21,6 @@ function test1() {
 
 /*
 Sum of values in array:45
-
 */
 
 
@@ -121,7 +120,6 @@ function test4() {
 
 /*
 [ 3, 4, 5, 6, 1, 2 ]
-
 */
 
 
@@ -147,7 +145,6 @@ function test5() {
 
 /*
 Max sub array sum :10
-
 */
 
 
@@ -353,7 +350,6 @@ SmallestPositiveMissingNumber: 3
 SmallestPositiveMissingNumber: 3
 */
 
-
 function MaxMinArr(arr: Array<number>, size: number) {
     let aux: Array<number> = arr.slice(0, size);
     let start: number = 0;
@@ -399,7 +395,6 @@ function test10() {
 [ 7, 1, 6, 2, 5, 3, 4 ]
 */
 
-
 function maxCircularSum(arr: Array<number>, size: number): number {
     let sumAll: number = 0;
     let currVal: number = 0;
@@ -426,7 +421,6 @@ function test11() {
 /*
 MaxCirculrSm: 290
 */
-
 
 function ArrayIndexMaxDiff(arr: Array<number>, size: number): number {
     let maxDiff: number = -1;
@@ -491,7 +485,6 @@ ArrayIndexMaxDiff : 6
 ArrayIndexMaxDiff : 6
 */
 
-
 function maxPathSum(arr1: Array<number>, size1: number, arr2: Array<number>, size2: number): number {
     let i: number = 0;
     let j: number = 0;
@@ -536,7 +529,6 @@ function test13() {
 Max Path Sum :: 201
 */
 
-
 function factorial(i: number): number {
     if (i <= 1) {
         return 1;
@@ -568,12 +560,9 @@ function printInt(number: number, base: number) : string {
 // Testing code.
 console.log(printInt(500, 16));
 
-
 /*
 1F4
 */
-
-
 
 function towerOfHanoi(num: number, src: string, dst: string, temp: string) {
     if (num < 1) {
@@ -633,7 +622,6 @@ function test15() {
 [ 3, 1, 2 ]
 */
 
-
 function BinarySearchRecursive(arr: Array<number>, low: number, high: number, value: number): number {
     if (low > high) return -1;
     let mid: number = ((low + high) / 2 | 0);
@@ -681,6 +669,7 @@ function fibonacci(n: number): number {
 console.log(fibonacci(10));
 
 // 5
+
 test1();
 test2();
 test3();
