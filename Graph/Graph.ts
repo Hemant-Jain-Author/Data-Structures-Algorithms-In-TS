@@ -53,7 +53,7 @@ class PriorityQueue<T> {
         this.size = 0;
     }
 
-    proclateDown(parent: number) {
+    percolateDown(parent: number) {
         let lChild: number = 2 * parent + 1;
         let rChild: number = lChild + 1;
         let child: number = -1;
@@ -68,11 +68,11 @@ class PriorityQueue<T> {
             temp = this.arr[parent];
             this.arr[parent] = this.arr[child];
             this.arr[child] = temp;
-            this.proclateDown(child);
+            this.percolateDown(child);
         }
     }
 
-    proclateUp(child: number) {
+    percolateUp(child: number) {
         let parent: number = Math.floor((child - 1) / 2);
         let temp: T;
         if (parent < 0) {
@@ -83,7 +83,7 @@ class PriorityQueue<T> {
             temp = this.arr[child];
             this.arr[child] = this.arr[parent];
             this.arr[parent] = temp;
-            this.proclateUp(parent);
+            this.percolateUp(parent);
         }
     }
 
@@ -94,7 +94,7 @@ class PriorityQueue<T> {
 
         this.arr[this.size++] = value;
 
-        this.proclateUp(this.size - 1);
+        this.percolateUp(this.size - 1);
     }
 
     private doubleSize() {
@@ -117,7 +117,7 @@ class PriorityQueue<T> {
         let value: T = this.arr[0];
         this.arr[0] = this.arr[this.size - 1];
         this.size--;
-        this.proclateDown(0);
+        this.percolateDown(0);
         return value;
     }
 
@@ -498,33 +498,35 @@ class Graph {
         return -1;
     }
 
-    public isCyclePresentUndirectedDFS(index: number, parentIndex: number, visited: Array<boolean>): boolean {
-        visited[index] = true;
+    isCyclePresentUndirectedDFS(src: number, parentIndex: number, visited: boolean[]): boolean {
+        visited[src] = true;
         let dest: number;
-        let adl: Array<GraphEdge> = this.adj[index];
+        const adl: Array<GraphEdge> = this.adj[src];
+    
         for (let index = 0; index < adl.length; index++) {
-            let adn = adl[index];
+            const adn = adl[index];
             dest = adn.dest;
             if (visited[dest] === false) {
-                if (this.isCyclePresentUndirectedDFS(dest, index, visited)) 
+                if (this.isCyclePresentUndirectedDFS(dest, src, visited))
                     return true;
-            } else if (parentIndex !== dest) 
+            } else if (parentIndex !== dest) {
                 return true;
+            }
         }
         return false;
     }
-
-    public isCyclePresentUndirected(): boolean {
+    
+    isCyclePresentUndirected(): boolean {
         const count: number = this.count;
         let visited: Array<boolean> = new Array<boolean>(count).fill(false);
         for (let i: number = 0; i < count; i++) {
             if (visited[i] === false && 
                 this.isCyclePresentUndirectedDFS(i, -1, visited))
-                    return true;;
+                return true;
         }
         return false;
     }
-
+    
     isCyclePresentUndirected2() {
         const count = this.count;
         const parent = new Array(count).fill(-1);

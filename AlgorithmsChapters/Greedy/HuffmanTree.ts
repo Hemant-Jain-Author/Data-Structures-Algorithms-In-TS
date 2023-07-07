@@ -10,7 +10,7 @@ class PriorityQueue<T> {
         this.size = 0;
     }
 
-    proclateDown(parent: number) {
+    percolateDown(parent: number) {
         let lChild: number = 2 * parent + 1;
         let rChild: number = lChild + 1;
         let child: number = -1;
@@ -25,11 +25,11 @@ class PriorityQueue<T> {
             temp = this.arr[parent];
             this.arr[parent] = this.arr[child];
             this.arr[child] = temp;
-            this.proclateDown(child);
+            this.percolateDown(child);
         }
     }
 
-    proclateUp(child: number) {
+    percolateUp(child: number) {
         let parent: number = Math.floor((child - 1) / 2);
         let temp: T;
         if (parent < 0) {
@@ -39,7 +39,7 @@ class PriorityQueue<T> {
             temp = this.arr[child];
             this.arr[child] = this.arr[parent];
             this.arr[parent] = temp;
-            this.proclateUp(parent);
+            this.percolateUp(parent);
         }
     }
 
@@ -49,7 +49,7 @@ class PriorityQueue<T> {
         }
 
         this.arr[this.size++] = value;
-        this.proclateUp(this.size - 1);
+        this.percolateUp(this.size - 1);
     }
 
     private doubleSize() {
@@ -70,7 +70,7 @@ class PriorityQueue<T> {
         let value: T = this.arr[0];
         this.arr[0] = this.arr[this.size - 1];
         this.size--;
-        this.proclateDown(0);
+        this.percolateDown(0);
         return value;
     }
 
