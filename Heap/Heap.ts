@@ -1,5 +1,4 @@
 type Comparator<T> = (a: T, b: T) => boolean;
-
 const greater = <T>(x: T, y: T): boolean => x > y;
 const less = <T>(x: T, y: T): boolean => x < y;
 

@@ -1,5 +1,5 @@
-const MIN_VALUE = -2147483647
-const MAX_VALUE = 2147483647
+const MIN_VALUE = -2147483647;
+const MAX_VALUE = 2147483647;
 
 function linearSearchUnsorted(arr: Array<number>, value: number): boolean {
     const size: number = arr.length;
@@ -29,7 +29,7 @@ function BinarySearch(arr: Array<number>, value: number): boolean {
     let high: number = size - 1;
     let mid: number;
     while (low <= high) {
-        mid = (low + high) / 2;
+        mid = Math.floor((low + high) / 2);
         if (arr[mid] === value) {
             return true;
         } else if (arr[mid] < value) {
@@ -37,7 +37,7 @@ function BinarySearch(arr: Array<number>, value: number): boolean {
         } else {
             high = mid - 1;
         }
-    };
+    }
     return false;
 }
 
@@ -52,7 +52,7 @@ function BinarySearchRecUtil(arr: Array<number>, low: number, high: number, valu
     if (low > high) {
         return false;
     }
-    let mid: number = ((low + high) / 2 );
+    let mid: number = Math.floor((low + high) / 2);
     if (arr[mid] === value) {
         return true;
     } else if (arr[mid] < value) {
@@ -67,11 +67,11 @@ function BinarySearch2(arr: Array<number>, start: number, end: number, key: numb
     if (end < start) {
         return -1;
     }
-    mid = ((start + end) / 2 );
+    mid = Math.floor((start + end) / 2);
     if (key === arr[mid]) {
         return mid;
     }
-    if (isInc !== false && key < arr[mid] || isInc === false && key > arr[mid]) {
+    if ((isInc !== false && key < arr[mid]) || (isInc === false && key > arr[mid])) {
         return BinarySearch2(arr, start, mid - 1, key, isInc);
     } else {
         return BinarySearch2(arr, mid + 1, end, key, isInc);
@@ -79,7 +79,7 @@ function BinarySearch2(arr: Array<number>, start: number, end: number, key: numb
 }
 
 function fibonacciSearch(arr: number[], value: number): boolean {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     /* Initialize fibonacci numbers */
     let fibNMn2 = 0;
     let fibNMn1 = 1;
@@ -116,24 +116,24 @@ function fibonacciSearch(arr: number[], value: number): boolean {
 
 function test1() {
     const first: Array<number> = [1, 3, 5, 7, 9, 25, 30];
-    console.info(linearSearchUnsorted(first, 8));
-    console.info(linearSearchUnsorted(first, 25));
-    
-    console.info(linearSearchSorted(first, 8));
-    console.info(linearSearchSorted(first, 25));
-    
-    console.info(BinarySearch(first, 8));
-    console.info(BinarySearch(first, 25));
-    
-    console.info(BinarySearchRec(first, 8));
-    console.info(BinarySearchRec(first, 25));
+    console.log(linearSearchUnsorted(first, 8));
+    console.log(linearSearchUnsorted(first, 25));
+
+    console.log(linearSearchSorted(first, 8));
+    console.log(linearSearchSorted(first, 25));
+
+    console.log(BinarySearch(first, 8));
+    console.log(BinarySearch(first, 25));
+
+    console.log(BinarySearchRec(first, 8));
+    console.log(BinarySearchRec(first, 25));
 
     const second: Array<number> = [1, 3, 5, 7, 9, 25, 30];
     console.log(fibonacciSearch(second, 8));
     console.log(fibonacciSearch(second, 25));
 }
 
-//test1();
+// test1();
 
 /*
 false
@@ -149,7 +149,7 @@ true
 */
 
 function firstRepeated(arr: any[]): any {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     for (let i: number = 0; i < size; i++) {
         for (let j = i + 1; j < size; j++) {
             if (arr[i] === arr[j]) {
@@ -161,7 +161,7 @@ function firstRepeated(arr: any[]): any {
 }
 
 function firstRepeated2(arr: any[]): any {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     const hm = new Map();
     for (let i: number = 0; i < size; i++) {
         if (hm.has(arr[i])) {
@@ -185,7 +185,7 @@ function test2() {
     console.log(`firstRepeated: ${firstRepeated2(first)}`);
 }
 
-//test2();
+// test2();
 
 /*
 firstRepeated: 1
@@ -193,7 +193,7 @@ firstRepeated: 1
 */
 
 function printRepeating(arr: any[]): void {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let output = "Repeating elements are:";
     for (let i: number = 0; i < size; i++) {
         for (let j = i + 1; j < size; j++) {
@@ -419,7 +419,7 @@ function findMissingNumber8(arr: number[], upperRange: number): number {
         }
         i += 1;
     }
-    console.info("NoNumberMissing");
+    console.log("NoNumberMissing");
     return -1;
 }
 
@@ -572,7 +572,7 @@ function oddCount3(arr: number[], size: number): void {
             count++;
         }
     }
-    console.info(`Odd count is: ${count}`);
+    console.log(`Odd count is: ${count}`);
 }
 
 function oddNumbers(arr: number[], size: number): void {
@@ -590,7 +590,7 @@ function oddNumbers(arr: number[], size: number): void {
         else
             second ^= arr[i];
     }
-    console.info(first, second);
+    console.log(first, second);
 }
 
 // Testing code.
@@ -883,7 +883,7 @@ function findDifference(arr: number[], value: number): boolean {
     for (let i: number = 0; i < size; i++) {
         for (let j = i + 1; j < size; j++) {
             if (Math.abs(arr[i] - arr[j]) === value) {
-                console.info(`The pair is: ${arr[i]} & ${arr[j]}`);
+                console.log(`The pair is: ${arr[i]} & ${arr[j]}`);
                 return true;
             }
         }
@@ -900,7 +900,7 @@ function findDifference2(arr: number[], value: number): boolean {
     while (first < size && second < size) {
         diff = Math.abs(arr[first] - arr[second]);
         if (diff === value) {
-            console.info(`The pair is: ${arr[first]} & ${arr[second]}`);
+            console.log(`The pair is: ${arr[first]} & ${arr[second]}`);
             return true;
         } else if (diff > value)
             first += 1;
@@ -913,8 +913,8 @@ function findDifference2(arr: number[], value: number): boolean {
 // Testing code.
 function test12() {
     const first = [1, 5, 4, 3, 2, 7, 8, 9, 6];
-    console.info(findDifference(first, 6));
-    console.info(findDifference2(first, 6));
+    console.log(findDifference(first, 6));
+    console.log(findDifference2(first, 6));
 }
 
 //test12();
@@ -1036,7 +1036,7 @@ function closestPair(arr: number[], size: number, value: number): void {
             }
         }
     }
-    console.info(`closest pair is: ${first}, ${second}`);
+    console.log(`closest pair is: ${first}, ${second}`);
 }
 
 function closestPair2(arr: number[], size: number, value: number): void {
@@ -1060,7 +1060,7 @@ function closestPair2(arr: number[], size: number, value: number): void {
         else
             stop -= 1;
     }
-    console.info(`closest pair is: ${first}, ${second}`);
+    console.log(`closest pair is: ${first}, ${second}`);
 }
 
 // Testing code.
@@ -1091,7 +1091,7 @@ function sumPairRestArray(arr: number[], size: number): boolean {
     while (low < high) {
         curr = arr[low] + arr[high];
         if (curr === value) {
-            console.info(`Pair is: ${arr[low]}, ${arr[high]}`);
+            console.log(`Pair is: ${arr[low]}, ${arr[high]}`);
             return true;
         } else if (curr < value) {
             low += 1;
@@ -1119,7 +1119,7 @@ function zeroSumTriplets(arr: number[], size: number): void {
         for (let j = i + 1; j < size - 1; j++) {
             for (let k = j + 1; k < size; k++) {
                 if (arr[i] + arr[j] + arr[k] === 0) {
-                    console.info(`Triplet: ${arr[i]}, ${arr[j]}, ${arr[k]}`);
+                    console.log(`Triplet: ${arr[i]}, ${arr[j]}, ${arr[k]}`);
                 }
             }
         }
@@ -1135,7 +1135,7 @@ function zeroSumTriplets2(arr: number[], size: number): void {
         stop = size - 1;
         while (start < stop) {
             if (arr[i] + arr[start] + arr[stop] === 0) {
-                console.info(`Triplet: ${arr[i]}, ${arr[start]}, ${arr[stop]}`);
+                console.log(`Triplet: ${arr[i]}, ${arr[start]}, ${arr[stop]}`);
                 start += 1;
                 stop -= 1;
             } else if (arr[i] + arr[start] + arr[stop] > 0) {
@@ -1151,7 +1151,7 @@ function zeroSumTriplets2(arr: number[], size: number): void {
 function test17() {
     const first = [1, 2, -4, 3, 7, -3];
     zeroSumTriplets(first, first.length);
-    console.info();
+    console.log();
     zeroSumTriplets2(first, first.length);
 }
 
@@ -1172,7 +1172,7 @@ function findTriplet(arr: number[], size: number, value: number): void {
         for (let j = i + 1; j < size - 1; j++) {
             for (let k = j + 1; k < size; k++) {
                 if (arr[i] + arr[j] + arr[k] === value) {
-                    console.info(`Triplet: ${arr[i]}, ${arr[j]}, ${arr[k]}`);
+                    console.log(`Triplet: ${arr[i]}, ${arr[j]}, ${arr[k]}`);
                 }
             }
         }
@@ -1187,7 +1187,7 @@ function findTriplet2(arr: number[], size: number, value: number): void {
         stop = size - 1;
         while (start < stop) {
             if (arr[i] + arr[start] + arr[stop] === value) {
-                console.info(`Triplet: ${arr[i]}, ${arr[start]}, ${arr[stop]}`);
+                console.log(`Triplet: ${arr[i]}, ${arr[start]}, ${arr[stop]}`);
                 start += 1;
                 stop -= 1;
             } else if (arr[i] + arr[start] + arr[stop] > value) {
@@ -1238,7 +1238,7 @@ function abcTriplet2(arr: number[], size: number): void {
         stop = size - 1;
         while (start < stop) {
             if (arr[i] === arr[start] + arr[stop]) {
-                console.info(`abcTriplet: ${arr[i]}, ${arr[start]}, ${arr[stop]}`);
+                console.log(`abcTriplet: ${arr[i]}, ${arr[start]}, ${arr[stop]}`);
                 start += 1;
                 stop -= 1;
             } else if (arr[i] < arr[start] + arr[stop]) {
@@ -1299,7 +1299,7 @@ function smallerThenTripletCount2(arr: number[], size: number, value: number): v
             }
         }
     }
-    console.info("smallerThenTripletCount: " + count);
+    console.log("smallerThenTripletCount: " + count);
 }
 
 // Testing code.
@@ -1322,7 +1322,7 @@ function APTriplets(arr: number[], size: number): void {
         let k = i + 1;
         while (j >= 0 && k < size) {
             if (arr[j] + arr[k] === 2 * arr[i]) {
-                console.info(`AP Triplet: ${arr[j]}, ${arr[i]}, ${arr[k]}`);
+                console.log(`AP Triplet: ${arr[j]}, ${arr[i]}, ${arr[k]}`);
                 k += 1;
                 j -= 1;
             } else if (arr[j] + arr[k] < 2 * arr[i]) {
@@ -1340,7 +1340,7 @@ function GPTriplets(arr: number[], size: number): void {
         let k = i + 1;
         while (j >= 0 && k < size) {
             if (arr[j] * arr[k] === arr[i] * arr[i]) {
-                console.info(`GP Triplet: ${arr[j]}, ${arr[i]}, ${arr[k]}`);
+                console.log(`GP Triplet: ${arr[j]}, ${arr[i]}, ${arr[k]}`);
                 k += 1;
                 j -= 1;
             } else if (arr[j] * arr[k] < arr[i] * arr[i]) {
@@ -1822,8 +1822,8 @@ function findLastIndex(arr: number[], start: number, end: number, key: number): 
 // Testing code.
 function test28() {
     const first = [1, 3, 5, 6, 6, 6, 6, 7, 9];
-    console.info(findKeyCount(first, 6));
-    console.info(findKeyCount2(first, 6));
+    console.log(findKeyCount(first, 6));
+    console.log(findKeyCount2(first, 6));
 }
 
 //test28();
@@ -2103,7 +2103,7 @@ function minAbsDiffAdjCircular(arr: number[], size: number): number {
 // Testing code.
 function test33() {
     const arr = [5, 29, 18, 51, 11];
-    console.info(minAbsDiffAdjCircular(arr, arr.length));
+    console.log(minAbsDiffAdjCircular(arr, arr.length));
 }
 
 //test33();
@@ -2377,7 +2377,7 @@ function findBalancedPoint(arr: number[], size: number): number {
 // Testing code.
 function test38() {
     const arr = [-7, 1, 5, 2, -4, 3, 0];
-    console.info("BalancedPoint:", findBalancedPoint(arr, arr.length));
+    console.log("BalancedPoint:", findBalancedPoint(arr, arr.length));
 }
 
 test38();
@@ -2459,7 +2459,7 @@ function closestNumber(arr: number[], size: number, num: number): number {
 // Testing code.
 function test40() {
     const arr = [2, 4, 8, 16];
-    console.info("closestNumber:", closestNumber(arr, arr.length, 9));
+    console.log("closestNumber:", closestNumber(arr, arr.length, 9));
 }
 
 test40();
@@ -2700,7 +2700,7 @@ function subArraySums(arr: number[], size: number, value: number) {
             output += `(${start} & ${end}) `;
         }
     }
-    console.info(output);
+    console.log(output);
 }
 
 // Testing code.
@@ -2836,7 +2836,7 @@ function rainWater(arr: number[], size: number): number {
     for (let i: number = 0; i < size; i++) {
         water += Math.min(leftHigh[i], rightHigh[i]) - arr[i];
     }
-    console.info(`Water: ${water}`);
+    console.log(`Water: ${water}`);
     return water;
 }
 
@@ -2862,7 +2862,7 @@ function rainWater2(arr: number[], size: number): number {
             right -= 1;
         }
     }
-    console.info(`Water: ${water}`);
+    console.log(`Water: ${water}`);
     return water;
 }
 

@@ -11,8 +11,8 @@ class HashTable {
     private HashFun: (key: any) => number;
 
     constructor(tSize: number, cmp?: (a: any, b: any) => number, hashFun?: (key: any) => number) {
-        this.comp = (cmp === undefined || cmp === null) ? this.DefaultCompare : cmp;
-        this.HashFun = (hashFun === undefined || hashFun === null) ? this.DefaultHashFun : hashFun;
+        this.comp = cmp || this.DefaultCompare;
+        this.HashFun = hashFun || this.DefaultHashFun;
         this.tableSize = tSize;
         this.KeyArr = new Array(tSize + 1);
         this.DataArr = new Array(tSize + 1);
@@ -36,11 +36,11 @@ class HashTable {
     }
 
     add(key: any, value?: any): boolean {
-        if (key === undefined || key === null) {
+        if (key == null) {
             return false;
         }
 
-        if (value === undefined || value === null) {
+        if (value == null) {
             value = key;
         }
 
@@ -65,7 +65,7 @@ class HashTable {
     }
 
     find(key: any): boolean {
-        if (key === undefined || key === null) {
+        if (key == null) {
             return false;
         }
 
@@ -85,8 +85,8 @@ class HashTable {
     }
 
     get(key: any): any {
-        if (key === undefined || key === null) {
-            return false;
+        if (key == null) {
+            return 0;
         }
 
         let hashValue = this.ComputeHash(key);
@@ -105,7 +105,7 @@ class HashTable {
     }
 
     remove(key: any): boolean {
-        if (key === undefined || key === null) {
+        if (key == null) {
             return false;
         }
 
@@ -126,10 +126,10 @@ class HashTable {
     }
 
     print(): void {
-        let output = "Hash Table contains ::";
+        let output = "Hash Table contains:";
         for (let i = 0; i < this.tableSize; i++) {
             if (this.FlagArr[i] === FILLED_VALUE) {
-                output += "(" + this.KeyArr[i] + "=>" + this.DataArr[i] + ") ";
+                output += ` (${this.KeyArr[i]}=>${this.DataArr[i]})`;
             }
         }
         console.log(output);
@@ -143,14 +143,14 @@ ht.add(2, 20);
 ht.add(3, 30);
 ht.print();
 
-console.log("Find key 2: ", ht.find(2));
-console.log("Value at key 2: ", ht.get(2));
+console.log("Find key 2:", ht.find(2));
+console.log("Value at key 2:", ht.get(2));
 ht.remove(1);
 ht.print();
 
 /*
-Hash Table contains ::(1=>10) (2=>20) (3=>30) 
-Find key 2:  true
-Value at key 2:  20
-Hash Table contains ::(2=>20) (3=>30) 
+Hash Table contains: (1=>10) (2=>20) (3=>30)
+Find key 2: true
+Value at key 2: 20
+Hash Table contains: (2=>20) (3=>30)
 */

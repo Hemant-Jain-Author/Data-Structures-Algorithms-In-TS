@@ -17,7 +17,7 @@ function findWays(n: number, m: number, V: number): number {
   return dp[n][V];
 }
 
-console.log(`${findWays(i, 6, 6)} `);
+console.log(`${findWays(3, 6, 6)} `);
 
 
 /*

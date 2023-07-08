@@ -122,7 +122,7 @@ class PriorityQueue<T> {
     }
 
     public print() {
-        console.info(this.arr);;
+        console.log(this.arr);;
     }
 
     public isEmpty(): boolean {
@@ -275,7 +275,7 @@ class Graph {
         return visited[target];
     }
 
-    public dfsUtil(index: number, visited: Array<boolean>, path: Array<number>) {
+    private dfsUtil(index: number, visited: Array<boolean>, path: Array<number>) {
         visited[index] = true;
         let adl: Array<GraphEdge> = this.adj[index];
         path.push(index);
@@ -286,7 +286,7 @@ class Graph {
         }
     }
 
-    public dfsUtil2(index: number, visited: Array<boolean>, stk: Array<number>) {
+    private dfsUtil2(index: number, visited: Array<boolean>, stk: Array<number>) {
         visited[index] = true;
         let adl: Array<GraphEdge> = this.adj[index];
         for (let index = 0; index < adl.length; index++) {
@@ -298,7 +298,7 @@ class Graph {
         stk.push(index);
     }
 
-    dfsUtil3(index: number, visited: boolean[]): void {
+    private dfsUtil3(index: number, visited: boolean[]): void {
         visited[index] = true;
         const adl = this.adj[index];
         for (let i = 0; i < adl.length; i++) {
@@ -385,7 +385,7 @@ class Graph {
     public printAllPathDFS(visited: Array<boolean>, source: number, dest: number, path: Array<number>) {
         path.push(source);
         if (source === dest) {
-            console.info(path);
+            console.log(path);
             path.pop();
             return;
         }
@@ -418,11 +418,11 @@ class Graph {
                 retVal = i;
             }
         }
-        console.info("Root vertex is :: " + retVal);
+        console.log("Root vertex is :: " + retVal);
         return retVal;
     }
 
-    public transitiveClosureUtil(source: number, dest: number, tc: Array<Array<number>>) {
+    private transitiveClosureUtil(source: number, dest: number, tc: Array<Array<number>>) {
         tc[source][dest] = 1;
         let adl: Array<GraphEdge> = this.adj[dest];
         for (let index = 0; index < adl.length; index++) {
@@ -452,12 +452,12 @@ class Graph {
         let que: Queue<number> = new Queue<number>();;
         que.add(source);
         level[source] = 0;
-        console.info("Node  - Level");
+        console.log("Node  - Level");
         while (que.isEmpty() === false) {
             let curr = que.remove();
             let depth: number = level[curr];
             let adl: Array<GraphEdge> = this.adj[curr];
-            console.info(curr + " - " + depth);
+            console.log(curr + " - " + depth);
             for (let index = 0; index < adl.length; index++) {
                 let adn = adl[index];
 
@@ -498,7 +498,7 @@ class Graph {
         return -1;
     }
 
-    isCyclePresentUndirectedDFS(src: number, parentIndex: number, visited: boolean[]): boolean {
+    private isCyclePresentUndirectedDFS(src: number, parentIndex: number, visited: boolean[]): boolean {
         visited[src] = true;
         let dest: number;
         const adl: Array<GraphEdge> = this.adj[src];
@@ -588,7 +588,7 @@ class Graph {
 
 
 
-    public isCyclePresentDFS(index: number, visited: Array<boolean>, marked: Array<number>): boolean {
+    private isCyclePresentDFS(index: number, visited: Array<boolean>, marked: Array<number>): boolean {
         visited[index] = true;
         marked[index] = 1;
         let adl: Array<GraphEdge> = this.adj[index];
@@ -617,7 +617,7 @@ class Graph {
         return false;
     }
 
-    public isCyclePresentDFSColor(index: number, visited: Array<number>): boolean {
+    private isCyclePresentDFSColor(index: number, visited: Array<number>): boolean {
         visited[index] = 1;
         let dest: number;
         let adl: Array<GraphEdge> = this.adj[index];
@@ -712,7 +712,7 @@ class Graph {
             if (visited[index] === false) {
                 stk2.length = 0;
                 gReversed.dfsUtil2(index, visited, stk2);
-                console.info(stk2);
+                console.log(stk2);
             }
         }
     }
@@ -814,7 +814,7 @@ class Graph {
         return path;
     }
 
-    printPath(previous, dist, count, source): void {
+    private printPath(previous, dist, count, source): void {
         let output = "Shortest Paths: ";
         for (let i = 0; i < count; i++) {
             if (dist[i] === 99999) {
@@ -978,7 +978,7 @@ class Graph {
     public isEulerian(): number {
         const count: number = this.count;
         if (this.isConnected() === false) {
-            console.info("graph is not Eulerian");
+            console.log("graph is not Eulerian");
             return 0;
         }
 
@@ -1001,13 +1001,13 @@ class Graph {
             }
         }
         if (odd === 0) {
-            console.info("graph is Eulerian");
+            console.log("graph is Eulerian");
             return 2;
         } else if (odd === 2) {
-            console.info("graph is Semi-Eulerian");
+            console.log("graph is Semi-Eulerian");
             return 1;
         } else {
-            console.info("graph is not Eulerian");
+            console.log("graph is not Eulerian");
             return 0;
         }
     }
@@ -1105,7 +1105,7 @@ class Graph {
         this.printSolution(dist, path, V);
     }
 
-    printSolution(cost: number[][], path: number[][], V: number): void {
+    private printSolution(cost: number[][], path: number[][], V: number): void {
         let output = "Shortest Paths : ";
         for (let u = 0; u < V; u++) {
             for (let v = 0; v < V; v++) {
@@ -1119,7 +1119,7 @@ class Graph {
         console.log(output);
     }
 
-    printPath2(path: number[][], u: number, v: number): string {
+    private printPath2(path: number[][], u: number, v: number): string {
         if (path[u][v] === u) {
             return u + "->" + v;
         }

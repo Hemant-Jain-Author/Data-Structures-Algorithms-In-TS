@@ -24,7 +24,7 @@ class SPLAYTree {
 		console.log();
 	}
 
-	printTreeUtil(node: TNode, indent: string, isLeft: boolean): void {
+	private printTreeUtil(node: TNode, indent: string, isLeft: boolean): void {
 		if (node == null) {
 			return;
 		}
@@ -42,7 +42,7 @@ class SPLAYTree {
 	}
 
 	// Function to right rotate subtree rooted with x
-	rightRotate(x: TNode): TNode {
+	private rightRotate(x: TNode): TNode {
 		let y = x.left;
 		let T = y.right;
 		// Rotation
@@ -63,7 +63,7 @@ class SPLAYTree {
 	}
 
 	// Function to left rotate subtree rooted with x
-	leftRotate(x: TNode): TNode {
+	private leftRotate(x: TNode): TNode {
 		let y = x.right;
 		let T = y.left;
 		// Rotation
@@ -83,14 +83,14 @@ class SPLAYTree {
 		return y;
 	}
 
-	parent(node: TNode): TNode {
+	private parent(node: TNode): TNode {
 		if (node == null || node.parent == null) {
 			return null;
 		}
 		return node.parent;
 	}
 
-	splay(node: TNode): void {
+	private splay(node: TNode): void {
 		let parent = null;
 		let grand = null;
 		while (node != this.root) {
@@ -170,7 +170,7 @@ class SPLAYTree {
 		this.splay(newNode);
 	}
 
-	findMinNode(curr: TNode): TNode {
+	private findMinNode(curr: TNode): TNode {
 		let node = curr;
 		if (node == null) {
 			return null;
@@ -230,8 +230,7 @@ class SPLAYTree {
 		console.log();
 	}
 
-	printInOrderUtil(node: TNode): void {
-		/* In order */
+	private printInOrderUtil(node: TNode): void {
 		if (node != null) {
 			this.printInOrderUtil(node.left);
 			console.log(node.data + " ");

@@ -26,7 +26,7 @@ function maxCost01KnapsackTD(wt: number[], cost: number[], capacity: number): nu
 }
 
 function maxCost01KnapsackTDUtil(dp: number[][], wt: number[], cost: number[], i: number, w: number): number {
-	if (w === 0 || i === 0)
+	if (i === 0 || w === 0)
 		return 0;
 
 	if (dp[w][i] !== 0)

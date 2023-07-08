@@ -76,7 +76,7 @@ class PriorityQueue<T> {
   }
 
   public PrintTree() {
-    console.info(this.arr);
+    console.log(this.arr);
   }
 
   public isEmpty(): boolean {
@@ -94,7 +94,6 @@ class PriorityQueue<T> {
     return this.arr[0];
   }
 }
-
 function optimalMerge(lists: number[], size: number): number {
   const pq = new PriorityQueue<number>((a, b) => a > b);
   for (let i = 0; i < size; i++) {
@@ -109,7 +108,7 @@ function optimalMerge(lists: number[], size: number): number {
     pq.add(value);
     total += value;
   }
-  console.log("Total: " + total);
+  console.log("Total:", total);
   return total;
 }
 
@@ -118,5 +117,5 @@ const lists = [4, 3, 2, 6];
 optimalMerge(lists, lists.length);
 
 /*
-Total : 29
+Total: 29
 */

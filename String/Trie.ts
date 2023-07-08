@@ -27,7 +27,7 @@ class Trie {
         this.insertUtil(this.root, temp, 0);
     }
 
-    insertUtil(curr: TrieNode, str: string, index: number): TrieNode {
+    private insertUtil(curr: TrieNode, str: string, index: number): TrieNode {
         if (curr == null) {
             curr = new TrieNode(str[index - 1]);
         }
@@ -51,7 +51,7 @@ class Trie {
         this.removeUtil(this.root, str, 0);
     }
 
-    removeUtil(curr: TrieNode, str: string, index: number): void {
+    private removeUtil(curr: TrieNode, str: string, index: number): void {
         if (curr == null) {
             return;
         }
@@ -77,7 +77,7 @@ class Trie {
         return this.findUtil(this.root, str, 0);
     }
 
-    findUtil(curr: TrieNode, str: string, index: number): boolean {
+    private findUtil(curr: TrieNode, str: string, index: number): boolean {
         if (curr == null) {
             return false;
         }

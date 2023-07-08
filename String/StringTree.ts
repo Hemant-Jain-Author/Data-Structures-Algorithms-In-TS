@@ -21,8 +21,8 @@ class StringTree {
 
     private printUtil(curr: StringTreeNode) {
         if (curr != null) {
-            console.info(" value is: " + curr.value);
-            console.info(" count is: " + curr.count);
+            console.log(" value is: " + curr.value);
+            console.log(" count is: " + curr.count);
             this.printUtil(curr.left);
             this.printUtil(curr.right);
         }

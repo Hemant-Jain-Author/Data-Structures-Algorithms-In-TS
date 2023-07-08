@@ -1,37 +1,35 @@
 function printSubset(flags: boolean[], arr: number[], size: number): void {
-	var result = ""
-	for (let i = 0; i < size; i++) {
-		if (flags[i]) {
-			result += arr[i];
-			result += " ";
-		}
-	}
-	console.log(result);
+    let result = "";
+    for (let i = 0; i < size; i++) {
+        if (flags[i]) {
+            result += arr[i];
+            result += " ";
+        }
+    }
+    console.log(result);
 }
 
 function subsetSum(arr: number[], n: number, target: number): void {
-	const flags: boolean[] = new Array(n);
-	subsetSumHelper(arr, n, flags, 0, 0, target);
+    const flags: boolean[] = new Array(n).fill(false);
+    subsetSumHelper(arr, n, flags, 0, 0, target);
 }
 
-function subsetSumHelper(arr: number[], n: number, flags: boolean[],
-	sum: number, curr: number, target: number): void {
-	if (target === sum) {
-		printSubset(flags, arr, n); // Solution found.
-		return;
-	}
+function subsetSumHelper(arr: number[], n: number, flags: boolean[], sum: number, curr: number, target: number): void {
+    if (target === sum) {
+        printSubset(flags, arr, n); // Solution found.
+        return;
+    }
 
-	if (curr >= n || sum > target) {
-		// Constraint check and backtracking.
-		return;
-	}
+    if (curr >= n || sum > target) {
+        // Constraint check and backtracking.
+        return;
+    }
 
-	// Current element included.
-	flags[curr] = true;
-	subsetSumHelper(arr, n, flags, sum + arr[curr], curr + 1, target);
-	// Current element excluded.
-	flags[curr] = false;
-	subsetSumHelper(arr, n, flags, sum, curr + 1, target);
+    // Current element included.
+    flags[curr] = true;
+    subsetSumHelper(arr, n, flags, sum + arr[curr], curr + 1, target);
+    flags[curr] = false; // Reset flag for backtracking.
+    subsetSumHelper(arr, n, flags, sum, curr + 1, target);
 }
 
 // Testing code.

@@ -83,7 +83,7 @@ function isPrime(n: number): boolean {
 function test3() {
     let output = "Prime numbers under 100 :: ";
     for (let i: number = 0; i < 100; i++) { if (isPrime(i)) output += (i + " "); }
-    console.info(output);
+    console.log(output);
 }
 
 

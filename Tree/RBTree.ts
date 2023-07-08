@@ -25,11 +25,11 @@ class RBTree<T> {
 	}
 
 	// To check whether a node is red or not.
-	isRed(node: TNode<T> | null): boolean {
+	private isRed(node: TNode<T> | null): boolean {
 		return node !== null && node.colour === true;
 	}
 
-	uncle(node: TNode<T>): TNode<T> | null {
+	private uncle(node: TNode<T>): TNode<T> | null {
 		// If no parent or grandparent, then no uncle
 		if (
 			node.parent === this.NullNode ||
@@ -47,7 +47,7 @@ class RBTree<T> {
 	}
 
 	// Function to right rotate subtree rooted with x
-	rightRotate(x: TNode<T>): TNode<T> {
+	private rightRotate(x: TNode<T>): TNode<T> {
 		const y = x.left;
 		const T = y.right;
 		// Rotation
@@ -72,7 +72,7 @@ class RBTree<T> {
 	}
 
 	// Function to left rotate subtree rooted with x
-	leftRotate(x: TNode<T>): TNode<T> {
+	private leftRotate(x: TNode<T>): TNode<T> {
 		const y = x.right;
 		const T = y.left;
 		// Rotation
@@ -96,12 +96,12 @@ class RBTree<T> {
 		return y;
 	}
 
-	rightLeftRotate(node: TNode<T>): TNode<T> {
+	private rightLeftRotate(node: TNode<T>): TNode<T> {
 		node.right = this.rightRotate(node.right);
 		return this.leftRotate(node);
 	}
 
-	leftRightRotate(node: TNode<T>): TNode<T> {
+	private leftRightRotate(node: TNode<T>): TNode<T> {
 		node.left = this.leftRotate(node.left);
 		return this.rightRotate(node);
 	}
@@ -125,7 +125,7 @@ class RBTree<T> {
 		console.log();
 	}
 
-	printTreeUtil(node: TNode<T>, indent: string, isLeft: boolean): void {
+	private printTreeUtil(node: TNode<T>, indent: string, isLeft: boolean): void {
 		if (node === this.NullNode) {
 			return;
 		}
@@ -149,7 +149,7 @@ class RBTree<T> {
 		this.fixRedRed(temp);
 	}
 
-	insertUtil(node: TNode<T>, data: T): TNode<T> {
+	private insertUtil(node: TNode<T>, data: T): TNode<T> {
 		if (node === this.NullNode) {
 			node = new TNode<T>(data, this.NullNode);
 		} else if (node.data > data) {
@@ -162,7 +162,7 @@ class RBTree<T> {
 		return node;
 	}
 
-	fixRedRed(x: TNode<T>): void {
+	private fixRedRed(x: TNode<T>): void {
 		if (x === this.root) {
 			x.colour = false;
 			return;
@@ -202,7 +202,7 @@ class RBTree<T> {
 		this.deleteUtil(this.root, data);
 	}
 
-	deleteUtil(node: TNode<T>, key: T): void {
+	private deleteUtil(node: TNode<T>, key: T): void {
 		let z = this.NullNode;
 		let x = null;
 		let y = null;
@@ -245,7 +245,7 @@ class RBTree<T> {
 		}
 	}
 
-	fixDoubleBlack(x: TNode<T>): void {
+	private fixDoubleBlack(x: TNode<T>): void {
 		if (x === this.root) {
 			return;
 		}
@@ -300,7 +300,7 @@ class RBTree<T> {
 	}
 
 
-	sibling(node: TNode<T>): TNode<T> {
+	private sibling(node: TNode<T>): TNode<T> {
 		if (node.parent === this.NullNode) {
 			return null;
 		}
@@ -310,7 +310,7 @@ class RBTree<T> {
 		return node.parent.left;
 	}
 
-	joinParentChild(u: TNode<T>, v: TNode<T>): void {
+	private joinParentChild(u: TNode<T>, v: TNode<T>): void {
 		if (u.parent === this.NullNode) {
 			this.root = v;
 		} else if (u === u.parent.left) {
@@ -321,7 +321,7 @@ class RBTree<T> {
 		v.parent = u.parent;
 	}
 
-	minimum(node: TNode<T>): TNode<T> {
+	private minimum(node: TNode<T>): TNode<T> {
 		while (node.left !== this.NullNode) {
 			node = node.left;
 		}

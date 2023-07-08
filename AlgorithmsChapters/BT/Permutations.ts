@@ -1,73 +1,67 @@
-function printArray(arr: number[], n: number): void {
-	for (let i = 0; i < n; i++) {
-		console.log(arr[i] + " ");
-	}
-	console.log();
-}
 
 function swap(arr: number[], i: number, j: number): void {
-	const temp = arr[i];
-	arr[i] = arr[j];
-	arr[j] = temp;
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
 }
 
 function permutation(arr: number[], i: number, length: number): void {
-	if (length === i) {
-		console.log(arr);
-		return;
-	}
+    if (length === i) {
+        console.log(arr);
+        return;
+    }
 
-	for (let j = i; j < length; j++) {
-		swap(arr, i, j);
-		permutation(arr, i + 1, length);
-		swap(arr, i, j);
-	}
+    for (let j = i; j < length; j++) {
+        swap(arr, i, j);
+        permutation(arr, i + 1, length);
+        swap(arr, i, j);
+    }
 }
 
 function isValid(arr: number[], n: number): boolean {
-	for (let j = 1; j < n; j++) {
-		if (Math.abs(arr[j] - arr[j - 1]) < 2) {
-			return false;
-		}
-	}
-	return true;
+    for (let j = 1; j < n; j++) {
+        if (Math.abs(arr[j] - arr[j - 1]) < 2) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function permutation2(arr: number[], i: number, length: number): void {
-	if (length === i) {
-		if (isValid(arr, length)) {
-			console.log(arr);
-		}
-		return;
-	}
+    if (length === i) {
+        if (isValid(arr, length)) {
+            console.log(arr);
+        }
+        return;
+    }
 
-	for (let j = i; j < length; j++) {
-		swap(arr, i, j);
-		permutation2(arr, i + 1, length);
-		swap(arr, i, j);
-	}
+    for (let j = i; j < length; j++) {
+        swap(arr, i, j);
+        permutation2(arr, i + 1, length);
+        swap(arr, i, j);
+    }
 }
 
 function isValid2(arr: number[], i: number): boolean {
-	if (i < 1 || Math.abs(arr[i] - arr[i - 1]) >= 2) {
-		return true;
-	}
-	return false;
+    if (i < 1 || Math.abs(arr[i] - arr[i - 1]) >= 2) {
+        return true;
+    }
+    return false;
 }
 
 function permutation3(arr: number[], i: number, length: number): void {
-	if (length === i) {
-		console.log(arr);
-		return;
-	}
+    if (length === i) {
+        console.log(arr);
+        return;
+    }
 
-	for (let j = i; j < length; j++) {
-		swap(arr, i, j);
-		if (isValid2(arr, i)) {
-			permutation3(arr, i + 1, length);
-		}
-		swap(arr, i, j);
-	}
+    for (let j = i; j < length; j++) {
+        swap(arr, i, j);
+        if (isValid2(arr, i)) {
+            permutation3(arr, i + 1, length);
+        }
+        swap(arr, i, j);
+    }
 }
 
 /* Testing code */

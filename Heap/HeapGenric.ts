@@ -77,7 +77,7 @@ class PriorityQueue<T> {
     }
 
     public print() {
-        console.info(this.arr);;
+        console.log(this.arr);;
     }
 
     public isEmpty(): boolean {

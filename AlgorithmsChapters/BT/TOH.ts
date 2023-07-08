@@ -1,16 +1,16 @@
 function tohUtil(num: number, from: string, to: string, temp: string): void {
-	if (num < 1) {
-		return;
-	}
+    if (num < 1) {
+        return;
+    }
 
-	tohUtil(num - 1, from, temp, to);
-	console.log(`Move disk ${num} from peg ${from} to peg ${to}`);
-	tohUtil(num - 1, temp, to, from);
+    tohUtil(num - 1, from, temp, to);
+    console.log(`Move disk ${num} from peg ${from} to peg ${to}`);
+    tohUtil(num - 1, temp, to, from);
 }
 
 function toh(num: number): void {
-	console.log("The sequence of moves involved in the Tower of Hanoi are:");
-	tohUtil(num, 'A', 'C', 'B');
+    console.log("The sequence of moves involved in the Tower of Hanoi are:");
+    tohUtil(num, 'A', 'C', 'B');
 }
 
 // Testing code.

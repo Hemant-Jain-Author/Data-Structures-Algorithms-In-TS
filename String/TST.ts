@@ -23,7 +23,7 @@ class TST {
         this.root = this.insertUtil(this.root, word, 0);
     }
 
-    insertUtil(curr: TSTNode, word: string, wordIndex: number): TSTNode {
+    private insertUtil(curr: TSTNode, word: string, wordIndex: number): TSTNode {
         if (curr == null) {
             curr = new TSTNode(word.charAt(wordIndex));
         }
@@ -42,7 +42,7 @@ class TST {
         return curr;
     }
 
-    findUtil(curr: TSTNode, word: string, wordIndex: number): boolean {
+    private findUtil(curr: TSTNode, word: string, wordIndex: number): boolean {
         if (curr == null) {
             return false;
         }

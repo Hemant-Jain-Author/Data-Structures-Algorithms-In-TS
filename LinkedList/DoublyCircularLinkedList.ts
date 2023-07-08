@@ -1,9 +1,9 @@
 class DCLLNode {
     value: number;
-    next: DCLLNode;
-    prev: DCLLNode;
+    next: DCLLNode | null;
+    prev: DCLLNode | null;
 
-    public constructor(v: number, nxt: DCLLNode = null, prv: DCLLNode = null) {
+    public constructor(v: number, nxt: DCLLNode | null = null, prv: DCLLNode | null = null) {
         this.value = v;
         this.next = nxt;
         this.prev = prv;
@@ -11,8 +11,8 @@ class DCLLNode {
 }
 
 class DoublyCircularLinkedList {
-    head: DCLLNode = null;
-    tail: DCLLNode = null;
+    head: DCLLNode | null = null;
+    tail: DCLLNode | null = null;
     length: number = 0;
 
     public size(): number {
@@ -23,39 +23,39 @@ class DoublyCircularLinkedList {
         return this.length === 0;
     }
 
-    public peekHead(): number {
+    public peekHead(): number | null {
         if (this.isEmpty())
-            throw "EmptyListException";
-        return this.head.value;
+            throw new Error("EmptyListException");
+        return this.head!.value;
     }
 
-    public addHead(value: number) {
-        let newNode: DCLLNode = new DCLLNode(value, null, null);
+    public addHead(value: number): void {
+        const newNode: DCLLNode = new DCLLNode(value);
         if (this.length === 0) {
             this.tail = this.head = newNode;
             newNode.next = newNode;
             newNode.prev = newNode;
         } else {
-            newNode.next = this.head;
-            newNode.prev = this.head.prev;
-            this.head.prev = newNode;
-            newNode.prev.next = newNode;
+            newNode.next = this.head!;
+            newNode.prev = this.head!.prev;
+            this.head!.prev = newNode;
+            newNode.prev!.next = newNode;
             this.head = newNode;
         }
         this.length++;
     }
 
-    public addTail(value: number) {
-        let newNode: DCLLNode = new DCLLNode(value, null, null);
+    public addTail(value: number): void {
+        const newNode: DCLLNode = new DCLLNode(value);
         if (this.length === 0) {
             this.head = this.tail = newNode;
             newNode.next = newNode;
             newNode.prev = newNode;
         } else {
-            newNode.next = this.tail.next;
+            newNode.next = this.tail!.next;
             newNode.prev = this.tail;
-            this.tail.next = newNode;
-            newNode.next.prev = newNode;
+            this.tail!.next = newNode;
+            newNode.next!.prev = newNode;
             this.tail = newNode;
         }
         this.length++;
@@ -63,40 +63,40 @@ class DoublyCircularLinkedList {
 
     public removeHead(): number {
         if (this.length === 0)
-            "EmptyListException";
-        let value: number = this.head.value;
+            throw new Error("EmptyListException");
+        const value: number = this.head!.value;
         this.length--;
         if (this.length === 0) {
             this.head = null;
             this.tail = null;
             return value;
         }
-        let next: DCLLNode = this.head.next;
+        const next: DCLLNode = this.head!.next!;
         next.prev = this.tail;
-        this.tail.next = next;
+        this.tail!.next = next;
         this.head = next;
         return value;
     }
 
     public removeTail(): number {
         if (this.length === 0)
-            throw "EmptyListException";
-        let value: number = this.tail.value;
+            throw new Error("EmptyListException");
+        const value: number = this.tail!.value;
         this.length--;
         if (this.length === 0) {
             this.head = null;
             this.tail = null;
             return value;
         }
-        let prev: DCLLNode = this.tail.prev;
+        const prev: DCLLNode = this.tail!.prev!;
         prev.next = this.head;
-        this.head.prev = prev;
+        this.head!.prev = prev;
         this.tail = prev;
         return value;
     }
 
     public find(key: number): boolean {
-        let temp: DCLLNode = this.head;
+        let temp: DCLLNode | null = this.head;
         if (this.head == null)
             return false;
         do {
@@ -107,25 +107,25 @@ class DoublyCircularLinkedList {
         return false;
     }
 
-    public freeList() {
+    public freeList(): void {
         this.head = null;
         this.tail = null;
         this.length = 0;
     }
 
-    public print() {
+    public print(): void {
         if (this.isEmpty()) {
             console.log("Empty list.");
             return;
         }
-        let temp: DCLLNode = this.head;
+        let temp: DCLLNode | null = this.head;
         let result: string = "";
         while (temp !== this.tail) {
             result += (temp.value + " ");
             temp = temp.next;
-        };
+        }
         result += temp.value;
-        console.info(result);
+        console.log(result);
     }
 }
 
@@ -157,12 +157,12 @@ function main2() {
     ll.addTail(3);
     ll.print();
 
-	ll.removeHead();
-	ll.print();
-	ll.removeTail();
-	ll.print();
-	ll.freeList();
-	ll.print();
+    ll.removeHead();
+    ll.print();
+    ll.removeTail();
+    ll.print();
+    ll.freeList();
+    ll.print();
 }
 
 /*
@@ -203,7 +203,7 @@ function main4() {
 3 2 1
 3 2
 */
-	
+
 main1();
 main2();
 main3();

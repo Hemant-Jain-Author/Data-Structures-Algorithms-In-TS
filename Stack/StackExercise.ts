@@ -488,7 +488,7 @@ function reverseParenthesis(expn: string, size: number): number {
     let closeCount: number = 0;
     let ch: string;
     if (size % 2 === 1) {
-        console.info("Invalid odd length " + size);
+        console.log("Invalid odd length " + size);
         return -1;
     }
     for (let i: number = 0; i < size; i++) {
@@ -573,7 +573,7 @@ function printParenthesisNumber(expn: string, size: number) {
         else if (ch == ')')
             output += stk.pop();
     }
-    console.info("Parenthesis Count ", output);
+    console.log("Parenthesis Count ", output);
 }
 
 // Testing code.

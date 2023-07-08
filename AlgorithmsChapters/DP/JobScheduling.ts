@@ -87,7 +87,7 @@ function maxValueJobsBU(start: number[], finish: number[], value: number[], n: n
 
 	act.sort((j1, j2) => j1.compareTo(j2)); // sort according to finish time.
 
-	const dp: number[] = new Array(n);
+	const dp: number[] = new Array(n).fill(0);
 	dp[0] = act[0].value;
 
 	for (let i = 1; i < n; i++) {

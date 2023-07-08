@@ -21,9 +21,9 @@ function shortestDist(graph: number[][], n: number): number {
   }
 
   value = n - 1;
-  var output = "";
+  let output = "";
   while (value !== -1) {
-    output += (value + " ");
+    output += `${value} `;
     value = path[value];
   }
   console.log(output);
@@ -40,4 +40,9 @@ const graph: number[][] = [
   [INF, INF, INF, INF, INF, INF, INF, 2],
   [INF, INF, INF, INF, INF, INF, INF, INF],
 ];
-console.log(shortestDist(graph, 8));
+console.log("Shortest distance:", shortestDist(graph, 8));
+
+/*
+7 6 3 0 
+Shortest distance: 9
+*/

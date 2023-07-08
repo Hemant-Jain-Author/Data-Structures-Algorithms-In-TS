@@ -42,4 +42,4 @@ function MergeSort(arr: Array<number>) {
 // Testing code.
 let array: Array<number> = [3, 4, 2, 1, 6, 5, 7, 8];
 MergeSort(array);
-console.info(array);
+console.log(array);

@@ -79,7 +79,7 @@ class PriorityQueue<T> {
     }
 
     public print() {
-        console.info(this.arr);;
+        console.log(this.arr);;
     }
 
     public isEmpty(): boolean {
@@ -223,7 +223,7 @@ class Graph {
         this.printPath(previous, dist, this.count, source);
     }
 
-    printPathUtil(previous, source, dest): string {
+    private printPathUtil(previous, source, dest): string {
         let path = "";
         if (dest === source) {
             path += source;
@@ -234,7 +234,7 @@ class Graph {
         return path;
     }
 
-    printPath(previous, dist, count, source): void {
+    private printPath(previous, dist, count, source): void {
         let output = "Shortest Paths: ";
         for (let i = 0; i < count; i++) {
             if (dist[i] === 99999) {
@@ -299,7 +299,7 @@ class Graph {
     }
 
 
-    public hamiltonianPathUtil(path: Array<number>, pSize: number, added: Array<number>): boolean {
+    private hamiltonianPathUtil(path: Array<number>, pSize: number, added: Array<number>): boolean {
         if (pSize === this.count) {
             return true;
         }
@@ -319,14 +319,14 @@ class Graph {
         let path: Array<number> = new Array<number>(this.count).fill(0);
         let added: Array<number> = new Array<number>(this.count).fill(0);
         if (this.hamiltonianPathUtil(path, 0, added)) {
-            console.info("Hamiltonian Path found :: " + path);
+            console.log("Hamiltonian Path found :: " + path);
             return true;
         }
-        console.info("Hamiltonian Path not found");
+        console.log("Hamiltonian Path not found");
         return false;
     }
 
-    public hamiltonianCycleUtil(path: Array<number>, pSize: number, added: Array<number>): boolean {
+    private hamiltonianCycleUtil(path: Array<number>, pSize: number, added: Array<number>): boolean {
         if (pSize === this.count) {
             if (this.adj[path[pSize - 1]][path[0]] === 1) {
                 path[pSize] = path[0];
@@ -350,10 +350,10 @@ class Graph {
         let added: Array<number> = new Array<number>(this.count).fill(0);
         
         if (this.hamiltonianCycleUtil(path, 0, added)) {
-            console.info("Hamiltonian Cycle found :: " + path);
+            console.log("Hamiltonian Cycle found :: " + path);
             return true;
         }
-        console.info("Hamiltonian Cycle not found");
+        console.log("Hamiltonian Cycle not found");
         return false;
     }
 }

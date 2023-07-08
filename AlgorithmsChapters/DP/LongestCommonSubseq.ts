@@ -29,21 +29,18 @@ function LCSubStr(st1: string, st2: string): number {
 
 function PrintLCS(p: number[][], X: string[], i: number, j: number): string {
 	if (i === 0 || j === 0) return "";
-	let str = ""
 	if (p[i][j] === 0) {
-		str += PrintLCS(p, X, i - 1, j - 1);
-		str += X[i - 1];
-	} else if (p[i][j] === 1)
-		str += PrintLCS(p, X, i - 1, j);
-	else
-		str += PrintLCS(p, X, i, j - 1);
-	return str;
+		return PrintLCS(p, X, i - 1, j - 1) + X[i - 1];
+	} else if (p[i][j] === 1) {
+		return PrintLCS(p, X, i - 1, j);
+	} else {
+		return PrintLCS(p, X, i, j - 1);
+	}
 }
 
 const X = "carpenter";
 const Y = "sharpener";
 console.log(LCSubStr(X, Y));
 
-
-//arpener
+// arpener
 // 7

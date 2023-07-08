@@ -54,7 +54,7 @@ class Tree {
         this.root = this.createCompleteBinaryTreeUtil(arr, 0);
     }
 
-    createCompleteBinaryTreeUtil(arr: any[], start: number): TreeNode | null {
+    private createCompleteBinaryTreeUtil(arr: any[], start: number): TreeNode | null {
         const size = arr.length;
         const curr = new TreeNode(arr[start]);
         const left = 2 * start + 1;
@@ -74,7 +74,7 @@ class Tree {
         console.log(output);
     }
 
-    printPreOrderUtil(node: TreeNode | null): string {
+    private printPreOrderUtil(node: TreeNode | null): string {
         let output: string = "";
         if (node != null) {
             output += `${node.value} `;
@@ -90,7 +90,7 @@ class Tree {
         console.log(output);
     }
 
-    printPostOrderUtil(node: TreeNode | null): string {
+    private printPostOrderUtil(node: TreeNode | null): string {
         let output: string = "";
         if (node != null) {
             output += this.printPostOrderUtil(node.left);
@@ -106,7 +106,7 @@ class Tree {
         console.log(output);
     }
 
-    printInOrderUtil(node: TreeNode | null): string {
+    private printInOrderUtil(node: TreeNode | null): string {
         let output: string = "";
         if (node != null) {
             output = this.printInOrderUtil(node.left);
@@ -245,7 +245,7 @@ class Tree {
         this.nthPreOrderUtil(this.root, index, counter);
     }
 
-    nthPreOrderUtil(node: TreeNode | null, index: number, counter: number[]): void {
+    private nthPreOrderUtil(node: TreeNode | null, index: number, counter: number[]): void {
         if (node != null) {
             counter[0]++;
             if (counter[0] === index) {
@@ -262,7 +262,7 @@ class Tree {
         this.nthPostOrderUtil(this.root, index, counter);
     }
 
-    nthPostOrderUtil(node: TreeNode | null, index: number, counter: number[]): void {
+    private nthPostOrderUtil(node: TreeNode | null, index: number, counter: number[]): void {
         if (node != null) {
             this.nthPostOrderUtil(node.left, index, counter);
             this.nthPostOrderUtil(node.right, index, counter);
@@ -278,7 +278,7 @@ class Tree {
         this.nthInOrderUtil(this.root, index, counter);
     }
 
-    nthInOrderUtil(node: TreeNode | null, index: number, counter: number[]): void {
+    private nthInOrderUtil(node: TreeNode | null, index: number, counter: number[]): void {
         if (node != null) {
             this.nthInOrderUtil(node.left, index, counter);
             counter[0]++;
@@ -296,7 +296,7 @@ class Tree {
         this.printAllPathUtil(this.root, stk);
     }
 
-    printAllPathUtil(curr: TreeNode | null, stk: any[]): void {
+    private printAllPathUtil(curr: TreeNode | null, stk: any[]): void {
         if (curr == null)
             return;
         stk.push(curr.value);
@@ -316,7 +316,7 @@ class Tree {
         return this.numNodesUtil(this.root);
     }
 
-    numNodesUtil(curr: TreeNode | null): number {
+    private numNodesUtil(curr: TreeNode | null): number {
         if (curr == null)
             return 0;
         else
@@ -327,7 +327,7 @@ class Tree {
         return this.sumAllBTUtil(this.root);
     }
 
-    sumAllBTUtil(curr: TreeNode | null): number {
+    private sumAllBTUtil(curr: TreeNode | null): number {
         if (curr == null)
             return 0;
         return curr.value + this.sumAllBTUtil(curr.left) + this.sumAllBTUtil(curr.right);
@@ -337,7 +337,7 @@ class Tree {
         return this.numLeafNodesUtil(this.root);
     }
 
-    numLeafNodesUtil(curr: TreeNode | null): number {
+    private numLeafNodesUtil(curr: TreeNode | null): number {
         if (curr == null)
             return 0;
 
@@ -352,7 +352,7 @@ class Tree {
         return this.numFullNodesBTUtil(this.root);
     }
 
-    numFullNodesBTUtil(curr: TreeNode | null): number {
+    private numFullNodesBTUtil(curr: TreeNode | null): number {
         let count: number;
         if (curr == null)
             return 0;
@@ -367,7 +367,7 @@ class Tree {
         return this.searchBTUtil(this.root, value);
     }
 
-    searchBTUtil(curr: TreeNode | null, val: number): boolean {
+    private searchBTUtil(curr: TreeNode | null, val: number): boolean {
         if (curr == null)
             return false;
 
@@ -382,7 +382,7 @@ class Tree {
         return ans;
     }
 
-    findMaxBTUtil(curr: TreeNode | null): number {
+    private findMaxBTUtil(curr: TreeNode | null): number {
         if (curr == null)
             return MIN_INT;
 
@@ -403,7 +403,7 @@ class Tree {
         return this.treeDepthUtil(this.root);
     }
 
-    treeDepthUtil(curr: TreeNode | null): number {
+    private treeDepthUtil(curr: TreeNode | null): number {
         if (curr == null)
             return 0;
         else {
@@ -421,7 +421,7 @@ class Tree {
         return this.maxLengthPathBTUtil(this.root);
     }
 
-    maxLengthPathBTUtil(curr: TreeNode | null): number {
+    private maxLengthPathBTUtil(curr: TreeNode | null): number {
         if (curr == null)
             return 0;
 
@@ -447,7 +447,7 @@ class Tree {
         return tree2;
     }
 
-    copyTreeUtil(curr: TreeNode | null): TreeNode | null {
+    private copyTreeUtil(curr: TreeNode | null): TreeNode | null {
         if (curr != null) {
             const temp = new TreeNode(curr.value);
             temp.left = this.copyTreeUtil(curr.left);
@@ -464,7 +464,7 @@ class Tree {
         return tree2;
     }
 
-    copyMirrorTreeUtil(curr: TreeNode | null): TreeNode | null {
+    private copyMirrorTreeUtil(curr: TreeNode | null): TreeNode | null {
         if (curr != null) {
             const temp = new TreeNode(curr.value);
             temp.right = this.copyMirrorTreeUtil(curr.left);
@@ -479,7 +479,7 @@ class Tree {
         return this.isEqualUtil(this.root, tree.root);
     }
 
-    isEqualUtil(node1: TreeNode | null, node2: TreeNode | null): boolean {
+    private isEqualUtil(node1: TreeNode | null, node2: TreeNode | null): boolean {
         if (node1 == null && node2 == null)
             return true;
         else if (node1 == null || node2 == null)
@@ -522,7 +522,7 @@ class Tree {
         return true;
     }
 
-    isCompleteTreeUtil(curr: TreeNode | null, index: number, count: number): boolean {
+    private isCompleteTreeUtil(curr: TreeNode | null, index: number, count: number): boolean {
         if (curr == null)
             return true;
 
@@ -541,7 +541,7 @@ class Tree {
     }
 
 
-    isHeapUtil(curr: TreeNode | null, parentValue: number): boolean {
+    private isHeapUtil(curr: TreeNode | null, parentValue: number): boolean {
         if (curr == null)
             return true;
 
@@ -559,7 +559,7 @@ class Tree {
         return this.isCompleteTree() && this.isHeapUtil(this.root, infi);
     }
 
-    isHeapUtil2(curr: TreeNode | null, index: number, count: number, parentValue: number): boolean {
+    private isHeapUtil2(curr: TreeNode | null, index: number, count: number, parentValue: number): boolean {
         if (curr == null)
             return true;
 
@@ -681,7 +681,7 @@ class Tree {
         return t2;
     }
 
-    treeToListRecUtil(curr: TreeNode | null): TreeNode | null {
+    private treeToListRecUtil(curr: TreeNode | null): TreeNode | null {
         let head: TreeNode | null = null;
         let tail: TreeNode | null = null;
         if (curr == null)
@@ -733,7 +733,7 @@ class Tree {
         this.root = this.createBinarySearchTreeUtil(arr, 0, arr.length - 1);
     }
 
-    createBinarySearchTreeUtil(arr: number[], start: number, end: number): TreeNode | null {
+    private createBinarySearchTreeUtil(arr: number[], start: number, end: number): TreeNode | null {
         if (start > end)
             return null;
 
@@ -748,7 +748,7 @@ class Tree {
         this.root = this.insertNodeUtil(this.root, value);
     }
 
-    insertNodeUtil(node: TreeNode | null, value: number): TreeNode {
+    private insertNodeUtil(node: TreeNode | null, value: number): TreeNode {
         if (node == null) {
             node = new TreeNode(value, null, null);
         } else {
@@ -835,7 +835,7 @@ class Tree {
         return this.isBST3Util(this.root);
     }
 
-    isBST3Util(root: TreeNode | null): boolean {
+    private isBST3Util(root: TreeNode | null): boolean {
         if (root == null)
             return true;
 
@@ -852,7 +852,7 @@ class Tree {
         return this.isBSTUtil(this.root, Number.MIN_VALUE, Number.MAX_VALUE);
     }
 
-    isBSTUtil(curr: TreeNode | null, min: number, max: number): boolean {
+    private isBSTUtil(curr: TreeNode | null, min: number, max: number): boolean {
         if (curr == null)
             return true;
 
@@ -867,7 +867,7 @@ class Tree {
         return this.isBST2Util(this.root, count);
     }
 
-    isBST2Util(root: TreeNode | null, count: number[]): boolean {
+    private isBST2Util(root: TreeNode | null, count: number[]): boolean {
         let ret;
         if (root != null) {
             ret = this.isBST2Util(root.left, count);
@@ -889,7 +889,7 @@ class Tree {
         this.root = this.deleteNodeUtil(this.root, value);
     }
 
-    deleteNodeUtil(node: TreeNode | null, value: number): TreeNode | null {
+    private deleteNodeUtil(node: TreeNode | null, value: number): TreeNode | null {
         let temp: TreeNode | null = null;
         if (node != null) {
             if (node.value === value) {
@@ -930,7 +930,7 @@ class Tree {
         return result;
     }
 
-    lcaBSTUtil(curr: TreeNode | null, first: number, second: number): number {
+    private lcaBSTUtil(curr: TreeNode | null, first: number, second: number): number {
         if (curr == null) {
             return Number.MAX_VALUE;
         }
@@ -955,7 +955,7 @@ class Tree {
         console.log(output);
     }
 
-    printInRangeUtil(curr: TreeNode | null, min: number, max: number): string {
+    private printInRangeUtil(curr: TreeNode | null, min: number, max: number): string {
         if (curr == null)
             return "";
         let output: string = "";
@@ -970,7 +970,7 @@ class Tree {
         this.root = this.trimOutsideRangeUtil(this.root, min, max);
     }
 
-    trimOutsideRangeUtil(curr: TreeNode | null, min: number, max: number): TreeNode | null {
+    private trimOutsideRangeUtil(curr: TreeNode | null, min: number, max: number): TreeNode | null {
         if (curr == null)
             return null;
 
@@ -1031,7 +1031,7 @@ class Tree {
         return this.ancestorUtil(this.root, first, second);
     }
 
-    ancestorUtil(curr: TreeNode | null, first: number, second: number): TreeNode | null {
+    private ancestorUtil(curr: TreeNode | null, first: number, second: number): TreeNode | null {
         if (curr == null) {
             return null;
         }
@@ -1052,7 +1052,7 @@ class Tree {
             return Number.MIN_VALUE;
     }
 
-    LCAUtil(curr: TreeNode | null, first: number, second: number): TreeNode | null {
+    private LCAUtil(curr: TreeNode | null, first: number, second: number): TreeNode | null {
         let left: TreeNode | null;
         let right: TreeNode | null;
 
@@ -1071,7 +1071,6 @@ class Tree {
         else
             return right;
     }
-    // Other methods in the BinarySearchTree class...
 }
 
 function isBSTArray(preorder: number[], size: number): boolean {

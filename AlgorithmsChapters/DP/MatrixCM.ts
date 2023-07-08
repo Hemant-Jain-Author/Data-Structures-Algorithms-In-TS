@@ -61,21 +61,21 @@ function MatrixChainMulBU(p: number[], n: number): number {
 	return dp[1][n - 1];
 }
 
-function PrintOptPar(n: number, pos: number[][], i: number, j: number): string {
-	var str = "";
-	if (i === j) {
-		str += `M${pos[i][i]} `;
-	} else {
-		str += "( ";
-		str += PrintOptPar(n, pos, i, pos[i][j]);
-		str += PrintOptPar(n, pos, pos[i][j] + 1, j);
-		str += ") ";
-	}
-	return str;
+function PrintOptimalParenthesis(n: number, pos: number[][]): void {
+	const str = PrintOptPar(pos, 1, n - 1);
+	console.log("OptimalParenthesis: " + str);
 }
 
-function PrintOptimalParenthesis(n: number, pos: number[][]): void {
-	console.log("OptimalParenthesis : ", PrintOptPar(n, pos, 1, n - 1));
+function PrintOptPar(pos: number[][], i: number, j: number): string {
+	if (i === j) {
+		return `M${i}`;
+	}
+
+	return ("(" +
+		PrintOptPar(pos, i, pos[i][j]) +
+		" " +
+		PrintOptPar(pos, pos[i][j] + 1, j) +
+		")");
 }
 
 function MatrixChainMulBU2(p: number[], n: number): number {
@@ -84,7 +84,6 @@ function MatrixChainMulBU2(p: number[], n: number): number {
 
 	for (let i = 1; i < n; i++) {
 		dp[i][i] = 0;
-		pos[i][i] = i;
 	}
 
 	for (let l = 1; l < n; l++) {
@@ -105,18 +104,15 @@ function MatrixChainMulBU2(p: number[], n: number): number {
 
 const arr: number[] = [1, 2, 3, 4];
 const n: number = arr.length;
-console.log(
-	"Matrix Chain Multiplication is: " + MatrixChainMulBruteForceWrapper(arr)
-);
+console.log("Matrix Chain Multiplication is: " + MatrixChainMulBruteForceWrapper(arr));
 console.log("Matrix Chain Multiplication is: " + MatrixChainMulTD(arr, n));
 console.log("Matrix Chain Multiplication is: " + MatrixChainMulBU(arr, n));
 console.log("Matrix Chain Multiplication is: " + MatrixChainMulBU2(arr, n));
-
 
 /*
 Matrix Chain Multiplication is: 18
 Matrix Chain Multiplication is: 18
 Matrix Chain Multiplication is: 18
-OptimalParenthesis : ( ( M1 M2 ) M3 ) 
+OptimalParenthesis: ((M1 M2) M3)
 Matrix Chain Multiplication is: 18
 */

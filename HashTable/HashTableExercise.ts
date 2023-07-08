@@ -60,12 +60,12 @@ function isAnagram(str1: string, str2: string): boolean {
     }
 
     const cm = new CountMap();
-    for (let index = 0; index < str1.length; index++) {
-        let ch = str1[index];
+    for (let index = 0; index < size1; index++) {
+        const ch = str1[index];
         cm.add(ch);
     }
-    for (let index = 0; index < str2.length; index++) {
-        let ch = str2[index];
+    for (let index = 0; index < size2; index++) {
+        const ch = str2[index];
         cm.remove(ch);
     }
     return cm.size() === 0;
@@ -76,14 +76,14 @@ function test1(): void {
     const first = "hello";
     const second = "elloh";
     const third = "world";
-    console.log(`isAnagram : ${isAnagram(first, second)}`);
-    console.log(`isAnagram : ${isAnagram(first, third)}`);
+    console.log(`isAnagram: ${isAnagram(first, second)}`);
+    console.log(`isAnagram: ${isAnagram(first, third)}`);
 }
 
 test1();
 /*
-isAnagram : true
-isAnagram : false
+isAnagram: true
+isAnagram: false
 */
 
 function removeDuplicate(str: string): string {
@@ -123,12 +123,12 @@ function findMissing(arr: number[], start: number, end: number): number {
 // Testing code.
 function test3(): void {
     const arr = [1, 2, 3, 5, 6, 7, 8, 9, 10];
-    console.log("Missing element is :", findMissing(arr, 1, 10));
+    console.log("Missing element is:", findMissing(arr, 1, 10));
 }
 
 test3();
 /*
-Missing element is : 4
+Missing element is: 4
 */
 
 function printRepeating(arr: number[]): void {
@@ -136,7 +136,6 @@ function printRepeating(arr: number[]): void {
     console.log("Repeating elements are:");
     for (let insert = 0; insert < arr.length; insert++) {
         const val = arr[insert];
-
         if (hs.has(val)) {
             console.log(val);
         } else {
@@ -154,7 +153,7 @@ function printFirstRepeating(arr: number[]): void {
     for (let i = 0; i < size; i++) {
         hs.remove(arr[i]);
         if (hs.find(arr[i])) {
-            console.log(`First Repeating number is : ${arr[i]}`);
+            console.log(`First Repeating number is: ${arr[i]}`);
             return;
         }
     }
@@ -172,7 +171,7 @@ test4();
 Repeating elements are:
 4
 1
-First Repeating number is : 1
+First Repeating number is: 1
 */
 
 function hornerHash(key: string, tableSize: number): number {

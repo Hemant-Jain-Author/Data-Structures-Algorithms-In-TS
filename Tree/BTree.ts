@@ -28,7 +28,7 @@ class BTree {
 		console.log();
 	}
 
-	printTreeUtil(node: TNode, indent: string): void {
+	private printTreeUtil(node: TNode, indent: string): void {
 		if (node == null) {
 			return;
 		}
@@ -60,7 +60,7 @@ class BTree {
 		return this.searchUtil(this.root, key);
 	}
 
-	searchUtil(node: TNode, key: number): TNode {
+	private searchUtil(node: TNode, key: number): TNode {
 		let i = 0;
 		while (i < node.n && node.keys[i] < key) {
 			i++;
@@ -112,7 +112,7 @@ class BTree {
 
 	// Insert a new key in this node
 	// Arguments are parent, child, index of child and key.
-	insertUtil(parent: TNode, child: TNode, index: number, key: number): void {
+	private insertUtil(parent: TNode, child: TNode, index: number, key: number): void {
 		if (child.leaf) {
 			// Finds the location where new key will be inserted 
 			// by moving all keys greater than key to one place forward.
@@ -139,7 +139,7 @@ class BTree {
 		}
 	}
 
-	split(parent: TNode, child: TNode, index: number): void {
+	private split(parent: TNode, child: TNode, index: number): void {
 		// Getting index of median.
 		let median = this.min;
 		// Reduce the number of keys in child
@@ -192,7 +192,7 @@ class BTree {
 		}
 	}
 
-	removeUtil(node: TNode, key: number): void {
+	private removeUtil(node: TNode, key: number): void {
 		let index = this.findKey(node, key);
 		if (node.leaf) {
 			if (index < node.n && node.keys[index] === key) {
@@ -225,7 +225,7 @@ class BTree {
 	}
 
 	// Remove the index key from the leaf node.
-	removeFromLeaf(node: TNode, index: number): void {
+	private removeFromLeaf(node: TNode, index: number): void {
 		// Move all the keys after the index position one step left.
 		for (let i = index + 1; i < node.n; ++i) {
 			node.keys[i - 1] = node.keys[i];
@@ -236,7 +236,7 @@ class BTree {
 	}
 
 	// Remove the index key from a non-leaf node.
-	removeFromNonLeaf(node: TNode, index: number): void {
+	private removeFromNonLeaf(node: TNode, index: number): void {
 		let key = node.keys[index];
 		// If the child that precedes key has at least min keys,
 		// Find the predecessor 'pred' of key in the subtree rooted at index.
@@ -257,7 +257,7 @@ class BTree {
 	}
 
 	// To get the predecessor of keys[index]
-	getPred(node: TNode, index: number): number {
+	private getPred(node: TNode, index: number): number {
 		// Keep moving to the rightmost node of the left subtree until we reach a leaf.
 		let cur = node.arr[index];
 		while (!cur.leaf) {
@@ -268,7 +268,7 @@ class BTree {
 	}
 
 	// To get the successor of keys[index]
-	getSucc(node: TNode, index: number): number {
+	private getSucc(node: TNode, index: number): number {
 		// Keep moving to the leftmost node of the right subtree until we reach a leaf
 		let cur = node.arr[index + 1];
 		while (!cur.leaf) {
@@ -279,7 +279,7 @@ class BTree {
 	}
 
 	// Make sure that the node has at least the min number of keys
-	fixBTree(node: TNode, index: number): void {
+	private fixBTree(node: TNode, index: number): void {
 		// If the left sibling has more than min keys.
 		if (index !== 0 && node.arr[index - 1].n > this.min) {
 			this.borrowFromLeft(node, index);
@@ -295,7 +295,7 @@ class BTree {
 	}
 
 	// Move a key from the parent to the right and left to the parent.
-	borrowFromLeft(node: TNode, index: number): void {
+	private borrowFromLeft(node: TNode, index: number): void {
 		let child = node.arr[index];
 		let sibling = node.arr[index - 1];
 		// Moving all keys in the child one step forward.
@@ -321,7 +321,7 @@ class BTree {
 	}
 
 	// Move a key from the parent to the left and right to the parent.
-	borrowFromRight(node: TNode, index: number): void {
+	private borrowFromRight(node: TNode, index: number): void {
 		let child = node.arr[index];
 		let sibling = node.arr[index + 1];
 		// node key is inserted as the last key in the child.
@@ -347,7 +347,7 @@ class BTree {
 	}
 
 	// Merge node's children at index and index+1.
-	merge(node: TNode, index: number): void {
+	private merge(node: TNode, index: number): void {
 		let left = node.arr[index];
 		let right = node.arr[index + 1];
 		let start = left.n;

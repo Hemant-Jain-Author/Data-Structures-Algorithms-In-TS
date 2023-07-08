@@ -18,4 +18,4 @@ function InsertionSort(arr: Array<number>) {
 // Testing code.
 let array: Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
 InsertionSort(array);
-console.info(array);
+console.log(array);

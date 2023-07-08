@@ -17,8 +17,8 @@ class HashTable {
     private HashFun: (key: any) => number;
 
     constructor(cmp?: (a: any, b: any) => number, hashFun?: (key: any) => number) {
-        this.comp = cmp ?? this.DefaultCompare;
-        this.HashFun = hashFun ?? this.DefaultHashFun;
+        this.comp = cmp || this.DefaultCompare;
+        this.HashFun = hashFun || this.DefaultHashFun;
         this.tableSize = 512;
         this.listArray = new Array(this.tableSize).fill(null);
     }
@@ -36,11 +36,11 @@ class HashTable {
     }
 
     add(key: any, value?: any): void {
-        if (key === undefined || key === null) {
+        if (key == null) {
             return;
         }
 
-        if (value === undefined || value === null) {
+        if (value == null) {
             value = key;
         }
 
@@ -50,32 +50,31 @@ class HashTable {
 
     remove(key: any): boolean {
         const index = this.ComputeHash(key);
-        let nextNode: HashTableNode | null;
-        let head = this.listArray[index];
-        if (head !== null && head.key === key) {
-            this.listArray[index] = head.next;
-            return true;
-        }
+        let prevNode: HashTableNode | null = null;
+        let currNode = this.listArray[index];
 
-        while (head !== null) {
-            nextNode = head.next;
-            if (nextNode !== null && nextNode.key === key) {
-                head.next = nextNode.next;
+        while (currNode !== null) {
+            if (currNode.key === key) {
+                if (prevNode === null) {
+                    this.listArray[index] = currNode.next;
+                } else {
+                    prevNode.next = currNode.next;
+                }
                 return true;
-            } else {
-                head = nextNode;
             }
+            prevNode = currNode;
+            currNode = currNode.next;
         }
         return false;
     }
 
     print(): void {
-        let output = "Hash Table contains ::";
+        let output = "Hash Table contains:";
         for (let i = 0; i < this.tableSize; i++) {
-            let head = this.listArray[i];
-            while (head !== null) {
-                output += "(" + head.key + "=>" + head.value + ") ";
-                head = head.next;
+            let currNode = this.listArray[i];
+            while (currNode !== null) {
+                output += ` (${currNode.key}=>${currNode.value})`;
+                currNode = currNode.next;
             }
         }
         console.log(output);
@@ -83,24 +82,26 @@ class HashTable {
 
     find(key: any): boolean {
         const index = this.ComputeHash(key);
-        let head = this.listArray[index];
-        while (head !== null) {
-            if (head.key === key) {
+        let currNode = this.listArray[index];
+
+        while (currNode !== null) {
+            if (currNode.key === key) {
                 return true;
             }
-            head = head.next;
+            currNode = currNode.next;
         }
         return false;
     }
 
     get(key: any): any {
         const index = this.ComputeHash(key);
-        let head = this.listArray[index];
-        while (head !== null) {
-            if (head.key === key) {
-                return head.value;
+        let currNode = this.listArray[index];
+
+        while (currNode !== null) {
+            if (currNode.key === key) {
+                return currNode.value;
             }
-            head = head.next;
+            currNode = currNode.next;
         }
         return 0;
     }
@@ -113,14 +114,14 @@ ht.add(2, 20);
 ht.add(3, 30);
 ht.print();
 
-console.log("Find key 2: ", ht.find(2));
-console.log("Value at key 2: ", ht.get(2));
+console.log("Find key 2:", ht.find(2));
+console.log("Value at key 2:", ht.get(2));
 ht.remove(1);
 ht.print();
 
 /*
-Hash Table contains ::(1=>10) (2=>20) (3=>30) 
-Find key 2:  true
-Value at key 2:  20
-Hash Table contains ::(2=>20) (3=>30) 
+Hash Table contains: (1=>10) (2=>20) (3=>30)
+Find key 2: true
+Value at key 2: 20
+Hash Table contains: (2=>20) (3=>30)
 */

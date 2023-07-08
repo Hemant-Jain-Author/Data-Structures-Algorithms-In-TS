@@ -70,7 +70,7 @@ function main0() {
         que.add(i);
     };
     for (let i: number = 0; i < 22; i++) {
-        console.info(que.remove());
+        console.log(que.remove());
     };
 }
 
@@ -144,7 +144,7 @@ function convertXY(src: number, dst: number): number {
         value = que.remove();
         arr[index++] = value;
         if (value === dst) {
-            console.info("Steps countr :: " + steps);
+            console.log("Steps countr :: " + steps);
             return steps;
         }
         steps++;
@@ -222,7 +222,7 @@ function minOfMaxSlidingWindows(arr: Array<number>, size: number, k: number): nu
         if (i >= (k - 1) && minVal > arr[que.front()])
             minVal = arr[que.front()];
     }
-    console.info(`Min of max is :: ${minVal}`);
+    console.log(`Min of max is :: ${minVal}`);
     return minVal;
 }
 
@@ -252,7 +252,7 @@ function maxOfMinSlidingWindows(arr: Array<number>, size: number, k: number): nu
         if (i >= (k - 1) && maxVal < arr[que.front()])
             maxVal = arr[que.front()];
     }
-    console.info("Max of min is :: " + maxVal);
+    console.log("Max of min is :: " + maxVal);
     return maxVal;
 }
 

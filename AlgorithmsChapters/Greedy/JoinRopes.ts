@@ -75,7 +75,7 @@ class PriorityQueue<T> {
     }
 
     public PrintTree() {
-        console.info(this.arr);
+        console.log(this.arr);
     }
 
     public isEmpty(): boolean {
@@ -96,58 +96,55 @@ class PriorityQueue<T> {
 
 
 function joinRopes(ropes: number[], size: number): number {
-    ropes.sort();
-    for (let i = 0, j = size - 1; i < j; i++, j--) {
-        let temp = ropes[i];
-        ropes[i] = ropes[j];
-        ropes[j] = temp;
-    }
+    ropes.sort((a, b) => b - a);
+  
     let total = 0;
     let value = 0;
-    let index: number;
     let length = size;
-
+  
     while (length >= 2) {
-        value = ropes[length - 1] + ropes[length - 2];
-        total += value;
-        index = length - 2;
-        while (index > 0 && ropes[index - 1] < value) {
-            ropes[index] = ropes[index - 1];
-            index -= 1;
-        }
-        ropes[index] = value;
-        length--;
+      value = ropes[length - 1] + ropes[length - 2];
+      total += value;
+      let index = length - 2;
+      while (index > 0 && ropes[index - 1] < value) {
+        ropes[index] = ropes[index - 1];
+        index--;
+      }
+      ropes[index] = value;
+      length--;
     }
-    console.log("Total: " + total);
+  
+    console.log("Total:", total);
     return total;
-}
-
-function joinRopes2(ropes: number[], size: number): number {
+  }
+  
+  function joinRopes2(ropes: number[], size: number): number {
     const pq: PriorityQueue<number> = new PriorityQueue<number>((a, b) => a > b);
-    let i = 0;
-    for (i = 0; i < size; i++) {
-        pq.add(ropes[i]);
+  
+    for (let i = 0; i < size; i++) {
+      pq.add(ropes[i]);
     }
-
+  
     let total = 0;
-    let value = 0;
     while (pq.length() > 1) {
-        value = pq.remove();
-        value += pq.remove();
-        pq.add(value);
-        total += value;
+      const value = pq.remove() + pq.remove();
+      pq.add(value);
+      total += value;
     }
-    console.log("Total: " + total);
+  
+    console.log("Total:", total);
     return total;
-}
-
-/* Testing Code */
-const ropes: number[] = [4, 3, 2, 6];
-joinRopes(ropes, ropes.length);
-const rope2: number[] = [4, 3, 2, 6];
-joinRopes2(rope2, rope2.length);
-
-/*
-Total: 29
-Total: 29
-*/
+  }
+  
+  /* Testing Code */
+  const ropes: number[] = [4, 3, 2, 6];
+  joinRopes(ropes, ropes.length);
+  
+  const ropes2: number[] = [4, 3, 2, 6];
+  joinRopes2(ropes2, ropes2.length);
+  
+  /*
+  Total: 29
+  Total: 29
+  */
+  

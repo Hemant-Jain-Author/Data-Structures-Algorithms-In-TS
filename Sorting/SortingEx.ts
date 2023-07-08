@@ -79,11 +79,11 @@ function Partition012(arr: Array<number>, size: number) {
 function test1() {
     let arr: Array<number> = [0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1];
     Partition01(arr, arr.length);
-    console.info(arr);
+    console.log(arr);
 
     let arr2: Array<number> = [0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1];
     Partition012(arr2, arr2.length);
-    console.info(arr2);
+    console.log(arr2);
 
     arr2 = [0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1];
     partition012_(arr2, arr2.length);
@@ -121,7 +121,7 @@ function RangePartition(arr: Array<number>, size: number, lower: number, higher:
 function test2() {
     let arr: Array<number> = [1, 21, 2, 20, 3, 19, 4, 18, 5, 17, 6, 16, 7, 15, 8, 14, 9, 13, 10, 12, 11];
     RangePartition(arr, arr.length, 9, 15);
-    console.info(arr);
+    console.log(arr);
 }
 
 test2();
@@ -179,7 +179,7 @@ function test4() {
     let array: Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
     let ref: number = 5;
     AbsBubbleSort(array, array.length, ref);
-    console.info(array);
+    console.log(array);
 }
 
 test4();
@@ -257,7 +257,7 @@ function ArrayReduction(arr: Array<number>, size: number) {
             count += 1;
         }
     }
-    console.info("Total number of reductions " + count);
+    console.log("Total number of reductions " + count);
 }
 
 // Testing code.
@@ -345,8 +345,8 @@ function test8() {
     let arr1: Array<number> = [1, 5, 9, 10, 15, 20];
     let arr2: Array<number> = [2, 3, 8, 13];
     merge(arr1, arr1.length, arr2, arr2.length);
-    console.info(arr1);
-    console.info(arr2);
+    console.log(arr1);
+    console.log(arr2);
 }
 
 test8();

@@ -16,7 +16,7 @@ function SumArray(arr: Array<number>): number {
 
 function test1() {
     let arr: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    console.info("Sum of values in array:" + SumArray(arr));
+    console.log("Sum of values in array:" + SumArray(arr));
 }
 
 /*
@@ -25,19 +25,19 @@ Sum of values in array:45
 
 
 function function2() {
-    console.info("fun2 line 1");
+    console.log("fun2 line 1");
 }
 
 function function1() {
-    console.info("fun1 line 1");
+    console.log("fun1 line 1");
     function2();
-    console.info("fun1 line 2");
+    console.log("fun1 line 2");
 }
 
 function test2() {
-    console.info("main line 1");
+    console.log("main line 1");
     function1();
-    console.info("main line 2");
+    console.log("main line 2");
 }
 
 /*
@@ -78,8 +78,8 @@ function BinarySearch(arr: Array<number>, size: number, value: number): number {
 
 function test3() {
     let arr: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    console.info("SequentialSearch:" + SequentialSearch(arr, arr.length, 7));
-    console.info("BinarySearch:" + BinarySearch(arr, arr.length, 7));
+    console.log("SequentialSearch:" + SequentialSearch(arr, arr.length, 7));
+    console.log("BinarySearch:" + BinarySearch(arr, arr.length, 7));
 }
 
 /*
@@ -115,7 +115,7 @@ function reverseArray2(a: Array<number>) {
 function test4() {
     let arr: Array<number> = [1, 2, 3, 4, 5, 6];
     rotateArray(arr, arr.length, 2);
-    console.info(arr);
+    console.log(arr);
 }
 
 /*
@@ -140,7 +140,7 @@ function maxSubArraySum(a: Array<number>, size: number): number {
 
 function test5() {
     let arr: Array<number> = [1, -2, 3, 4, -4, 6, -4, 3, 2];
-    console.info("Max sub array sum :" + maxSubArraySum(arr, 9));
+    console.log("Max sub array sum :" + maxSubArraySum(arr, 9));
 }
 
 /*
@@ -171,10 +171,10 @@ function WaveArray(arr: Array<number>) {
 function test6() {
     let arr: Array<number> = [8, 1, 2, 3, 4, 5, 6, 4, 2];
     WaveArray(arr);
-    console.info(arr);
+    console.log(arr);
     let arr2: Array<number> = [8, 1, 2, 3, 4, 5, 6, 4, 2];
     WaveArray2(arr2);
-    console.info(arr2);
+    console.log(arr2);
 }
 
 /*
@@ -213,11 +213,11 @@ function test7() {
     let arr: Array<number> = [8, -1, 6, 1, 9, 3, 2, 7, 4, -1];
     let size: number = arr.length;
     indexArray2(arr, size);
-    console.info(arr);
+    console.log(arr);
     let arr2: Array<number> = [8, -1, 6, 1, 9, 3, 2, 7, 4, -1];
     size = arr2.length;
     indexArray(arr2, size);
-    console.info(arr2);
+    console.log(arr2);
 }
 
 /*
@@ -257,11 +257,11 @@ function test8() {
     let arr: Array<number> = [8, 5, 6, 1, 9, 3, 2, 7, 4, 10];
     let size: number = arr.length;
     Sort1toN2(arr, size);
-    console.info(arr);
+    console.log(arr);
     let arr2: Array<number> = [8, 5, 6, 1, 9, 3, 2, 7, 4, 10];
     size = arr2.length;
     Sort1toN(arr2, size);
-    console.info(arr2);
+    console.log(arr2);
 }
 
 /*
@@ -337,10 +337,10 @@ function SmallestPositiveMissingNumber4(arr: Array<number>, size: number): numbe
 function test9() {
     let arr: Array<number> = [8, 5, 6, 1, 9, 11, 2, 7, 4, 10];
     let size: number = arr.length;
-    console.info("SmallestPositiveMissingNumber: " + SmallestPositiveMissingNumber(arr, size));
-    console.info("SmallestPositiveMissingNumber: " + SmallestPositiveMissingNumber2(arr, size));
-    console.info("SmallestPositiveMissingNumber: " + SmallestPositiveMissingNumber3(arr, size));
-    console.info("SmallestPositiveMissingNumber: " + SmallestPositiveMissingNumber4(arr, size));
+    console.log("SmallestPositiveMissingNumber: " + SmallestPositiveMissingNumber(arr, size));
+    console.log("SmallestPositiveMissingNumber: " + SmallestPositiveMissingNumber2(arr, size));
+    console.log("SmallestPositiveMissingNumber: " + SmallestPositiveMissingNumber3(arr, size));
+    console.log("SmallestPositiveMissingNumber: " + SmallestPositiveMissingNumber4(arr, size));
 }
 
 /*
@@ -383,11 +383,11 @@ function test10() {
     let arr: Array<number> = [1, 2, 3, 4, 5, 6, 7];
     let size: number = arr.length;
     MaxMinArr(arr, size);
-    console.info(arr);
+    console.log(arr);
     let arr2: Array<number> = [1, 2, 3, 4, 5, 6, 7];
     let size2: number = arr.length;
     MaxMinArr2(arr2, size2);
-    console.info(arr2);
+    console.log(arr2);
 }
 
 /*
@@ -415,7 +415,7 @@ function maxCircularSum(arr: Array<number>, size: number): number {
 
 function test11() {
     let arr: Array<number> = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-    console.info("MaxCirculrSm: " + maxCircularSum(arr, arr.length));
+    console.log("MaxCirculrSm: " + maxCircularSum(arr, arr.length));
 }
 
 /*
@@ -476,8 +476,8 @@ function ArrayIndexMaxDiff2(arr: Array<number>, size: number): number {
 
 function test12() {
     let arr: Array<number> = [33, 9, 10, 3, 2, 60, 30, 33, 1];
-    console.info("ArrayIndexMaxDiff : " + ArrayIndexMaxDiff(arr, arr.length));
-    console.info("ArrayIndexMaxDiff : " + ArrayIndexMaxDiff2(arr, arr.length));
+    console.log("ArrayIndexMaxDiff : " + ArrayIndexMaxDiff(arr, arr.length));
+    console.log("ArrayIndexMaxDiff : " + ArrayIndexMaxDiff2(arr, arr.length));
 }
 
 /*
@@ -522,7 +522,7 @@ function maxPathSum(arr1: Array<number>, size1: number, arr2: Array<number>, siz
 function test13() {
     let arr1: Array<number> = [12, 13, 18, 20, 22, 26, 70];
     let arr2: Array<number> = [11, 15, 18, 19, 20, 26, 30, 31];
-    console.info("Max Path Sum :: " + maxPathSum(arr1, arr1.length, arr2, arr2.length));
+    console.log("Max Path Sum :: " + maxPathSum(arr1, arr1.length, arr2, arr2.length));
 }
 
 /*
@@ -542,7 +542,7 @@ function printInt1(number: number) {
     if (number !== 0) {
         printInt1(number);
     }
-    console.info("%c" + digit);
+    console.log("%c" + digit);
 }
 
 function printInt(number: number, base: number) : string {
@@ -569,13 +569,13 @@ function towerOfHanoi(num: number, src: string, dst: string, temp: string) {
         return;
     }
     towerOfHanoi(num - 1, src, temp, dst);
-    console.info("Move " + num + " disk  from peg " + src + " to peg " + dst);
+    console.log("Move " + num + " disk  from peg " + src + " to peg " + dst);
     towerOfHanoi(num - 1, temp, dst, src);
 }
 
 function test14() {
     let num: number = 3;
-    console.info("The sequence of moves involved in the Tower of Hanoi are :");
+    console.log("The sequence of moves involved in the Tower of Hanoi are :");
     towerOfHanoi(num, 'A', 'C', 'B');
 }
 
@@ -596,7 +596,7 @@ function permutation(arr: Array<number>) {
 
 function permutationUtil(arr: Array<number>, i: number, length: number) {
     if (length === i) {
-        console.info(arr);
+        console.log(arr);
         return;
     }
     let j: number = i;
@@ -636,8 +636,8 @@ function BinarySearchRecursive(arr: Array<number>, low: number, high: number, va
 
 function test16() {
     let arr: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    console.info(BinarySearchRecursive(arr, 0, arr.length - 1, 6));
-    console.info(BinarySearchRecursive(arr, 0, arr.length - 1, 16));
+    console.log(BinarySearchRecursive(arr, 0, arr.length - 1, 6));
+    console.log(BinarySearchRecursive(arr, 0, arr.length - 1, 16));
 }
 
 /*
