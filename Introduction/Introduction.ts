@@ -545,10 +545,10 @@ function printInt1(number: number) {
     console.log("%c" + digit);
 }
 
-function printInt(number: number, base: number) : string {
+function printInt(number: number, base: number): string {
     let conversion: string = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let digit: string = String.fromCharCode((number % base));
-    let output: string = ""; 
+    let output: string = "";
     number = (number / base | 0);
     if (number !== 0) {
         output += printInt(number, base);

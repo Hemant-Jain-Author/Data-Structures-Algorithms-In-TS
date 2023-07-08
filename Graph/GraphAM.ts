@@ -183,7 +183,7 @@ class Graph {
             let t = `Vertex ${i} is connected to : `;
             for (let j = 0; j < this.count; j++) {
                 if (this.adj[i][j] !== 0)
-                    t += j +"(cost: " + this.adj[i][j] +") "
+                    t += j + "(cost: " + this.adj[i][j] + ") "
             }
             console.log(t)
         }
@@ -194,7 +194,7 @@ class Graph {
         let previous: Array<number> = new Array<number>(this.count).fill(-1);
         let dist: Array<number> = new Array<number>(this.count).fill(infi);
         let visited: Array<boolean> = new Array<boolean>(this.count).fill(false);
- 
+
         dist[source] = 0;
         previous[source] = source;
 
@@ -285,7 +285,7 @@ class Graph {
             };
         };
         let total = 0;
-        let output = "Edges are " ;
+        let output = "Edges are ";
         for (let i = 0; i < this.count; i++) {
             if (dist[i] === Infinity) {
                 output += `( ${i},  Unreachable)`
@@ -348,7 +348,7 @@ class Graph {
     public hamiltonianCycle(): boolean {
         let path: Array<number> = new Array<number>(this.count + 1).fill(0);
         let added: Array<number> = new Array<number>(this.count).fill(0);
-        
+
         if (this.hamiltonianCycleUtil(path, 0, added)) {
             console.log("Hamiltonian Cycle found :: " + path);
             return true;
@@ -359,7 +359,7 @@ class Graph {
 }
 
 /* Testing Code */
-function test1(){
+function test1() {
     const graph = new Graph(4);
     graph.addUndirectedEdge(0, 1);
     graph.addUndirectedEdge(0, 2);
@@ -376,7 +376,7 @@ Vertex 3 is connected to : 2(cost: 1)
 */
 
 /* Testing Code */
-function test2(){
+function test2() {
     const gph = new Graph(9);
     gph.addUndirectedEdge(0, 1, 4);
     gph.addUndirectedEdge(0, 7, 8);
@@ -403,7 +403,7 @@ Total MST cost : 37
 */
 
 /* Testing Code */
-function test3(){
+function test3() {
     const gph = new Graph(9);
     gph.addUndirectedEdge(0, 1, 4)
     gph.addUndirectedEdge(0, 7, 8)
@@ -427,7 +427,7 @@ Shortest Paths: (1->0 @ 4) (1->2 @ 8) (1->2->3 @ 15) (1->2->5->4 @ 22) (1->2->5 
 */
 
 /* Testing Code */
-function test4(){
+function test4() {
     const count = 5;
     const graph = new Graph(count);
     const adj =
@@ -472,7 +472,7 @@ hamiltonianPath :  true
 */
 
 /* Testing Code */
-function test5(){
+function test5() {
     const count = 5;
     const graph = new Graph(count);
     const adj =

@@ -78,7 +78,7 @@ class PriorityQueue<T> {
         if (parent < 0) {
             return;
         }
-        
+
         if (this.compare(this.arr[parent], this.arr[child])) {
             temp = this.arr[child];
             this.arr[child] = this.arr[parent];
@@ -502,7 +502,7 @@ class Graph {
         visited[src] = true;
         let dest: number;
         const adl: Array<GraphEdge> = this.adj[src];
-    
+
         for (let index = 0; index < adl.length; index++) {
             const adn = adl[index];
             dest = adn.dest;
@@ -515,18 +515,18 @@ class Graph {
         }
         return false;
     }
-    
+
     isCyclePresentUndirected(): boolean {
         const count: number = this.count;
         let visited: Array<boolean> = new Array<boolean>(count).fill(false);
         for (let i: number = 0; i < count; i++) {
-            if (visited[i] === false && 
+            if (visited[i] === false &&
                 this.isCyclePresentUndirectedDFS(i, -1, visited))
                 return true;
         }
         return false;
     }
-    
+
     isCyclePresentUndirected2() {
         const count = this.count;
         const parent = new Array(count).fill(-1);

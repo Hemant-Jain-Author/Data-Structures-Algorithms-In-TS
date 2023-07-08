@@ -97,54 +97,53 @@ class PriorityQueue<T> {
 
 function joinRopes(ropes: number[], size: number): number {
     ropes.sort((a, b) => b - a);
-  
+
     let total = 0;
     let value = 0;
     let length = size;
-  
+
     while (length >= 2) {
-      value = ropes[length - 1] + ropes[length - 2];
-      total += value;
-      let index = length - 2;
-      while (index > 0 && ropes[index - 1] < value) {
-        ropes[index] = ropes[index - 1];
-        index--;
-      }
-      ropes[index] = value;
-      length--;
+        value = ropes[length - 1] + ropes[length - 2];
+        total += value;
+        let index = length - 2;
+        while (index > 0 && ropes[index - 1] < value) {
+            ropes[index] = ropes[index - 1];
+            index--;
+        }
+        ropes[index] = value;
+        length--;
     }
-  
+
     console.log("Total:", total);
     return total;
-  }
-  
-  function joinRopes2(ropes: number[], size: number): number {
+}
+
+function joinRopes2(ropes: number[], size: number): number {
     const pq: PriorityQueue<number> = new PriorityQueue<number>((a, b) => a > b);
-  
+
     for (let i = 0; i < size; i++) {
-      pq.add(ropes[i]);
+        pq.add(ropes[i]);
     }
-  
+
     let total = 0;
     while (pq.length() > 1) {
-      const value = pq.remove() + pq.remove();
-      pq.add(value);
-      total += value;
+        const value = pq.remove() + pq.remove();
+        pq.add(value);
+        total += value;
     }
-  
+
     console.log("Total:", total);
     return total;
-  }
-  
-  /* Testing Code */
-  const ropes: number[] = [4, 3, 2, 6];
-  joinRopes(ropes, ropes.length);
-  
-  const ropes2: number[] = [4, 3, 2, 6];
-  joinRopes2(ropes2, ropes2.length);
-  
-  /*
-  Total: 29
-  Total: 29
-  */
-  
+}
+
+/* Testing Code */
+const ropes: number[] = [4, 3, 2, 6];
+joinRopes(ropes, ropes.length);
+
+const ropes2: number[] = [4, 3, 2, 6];
+joinRopes2(ropes2, ropes2.length);
+
+/*
+Total: 29
+Total: 29
+*/

@@ -207,7 +207,7 @@ function printRepeating(arr: any[]): void {
 }
 
 function printRepeating2(arr: any[]): void {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     arr.sort((a, b) => a - b);
     let output = "Repeating elements are:";
     for (let i = 1; i < size; i++) {
@@ -220,7 +220,7 @@ function printRepeating2(arr: any[]): void {
 
 function printRepeating3(arr: any[]): void {
     const hs: { [key: string]: number } = {};
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let output = "Repeating elements are:";
     for (let i: number = 0; i < size; i++) {
         if (arr[i] in hs) {
@@ -233,7 +233,7 @@ function printRepeating3(arr: any[]): void {
 }
 
 function printRepeating4(arr: any[], range: number): void {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     const count = new Array(range).fill(0);
     let output = "Repeating elements are:";
     for (let i: number = 0; i < size; i++) {
@@ -281,7 +281,7 @@ function removeDuplicates(array: any[]): any[] {
 }
 
 function removeDuplicates2(arr: any[]): any[] {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     const hm = new Map();
     let j = 0;
     for (let i: number = 0; i < size; i++) {
@@ -310,7 +310,7 @@ function test4() {
 */
 
 function findMissingNumber(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let found;
     for (let i = 1; i <= size; i++) {
         found = false;
@@ -328,7 +328,7 @@ function findMissingNumber(arr: number[]): number {
 }
 
 function findMissingNumber2(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     arr.sort((a, b) => a - b);
     for (let i: number = 0; i < size; i++) {
         if (arr[i] !== i + 1) {
@@ -339,7 +339,7 @@ function findMissingNumber2(arr: number[]): number {
 }
 
 function findMissingNumber3(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     const hm = new Map();
     for (let i: number = 0; i < size; i++) {
         hm.set(arr[i], 1);
@@ -353,7 +353,7 @@ function findMissingNumber3(arr: number[]): number {
 }
 
 function findMissingNumber4(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     const count = Array(size + 1).fill(-1);
     for (let i: number = 0; i < size; i++) {
         count[arr[i] - 1] = 1;
@@ -367,7 +367,7 @@ function findMissingNumber4(arr: number[]): number {
 }
 
 function findMissingNumber5(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let sum: number = 0;
     // Element value range is from 1 to size+1.
     for (let i = 1; i < size + 2; i++) {
@@ -380,7 +380,7 @@ function findMissingNumber5(arr: number[]): number {
 }
 
 function findMissingNumber6(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     for (let i: number = 0; i < size; i++) {
         arr[(arr[i]) % (size) - 1] += size + 1;
     }
@@ -393,7 +393,7 @@ function findMissingNumber6(arr: number[]): number {
 }
 
 function findMissingNumber7(arr: number[], range: number): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let xorSum: number = 0;
     for (let i = 1; i <= range; i++) {
         xorSum ^= i;
@@ -405,7 +405,7 @@ function findMissingNumber7(arr: number[], range: number): number {
 }
 
 function findMissingNumber8(arr: number[], upperRange: number): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let st: Set<number> = new Set<number>();
     let i: number = 0;
     while (i <= size) {
@@ -637,7 +637,7 @@ function test8() {
 // 21
 
 function minAbsSumPair(arr: number[]): void {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     if (size < 2) {
         console.log("Invalid Input");
         return;
@@ -660,7 +660,7 @@ function minAbsSumPair(arr: number[]): void {
 }
 
 function minAbsSumPair2(arr: number[]): void {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     if (size < 2) {
         console.log("Invalid Input");
         return;
@@ -703,7 +703,7 @@ Elements with minimum sum are: -6 , 6
 */
 
 function findPair(arr: number[], value: number): boolean {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     for (let i: number = 0; i < size; i++) {
         for (let j = i + 1; j < size; j++) {
             if (arr[i] + arr[j] === value) {
@@ -717,7 +717,7 @@ function findPair(arr: number[], value: number): boolean {
 
 function findPair2(arr: number[], value: number): boolean {
     let first = 0;
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let second = size - 1;
     let curr;
     arr.sort((a, b) => a - b);
@@ -737,7 +737,7 @@ function findPair2(arr: number[], value: number): boolean {
 
 function findPair3(arr: number[], value: number): boolean {
     const hs: { [key: number]: number } = {};
-    const size: number  = arr.length;
+    const size: number = arr.length;
     for (let i: number = 0; i < size; i++) {
         if (value - arr[i] in hs) {
             console.log(`The pair is: ${arr[i]}, ${value - arr[i]}`);
@@ -749,7 +749,7 @@ function findPair3(arr: number[], value: number): boolean {
 }
 
 function findPair4(arr: number[], range: number, value: number): boolean {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let count = Array(range + 1).fill(0);
     for (let i: number = 0; i < size; i++) {
         if (count[value - arr[i]] > 0) {
@@ -879,7 +879,7 @@ true
 */
 
 function findDifference(arr: number[], value: number): boolean {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     for (let i: number = 0; i < size; i++) {
         for (let j = i + 1; j < size; j++) {
             if (Math.abs(arr[i] - arr[j]) === value) {
@@ -892,7 +892,7 @@ function findDifference(arr: number[], value: number): boolean {
 }
 
 function findDifference2(arr: number[], value: number): boolean {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let first: number = 0;
     let second: number = 0;
     let diff: number;
@@ -927,7 +927,7 @@ true
 */
 
 function findMinDiff(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let diff = Number.MAX_VALUE;
     for (let i: number = 0; i < size; i++) {
         for (let j = i + 1; j < size; j++) {
@@ -940,7 +940,7 @@ function findMinDiff(arr: number[]): number {
 }
 
 function findMinDiff2(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     arr.sort((a, b) => a - b);
     let diff = Number.MAX_VALUE;
     for (let i: number = 0; i < size - 1; i++) {
@@ -1417,7 +1417,7 @@ function test22() {
 
 function getMax(arr: number[]): number {
     let max = arr[0];
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let count = 1;
     let maxCount = 1;
     for (let i: number = 0; i < size; i++) {
@@ -1436,7 +1436,7 @@ function getMax(arr: number[]): number {
 }
 
 function getMax2(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let max: number = arr[0];
     let maxCount: number = 1;
     let curr: number = arr[0];
@@ -1459,7 +1459,7 @@ function getMax2(arr: number[]): number {
 }
 
 function getMax3(arr: number[], range: number): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let max: number = arr[0];
     let maxCount: number = 1;
     const count: number[] = new Array(range).fill(0);
@@ -1490,7 +1490,7 @@ function test23() {
 */
 
 function getMajority(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let max: number = 0;
     let count: number = 0;
     let maxCount: number = 0;
@@ -1514,12 +1514,12 @@ function getMajority(arr: number[]): number {
 }
 
 function getMajority2(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     const majIndex = Math.floor(size / 2);
     arr.sort((a, b) => a - b);
     let candidate: number = arr[majIndex];
     let count: number = 0;
-    
+
     for (let i: number = 0; i < size; i++) {
         if (arr[i] === candidate) {
             count++;
@@ -1533,7 +1533,7 @@ function getMajority2(arr: number[]): number {
 }
 
 function getMajority3(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let majIndex: number = 0;
     let count: number = 1;
     let i: number;
@@ -1586,7 +1586,7 @@ function isMajority2(arr: number[], size: number): boolean {
     else return false;
 }
 
-function firstIndex( arr: number[], size: number,
+function firstIndex(arr: number[], size: number,
     low: number, high: number, x: number): number {
     if (high >= low) {
         const mid = Math.floor((low + high) / 2);
@@ -1618,14 +1618,14 @@ true
 */
 
 function getMedian(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     arr.sort((a, b) => a - b);
     const mid = Math.floor(size / 2);
     return arr[mid];
 }
 
 function getMedian2(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     const k = Math.ceil(size / 2);
     quickSelectUtil(arr, 0, size - 1, k);
     return arr[k - 1];
@@ -1646,7 +1646,7 @@ median value is: 9
 */
 
 function searchBitonicArrayMax(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     for (let i: number = 0; i < size - 2; i++) {
         if (arr[i] > arr[i + 1])
             return i;
@@ -1656,7 +1656,7 @@ function searchBitonicArrayMax(arr: number[]): number {
 }
 
 function searchBitonicArrayMax2(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let start = 0;
     let end = size - 1;
     let mid;
@@ -1696,7 +1696,7 @@ function test26() {
 */
 
 function searchBitonicArray(arr: number[], key: number): boolean {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     const max = searchBitonicArrayMax(arr);
     let k = binarySearch3(arr, 0, max, key, true);
     if (k !== -1)
@@ -1728,7 +1728,7 @@ function binarySearch3(arr: number[], start: number, end: number, key: number, i
 }
 
 function findMaxBitonicArray(arr: number[]): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let start = 0, end = size - 1, mid;
     if (size < 3) {
         console.log("Error");
@@ -1769,7 +1769,7 @@ true
 */
 
 function findKeyCount(arr: number[], key: number): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let count = 0;
     for (let i: number = 0; i < size; i++) {
         if (arr[i] === key)
@@ -1779,7 +1779,7 @@ function findKeyCount(arr: number[], key: number): number {
 }
 
 function findKeyCount2(arr: number[], key: number): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     const firstIndex = findFirstIndex(arr, 0, size - 1, key);
     const lastIndex = findLastIndex(arr, 0, size - 1, key);
     return (lastIndex - firstIndex + 1);
@@ -1835,17 +1835,17 @@ function test28() {
 
 function maxProfit(stocks: number[]): number {
     const size = stocks.length;
-	let maxProfit = 0, buy = 0, sell = 0;
-	for (let i: number = 0; i < size - 1; i++) {
-		for (let j = i + 1; j < size; j++) {
-			if (maxProfit < stocks[j] - stocks[i]) {
-				maxProfit = stocks[j] - stocks[i];
-				buy = i;
-				sell = j;
-			}
-		}
-	}
-	console.log(`Purchase day is ${buy} at price ${stocks[buy]}`);
+    let maxProfit = 0, buy = 0, sell = 0;
+    for (let i: number = 0; i < size - 1; i++) {
+        for (let j = i + 1; j < size; j++) {
+            if (maxProfit < stocks[j] - stocks[i]) {
+                maxProfit = stocks[j] - stocks[i];
+                buy = i;
+                sell = j;
+            }
+        }
+    }
+    console.log(`Purchase day is ${buy} at price ${stocks[buy]}`);
     console.log(`Sell day is ${sell} at price ${stocks[sell]}`);
     return maxProfit;
 }
@@ -1933,7 +1933,7 @@ function search01(arr: string, size: number): number {
 }
 
 function binarySearch01(arr: string): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     if (size === 0) {
         return 0;
     }
@@ -1981,7 +1981,7 @@ function searchRotateArray(arr: number[], size: number, key: number): number {
 }
 
 function binarySearchRotateArray(arr: number[], key: number): number {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     return binarySearchRotateArrayUtil(arr, 0, size - 1, key);
 }
 
@@ -2508,7 +2508,7 @@ function frequencyCounts(arr: number[], size: number) {
 }
 
 function frequencyCounts2(arr: number[], size: number) {
-    arr.sort(function(a, b) {
+    arr.sort(function (a, b) {
         return a - b;
     });
     let count = 1;
@@ -2605,7 +2605,7 @@ function quickSelectUtil(arr: number[], lower: number, upper: number, k: number)
             lower++;
         }
 
-        while (arr[upper] > pivot) {    
+        while (arr[upper] > pivot) {
             upper--;
         }
 
@@ -2625,7 +2625,7 @@ function KLargestElements2(arr: number[], size: number, k: number) {
     quickSelectUtil(arr, 0, size - 1, size - k);
     let output = "";
     for (let i: number = 0; i < k; i++) {
-        output += arr[size -1 - i] + " ";
+        output += arr[size - 1 - i] + " ";
     }
     console.log(output);
 }
@@ -2695,7 +2695,7 @@ function subArraySums(arr: number[], size: number, value: number) {
             sum -= arr[start];
             start += 1;
         }
-        
+
         if (sum === value) {
             output += `(${start} & ${end}) `;
         }
@@ -2722,7 +2722,7 @@ function maxConSub(arr: number[], size: number) {
         currMax = Math.max(arr[i], currMax + arr[i]);
         if (currMax < 0)
             currMax = 0;
-        
+
         if (maximum < currMax)
             maximum = currMax;
     }
@@ -2788,7 +2788,7 @@ function maxConSubArr2(A: number[], sizeA: number, B: number[], sizeB: number) {
             currMax = Math.max(A[i], currMax + A[i]);
             if (currMax < 0)
                 currMax = 0;
-            
+
             if (maximum < currMax)
                 maximum = currMax;
         }
@@ -2817,7 +2817,7 @@ function rainWater(arr: number[], size: number): number {
     const rightHigh: number[] = new Array(size);
     let max = arr[0];
     leftHigh[0] = arr[0];
-    
+
     for (let i = 1; i < size; i++) {
         if (max < arr[i])
             max = arr[i];
@@ -2846,7 +2846,7 @@ function rainWater2(arr: number[], size: number): number {
     let rightMax = 0;
     let left = 0;
     let right = size - 1;
-    
+
     while (left <= right) {
         if (arr[left] < arr[right]) {
             if (arr[left] > leftMax)
@@ -2881,7 +2881,7 @@ Water: 7
 */
 
 function separateEvenAndOdd(arr: number[]): void {
-    const size: number  = arr.length;
+    const size: number = arr.length;
     let left = 0;
     let right = size - 1;
     while (left < right) {
@@ -2928,7 +2928,7 @@ function smallestPositiveMissingNumber2(arr: number[], size: number): number {
             aux[arr[i] - 1] = arr[i];
         }
     }
-    
+
     for (let i: number = 0; i < size; i++) {
         if (aux[i] !== i + 1) {
             return i + 1;
@@ -2945,7 +2945,7 @@ function smallestPositiveMissingNumber3(arr: number[], size: number): number {
             arr[temp - 1] = temp;
         }
     }
-    
+
     for (let i: number = 0; i < size; i++) {
         if (arr[i] !== i + 1) {
             return i + 1;
@@ -2957,7 +2957,7 @@ function smallestPositiveMissingNumber3(arr: number[], size: number): number {
 // Testing code.
 function test50() {
     const arr = [8, 5, 6, 1, 9, 11, 2, 7, 4, 10];
-    const size: number  = arr.length;
+    const size: number = arr.length;
     console.log(`Smallest Positive Missing Number: ${smallestPositiveMissingNumber(arr, size)}`);
     console.log(`Smallest Positive Missing Number: ${smallestPositiveMissingNumber2(arr, size)}`);
     console.log(`Smallest Positive Missing Number: ${smallestPositiveMissingNumber3(arr, size)}`);
@@ -3031,7 +3031,7 @@ function maxPathSum(arr1: number[], size1: number, arr2: number[], size2: number
     let i = 0, j = 0;
     let result = 0;
     let sum1 = 0, sum2 = 0;
-    
+
     while (i < size1 && j < size2) {
         if (arr1[i] < arr2[j]) {
             sum1 += arr1[i];

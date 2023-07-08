@@ -6,7 +6,7 @@ class Heap<T> {
     private arr: T[];
     private size: number;
     private comp: Comparator<T>;
-    
+
     public constructor(array?: any, cmp: Comparator<T> = greater) {
         this.comp = cmp;
 
@@ -436,7 +436,7 @@ Kth Smallest product:: 50
 
 function PrintLargerHalf(arr: number[], size: number): void {
     arr = arr.sort();
-    let output : string= "";
+    let output: string = "";
     for (let i = Math.floor(size / 2); i < size; i++) {
         output += ` ${arr[i]} `;
     }
@@ -448,7 +448,7 @@ function PrintLargerHalf2(arr: number[], size: number): void {
     for (let i = 0; i < size / 2; i++) {
         pq.remove();
     }
-    let output : string= "";
+    let output: string = "";
     while (pq.isEmpty() === false) {
         output += ` ${pq.remove()} `;
     }
@@ -457,7 +457,7 @@ function PrintLargerHalf2(arr: number[], size: number): void {
 
 function PrintLargerHalf3(arr: number[], size: number): void {
     QuickSelectUtil(arr, 0, size - 1, size / 2);
-    let output : string= "";
+    let output: string = "";
     for (let i = size / 2; i < size; i++) {
         output += ` ${arr[i]} `;
     }

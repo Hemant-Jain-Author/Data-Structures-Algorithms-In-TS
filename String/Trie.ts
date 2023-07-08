@@ -36,9 +36,9 @@ class Trie {
             curr.isLastChar = true;
         } else {
             curr.child[str.charCodeAt(index) - 'a'.charCodeAt(0)] =
-             this.insertUtil(
-                curr.child[str.charCodeAt(index) - 'a'.charCodeAt(0)],
-                str, index + 1 );
+                this.insertUtil(
+                    curr.child[str.charCodeAt(index) - 'a'.charCodeAt(0)],
+                    str, index + 1);
         }
         return curr;
     }

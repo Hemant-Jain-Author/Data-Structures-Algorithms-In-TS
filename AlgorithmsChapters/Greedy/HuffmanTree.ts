@@ -99,63 +99,62 @@ class NodeStr {
     freq: number;
     left: NodeStr | null;
     right: NodeStr | null;
-  
+
     constructor(ch: string, fr: number, l: NodeStr | null, r: NodeStr | null) {
-      this.c = ch;
-      this.freq = fr;
-      this.left = l;
-      this.right = r;
+        this.c = ch;
+        this.freq = fr;
+        this.left = l;
+        this.right = r;
     }
-  
+
     compareTo(n2: NodeStr): boolean {
-      return this.freq > n2.freq;
+        return this.freq > n2.freq;
     }
-  }
-  
-  function createHuffmanTree(arr: string[], freq: number[]): void {
+}
+
+function createHuffmanTree(arr: string[], freq: number[]): void {
     const n = arr.length;
     const que: PriorityQueue<NodeStr> = new PriorityQueue<NodeStr>((a, b) => a.compareTo(b));
     for (let i = 0; i < n; i++) {
-      const node = new NodeStr(arr[i], freq[i], null, null);
-      que.add(node);
+        const node = new NodeStr(arr[i], freq[i], null, null);
+        que.add(node);
     }
-  
+
     while (que.length() > 1) {
-      const lt = que.remove();
-      const rt = que.remove();
-      const nd = new NodeStr('+', lt.freq + rt.freq, lt, rt);
-      que.add(nd);
+        const lt = que.remove();
+        const rt = que.remove();
+        const nd = new NodeStr('+', lt.freq + rt.freq, lt, rt);
+        que.add(nd);
     }
-  
+
     const root = que.peek();
     printHuffmanCodes(root, "");
-  }
-  
-  function printHuffmanCodes(root: NodeStr | null, s: string): void {
+}
+
+function printHuffmanCodes(root: NodeStr | null, s: string): void {
     if (root === null) {
-      return;
+        return;
     }
-  
+
     if (root.left === null && root.right === null && root.c !== '+') {
-      console.log(root.c + " = " + s);
-      return;
+        console.log(root.c + " = " + s);
+        return;
     }
-  
+
     printHuffmanCodes(root.left, s + "0");
     printHuffmanCodes(root.right, s + "1");
-  }
-  
-  const chars = ['A', 'B', 'C', 'D', 'E'];
-  const freqs = [30, 25, 21, 14, 10];
-  console.log("Char = Huffman code");
-  createHuffmanTree(chars, freqs);
-  
-  /*
-  Char = Huffman code
-  C = 00
-  E = 010
-  D = 011
-  B = 10
-  A = 11
-  */
-  
+}
+
+const chars = ['A', 'B', 'C', 'D', 'E'];
+const freqs = [30, 25, 21, 14, 10];
+console.log("Char = Huffman code");
+createHuffmanTree(chars, freqs);
+
+/*
+Char = Huffman code
+C = 00
+E = 010
+D = 011
+B = 10
+A = 11
+*/

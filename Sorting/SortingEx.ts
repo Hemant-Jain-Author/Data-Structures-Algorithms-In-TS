@@ -26,34 +26,34 @@ function Partition01(arr: Array<number>, size: number): number {
 }
 
 function partition012_(arr: number[], size: number): void {
-	let zero = 0;
-	let one = 0;
-	let two = 0;
-	for (let i = 0; i < size; i++) {
-		if (arr[i] === 0) {
-			zero += 1;
-		} else if (arr[i] === 1) {
-			one += 1;
-		} else {
-			two += 1;
-		}
-	}
+    let zero = 0;
+    let one = 0;
+    let two = 0;
+    for (let i = 0; i < size; i++) {
+        if (arr[i] === 0) {
+            zero += 1;
+        } else if (arr[i] === 1) {
+            one += 1;
+        } else {
+            two += 1;
+        }
+    }
 
-	let index = 0;
-	while (zero > 0) {
-		arr[index++] = 0;
-		zero -= 1;
-	}
+    let index = 0;
+    while (zero > 0) {
+        arr[index++] = 0;
+        zero -= 1;
+    }
 
-	while (one > 0) {
-		arr[index++] = 1;
-		one -= 1;
-	}
+    while (one > 0) {
+        arr[index++] = 1;
+        one -= 1;
+    }
 
-	while (two > 0) {
-		arr[index++] = 2;
-		two -= 1;
-	}
+    while (two > 0) {
+        arr[index++] = 2;
+        two -= 1;
+    }
 }
 
 
@@ -151,7 +151,7 @@ function minSwaps(arr: Array<number>, size: number, val: number): number {
 }
 
 // Testing code.
-function test3(){
+function test3() {
     let arr = [2, 7, 5, 6, 1, 3, 4, 9, 10, 8];
     let val = 5;
     console.log(minSwaps(arr, 10, val));
@@ -194,21 +194,21 @@ function EqGreater(value1: number, value2: number, A: number): boolean {
 }
 
 function separateEvenAndOdd(data: number[], size: number): void {
-	let left = 0;
-	let right = size - 1;
-	let aux: number[] = Array(size).fill(0);
-	for (let i = 0; i < size; i++) {
-		if (data[i] % 2 === 0) {
-			aux[left] = data[i];
-			left++;
-		} else if (data[i] % 2 === 1) {
-			aux[right] = data[i];
-			right--;
-		}
-	}
-	for (let i = 0; i < size; i++) {
-		data[i] = aux[i];
-	}
+    let left = 0;
+    let right = size - 1;
+    let aux: number[] = Array(size).fill(0);
+    for (let i = 0; i < size; i++) {
+        if (data[i] % 2 === 0) {
+            aux[left] = data[i];
+            left++;
+        } else if (data[i] % 2 === 1) {
+            aux[right] = data[i];
+            right--;
+        }
+    }
+    for (let i = 0; i < size; i++) {
+        data[i] = aux[i];
+    }
 }
 
 

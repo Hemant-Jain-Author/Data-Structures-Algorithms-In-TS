@@ -71,17 +71,17 @@ class LinkedList {
         }
         return false;
     }
-    
+
     public deleteNode(delValue: number): boolean {
         if (this.isEmpty())
             return false;
-    
+
         if (delValue === this.head.value) {
             this.head = this.head.next;
             this.length--;
             return true;
         }
-    
+
         let temp: LNode | null = this.head;
         while (temp.next !== null) {
             if (temp.next.value === delValue) {
@@ -93,16 +93,16 @@ class LinkedList {
         }
         return false;
     }
-    
+
     public deleteNodes(delValue: number): void {
         let currNode: LNode | null = this.head;
         let nextNode: LNode | null;
-    
+
         while (currNode !== null && currNode.value === delValue) {
             this.head = currNode.next;
             currNode = this.head;
         }
-    
+
         while (currNode !== null) {
             nextNode = currNode.next;
             if (nextNode !== null && nextNode.value === delValue) {
@@ -112,80 +112,80 @@ class LinkedList {
             }
         }
     }
-    
+
     private reverseRecurseUtil(currentNode: LNode | null, nextNode: LNode | null): LNode | null {
         if (currentNode === null)
             return null;
-    
+
         if (currentNode.next === null) {
             currentNode.next = nextNode;
             return currentNode;
         }
-    
+
         const ret: LNode | null = this.reverseRecurseUtil(currentNode.next, currentNode);
         currentNode.next = nextNode;
         return ret;
     }
-    
+
     public reverseRecurse(): void {
         this.head = this.reverseRecurseUtil(this.head, null);
     }
-    
+
     public reverse(): void {
         let curr: LNode | null = this.head;
         let prev: LNode | null = null;
         let next: LNode | null = null;
-    
+
         while (curr !== null) {
             next = curr.next;
             curr.next = prev;
             prev = curr;
             curr = next;
         }
-    
+
         this.head = prev;
     }
-    
+
     public copyListReversed(): LinkedList {
         let tempNode: LNode | null = null;
         let tempNode2: LNode | null = null;
         let curr: LNode | null = this.head;
-    
+
         while (curr !== null) {
             tempNode2 = new LNode(curr.value, tempNode);
             curr = curr.next;
             tempNode = tempNode2;
         }
-    
+
         const ll2: LinkedList = new LinkedList();
         ll2.head = tempNode;
         return ll2;
     }
-    
+
     public copyList(): LinkedList {
         if (this.head === null)
             return new LinkedList();
-    
+
         let headNode: LNode = new LNode(this.head.value, null);
         let tailNode: LNode = headNode;
         let curr: LNode | null = this.head.next;
-    
+
         while (curr !== null) {
             const tempNode: LNode = new LNode(curr.value, null);
             tailNode.next = tempNode;
             tailNode = tempNode;
             curr = curr.next;
         }
-    
+
         const ll2: LinkedList = new LinkedList();
         ll2.head = headNode;
         return ll2;
     }
-    
+
     public compareList(ll: LinkedList): boolean {
         return this.compareListUtil(this.head, ll.head);
     }
-    
+
     private compareListUtil(head1: LNode | null, head2: LNode | null): boolean {
         if (head1 === null && head2 === null)
             return true;
@@ -194,23 +194,23 @@ class LinkedList {
         else
             return this.compareListUtil(head1.next, head2.next);
     }
-    
+
     public compareList2(ll2: LinkedList): boolean {
         let head1: LNode | null = this.head;
         let head2: LNode | null = ll2.head;
-    
+
         while (head1 !== null && head2 !== null) {
             if (head1.value !== head2.value)
                 return false;
             head1 = head1.next;
             head2 = head2.next;
         }
-    
+
         if (head1 === null && head2 === null)
             return true;
         return false;
     }
-    
+
     public findLength(): number {
         let curr: LNode | null = this.head;
         let count: number = 0;
@@ -220,7 +220,7 @@ class LinkedList {
         }
         return count;
     }
-    
+
     public nthNodeFromBeginning(index: number): number {
         if (index > this.size() || index < 1)
             return ErrorValue;
@@ -234,7 +234,7 @@ class LinkedList {
             return ErrorValue;
         return curr.value;
     }
-    
+
     public nthNodeFromEnd(index: number): number {
         let size: number = this.findLength();
         if (size !== 0 && size < index) {
@@ -243,7 +243,7 @@ class LinkedList {
         let startIndex: number = size - index;
         return this.nthNodeFromBeginning(startIndex + 1);
     }
-    
+
     public nthNodeFromEnd2(index: number): number {
         let count: number = 1;
         let forward: LNode | null = this.head;
@@ -260,7 +260,7 @@ class LinkedList {
         }
         return curr.value;
     }
-    
+
     public findIntersection(lst2: LinkedList): LNode | null {
         let head2: LNode | null = lst2.head;
         let l1: number = 0;
@@ -293,12 +293,12 @@ class LinkedList {
         }
         return this.head;
     }
-    
+
     public freeList() {
         this.head = null;
         this.length = 0;
     }
-    
+
     public print() {
         let temp: LNode | null = this.head;
         let result: string = "";
@@ -308,7 +308,7 @@ class LinkedList {
         }
         console.log(result);
     }
-    
+
     public sortedInsert(value: number) {
         let newNode: LNode = new LNode(value, null);
         if (this.head === null || this.head.value > value) {
@@ -323,7 +323,7 @@ class LinkedList {
         newNode.next = curr!.next;
         curr!.next = newNode;
     }
-    
+
     public removeDuplicate() {
         let curr: LNode | null = this.head;
         while (curr !== null) {
@@ -334,7 +334,7 @@ class LinkedList {
             }
         }
     }
-    
+
     public makeLoop() {
         let temp: LNode | null = this.head;
         while (temp !== null) {
@@ -345,7 +345,7 @@ class LinkedList {
             temp = temp.next;
         }
     }
-    
+
     public loopDetect(): boolean {
         let slowPtr: LNode | null;
         let fastPtr: LNode | null;
@@ -361,7 +361,7 @@ class LinkedList {
         console.log("loop not found");
         return false;
     }
-    
+
     public reverseListLoopDetect(): boolean {
         let tempHead: LNode | null = this.head;
         this.reverse();
@@ -375,7 +375,7 @@ class LinkedList {
             return false;
         }
     }
-    
+
     public loopTypeDetect(): number {
         let slowPtr: LNode | null;
         let fastPtr: LNode | null;
@@ -409,7 +409,7 @@ class LinkedList {
         }
         return null;
     }
-    
+
     removeLoop() {
         const loopPoint = this.loopPointDetect();
         if (loopPoint === null)
@@ -428,16 +428,16 @@ class LinkedList {
         }
         secondPtr!.next = null;
     }
-    
+
     bubbleSort() {
         let curr: LNode | null = null;
         let end: LNode | null = null;
         let temp: number;
-    
+
         if (this.head === null || this.head.next === null) {
             return;
         }
-    
+
         let flag = true;
         while (flag) {
             flag = false;
@@ -454,18 +454,18 @@ class LinkedList {
             end = curr;
         }
     }
-    
+
     selectionSort() {
         let curr: LNode | null = null;
         let end: LNode | null = null;
         let maxNode: LNode | null;
         let temp: number;
         let max: number;
-    
+
         if (this.head === null || this.head.next === null) {
             return;
         }
-    
+
         while (this.head !== end) {
             curr = this.head;
             max = curr!.value;
@@ -485,16 +485,16 @@ class LinkedList {
             }
         }
     }
-    
+
     insertionSort() {
         let curr: LNode | null;
         let stop: LNode | null;
         let temp: number;
-    
+
         if (this.head === null || this.head.next === null) {
             return;
         }
-    
+
         stop = this.head.next;
         while (stop !== null) {
             curr = this.head;
