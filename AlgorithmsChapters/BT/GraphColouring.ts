@@ -78,6 +78,7 @@ const graph: boolean[][] = [
     [false, false, true, false, true],
     [true, true, true, true, false]
 ];
+
 const V: number = 5; // Number of vertices
 const m: number = 4; // Number of colours
 

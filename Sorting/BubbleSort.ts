@@ -1,51 +1,58 @@
-function less(value1: number, value2: number): boolean {
-    return value1 < value2;
+function bucketSort(arr, maxValue) {
+	let numBucket = 5;
+	bucketSortUtil(arr, maxValue, numBucket);
 }
 
-function more(value1: number, value2: number): boolean {
-    return value1 > value2;
-}
+function bucketSortUtil(arr, maxValue, numBucket) {
+	let length = arr.length;
+	if (length == 0) {
+		return;
+	}
+	let bucket = new Array(); // Create empty buckets
 
-function BubbleSort(arr: Array<number>) {
-    let size: number = arr.length;
-    let i: number;
-    let j: number;
-    let temp: number;
-    for (i = 0; i < (size - 1); i++) {
-        for (j = 0; j < size - i - 1; j++) {
-            if (more(arr[j], arr[j + 1])) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
-    }
-}
+	for (let i = 0; i < numBucket; i++) {
+		(bucket.push(new Array()) > 0);
+	}
 
-function BubbleSort2(arr: Array<number>) {
-    let size: number = arr.length;
-    let i: number;
-    let j: number;
-    let temp: number;
-    let swapped: number = 1;
-    for (i = 0; i < (size - 1) && swapped === 1; i++) {
-        swapped = 0;
-        for (j = 0; j < size - i - 1; j++) {
-            if (more(arr[j], arr[j + 1])) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-                swapped = 1;
-            }
-        }
-    }
+	let div = parseInt(Math.ceil( maxValue / numBucket));
+	
+	// Add elements into the buckets
+	for (let i = 0; i < length; i++) {
+		if (arr[i] < 0 || arr[i] > maxValue) {
+			console.log("Value out of range.");
+			return;
+		}
+
+		let bucketIndex = (parseInt(arr[i] / div));
+		
+		// Maximum value will be assigned to last bucket.
+		if (bucketIndex >= numBucket)
+			bucketIndex = numBucket - 1;
+		bucket[bucketIndex].push(arr[i]);
+	}
+
+	// bucketSort the elements of each bucket.
+	for (let i = 0; i < numBucket; i++) {
+		bucket[i].sort(function(a, b){return a - b;});
+	}
+
+	// Populate output from the bucketSorted subarray.
+	let index = 0, count = 0;
+	for (let i = 0; i < numBucket; i++) {
+		let temp = bucket[i];
+		count = temp.length;
+		for (let j = 0; j < count; j++) {
+			arr[index++] = temp[j];
+		}
+	}
 }
 
 // Testing code.
-let array: Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
-BubbleSort(array);
-console.log(array);
+let array = [1, 34, 7, 99, 5, 23, 45, 88, 77, 19, 91, 100];
+let maxValue = 100;
+bucketSort(array, maxValue);
+console.log(JSON.stringify(array));
 
-let array2: Array<number> = [9, 1, 8, 2, 7, 3, 6, 4, 5];
-BubbleSort2(array2);
-console.log(array2);
+/*
+[1,5,7,19,23,34,45,77,88,91,99,100]
+*/

@@ -11,9 +11,10 @@ console.log(hs);
 console.log(`Apple present : ${hs.has("Apple")}`);
 
 /*
-Set(3) { 'Banana', 'Apple', 'Mango' }
+Set { 'Banana', 'Apple', 'Mango' }
+Set size : 3
 Apple present : true
 Grapes present : false
-Set(2) { 'Banana', 'Mango' }
+Set { 'Banana', 'Mango' }
 Apple present : false
 */
