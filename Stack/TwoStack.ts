@@ -52,11 +52,16 @@ class TwoStack<T> {
 const st = new TwoStack<number>();
 st.push1(1);
 st.push1(2);
-st.push1(3);
+st.push2(3);
 st.push2(4);
-st.push2(5);
-st.push2(6);
 console.log("stk1 pop: " + st.pop1());
 console.log("stk1 pop: " + st.pop1());
 console.log("stk2 pop: " + st.pop2());
 console.log("stk2 pop: " + st.pop2());
+
+/*
+stk1 pop: 2
+stk1 pop: 1
+stk2 pop: 4
+stk2 pop: 3
+*/

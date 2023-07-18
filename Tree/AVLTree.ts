@@ -27,6 +27,28 @@ class AVLTree {
 		return node == null ? 0 : this.height(node.left) - this.height(node.right);
 	}
 
+	public printTree(): void {
+		this.printTreeUtil(this.root, "", false);
+		console.log();
+	}
+
+	private printTreeUtil(node: TNode, indent: string, isLeft: boolean): void {
+		if (node == null) {
+			return;
+		}
+		let out = "";
+		if (isLeft) {
+			out += indent + "L:";
+			indent += "|  ";
+		} else {
+			out += indent + "R:";
+			indent += "   ";
+		}
+		console.log(out + node.data + "(" + node.height + ")");
+		this.printTreeUtil(node.left, indent, true);
+		this.printTreeUtil(node.right, indent, false);
+	}
+
 	public insert(data: number): void {
 		this.root = this.insertUtil(this.root, data);
 	}
@@ -161,28 +183,6 @@ class AVLTree {
 			node = node.left;
 		}
 		return node;
-	}
-
-	public printTree(): void {
-		this.printTreeUtil(this.root, "", false);
-		console.log();
-	}
-
-	private printTreeUtil(node: TNode, indent: string, isLeft: boolean): void {
-		if (node == null) {
-			return;
-		}
-		let out = "";
-		if (isLeft) {
-			out += indent + "L:";
-			indent += "|  ";
-		} else {
-			out += indent + "R:";
-			indent += "   ";
-		}
-		console.log(out + node.data + "(" + node.height + ")");
-		this.printTreeUtil(node.left, indent, true);
-		this.printTreeUtil(node.right, indent, false);
 	}
 }
 

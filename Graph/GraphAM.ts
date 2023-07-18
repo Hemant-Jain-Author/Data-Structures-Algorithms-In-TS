@@ -285,7 +285,7 @@ class Graph {
             };
         };
         let total = 0;
-        let output = "Edges are ";
+        let output = "Edges are: ";
         for (let i = 0; i < this.count; i++) {
             if (dist[i] === Infinity) {
                 output += `( ${i},  Unreachable)`
@@ -295,7 +295,7 @@ class Graph {
             }
         }
         console.log(output);
-        console.log(`Total MST cost : ${total}`)
+        console.log(`Total MST cost: ${total}`)
     }
 
 

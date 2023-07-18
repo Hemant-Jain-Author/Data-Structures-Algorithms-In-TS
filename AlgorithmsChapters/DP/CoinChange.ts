@@ -31,17 +31,17 @@ function minCoins2(coins: number[], n: number, val: number): number {
 function minCoinsTD(coins: number[], n: number, val: number): number {
 	const count: number[] = new Array(val + 1).fill(Infinity);
 	count[0] = 0;
-	return minCoinsTDHelper(count, coins, n, val);
+	return minCoinsTDUtil(count, coins, n, val);
 }
 
-function minCoinsTDHelper(count: number[], coins: number[], n: number, val: number): number {
+function minCoinsTDUtil(count: number[], coins: number[], n: number, val: number): number {
 	if (count[val] !== Infinity) {
 		return count[val];
 	}
 
 	for (let i = 0; i < n; i++) {
 		if (coins[i] <= val) {
-			const subCount = minCoinsTDHelper(count, coins, n, val - coins[i]);
+			const subCount = minCoinsTDUtil(count, coins, n, val - coins[i]);
 			if (subCount !== Infinity && count[val] > subCount + 1) {
 				count[val] = subCount + 1;
 			}

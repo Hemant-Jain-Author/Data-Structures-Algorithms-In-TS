@@ -17,27 +17,27 @@ class Stack<T> {
         this.length = 0;
     }
 
-    size(): number {
+    public size(): number {
         return this.length;
     }
 
-    isEmpty(): boolean {
+    public isEmpty(): boolean {
         return this.length === 0;
     }
 
-    peek(): T {
+    public peek(): T {
         if (this.isEmpty()) {
             throw new Error("StackEmptyError");
         }
         return this.head!.value;
     }
 
-    push(value: T): void {
+    public push(value: T): void {
         this.head = new StackNode(value, this.head);
         this.length++;
     }
 
-    pop(): T {
+    public pop(): T {
         if (this.isEmpty()) {
             throw new Error("StackEmptyError");
         }
@@ -47,17 +47,7 @@ class Stack<T> {
         return value;
     }
 
-    insertAtBottom(value: T): void {
-        if (this.isEmpty()) {
-            this.push(value);
-        } else {
-            const temp = this.pop();
-            this.insertAtBottom(value);
-            this.push(temp);
-        }
-    }
-
-    print(): void {
+    public print(): void {
         let out = "";
         let temp = this.head;
         while (temp !== null) {

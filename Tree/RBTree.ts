@@ -29,6 +29,28 @@ class RBTree<T> {
 		return node !== null && node.colour === true;
 	}
 
+	printTree(): void {
+		this.printTreeUtil(this.root, "", false);
+		console.log();
+	}
+
+	private printTreeUtil(node: TNode<T>, indent: string, isLeft: boolean): void {
+		if (node === this.NullNode) {
+			return;
+		}
+		let output = "";
+		if (isLeft) {
+			output += indent + "L:";
+			indent += "|  ";
+		} else {
+			output += indent + "R:";
+			indent += "   ";
+		}
+		console.log(output + node.data + "(" + node.colour + ")");
+		this.printTreeUtil(node.left, indent, true);
+		this.printTreeUtil(node.right, indent, false);
+	}
+
 	private uncle(node: TNode<T>): TNode<T> | null {
 		// If no parent or grandparent, then no uncle
 		if (
@@ -119,29 +141,6 @@ class RBTree<T> {
 		}
 		return null;
 	}
-
-	printTree(): void {
-		this.printTreeUtil(this.root, "", false);
-		console.log();
-	}
-
-	private printTreeUtil(node: TNode<T>, indent: string, isLeft: boolean): void {
-		if (node === this.NullNode) {
-			return;
-		}
-		let output = "";
-		if (isLeft) {
-			output += indent + "L:";
-			indent += "|  ";
-		} else {
-			output += indent + "R:";
-			indent += "   ";
-		}
-		console.log(output + node.data + "(" + node.colour + ")");
-		this.printTreeUtil(node.left, indent, true);
-		this.printTreeUtil(node.right, indent, false);
-	}
-
 
 	insert(data: T): void {
 		this.root = this.insertUtil(this.root, data);

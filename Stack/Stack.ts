@@ -5,35 +5,35 @@ class Stack<T> {
         this.arr = [];
     }
 
-    size(): number {
-        return this.arr.length;
-    }
-
-    isEmpty(): boolean {
-        return this.arr.length === 0;
-    }
-
-    push(value: T): void {
-        this.arr.push(value);
-    }
-
-    top(): T {
-        if (this.isEmpty()) {
-            throw new Error("Stack Empty Exception");
-        }
-        return this.arr[this.arr.length - 1];
-    }
-
-    pop(): T {
-        if (this.isEmpty()) {
-            throw new Error("Stack Empty Exception");
-        }
-        return this.arr.pop()!;
-    }
-
-    print(): void {
-        console.log(this.arr);
-    }
+	public size(): number {
+	    return this.arr.length;
+	}
+	
+	public isEmpty(): boolean {
+	    return this.arr.length === 0;
+	}
+	
+	public push(value: T): void {
+	    this.arr.push(value);
+	}
+	
+	public top(): T {
+	    if (this.isEmpty()) {
+	        throw new Error("Stack Empty Exception");
+	    }
+	    return this.arr[this.arr.length - 1];
+	}
+	
+	public pop(): T {
+	    if (this.isEmpty()) {
+	        throw new Error("Stack Empty Exception");
+	    }
+	    return this.arr.pop()!;
+	}
+	
+	public print(): void {
+	    console.log(this.arr);
+	}
 }
 
 // Testing code.

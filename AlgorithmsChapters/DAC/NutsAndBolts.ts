@@ -1,6 +1,6 @@
 function makePairs(nuts: number[], bolts: number[]): void {
 	makePairsUtil(nuts, bolts, 0, nuts.length - 1);
-	console.log("Matched nuts and bolts are : ", nuts, bolts);
+	console.log("Matched nuts and bolts are:", nuts, bolts);
 }
 
 function makePairsUtil(nuts: number[], bolts: number[], low: number, high: number): void {
@@ -40,5 +40,5 @@ makePairs(nuts, bolts);
 
 
 /*
-Matched nuts and bolts are :  [ 1, 2, 3, 4, 5, 6 ] [ 1, 2, 3, 4, 5, 6 ] 
+Matched nuts and bolts are: [ 1, 2, 3, 4, 5, 6 ] [ 1, 2, 3, 4, 5, 6 ] 
 */

@@ -9,7 +9,6 @@ function largestPalinSubstr(str: string): number {
 
 	let max = 1;
 	let start = 0;
-
 	for (let l = 1; l < n; l++) {
 		for (let i = 0, j = i + l; j < n; i++, j++) {
 			if (str.charAt(i) === str.charAt(j) && dp[i + 1][j - 1] === j - i - 1) {

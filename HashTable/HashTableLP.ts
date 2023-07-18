@@ -19,13 +19,13 @@ class HashTable {
         this.FlagArr = new Array(tSize + 1).fill(EMPTY_VALUE);
     }
 
-    private ComputeHash(key: any): number {
-        return this.HashFun(key) % this.tableSize;
-    }
-
-    private resolverFun(index: number): number {
-        return index;
-    }
+	private ComputeHash(key: any): number {
+	    return this.HashFun(key) % this.tableSize;
+	}
+	
+	private resolverFun(index: number): number {
+	    return index;
+	}
 
     private DefaultCompare(first: any, second: any): number {
         return first - second;
@@ -34,106 +34,106 @@ class HashTable {
     private DefaultHashFun(key: any): number {
         return key;
     }
-
-    add(key: any, value?: any): boolean {
-        if (key == null) {
-            return false;
-        }
-
-        if (value == null) {
-            value = key;
-        }
-
-        let hashValue = this.ComputeHash(key);
-        for (let i = 0; i < this.tableSize; i++) {
-            if (this.FlagArr[hashValue] === EMPTY_VALUE ||
-                this.FlagArr[hashValue] === DELETED_VALUE) {
-                this.DataArr[hashValue] = value;
-                this.KeyArr[hashValue] = key;
-                this.FlagArr[hashValue] = FILLED_VALUE;
-                return true;
-            } else if (this.FlagArr[hashValue] === FILLED_VALUE &&
-                this.KeyArr[hashValue] === key) {
-                this.DataArr[hashValue] = value;
-                return true;
-            }
-
-            hashValue += this.resolverFun(i);
-            hashValue %= this.tableSize;
-        }
-        return false;
-    }
-
-    find(key: any): boolean {
-        if (key == null) {
-            return false;
-        }
-
-        let hashValue = this.ComputeHash(key);
-        for (let i = 0; i < this.tableSize; i++) {
-            if (this.FlagArr[hashValue] === EMPTY_VALUE) {
-                return false;
-            }
-            if (this.FlagArr[hashValue] === FILLED_VALUE &&
-                this.KeyArr[hashValue] === key) {
-                return true;
-            }
-            hashValue += this.resolverFun(i);
-            hashValue %= this.tableSize;
-        }
-        return false;
-    }
-
-    get(key: any): any {
-        if (key == null) {
-            return 0;
-        }
-
-        let hashValue = this.ComputeHash(key);
-        for (let i = 0; i < this.tableSize; i++) {
-            if (this.FlagArr[hashValue] === EMPTY_VALUE) {
-                return 0;
-            }
-            if (this.FlagArr[hashValue] === FILLED_VALUE &&
-                this.KeyArr[hashValue] === key) {
-                return this.DataArr[hashValue];
-            }
-            hashValue += this.resolverFun(i);
-            hashValue %= this.tableSize;
-        }
-        return 0;
-    }
-
-    remove(key: any): boolean {
-        if (key == null) {
-            return false;
-        }
-
-        let hashValue = this.ComputeHash(key);
-        for (let i = 0; i < this.tableSize; i++) {
-            if (this.FlagArr[hashValue] === EMPTY_VALUE) {
-                return false;
-            }
-            if (this.FlagArr[hashValue] === FILLED_VALUE &&
-                this.KeyArr[hashValue] === key) {
-                this.FlagArr[hashValue] = DELETED_VALUE;
-                return true;
-            }
-            hashValue += this.resolverFun(i);
-            hashValue %= this.tableSize;
-        }
-        return false;
-    }
-
-    print(): void {
-        let output = "Hash Table contains:";
-        for (let i = 0; i < this.tableSize; i++) {
-            if (this.FlagArr[i] === FILLED_VALUE) {
-                output += ` (${this.KeyArr[i]}=>${this.DataArr[i]})`;
-            }
-        }
-        console.log(output);
-    }
+		
+	public add(key: any, value?: any): boolean {
+	    if (key == null) {
+	        return false;
+	    }
+	
+	    if (value == null) {
+	        value = key;
+	    }
+	
+	    let hashValue = this.ComputeHash(key);
+	    for (let i = 0; i < this.tableSize; i++) {
+	        if (this.FlagArr[hashValue] === EMPTY_VALUE ||
+	            this.FlagArr[hashValue] === DELETED_VALUE) {
+	            this.DataArr[hashValue] = value;
+	            this.KeyArr[hashValue] = key;
+	            this.FlagArr[hashValue] = FILLED_VALUE;
+	            return true;
+	        } else if (this.FlagArr[hashValue] === FILLED_VALUE &&
+	            this.KeyArr[hashValue] === key) {
+	            this.DataArr[hashValue] = value;
+	            return true;
+	        }
+	
+	        hashValue += this.resolverFun(i);
+	        hashValue %= this.tableSize;
+	    }
+	    return false;
+	}
+	
+	public find(key: any): boolean {
+	    if (key == null) {
+	        return false;
+	    }
+	
+	    let hashValue = this.ComputeHash(key);
+	    for (let i = 0; i < this.tableSize; i++) {
+	        if (this.FlagArr[hashValue] === EMPTY_VALUE) {
+	            return false;
+	        }
+	        if (this.FlagArr[hashValue] === FILLED_VALUE &&
+	            this.KeyArr[hashValue] === key) {
+	            return true;
+	        }
+	        hashValue += this.resolverFun(i);
+	        hashValue %= this.tableSize;
+	    }
+	    return false;
+	}
+	
+	public get(key: any): any {
+	    if (key == null) {
+	        return 0;
+	    }
+	
+	    let hashValue = this.ComputeHash(key);
+	    for (let i = 0; i < this.tableSize; i++) {
+	        if (this.FlagArr[hashValue] === EMPTY_VALUE) {
+	            return 0;
+	        }
+	        if (this.FlagArr[hashValue] === FILLED_VALUE &&
+	            this.KeyArr[hashValue] === key) {
+	            return this.DataArr[hashValue];
+	        }
+	        hashValue += this.resolverFun(i);
+	        hashValue %= this.tableSize;
+	    }
+	    return 0;
+	}
+	
+	public remove(key: any): boolean {
+	    if (key == null) {
+	        return false;
+	    }
+	
+	    let hashValue = this.ComputeHash(key);
+	    for (let i = 0; i < this.tableSize; i++) {
+	        if (this.FlagArr[hashValue] === EMPTY_VALUE) {
+	            return false;
+	        }
+	        if (this.FlagArr[hashValue] === FILLED_VALUE &&
+	            this.KeyArr[hashValue] === key) {
+	            this.FlagArr[hashValue] = DELETED_VALUE;
+	            return true;
+	        }
+	        hashValue += this.resolverFun(i);
+	        hashValue %= this.tableSize;
+	    }
+	    return false;
+	}
+	
+	public print(): void {
+	    let output = "Hash Table contains:";
+	    for (let i = 0; i < this.tableSize; i++) {
+	        if (this.FlagArr[i] === FILLED_VALUE) {
+	            output += ` (${this.KeyArr[i]}=>${this.DataArr[i]})`;
+	        }
+	    }
+	    console.log(output);
+	}
 }
 
 // Testing code.

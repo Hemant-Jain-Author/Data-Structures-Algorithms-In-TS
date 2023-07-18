@@ -20,6 +20,7 @@ function nQueens(Q: number[], k: number, n: number): void {
     }
 }
 
+// Testing code.
 const Q: number[] = new Array(8).fill(0);
 nQueens(Q, 0, 8);
 

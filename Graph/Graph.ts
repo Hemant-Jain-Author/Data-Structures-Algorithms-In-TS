@@ -142,48 +142,48 @@ class PriorityQueue<T> {
 }
 
 class Sets {
-    parent: number;
-    rank: number;
-
-    constructor(p: number, r: number) {
-        this.parent = p;
-        this.rank = r;
-    }
+	parent: number;
+	rank: number;
+	
+	constructor(p: number, r: number) {
+	    this.parent = p;
+	    this.rank = r;
+	}
 }
 
 // Get root of set
 function find(sets: Sets[], index: number): number {
-    let p = sets[index].parent;
-    while (p !== index) {
-        index = p;
-        p = sets[index].parent;
-    }
-    return index;
+	let p = sets[index].parent;
+	while (p !== index) {
+	    index = p;
+	    p = sets[index].parent;
+	}
+	return index;
 }
 
 // Consider x and y are roots of sets.
 function union(sets: Sets[], x: number, y: number): void {
-    if (sets[x].rank < sets[y].rank) {
-        sets[x].parent = y;
-    } else if (sets[y].rank < sets[x].rank) {
-        sets[y].parent = x;
-    } else {
-        sets[x].parent = y;
-        sets[y].rank++;
-    }
+	if (sets[x].rank < sets[y].rank) {
+	    sets[x].parent = y;
+	} else if (sets[y].rank < sets[x].rank) {
+	    sets[y].parent = x;
+	} else {
+	    sets[x].parent = y;
+	    sets[y].rank++;
+	}
 }
 
 function find1(parent: number[], index: number): number {
-    let p = parent[index];
-    while (p !== -1) {
-        index = p;
-        p = parent[index];
-    }
-    return index;
+	let p = parent[index];
+	while (p !== -1) {
+	    index = p;
+	    p = parent[index];
+	}
+	return index;
 }
 
 function union1(parent: number[], x: number, y: number): void {
-    parent[y] = x;
+	parent[y] = x;
 }
 
 
@@ -271,7 +271,7 @@ class Graph {
         let visited: Array<boolean> = new Array<boolean>(count).fill(false);
         const path: Array<number> = new Array<number>();
         this.dfsUtil(source, visited, path);
-        console.log("DFS Path is : " + path)
+        console.log("DFS Path is:", path)
         return visited[target];
     }
 
@@ -328,7 +328,7 @@ class Graph {
                 }
             }
         }
-        console.log("BFS Path is : " + path)
+        console.log("BFS Path is:", path)
         return visited[target];
     }
 
@@ -914,7 +914,6 @@ class Graph {
             }
         }
         this.printPath(previous, distance, count, source);
-
     }
 
     public bestFirstSearchPQ(source: number, dest: number): number {
@@ -1605,17 +1604,15 @@ function test20() {
 Shortest Paths : (0->1 @ 5) (0->1->2 @ 8) (0->1->2->3 @ 9) (1->2 @ 3) (1->2->3 @ 4) (2->3 @ 1) 
 */
 
-/*test1()
+test1()
 test2()
 test3()
 test4()
 test5()
 test6()
 test7()
-*/
 test8()
 test9()
-/*
 test10()
 test11()
 test12()
@@ -1627,4 +1624,3 @@ test17()
 test18()
 test19()
 test20()
-*/

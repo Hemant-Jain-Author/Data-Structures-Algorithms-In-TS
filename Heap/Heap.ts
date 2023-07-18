@@ -7,7 +7,7 @@ class Heap<T> {
     private size: number;
     private comp: Comparator<T>;
 
-    public constructor(array?: any, cmp: Comparator<T> = greater) {
+    constructor(array?: any, cmp: Comparator<T> = greater) {
         this.comp = cmp;
 
         if (array === null || array === undefined) {
@@ -21,6 +21,25 @@ class Heap<T> {
                 this.percolateDown(i);
             }
         }
+    }
+    
+    public print(): void {
+        console.log(this.arr);
+    }
+
+    public isEmpty(): boolean {
+        return this.size === 0;
+    }
+
+    public length(): number {
+        return this.size;
+    }
+
+    public peek(): T {
+        if (this.isEmpty()) {
+            throw new Error("IllegalStateException");
+        }
+        return this.arr[0];
     }
 
 
@@ -57,13 +76,13 @@ class Heap<T> {
         }
     }
 
-    add(value: T): void {
+    public add(value: T): void {
         this.arr[this.size] = value;
         this.size++;
         this.percolateUp(this.size - 1);
     }
 
-    remove(): T {
+    public remove(): T {
         if (this.isEmpty()) {
             throw new Error("IllegalStateException");
         }
@@ -74,26 +93,9 @@ class Heap<T> {
         return value;
     }
 
-    print(): void {
-        console.log(this.arr);
-    }
 
-    isEmpty(): boolean {
-        return this.size === 0;
-    }
 
-    length(): number {
-        return this.size;
-    }
-
-    peek(): T {
-        if (this.isEmpty()) {
-            throw new Error("IllegalStateException");
-        }
-        return this.arr[0];
-    }
-
-    find(val: T): boolean {
+    public find(val: T): boolean {
         for (let i = 0; i < this.size; i++) {
             if (this.arr[i] === val) {
                 return true;
@@ -102,7 +104,7 @@ class Heap<T> {
         return false;
     }
 
-    delete(value: T): boolean {
+    public delete(value: T): boolean {
         for (let i = 0; i < this.size; i++) {
             if (this.arr[i] === value) {
                 this.arr[i] = this.arr[this.size - 1];
@@ -299,22 +301,22 @@ function kthSmallest4(arr: number[], size: number, k: number): number {
 // Testing code.
 function test5(): void {
     const arr: number[] = [8, 7, 6, 5, 7, 5, 2, 1];
-    console.log(`Kth Smallest :: ${kthSmallest(arr, arr.length, 3)}`);
+    console.log(`Kth Smallest: ${kthSmallest(arr, arr.length, 3)}`);
     const arr2: number[] = [8, 7, 6, 5, 7, 5, 2, 1];
-    console.log(`Kth Smallest :: ${kthSmallest2(arr2, arr2.length, 3)}`);
+    console.log(`Kth Smallest: ${kthSmallest2(arr2, arr2.length, 3)}`);
     const arr3: number[] = [8, 7, 6, 5, 7, 5, 2, 1];
-    console.log(`Kth Smallest :: ${kthSmallest3(arr3, arr3.length, 3)}`);
+    console.log(`Kth Smallest: ${kthSmallest3(arr3, arr3.length, 3)}`);
     const arr4: number[] = [8, 7, 6, 5, 7, 5, 2, 1];
-    console.log(`Kth Smallest :: ${kthSmallest4(arr4, arr4.length, 3)}`);
+    console.log(`Kth Smallest: ${kthSmallest4(arr4, arr4.length, 3)}`);
 }
 
 //test5();
 
 /*
-Kth Smallest :: 5
-Kth Smallest :: 5
-Kth Smallest :: 5
-Kth Smallest :: 5
+Kth Smallest: 5
+Kth Smallest: 5
+Kth Smallest: 5
+Kth Smallest: 5
 */
 
 function isMinHeap(arr: number[]): boolean {
@@ -355,15 +357,15 @@ function isMaxHeap(arr: number[]): boolean {
 // Testing code.
 function test6(): void {
     const arr3: number[] = [8, 7, 6, 5, 7, 5, 2, 1];
-    console.log(`isMaxHeap :: ${isMaxHeap(arr3)}`);
+    console.log(`isMaxHeap: ${isMaxHeap(arr3)}`);
     const arr4: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
-    console.log(`isMinHeap :: ${isMinHeap(arr4)}`);
+    console.log(`isMinHeap: ${isMinHeap(arr4)}`);
 }
 
 //test6();
 /*
-isMaxHeap :: true
-isMinHeap :: true
+isMaxHeap: true
+isMinHeap: true
 */
 
 function kSmallestProduct(arr: number[], size: number, k: number): number {
@@ -417,21 +419,21 @@ function kSmallestProduct4(arr: number[], size: number, k: number): number {
 // Testing code.
 function test7(): void {
     const arr: number[] = [8, 7, 6, 5, 7, 5, 2, 1];
-    console.log(`Kth Smallest product:: ${kSmallestProduct(arr, 8, 4)}`);
+    console.log(`Kth Smallest product: ${kSmallestProduct(arr, 8, 4)}`);
     const arr2: number[] = [8, 7, 6, 5, 7, 5, 2, 1];
-    console.log(`Kth Smallest product:: ${kSmallestProduct2(arr2, 8, 4)}`);
+    console.log(`Kth Smallest product: ${kSmallestProduct2(arr2, 8, 4)}`);
     const arr3: number[] = [8, 7, 6, 5, 7, 5, 2, 1];
-    console.log(`Kth Smallest product:: ${kSmallestProduct3(arr3, 8, 4)}`);
+    console.log(`Kth Smallest product: ${kSmallestProduct3(arr3, 8, 4)}`);
     const arr4: number[] = [8, 7, 6, 5, 7, 5, 2, 1];
-    console.log(`Kth Smallest product:: ${kSmallestProduct4(arr4, 8, 4)}`);
+    console.log(`Kth Smallest product: ${kSmallestProduct4(arr4, 8, 4)}`);
 }
 
 //test7();
 
 /*
-Kth Smallest product:: 50
-Kth Smallest product:: 50
-Kth Smallest product:: 50
+Kth Smallest product: 50
+Kth Smallest product: 50
+Kth Smallest product: 50
 */
 
 function PrintLargerHalf(arr: number[], size: number): void {

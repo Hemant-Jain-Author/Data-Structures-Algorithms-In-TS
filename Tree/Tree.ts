@@ -1,4 +1,4 @@
-class Queue<T> {
+    class Queue<T> {
     arr: T[];
 
     constructor() {
@@ -24,12 +24,12 @@ class Queue<T> {
     length(): number {
         return this.arr.length;
     }
-}
+    }
 
-const MAX_INT = 2147483647;
-const MIN_INT = -2147483647;
+    const MAX_INT = 2147483647;
+    const MIN_INT = -2147483647;
 
-class TreeNode {
+    class TreeNode {
     value: any;
     left: TreeNode | null;
     right: TreeNode | null;
@@ -39,9 +39,9 @@ class TreeNode {
         this.left = left;
         this.right = right;
     }
-}
+    }
 
-class Tree {
+    class Tree {
     root: TreeNode | null;
 
     constructor() {
@@ -50,7 +50,7 @@ class Tree {
 
     /* Other Functions */
 
-    createCompleteBinaryTree(arr: any[]): void {
+    public createCompleteBinaryTree(arr: any[]): void {
         this.root = this.createCompleteBinaryTreeUtil(arr, 0);
     }
 
@@ -68,8 +68,8 @@ class Tree {
         return curr;
     }
 
-    printPreOrder(): void {
-        let output = "Pre Order Tree: ";
+    public printPreOrder(): void {
+        let output = "Pre Order: ";
         output += this.printPreOrderUtil(this.root);
         console.log(output);
     }
@@ -84,8 +84,8 @@ class Tree {
         return output;
     }
 
-    printPostOrder(): void {
-        let output = "Post Order Tree: ";
+    public printPostOrder(): void {
+        let output = "Post Order: ";
         output += this.printPostOrderUtil(this.root);
         console.log(output);
     }
@@ -100,8 +100,8 @@ class Tree {
         return output;
     }
 
-    printInOrder(): void {
-        let output = "In Order Tree: ";
+    public printInOrder(): void {
+        let output = "In Order: ";
         output += this.printInOrderUtil(this.root);
         console.log(output);
     }
@@ -116,7 +116,7 @@ class Tree {
         return output;
     }
 
-    printBreadthFirst(): void {
+    public printBreadthFirst(): void {
         const que = new Queue<TreeNode>();
         let temp: TreeNode | null;
 
@@ -135,7 +135,7 @@ class Tree {
         console.log(output);
     }
 
-    printDepthFirst(): void {
+    public printDepthFirst(): void {
         const stk: TreeNode[] = [];
         let temp: TreeNode | null;
         if (this.root != null)
@@ -153,7 +153,7 @@ class Tree {
         console.log(output);
     }
 
-    printLevelOrderLineByLine(): void {
+    public printLevelOrderLineByLine(): void {
         const que1 = new Queue<TreeNode>();
         const que2 = new Queue<TreeNode>();
         let temp: TreeNode | null = null;
@@ -185,7 +185,7 @@ class Tree {
         }
     }
 
-    printLevelOrderLineByLine2(): void {
+    public printLevelOrderLineByLine2(): void {
         const que = new Queue<TreeNode>();
         let temp: TreeNode | null = null;
         let count = 0;
@@ -209,7 +209,7 @@ class Tree {
         }
     }
 
-    printSpiralTree(): void {
+    public printSpiralTree(): void {
         const stk1: TreeNode[] = [];
         const stk2: TreeNode[] = [];
         let temp: TreeNode | null;
@@ -240,7 +240,7 @@ class Tree {
     }
 
 
-    nthPreOrder(index: number): void {
+    public nthPreOrder(index: number): void {
         const counter: number[] = [0];
         this.nthPreOrderUtil(this.root, index, counter);
     }
@@ -249,7 +249,7 @@ class Tree {
         if (node != null) {
             counter[0]++;
             if (counter[0] === index) {
-                console.log(`Nth Preorder node is: ${node.value}`);
+                console.log(`Nth Preorder Node: ${node.value}`);
                 return;
             }
             this.nthPreOrderUtil(node.left, index, counter);
@@ -257,7 +257,7 @@ class Tree {
         }
     }
 
-    nthPostOrder(index: number): void {
+    public nthPostOrder(index: number): void {
         const counter: number[] = [0];
         this.nthPostOrderUtil(this.root, index, counter);
     }
@@ -268,12 +268,12 @@ class Tree {
             this.nthPostOrderUtil(node.right, index, counter);
             counter[0]++;
             if (counter[0] === index) {
-                console.log(`Nth Post order : ${node.value}`);
+                console.log(`Nth PostOrder Node: ${node.value}`);
             }
         }
     }
 
-    nthInOrder(index: number): void {
+    public nthInOrder(index: number): void {
         const counter: number[] = [0];
         this.nthInOrderUtil(this.root, index, counter);
     }
@@ -283,14 +283,14 @@ class Tree {
             this.nthInOrderUtil(node.left, index, counter);
             counter[0]++;
             if (counter[0] === index) {
-                console.log(`Nth InOrder Node : ${node.value}`);
+                console.log(`Nth InOrder Node: ${node.value}`);
                 return;
             }
             this.nthInOrderUtil(node.right, index, counter);
         }
     }
 
-    printAllPath(): void {
+    public printAllPath(): void {
         const stk: any[] = [];
         console.log("Print All Path : ");
         this.printAllPathUtil(this.root, stk);
@@ -312,7 +312,7 @@ class Tree {
         stk.pop();
     }
 
-    numNodes(): number {
+    public numNodes(): number {
         return this.numNodesUtil(this.root);
     }
 
@@ -323,7 +323,7 @@ class Tree {
             return 1 + this.numNodesUtil(curr.right) + this.numNodesUtil(curr.left);
     }
 
-    sumAllBT(): number {
+    public sumAllBT(): number {
         return this.sumAllBTUtil(this.root);
     }
 
@@ -333,7 +333,7 @@ class Tree {
         return curr.value + this.sumAllBTUtil(curr.left) + this.sumAllBTUtil(curr.right);
     }
 
-    numLeafNodes(): number {
+    public numLeafNodes(): number {
         return this.numLeafNodesUtil(this.root);
     }
 
@@ -348,7 +348,7 @@ class Tree {
     }
 
 
-    numFullNodesBT(): number {
+    public numFullNodesBT(): number {
         return this.numFullNodesBTUtil(this.root);
     }
 
@@ -363,7 +363,7 @@ class Tree {
         return count;
     }
 
-    searchBT(value: number): boolean {
+    public searchBT(value: number): boolean {
         return this.searchBTUtil(this.root, value);
     }
 
@@ -377,7 +377,7 @@ class Tree {
         return false;
     }
 
-    findMaxBT(): number {
+    public findMaxBT(): number {
         const ans = this.findMaxBTUtil(this.root);
         return ans;
     }
@@ -399,7 +399,7 @@ class Tree {
         return max;
     }
 
-    treeDepth(): number {
+    public treeDepth(): number {
         return this.treeDepthUtil(this.root);
     }
 
@@ -417,7 +417,7 @@ class Tree {
         }
     }
 
-    maxLengthPathBT(): number {
+    public maxLengthPathBT(): number {
         return this.maxLengthPathBTUtil(this.root);
     }
 
@@ -441,7 +441,7 @@ class Tree {
         return max;
     }
 
-    copyTree(): Tree {
+    public copyTree(): Tree {
         const tree2 = new Tree();
         tree2.root = this.copyTreeUtil(this.root);
         return tree2;
@@ -458,7 +458,7 @@ class Tree {
         }
     }
 
-    copyMirrorTree(): Tree {
+    public copyMirrorTree(): Tree {
         const tree2 = new Tree();
         tree2.root = this.copyMirrorTreeUtil(this.root);
         return tree2;
@@ -475,7 +475,7 @@ class Tree {
         }
     }
 
-    isEqual(tree: Tree): boolean {
+    public isEqual(tree: Tree): boolean {
         return this.isEqualUtil(this.root, tree.root);
     }
 
@@ -492,11 +492,11 @@ class Tree {
             );
     }
 
-    free(): void {
+    public free(): void {
         this.root = null;
     }
 
-    isCompleteTree(): boolean {
+    public isCompleteTree(): boolean {
         const que = new Queue();
         let temp = null;
         let noChild = 0;
@@ -535,7 +535,7 @@ class Tree {
         );
     }
 
-    isCompleteTree2(): boolean {
+    public isCompleteTree2(): boolean {
         const count = this.numNodes();
         return this.isCompleteTreeUtil(this.root, 0, count);
     }
@@ -554,7 +554,7 @@ class Tree {
         );
     }
 
-    isHeap(): boolean {
+    public isHeap(): boolean {
         const infi = MIN_INT;
         return this.isCompleteTree() && this.isHeapUtil(this.root, infi);
     }
@@ -575,13 +575,13 @@ class Tree {
         );
     }
 
-    isHeap2(): boolean {
+    public isHeap2(): boolean {
         const count = this.numNodes();
         const parentValue = MIN_INT;
         return this.isHeapUtil2(this.root, 0, count, parentValue);
     }
 
-    iterativePreOrder(): void {
+    public iterativePreOrder(): void {
         const stk: TreeNode[] = [];
         let output: string = "Iterative Pre Order : ";
         let curr: TreeNode | undefined;
@@ -602,7 +602,7 @@ class Tree {
         console.log(output);
     }
 
-    iterativePostOrder(): void {
+    public iterativePostOrder(): void {
         const stk: TreeNode[] = [];
         const visited: number[] = [];
         let curr: TreeNode | undefined;
@@ -638,7 +638,7 @@ class Tree {
         console.log(output);
     }
 
-    iterativeInOrder(): void {
+    public iterativeInOrder(): void {
         const stk: TreeNode[] = [];
         const visited: number[] = [];
         let curr: TreeNode | undefined;
@@ -674,7 +674,7 @@ class Tree {
         console.log(output);
     }
 
-    treeToListRec(): Tree {
+    public treeToListRec(): Tree {
         const t2 = this.copyTree();
         const root = this.treeToListRecUtil(t2.root);
         t2.root = root;
@@ -714,7 +714,7 @@ class Tree {
         return head;
     }
 
-    printDLL(): void {
+    public printDLL(): void {
         if (this.root == null) {
             return;
         }
@@ -729,7 +729,7 @@ class Tree {
         console.log(output);
     }
 
-    createBinarySearchTree(arr: number[]): void {
+    public createBinarySearchTree(arr: number[]): void {
         this.root = this.createBinarySearchTreeUtil(arr, 0, arr.length - 1);
     }
 
@@ -744,7 +744,7 @@ class Tree {
         return curr;
     }
 
-    insertNode(value: number): void {
+    public insertNode(value: number): void {
         this.root = this.insertNodeUtil(this.root, value);
     }
 
@@ -761,7 +761,7 @@ class Tree {
         return node;
     }
 
-    find(value: number): boolean {
+    public find(value: number): boolean {
         let curr = this.root;
         while (curr != null) {
             if (curr.value === value) {
@@ -775,7 +775,7 @@ class Tree {
         return false;
     }
 
-    find2(value: number): boolean {
+    public find2(value: number): boolean {
         let curr = this.root;
         while (curr != null && curr.value !== value) {
             curr = (curr.value > value) ? curr.left : curr.right;
@@ -783,7 +783,7 @@ class Tree {
         return curr != null;
     }
 
-    findMin(): number {
+    public findMin(): number {
         let node = this.root;
         if (node == null) {
             return Number.MAX_VALUE;
@@ -794,7 +794,7 @@ class Tree {
         return node.value;
     }
 
-    findMinNode(curr: TreeNode | null): TreeNode | null {
+    public findMinNode(curr: TreeNode | null): TreeNode | null {
         let node = curr;
         if (node == null) {
             return null;
@@ -807,7 +807,7 @@ class Tree {
         return node;
     }
 
-    findMax(): number {
+    public findMax(): number {
         let node = this.root;
         if (node == null) {
             return Number.MIN_VALUE;
@@ -818,7 +818,7 @@ class Tree {
         return node.value;
     }
 
-    findMaxNode(curr: TreeNode | null): TreeNode | null {
+    public findMaxNode(curr: TreeNode | null): TreeNode | null {
         let node = curr;
         if (node == null) {
             return null;
@@ -831,7 +831,7 @@ class Tree {
         return node;
     }
 
-    isBST3(): boolean {
+    public isBST3(): boolean {
         return this.isBST3Util(this.root);
     }
 
@@ -848,7 +848,7 @@ class Tree {
         return (this.isBST3Util(root.left) && this.isBST3Util(root.right));
     }
 
-    isBST(): boolean {
+    public isBST(): boolean {
         return this.isBSTUtil(this.root, Number.MIN_VALUE, Number.MAX_VALUE);
     }
 
@@ -862,7 +862,7 @@ class Tree {
         return this.isBSTUtil(curr.left, min, curr.value) && this.isBSTUtil(curr.right, curr.value, max);
     }
 
-    isBST2(): boolean {
+    public isBST2(): boolean {
         const count: number[] = [Number.MIN_VALUE];
         return this.isBST2Util(this.root, count);
     }
@@ -885,7 +885,7 @@ class Tree {
         return true;
     }
 
-    deleteNode(value: number): void {
+    public deleteNode(value: number): void {
         this.root = this.deleteNodeUtil(this.root, value);
     }
 
@@ -920,7 +920,7 @@ class Tree {
         return node;
     }
 
-    lcaBST(first: number, second: number): number {
+    public lcaBST(first: number, second: number): number {
         let result: number;
         if (first > second)
             result = this.lcaBSTUtil(this.root, second, first);
@@ -949,7 +949,7 @@ class Tree {
         return Number.MAX_VALUE;
     }
 
-    printInRange(min: number, max: number): void {
+    public printInRange(min: number, max: number): void {
         let output: string = "Print In Range : ";
         output += this.printInRangeUtil(this.root, min, max);
         console.log(output);
@@ -966,7 +966,7 @@ class Tree {
         return output;
     }
 
-    trimOutsideRange(min: number, max: number): void {
+    public trimOutsideRange(min: number, max: number): void {
         this.root = this.trimOutsideRangeUtil(this.root, min, max);
     }
 
@@ -988,7 +988,7 @@ class Tree {
         return curr;
     }
 
-    ceilBST(val: number): number {
+    public ceilBST(val: number): number {
         let curr = this.root;
         let ceil = Number.MIN_VALUE;
         while (curr != null) {
@@ -1005,7 +1005,7 @@ class Tree {
         return ceil;
     }
 
-    floorBST(val: number): number {
+    public floorBST(val: number): number {
         let curr = this.root;
         let floor = Number.MAX_VALUE;
         while (curr != null) {
@@ -1022,7 +1022,7 @@ class Tree {
         return floor;
     }
 
-    ancestor(first: number, second: number): TreeNode | null {
+    public ancestor(first: number, second: number): TreeNode | null {
         if (first > second) {
             const temp = first;
             first = second;
@@ -1044,7 +1044,7 @@ class Tree {
         return curr;
     }
 
-    LCA(first: number, second: number): number {
+    public LCA(first: number, second: number): number {
         const ans = this.LCAUtil(this.root, first, second);
         if (ans != null)
             return ans.value;
@@ -1071,28 +1071,28 @@ class Tree {
         else
             return right;
     }
-}
+    }
 
 function isBSTArray(preorder: number[], size: number): boolean {
-    const stk: number[] = [];
-    let value: number;
-    let root: number = Number.MIN_VALUE;
-
-    for (let i = 0; i < size; i++) {
-        value = preorder[i];
-        // If value of the right child is less than root.
-        if (value < root)
-            return false;
-        // First left child values will be popped
-        // Last popped value will be the root.
-        while (stk.length > 0 && stk[stk.length - 1] < value) {
-            root = stk.pop()!;
+        const stk: number[] = [];
+        let value: number;
+        let root: number = Number.MIN_VALUE;
+    
+        for (let i = 0; i < size; i++) {
+            value = preorder[i];
+            // If value of the right child is less than root.
+            if (value < root)
+                return false;
+            // First left child values will be popped
+            // Last popped value will be the root.
+            while (stk.length > 0 && stk[stk.length - 1] < value) {
+                root = stk.pop()!;
+            }
+            // add current value to the stack.
+            stk.push(value);
         }
-        // add current value to the stack.
-        stk.push(value);
+        return true;
     }
-    return true;
-}
 
 
 function main1() {
@@ -1100,13 +1100,13 @@ function main1() {
     let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     t.createCompleteBinaryTree(arr);
     t.printPreOrder();
-    //Pre Order Tree: 1 2 4 8 9 5 10 3 6 7 
+    //Pre Order: 1 2 4 8 9 5 10 3 6 7 
 
     t.printPostOrder();
-    // Post Order Tree: 8 9 4 10 5 2 6 7 3 1 
+    // Post Order: 8 9 4 10 5 2 6 7 3 1 
 
     t.printInOrder();
-    // In Order Tree: 8 4 9 2 10 5 1 6 3 7 
+    // In Order: 8 4 9 2 10 5 1 6 3 7 
 
     t.iterativePreOrder();
     // Iterative Pre Order :  1 2 4 8 9 5 10 3 6 7 
@@ -1148,9 +1148,9 @@ function main1() {
     t.nthPreOrder(2);
 
     /*
-    Nth InOrder Node : 4
-    Nth Post order : 9
-    Nth Preorder node is : 2
+    Nth InOrder Node: 4
+    Nth PostOrder Node: 9
+    Nth Preorder Node: 2
     */
 
     t.printAllPath();
@@ -1202,26 +1202,26 @@ function main3() {
     let t2 = t.copyTree();
     t2.printInOrder();
     /*
-In Order Tree: 8 4 9 2 10 5 1 6 3 7 
+    In Order: 8 4 9 2 10 5 1 6 3 7 
     */
     let t3 = t.copyMirrorTree();
     t3.printInOrder();
     /*
-In Order Tree: 7 3 6 1 5 10 2 9 4 8 
+    In Order: 7 3 6 1 5 10 2 9 4 8 
     */
     console.log("isEqual:", t.isEqual(t2));
     /*
-isEqual: true
+    isEqual: true
     */
     console.log("isHeap:", t.isHeap());
     console.log("isHeap:", t.isHeap2());
     console.log("isCompleteTree:", t.isCompleteTree());
     console.log("isCompleteTree:", t.isCompleteTree2());
     /*
-isHeap: true
-isHeap: true
-isCompleteTree: true
-isCompleteTree: true
+    isHeap: true
+    isHeap: true
+    isCompleteTree: true
+    isCompleteTree: true
     */
 }
 
@@ -1240,7 +1240,7 @@ function main4() {
     t.printInOrder();
 
     /*
-In Order Tree: 1 2 3 4 5 6 7 8 9 10 
+    In Order: 1 2 3 4 5 6 7 8 9 10 
     */
     console.log(t.find(3));
     console.log(t.find(16));
@@ -1252,11 +1252,10 @@ In Order Tree: 1 2 3 4 5 6 7 8 9 10
     console.log("isBST:", t.isBST2());
     console.log("isBST:", t.isBST3());
     /*
-isBST: true
-isBST: true
-isBST: true
+    isBST: true
+    isBST: true
+    isBST: true
     */
-
 }
 
 
@@ -1266,18 +1265,18 @@ function main5() {
     t.createBinarySearchTree(arr);
     console.log("findMin:", t.findMin());
     console.log("findMax:", t.findMax());
-    console.log("LCA :", t.lcaBST(3, 4));
-    console.log("LCA :", t.lcaBST(1, 4));
-    console.log("LCA :", t.lcaBST(10, 4));
+    console.log("LCA:", t.lcaBST(3, 4));
+    console.log("LCA:", t.lcaBST(1, 4));
+    console.log("LCA:", t.lcaBST(10, 4));
 }
 
-/*
-findMin: 1
-findMax: 10
-LCA : 3
-LCA : 2
-LCA : 5
-*/
+    /*
+    findMin: 1
+    findMax: 10
+    LCA: 3
+    LCA: 2
+    LCA: 5
+    */
 
 function main6() {
     let t = new Tree();
@@ -1289,11 +1288,11 @@ function main6() {
     t.printInOrder();
 }
 
-/*
-In Order Tree: 1 2 3 4 5 6 7 8 9 10 
-Print In Range : 4 5 6 7 
-In Order Tree: 4 5 6 7
-*/
+    /*
+    In Order: 1 2 3 4 5 6 7 8 9 10 
+    Print In Range : 4 5 6 7 
+    In Order: 4 5 6 7
+    */
 
 function main7() {
     let t = new Tree();
@@ -1313,8 +1312,8 @@ function main7() {
     console.log("isBSTArray:", isBSTArray(arr1, 6));
     console.log("isBSTArray:", isBSTArray(arr2, 7));
     /*
-isBSTArray: true
-isBSTArray: false
+    isBSTArray: true
+    isBSTArray: false
     */
 }
 

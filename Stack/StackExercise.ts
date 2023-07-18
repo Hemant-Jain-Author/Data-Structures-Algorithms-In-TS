@@ -114,7 +114,7 @@ function test2() {
     console.log(stk);
 }
 
-//test2()
+test2()
 
 // [ 1, 2, 3, 4, 5 ]
 
@@ -155,7 +155,7 @@ function test3() {
     console.log(stk);
 }
 
-//test3()
+test3()
 
 // [ 1, 2, 3, 4, 5 ]
 
@@ -348,12 +348,10 @@ Deque { arr: [ 2, 1, 3, 4 ] }
 */
 
 
-function isBalancedParenthesis(expn: string): boolean {
-    let stk: Array<string> = new Array<string>();
-
+function isBalancedParenthesis(expn) {
+    const stk = [];
     for (let index = 0; index < expn.length; index++) {
-        let ch = expn[index];
-
+        const ch = expn[index];
         switch (ch) {
             case '{':
             case '[':
@@ -361,23 +359,22 @@ function isBalancedParenthesis(expn: string): boolean {
                 stk.push(ch);
                 break;
             case '}':
-                if (stk.pop() != '{') {
+                if (stk.pop() !== '{') {
                     return false;
                 }
                 break;
             case ']':
-                if (stk.pop() != '[') {
+                if (stk.pop() !== '[') {
                     return false;
                 }
                 break;
             case ')':
-                if (stk.pop() != '(') {
+                if (stk.pop() !== '(') {
                     return false;
                 }
                 break;
         }
     }
-
     return (stk.length == 0);
 }
 

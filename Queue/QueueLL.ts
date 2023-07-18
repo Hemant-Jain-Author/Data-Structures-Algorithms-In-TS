@@ -32,7 +32,17 @@ class Queue<T> {
             throw new Error("Queue is empty.");
         return this.head!.value;
     }
-
+    
+    print(): void {
+        let output = "";
+        let temp = this.head;
+        while (temp !== null) {
+            output += `${temp.value} `;
+            temp = temp.next;
+        }
+        console.log(output);
+    }
+    
     add(value: T): void {
         const temp = new QueueNode(value, null);
         if (this.head === null)
@@ -53,16 +63,6 @@ class Queue<T> {
             this.tail = null;
         this.length--;
         return value;
-    }
-
-    print(): void {
-        let output = "";
-        let temp = this.head;
-        while (temp !== null) {
-            output += `${temp.value} `;
-            temp = temp.next;
-        }
-        console.log(output);
     }
 }
 

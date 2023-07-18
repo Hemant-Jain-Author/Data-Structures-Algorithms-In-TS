@@ -1,6 +1,6 @@
 const INVALID_VALUE = Infinity;
 //General Top-Down function to solve Min and Max problems:
-function TopDownFunction(dp_array: number[], ways: number[], target: number): number {
+function TopDownFunctionUtil(dp_array: number[], ways: number[], target: number): number {
   // Base Case
   if (target === 0) {
     return 0;
@@ -13,15 +13,15 @@ function TopDownFunction(dp_array: number[], ways: number[], target: number): nu
   // Recursion
   for (let i = 0; i < ways.length; i++) {
     dp_array[target] = Math.min(dp_array[target],
-      TopDownFunction(dp_array, ways, target - ways[i]) + cost);
+      TopDownFunctionUtil(dp_array, ways, target - ways[i]) + cost);
   }
 
   return dp_array[target];
 }
 
-function TopDownFunctionWrapper(ways: number[], target: number): number {
+function TopDownFunction(ways: number[], target: number): number {
   const dp_array: number[] = new Array(target + 1).fill(INVALID_VALUE);
-  return TopDownFunction(dp_array, ways, target);
+  return TopDownFunctionUtil(dp_array, ways, target);
 }
 
 //General Bottom-Up function to solve Min-Max problems:
@@ -43,7 +43,7 @@ function BottomUpFunction(ways: number[], target: number): number {
 //////////////////////////////////
 
 //General Top-Down function to solve Distinct-Way problems:
-function TopDownFunction(dp_array: number[], ways: number[], target: number): number {
+function TopDownFunctionUtil(dp_array: number[], ways: number[], target: number): number {
   // Base Case
   if (target === 0) {
     return 0;
@@ -56,15 +56,15 @@ function TopDownFunction(dp_array: number[], ways: number[], target: number): nu
   // Recursion
   for (let i = 0; i < ways.length && ways[i] <= i; i++) {
     // For all fusible ways.
-    dp_array[target] += TopDownFunction(dp_array, ways, target - ways[i]);
+    dp_array[target] += TopDownFunctionUtil(dp_array, ways, target - ways[i]);
   }
 
   return dp_array[target];
 }
 
-function TopDownFunctionWrapper(ways: number[], target: number): number {
+function TopDownFunction(ways: number[], target: number): number {
   const dp_array: number[] = new Array(target).fill(0);
-  return TopDownFunction(dp_array, ways, target);
+  return TopDownFunctionUtil(dp_array, ways, target);
 }
 
 // General Bottom-Up function to solve Distinct-Way problems:
@@ -91,10 +91,10 @@ function TopDownFunction(costs: number[]): number {
   // dp_array is a two-dimensional array n*n
   const dp_array: number[][] = Array.from({ length: n }, () => new Array(n).fill(INVALID_VALUE));
 
-  return topDownFunction(dp_array, costs, 0, n - 1);
+  return topDownFunctionUtil(dp_array, costs, 0, n - 1);
 }
 
-function topDownFunction(dp_array: number[][], costs: number[], i: number, j: number): number {
+function topDownFunctionUtil(dp_array: number[][], costs: number[], i: number, j: number): number {
   // Base Case
   if (i === j) {
     return 0;
@@ -107,7 +107,7 @@ function topDownFunction(dp_array: number[][], costs: number[], i: number, j: nu
   // Recursion
   for (let k = i; k < j; k++) {
     dp_array[i][j] = Math.min(dp_array[i][j],
-      topDownFunction(dp_array, costs, i, k) + costs[k] + topDownFunction(dp_array, costs, k + 1, j));
+      topDownFunctionUtil(dp_array, costs, i, k) + costs[k] + topDownFunction(dp_array, costs, k + 1, j));
   }
 
   return dp_array[i][j];

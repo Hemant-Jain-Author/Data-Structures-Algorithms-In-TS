@@ -62,17 +62,34 @@ class Queue<T> {
     size(): number {
         return this.arr.length;
     }
+
+    print() : void {
+        console.log(this.arr)
+    }
 }
 
 function main0() {
     let que: Queue<number> = new Queue<number>();
-    for (let i: number = 0; i < 20; i++) {
-        que.add(i);
-    };
-    for (let i: number = 0; i < 22; i++) {
-        console.log(que.remove());
-    };
+    que.add(1);
+    que.add(2);
+    que.add(3);
+    que.print();
+    console.log("isEmpty: " + que.isEmpty());
+    console.log("size: " + que.size());
+    console.log("Queue remove: " + que.remove());
+    console.log("Queue remove: " + que.remove());
 }
+
+main0();
+
+/*
+[ 1, 2, 3 ]
+isEmpty: false
+size: 3
+Queue remove: 1
+Queue remove: 2
+*/
+
 
 function CircularTour(arr: number[][], n: number): number {
     for (let i = 0; i < n; i++) {
@@ -123,14 +140,14 @@ function CircularTour2(arr: number[][], n: number): number {
 // Testing code.
 function test1() {
     const tour: number[][] = [[8, 6], [1, 4], [7, 6]];
-    console.log(`Circular Tour : ${CircularTour(tour, 3)}`);
-    console.log(`Circular Tour : ${CircularTour2(tour, 3)}`);
+    console.log(`Circular Tour: ${CircularTour(tour, 3)}`);
+    console.log(`Circular Tour: ${CircularTour2(tour, 3)}`);
 }
 
 test1();
 /*
-Circular Tour : 2
-Circular Tour : 2
+Circular Tour: 2
+Circular Tour: 2
 */
 
 function convertXY(src: number, dst: number): number {
@@ -144,7 +161,7 @@ function convertXY(src: number, dst: number): number {
         value = que.remove();
         arr[index++] = value;
         if (value === dst) {
-            console.log("Steps countr :: " + steps);
+            console.log("Steps countr: " + steps);
             return steps;
         }
         steps++;
@@ -222,7 +239,7 @@ function minOfMaxSlidingWindows(arr: Array<number>, size: number, k: number): nu
         if (i >= (k - 1) && minVal > arr[que.front()])
             minVal = arr[que.front()];
     }
-    console.log(`Min of max is :: ${minVal}`);
+    console.log(`Min of max is: ${minVal}`);
     return minVal;
 }
 
@@ -235,7 +252,7 @@ function test4() {
 test4()
 
 /*
-Min of max is :: 75
+Min of max is: 75
 */
 
 const NEGATIVE_INFI = -2147483647;
@@ -252,7 +269,7 @@ function maxOfMinSlidingWindows(arr: Array<number>, size: number, k: number): nu
         if (i >= (k - 1) && maxVal < arr[que.front()])
             maxVal = arr[que.front()];
     }
-    console.log("Max of min is :: " + maxVal);
+    console.log("Max of min is: " + maxVal);
     return maxVal;
 }
 
@@ -265,7 +282,7 @@ function test5() {
 test5()
 
 /*
-Max of min is :: 59
+Max of min is: 59
 */
 
 function firstNegSlidingWindows(arr: Array<number>, size: number, k: number) {
@@ -310,7 +327,7 @@ function josephus(n: number, k: number): number {
 }
 
 // Testing code.
-console.log("Position : " + josephus(11, 5));
+console.log("Position: " + josephus(11, 5));
 
 function rottenFruitUtil(
     arr: number[][],
@@ -434,15 +451,15 @@ function test22() {
         [1, 1, 0, 0, 1],
     ];
 
-    console.log("rottenFruit :", rottenFruit(arr, 5, 5));
-    console.log("rottenFruit :", rottenFruit2(arr, 5, 5));
+    console.log("rottenFruit:", rottenFruit(arr, 5, 5));
+    console.log("rottenFruit:", rottenFruit2(arr, 5, 5));
 }
 
 test22();
 
 /*
-rottenFruit : 3
-rottenFruit : 3
+rottenFruit: 3
+rottenFruit: 3
 */
 
 
@@ -502,15 +519,15 @@ function stepsOfKnight2(size: number, srcX: number, srcY: number, dstX: number, 
 
 // Testing code.
 function test23() {
-    console.log("stepsOfKnight :", stepsOfKnight(20, 10, 10, 20, 20));
-    console.log("stepsOfKnight :", stepsOfKnight2(20, 10, 10, 20, 20));
+    console.log("stepsOfKnight:", stepsOfKnight(20, 10, 10, 20, 20));
+    console.log("stepsOfKnight:", stepsOfKnight2(20, 10, 10, 20, 20));
 }
 
 test23();
 
 /*
-stepsOfKnight : 8
-stepsOfKnight : 8
+stepsOfKnight: 8
+stepsOfKnight: 8
 */
 
 function distNearestFillUtil(arr: number[][], maxCol: number, maxRow: number, currCol: number, currRow: number, traversed: number[][], dist: number): void {
@@ -545,6 +562,7 @@ function distNearestFill(arr: number[][], maxCol: number, maxRow: number): void 
         console.log(traversed[i]);
     }
 }
+
 class DNode {
     x: number;
     y: number;

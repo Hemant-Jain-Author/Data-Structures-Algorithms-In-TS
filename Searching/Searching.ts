@@ -1971,8 +1971,9 @@ search01 index is: 8
 binarySearch01 index is: 8
 */
 
-function searchRotateArray(arr: number[], size: number, key: number): number {
-    for (let i: number = 0; i < size - 1; i++) {
+function searchRotateArray(arr: number[], key: number): number {
+    const size: number = arr.length;
+    for (let i: number = 0; i < size; i++) {
         if (arr[i] === key) {
             return i;
         }
@@ -2074,20 +2075,25 @@ function countRotation(arr: number[], size: number): number {
 // Testing code.
 function test32() {
     const first = [8, 9, 10, 11, 3, 5, 7];
+    console.log(`searchRotateArray index is: ${searchRotateArray(first, 7)}`);
+    console.log(`searchRotateArray index is: ${searchRotateArray(first, 6)}`);
     console.log(`binarySearchRotateArray index is: ${binarySearchRotateArray(first, 7)}`);
     console.log(`binarySearchRotateArray index is: ${binarySearchRotateArray(first, 6)}`);
     console.log(`rotationMax is: ${rotationMax(first, first.length)}`);
     console.log(`countRotation is: ${countRotation(first, first.length)}`);
 }
 
-//test32();
+test32();
 
 /*
+searchRotateArray index is: 6
+searchRotateArray index is: -1
 binarySearchRotateArray index is: 6
 binarySearchRotateArray index is: -1
 rotationMax is: 11
 countRotation is: 4
 */
+
 function minAbsDiffAdjCircular(arr: number[], size: number): number {
     if (size < 2) {
         return -1;

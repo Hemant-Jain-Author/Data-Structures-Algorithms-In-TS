@@ -11,10 +11,10 @@ function printSubset(flags: boolean[], arr: number[], size: number): void {
 
 function subsetSum(arr: number[], n: number, target: number): void {
     const flags: boolean[] = new Array(n).fill(false);
-    subsetSumHelper(arr, n, flags, 0, 0, target);
+    subsetSumUtil(arr, n, flags, 0, 0, target);
 }
 
-function subsetSumHelper(arr: number[], n: number, flags: boolean[], sum: number, curr: number, target: number): void {
+function subsetSumUtil(arr: number[], n: number, flags: boolean[], sum: number, curr: number, target: number): void {
     if (target === sum) {
         printSubset(flags, arr, n); // Solution found.
         return;
@@ -27,9 +27,9 @@ function subsetSumHelper(arr: number[], n: number, flags: boolean[], sum: number
 
     // Current element included.
     flags[curr] = true;
-    subsetSumHelper(arr, n, flags, sum + arr[curr], curr + 1, target);
+    subsetSumUtil(arr, n, flags, sum + arr[curr], curr + 1, target);
     flags[curr] = false; // Reset flag for backtracking.
-    subsetSumHelper(arr, n, flags, sum, curr + 1, target);
+    subsetSumUtil(arr, n, flags, sum, curr + 1, target);
 }
 
 // Testing code.

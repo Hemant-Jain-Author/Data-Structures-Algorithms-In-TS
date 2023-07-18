@@ -1,12 +1,12 @@
-function MatrixChainMulBruteForce(p: number[], i: number, j: number): number {
+function MatrixChainMulBruteForceUtil(p: number[], i: number, j: number): number {
 	if (i === j) return 0;
 
 	let min = Infinity;
 
 	for (let k = i; k < j; k++) {
 		const count =
-			MatrixChainMulBruteForce(p, i, k) +
-			MatrixChainMulBruteForce(p, k + 1, j) +
+			MatrixChainMulBruteForceUtil(p, i, k) +
+			MatrixChainMulBruteForceUtil(p, k + 1, j) +
 			p[i - 1] * p[k] * p[j];
 
 		if (count < min) min = count;
@@ -15,26 +15,26 @@ function MatrixChainMulBruteForce(p: number[], i: number, j: number): number {
 	return min;
 }
 
-function MatrixChainMulBruteForceWrapper(p: number[]): number {
+function MatrixChainMulBruteForce(p: number[]): number {
 	const i = 1;
 	const j = p.length - 1;
-	return MatrixChainMulBruteForce(p, i, j);
+	return MatrixChainMulBruteForceUtil(p, i, j);
 }
 
 function MatrixChainMulTD(p: number[], n: number): number {
 	const dp: number[][] = new Array(n).fill(0).map(() => new Array(n).fill(Infinity));
 	for (let i = 1; i < n; i++) dp[i][i] = 0;
-	return MatrixChainMulTDHelper(dp, p, 1, n - 1);
+	return MatrixChainMulTDUtil(dp, p, 1, n - 1);
 }
 
-function MatrixChainMulTDHelper(dp: number[][], p: number[], i: number, j: number): number {
+function MatrixChainMulTDUtil(dp: number[][], p: number[], i: number, j: number): number {
 	if (dp[i][j] !== Infinity) return dp[i][j];
 
 	for (let k = i; k < j; k++) {
 		dp[i][j] = Math.min(
 			dp[i][j],
-			MatrixChainMulTDHelper(dp, p, i, k) +
-			MatrixChainMulTDHelper(dp, p, k + 1, j) +
+			MatrixChainMulTDUtil(dp, p, i, k) +
+			MatrixChainMulTDUtil(dp, p, k + 1, j) +
 			p[i - 1] * p[k] * p[j]
 		);
 	}
@@ -104,7 +104,7 @@ function MatrixChainMulBU2(p: number[], n: number): number {
 
 const arr: number[] = [1, 2, 3, 4];
 const n: number = arr.length;
-console.log("Matrix Chain Multiplication is: " + MatrixChainMulBruteForceWrapper(arr));
+console.log("Matrix Chain Multiplication is: " + MatrixChainMulBruteForce(arr));
 console.log("Matrix Chain Multiplication is: " + MatrixChainMulTD(arr, n));
 console.log("Matrix Chain Multiplication is: " + MatrixChainMulBU(arr, n));
 console.log("Matrix Chain Multiplication is: " + MatrixChainMulBU2(arr, n));
