@@ -347,11 +347,10 @@ Deque { arr: [ 1, 2, 3, 4 ] }
 Deque { arr: [ 2, 1, 3, 4 ] }
 */
 
-
-function isBalancedParenthesis(expn) {
-    const stk = [];
+function isBalancedParenthesis(expn: string): boolean {
+    const stk: string[] = [];
     for (let index = 0; index < expn.length; index++) {
-        const ch = expn[index];
+        const ch: string = expn[index];
         switch (ch) {
             case '{':
             case '[':
@@ -375,9 +374,8 @@ function isBalancedParenthesis(expn) {
                 break;
         }
     }
-    return (stk.length == 0);
+    return stk.length === 0;
 }
-
 
 // Testing code.
 function test9() {
